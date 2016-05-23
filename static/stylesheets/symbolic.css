@@ -1,0 +1,84 @@
+.symbol {
+  display: inline-block;
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.symbol::before,
+.symbol::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 37.5%;
+  -webkit-transform-origin: 50% 50%;
+  width: 100%;
+  height: 25%;
+  background-color: #F7F7F8;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  -o-transition: .3s;
+  transition: .3s;
+
+}
+
+.symbol.plus::after{
+  transform: rotate(90deg);
+}
+
+.symbol.x::before {
+  transform: rotate(45deg);
+}
+
+.symbol.x::after{
+  transform: rotate(135deg);
+}
+
+.symbol.minus::after {
+  transform: rotate(0deg);
+}
+
+.symbol.minus::before {
+  transform: none;
+}
+
+.symbol.right-arrow::before {
+  transform: rotate(45deg) translateY(-75%) scaleX(.625);
+}
+
+.symbol.right-arrow::after {
+  transform: rotate(135deg) translateY(-75%) scaleX(.625);
+}
+
+.symbol.left-arrow::before {
+  transform: rotate(-45deg) translateY(-75%) scaleX(.625);
+}
+
+.symbol.left-arrow::after {
+  transform: rotate(225deg) translateY(-75%) scaleX(.625);
+}
+
+.symbol.down-arrow::before {
+    transform: rotate(-135deg) translateY(-75%) scaleX(.625);
+}
+
+.symbol.down-arrow::after {
+    transform: rotate(135deg) translateY(-75%) scaleX(.625);
+}
+
+.symbol.up-arrow::before {
+    transform: rotate(-45deg) translateY(-75%) scaleX(.625);
+}
+
+.symbol.up-arrow::after {
+    transform: rotate(45deg) translateY(-75%) scaleX(.625);
+}
+
+.symbol.check::before {
+    transform: rotate(-135deg) translateY(-125%) scaleX(.5);
+}
+
+.symbol.check::after {
+    transform: rotate(135deg) translateY(-50%) scaleX(.875);
+}

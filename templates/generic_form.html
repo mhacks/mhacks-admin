@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/style.css') }}">
+{% endblock %}
+{% block content %}
+    {% if form %}
+        <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}">
+            {{ csrf_input }}
+            <fieldset>
+                <div class="header">
+                    <div class="container">
+                        <a href="{{ url_for('mhacks-home') }}"><img src="{{ static('assets/logo_orange.png') }}" id="headerLogo" alt="MHacks: Refactor"/></a>
+                    </div>
+                </div>
+
+                <h3 class="first container head"><span>{% block form_title %}{% endblock %}</span></h3>
+                <div class="section container">
+                    {% block non_field_errors %}
+                        {% for error in form.non_field_errors() %}
+                            <p class="alert alert-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% endblock %}
+                    {% for field in form %}
+                        <div class="row flexLine">
+                            <h4 class="input_word" {% if field.field.longest %}id="longest"{% endif %}>{{ field.label }}</h4>
+                            {{ field.as_widget(attrs={'class': 'form-control input-md'}) }}
+                            {% for error in form.errors[field.name] %}
+                                <p class="alert alert-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="final container">
+                    <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="container horizontal-center">
+            {% block form_footer %}
+            {% endblock %}
+        </div>
+    {% else %}
+        <div class="header">
+            <div class="container">
+                <a href="{{ url_for('mhacks-home') }}"><img src="{{ static('assets/logo_orange.png') }}" id="headerLogo" alt="MHacks: Refactor"/></a>
+            </div>
+        </div>
+        <h3 class="first container head"><span>{% block message_title %}{% endblock %}</span></h3>
+        <div class="section container text-center">
+            {% block message_info %}{% endblock %}
+        </div>
+        <div class="final container"></div>
+    {% endif %}
+{% endblock %}

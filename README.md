@@ -1,0 +1,51 @@
+# MHacks Backend And Frontend
+
+## Installation
+Pre-installed packages:
+- Python 2.7
+- Git
+- Postgre SQL (make sure its setup and running!)
+    - For this make sure you have a database named mhacks and an empty user and password on localhost. If this is not the case update the development settings DATABASE settings to your own authentication details.
+
+Getting started:
+```bash
+    git clone <ssh or git link from repo>
+    cd MHacks-Website
+    # if <virtual environment preferred>
+    virtualenv --distribute venv/
+    source venv/bin/activate
+    # endif
+    pip install -r requirements.txt
+    ./manage.py migrate
+    ./manage.py runserver
+```
+
+## URLs
+    `/`                             => Homepage (can be index or blackout page)
+    `/register`                     => Registration page (aka signup)
+    `/validate/<uid>/<token>`       => Validate email page
+    `/send_verify_email/<uid>`      => Send new verification email then redirects to login
+    `/login`                        => Login page
+    `/logout`                       => Logout then redirect to Homepage
+    `/reset`                        => Request to reset password
+    `/update_password/<uid>/<token>`=> Allows a reset of password from email link
+    `/dashboard`                    => Dashboard with context based on user type
+    `/live`                         => Live page with updates and stuff
+    `/v1/docs`                      => API Documentation, also includes URLs to the rest of the API and methods
+
+## Project Structure
+ - Settings: `config/settings.py`: Has all the important configuration settings. `development_settings.py`: is used for local development, whereas `production_settings.py` should be created with the right settings and left on the production server.
+ - URLs: `config/urls.py`: Has the high level URLs and includes URLs from different sources. `MHacks/frontend/urls.py`: Has the frontend URLs, `MHacks/v1/urls.py` has the backend endpoints.
+ - Models: `MHacks/models.py` contains all the models that are in the database
+ - Common code: `MHacks/` has common code like utils and forms and decorators shared between both the frontend and backend.
+ - Managers:
+
+## Important Things To Note:
+(At some point this should be more fleshed out, better organized and moved to the wiki)
+ - When creating forms for basically anything use Django forms and extend the generic form html file, allowing for maximum scalability and code reuse. See already implemented forms like login for how to do it correctly.
+ - Always use form validators, don't do it yourself in the views. (See django docs for more)
+ - Keep number of migrations as low as possible, i.e. by combining and pushing your (only one) migration only when you are certain that there will be no more changes to that part of the app. This is not necessary but is nice to keep the codebase clean and well maintained. Also once the migration is pushed don't go back and change as others may be depending on it.
+ - When adding new models, remember to add it to the admin.py file so that it is exposed to the admin interface (if that behavior is wanted).
+ - Keep view code small and minimal, implement maximum functionality in validators and model requirements.
+ - Keep things as generic as possible thereby allowing maximum re-usability.
+ - When adding API keys or anything protected, add a 'dummy' variable to development_settings.py and only then push, protected keys will be used on the backend. Never put any protected keys or anything protected in any other python file.

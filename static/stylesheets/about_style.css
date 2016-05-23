@@ -1,0 +1,941 @@
+/*
+Table of contents
+––––––––––––––––––––––––––––––––––––––––––––––––––
+1. Reference
+2. Fonts
+3. Elements
+5. Utility classes
+6. Event Page Styles
+7. Header Styles
+8. About Styles
+*/
+
+
+/* 1. Reference
+––––––––––––––––––––––––––––––––––––––––––––––––––
+
+-- Colors --
+Black = #111
+Charcoal = #554
+White = #fff
+Off White = #EEE
+Gray = #9BA89A
+Yellow = #FFE641
+Orange = #FEC111
+Orange tint = #FFD44E
+Orange shade = #F78F1E
+
+
+*/
+
+/* 2. Fonts
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+@font-face {
+    font-family: Apercu;
+    src: url(/static/fonts/apercu.otf) format("opentype");
+}
+
+@font-face {
+    font-family: AvenirMedium;
+    src: url(/static/fonts/AvenirNext-Medium.ttf);
+}
+
+@font-face {
+    font-family: AvenirRegular;
+    src: url(/static/fonts/AvenirNext-Regular.ttf);
+}
+
+
+/* 3. Elements
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+
+* {
+	font-family:AvenirRegular, "Calibri", sans-serif;
+}
+
+html,
+body,
+html fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	overflow-x:hidden;
+}
+
+legend {
+	text-align: center;
+	font-size: 60px;
+	color: #FFFFFF;
+	font-family: AvenirLight, "Calibri", sans-serif;
+
+	z-index: 1;
+}
+
+img {
+	display: block;
+}
+
+h3 {
+	margin-left: 0%;
+	font-size: 30pt;
+	color: #FFF;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+
+h4 {
+	margin: 0px;
+	font-size: 16pt;
+}
+
+p {
+	font-size: 14pt;
+	margin:0;
+	text-align: justify;
+	color: #111;
+}
+
+@media (min-width: 750px) {
+	html {
+		background-color: #EEE;
+	}
+
+	html p {
+		text-align: left;
+	}
+}
+
+@media (min-width: 1000px) {
+	html h4 {
+		font-size: 18pt;
+	}
+
+	html p {
+		font-size: 16pt;
+		margin-top:0;
+	}
+}
+
+@media (min-width: 1200px) {
+	html h4 {
+		font-size: 20pt;
+	}
+}
+
+
+span{
+	font-family: AvenirRegular, "Calibri", sans-serif;
+}
+
+html input[type="number"]{
+	box-sizing: border-box;
+	text-align: center;
+	font-size: 18px;
+	padding-right: 8px;
+}
+
+html input[type="text"],
+html input[type="number"],
+html input[type="url"],
+html input[type="email"],
+html input{
+	border-color: #000;
+	border-width: 0px 0px 2px 0px;
+	border-radius: 0px;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+html input[type="text"]:hover,
+html input[type="number"]:hover,
+html input[type="url"]:hover,
+html input[type="email"]:hover,
+html input:hover {
+	border-color: #FEC111;
+}
+
+html input[type="text"]:active,
+html input[type="text"]:focus,
+html input[type="number"]:active,
+html input[type="number"]:focus,
+html input[type="url"]:active,
+html input[type="url"]:focus,
+html input[type="email"]:active,
+html input[type="email"]:focus,
+html input:active,
+html input:focus {
+	border-color: #FFE641;
+	border-width: 0px 0px 2px 0px;
+	border-radius: 0px;
+}
+
+html input[type="radio"],
+html input[type="checkbox"] {
+	display: none ;
+}
+
+html button {
+	color: #000000;
+	background-color: #FFE641;
+	border:none;
+	border-radius: 0px;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+html button:hover {
+	color: #fff;
+	text-shadow: 0px 0px 0px #554;
+	background-color: #000;
+}
+
+html select {
+	border: 2px solid #000;
+}
+
+html select:active,
+html select:focus {
+	border: 2px solid #FFE641;
+}
+
+html textarea {
+	border: 2px solid #000;
+	min-height: 124px;
+}
+
+html textarea:active,
+html textarea:focus {
+	border: 2px solid #FFE641;
+}
+
+/* 4. Element styles
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+.radio-button,
+.checkbox {
+	box-sizing: border-box;
+	padding: 6px 0px;
+	border: 4px solid #FFF;
+	border-radius: 0px;
+	text-align: center;
+	background-color: #FFF;
+	color: #170F49;
+	box-shadow: inset 0px 0px 0px 2px #170F49;
+	-webkit-transition: .4s;
+	transition: .4s;
+	text-shadow: 0px 0px 2px #FFF;
+}
+
+.radio-button:hover,
+.checkbox:hover {
+	box-shadow: inset 0px 0px 0px 2px #FEC111;
+	color: #FEC111;
+}
+
+.radio-button.active,
+.checkbox.active {
+	background-color: #FFE641;
+	border-color: #FFE641;
+	color: #FFF;
+	box-shadow: inset 0px 0px 0px 2px #fff;
+	text-shadow: 0px 0px 1px #554;
+}
+
+
+@media (min-width: 550px){
+
+}
+
+
+@media (min-width: 750px) {
+}
+
+
+@media (min-width: 1200px) {
+}
+
+.row {
+	margin-top: 12px;
+}
+
+.row.two {
+	margin-top: 32px;
+}
+
+.row.three {
+	margin-top: 48px;
+}
+
+.row.four {
+	margin-top: 64px;
+}
+
+.row.five {
+	margin-top: 80px;
+}
+
+.drawer {
+	box-sizing: border-box;
+	overflow: hidden;
+	height: auto;
+	max-height: 0px;
+	-webkit-transition: max-height 0.7s;
+	transition: max-height 0.7s;
+}
+
+.container {
+	width: 100%;
+}
+
+.container.pad {
+	padding-left: 16px;
+	padding-right: 16px
+}
+
+@media (min-width: 550px){
+	.container.pad {
+		padding-left: 32px;
+		padding-right: 32px;
+	}
+}
+
+
+@media (min-width: 750px){
+	.container.pad {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+}
+
+
+
+/* 5. Utility classes
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+.hidden {
+	display: none;
+}
+
+.card {
+	background-color: #FFF;
+}
+
+
+/* 6. Event Page
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+.title{
+	font-family: Apercu;
+	color: #FFF;
+	text-align: center;
+	background-color: #000;
+	padding: 16px 0px 12px 0px;
+	margin-bottom: 32px;
+	-webkit-transition: 1s;
+	transition: 1s;
+}
+
+section .title.fancy {
+	background-color: #FFE641;
+	color: #000;
+	text-shadow: -6px -6px 0px #FFF;
+}
+
+.subtext-container {
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: bottom;
+}
+
+.subtext-container span:first-child {
+	position: relative;
+}
+
+.subtext-container span:last-child{
+	position: absolute;
+	padding: 0px 8px;
+	top: 0px;
+	background-color: #000;
+	color: #FFF;
+	-webkit-transition: 2s linear;
+	transition: 2s linear;
+}
+
+/* 7. Header Styles
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+.header {
+	position: relative;
+	padding-top: 128px;
+	padding-bottom: 48px;
+	text-align: center;
+	margin-bottom: 64px;
+	background-color: #FFE641;
+}
+
+.header .content {
+	position: relative;
+	z-index: 2;
+}
+
+.header .description {
+	margin-top: 140px;
+}
+
+.header .description h3 {
+	color: black;
+	font-size: 35px;
+	font-family: AvenirMedium;
+}
+
+.header h1 {
+	font-family: Apercu;
+	font-size: 54pt;
+	color: #FFF;
+	text-shadow: 0px 2px 4px rgba(0, 0, 0, .25);
+	margin-bottom: 0px;
+}
+
+.header h2 {
+	font-size: 20pt;
+	letter-spacing: 15px;
+	text-shadow: 0px 2px 4px rgba(0, 0, 0, .4);
+}
+
+.header h3 {
+	text-shadow: 0px 2px 4px rgba(0, 0, 0, .25);
+}
+
+.header span {
+	border-right: 2px solid #000000;
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .25);
+	margin: 0px 12px;
+}
+
+.header .background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 64px auto 0px auto;
+}
+
+#mHacks-standard-logo {
+	fill: #FEC111;
+	-webkit-transition: 1.2s fill, 1.2s opacity;
+	transition: 1.2s fill, 1.2s opacity;
+}
+
+.loop {
+    fill:none;
+    stroke:#FFE641 ;
+    stroke-width:16;
+    stroke-linejoin:round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    -webkit-transition: 1.2s stroke;
+    transition: 1.2s stroke;
+}
+
+
+@-webkit-keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 8. Actionable Styles
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+	.actionable {
+		margin: auto;
+		left: 0;
+		right: 0;
+		position: absolute;
+		margin-top: -104px;
+		text-align: center;
+	}
+
+	.actionable button{
+		padding: 8px;
+		height: auto;
+		text-transform: none;
+		font-weight: normal;
+		font-size: 18pt;
+		color: #000;
+		width: 20%;
+		min-width: 160px;
+		box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .25);
+		background-color: #FEC111;
+		font-family: AvenirMedium;
+	}
+	.actionable button {
+		margin-right: 16px;
+	}
+	.actionable button:last-child{
+		margin-right: none;
+	}
+
+	.actionable button:hover{
+		background-color: #FFF;
+		text-transform: none;
+		font-size: 18pt;
+		background-color: #000;
+		text-shadow: 0px 0px 0px #FFE641;
+		box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .25);
+	}
+
+
+
+/* 9. About Styles
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+.mHacks-is {
+	background-color: #FFF;
+}
+
+.mHacks-is .background-image {
+	position: relative;
+	background-image: url('/assets/auditorium.png');
+	background-repeat: no-repeat;
+	background-position: bottom;
+	background-size: cover;
+	min-height: 480px;
+}
+
+.mHacks-is h3 {
+	padding-left: 32px;
+	color: #000;
+	font-size: 32pt;
+}
+
+
+.mHacks-is .description {
+	position: absolute;
+	z-index: 10;
+	bottom: 0;
+	padding-top: 16px;
+	background-color: rgba(255, 255, 255, .9);
+	border-bottom: 1px solid #9BA89A;
+}
+
+.mHacks-is .description span {
+	text-shadow: -6px -6px 0px #FFE641;
+}
+
+.mHacks-is .phrase h3 {
+	position: relative;
+	z-index: 2;
+	margin-top: 0px;
+	padding-top: 8px;
+	padding-bottom: 16px;
+	box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, .25);
+}
+
+.dream {
+	color: #111;
+	margin-bottom: 32px;
+}
+.dream p{
+	padding: 64px 0px 48px 0px;
+}
+
+.new-stuff {
+	min-height: 400px;
+	/*background-image: ;*/
+}
+
+.new-stuff .chest {
+	text-align: center;
+	border: 2px solid #000;
+	margin-bottom: 16px;
+	background-color: #FFF;
+	-webkit-transition: border 1s;
+	transition: border 1s;
+}
+
+.new-stuff .chest.open {
+	border-color: #FFE641;
+}
+
+.new-stuff .chest h4 {
+	background-color: #000;
+	padding: 8px 0px;
+	color: #FFF;
+	text-shadow: 0px 1px 3px rgba(0, 0, 0, .25);
+	-webkit-transition: 1s;
+	transition: 1s;
+	font-family: AvenirMedium;
+}
+
+.new-stuff .chest.open h4{
+	background-color: #FFE641;
+}
+
+.new-stuff .chest h5 {
+	margin: 48px 0px;
+	font-size: 36pt;
+	color: #000;
+	text-shadow: -6px -6px 0px #FFE641;
+	font-family: Apercu;
+}
+
+.new-stuff .add-text {
+	border-top: 1px solid #f3f3f3;
+	padding: 0px 16px;
+}
+
+.new-stuff .add-text p {
+	margin: 16px 0px;
+}
+
+@media (min-width: 750px) {
+	.mHacks-is h3 {
+		font-size: 48pt;
+	}
+
+	.new-stuff .chest {
+		border: 0px;
+	}
+}
+
+
+/* 10. FAQ
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+.faq-header {
+	text-align: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.faq-header h3{
+	padding: 96px 0px;
+	margin: 0px;
+	text-shadow: 0px 1px 8px rgba(0, 0, 0, 1);
+	margin-bottom: 8px;
+}
+
+.faq-header.general {
+	background-image: url('/assets/general.png');
+}
+
+.faq-header.hacking {
+	background-image: url('/assets/hacking.png');
+}
+
+.faq-header.logistics {
+	background-image: url('/assets/logistics.png');
+}
+
+.faq-header.apply {
+	background-image: url('/assets/apply.png');
+}
+
+.question {
+	background-color: #FFF;
+	margin-bottom: 4px;
+	cursor: pointer;
+}
+
+.question h4{
+	padding: 8px 16px;
+}
+
+.question .symbol {
+	display: inline-block;
+	margin-top: 4px;
+	height: 24px;
+	width: 24px;
+	float: right;
+}
+
+.question .symbol::after {
+	background-color: #FFF;
+}
+
+.question .symbol::before {
+	background-color: #FFF;
+}
+
+.question:hover .symbol::after {
+	background-color: #FFE641;
+}
+
+.question:hover .symbol::before {
+	background-color: #FFE641;
+}
+
+.question.chest.open .drawer{
+	max-height: 320px;
+}
+
+.question p {
+	padding: 32px 16px;
+	border-top: 1px solid #EEE;
+}
+
+#credit_photos {
+	color: #4c4c33;
+	font-size: 16px;
+}
+
+@media (min-width: 750px) {
+	.faq-header h3{
+		font-size: 22pt
+	}
+}
+
+@media (min-width: 1000px) {
+	.faq-header h3{
+		font-size: 28pt
+	}
+}
+
+/* 11. SPONSORS
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+#sponsors-info {
+	background: #fff;
+	text-align: center;
+	margin-bottom: 100px;
+	padding: 0 30px;
+}
+
+#sponsors-info h3 {
+	color: #111;
+	padding: 40px 0;
+}
+
+#sponsor_button {
+	font-size: 16px;
+	color:black;
+	background-color: #FEC111;
+}
+#sponsor_button:hover{
+  color: white;
+  background-color: black;
+}
+#sponsorImages{
+	background: #fff;
+	text-align: center;
+	margin-bottom: 100px;
+	padding: 0 30px;
+}
+
+.sponsor-images {
+	text-align: center;
+	display:inline;
+	vertical-align:middle;
+
+}
+
+.sponsor-images > div > div {
+    display: inline-block;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.sponsor-images img {
+    width: 70%;
+    display:inline-block;
+    vertical-align:middle;
+	text-align: center;
+
+
+}
+
+.sponsor-images .premium {
+    margin-bottom: 35px;
+}
+
+.sponsor-images .premium img {
+	width: 100%;
+}
+
+.sponsor-images .large {
+    margin-bottom: 30px;
+}
+
+.sponsor-images .large > div {
+    width: 49%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sponsor-images .medium > div {
+    width: 32%;
+}
+
+.sponsor-images .medium {
+    margin-bottom: 50px;
+}
+
+.sponsor-images .small > div {
+    width: 24%;
+}
+
+.sponsor-images .premium {
+    margin-bottom: 35px;
+}
+
+.sponsor-images .premium img {
+	width: 100%;
+}
+
+
+
+footer {
+	width: 100%;
+	background: #444;
+	position: relative;
+	overflow: auto;
+	padding-bottom: 15px;
+}
+
+footer .row {
+	margin-top: 0px;
+}
+
+footer #mh-logo {
+	float: right;
+	padding-top: 20px;
+	padding-right: 40px;
+	max-width:110px;
+	width: 15vw;
+}
+
+footer #mlh-trust-badge {
+	float: right;
+	max-width:140px;
+	width: 20vw;
+}
+
+footer p {
+	float: left;
+	padding: 20px 0px 20px 0px;
+	color: #fff;
+	margin-bottom: 0px;
+}
+
+footer p a {
+	color: #fff;
+}
+
+
+.onoffswitch {
+    position: relative; width: 90px;
+    float: right;
+    text-shadow: none;
+    display: inline-block;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    margin-top: -5px;
+    margin-right: 10px;
+    text-align: center;
+    -webkit-transition: 1s;
+	transition: 1s;
+	opacity: 0;
+}
+
+.onoffswitch.fancy {
+	opacity: 1;
+}
+
+.onoffswitch p {
+	width: 100%;
+	text-align: center;
+}
+
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #FEC111; border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -webkit-transition: margin 0.3s ease-in 0s;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    text-align: left;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "ON";
+    padding-left: 10px;
+    background-color: #FEC111; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "OFF";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 19px; height: 19px; margin: 5.5px;
+    background: #FFFFFF;
+    position: absolute; bottom: 5px;
+    right: 56px;
+    border: 2px solid #FEC111; border-radius: 20px;
+    -webkit-transition: all 0.3s ease-in 0s;
+    transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked  .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+
+.flush{
+  margin-left:0;
+}
+.schedule-day{
+  margin-bottom:16px;
+  display:flex;
+  flex-direction:column;
+  width:96%;
+}
+.schedule-item{
+  display:flex;
+}
+.schedule-time{
+  width:27.777777777777778%;
+  flex-shrink:0;
+}
+.schedule-time p{
+  text-align:right;
+  margin:0 10px;
+  font-weight: bold;
+  color: #FEC111;
+}
+.schedule-detail{
+  margin:0 10px;
+}

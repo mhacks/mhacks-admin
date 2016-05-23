@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/png" href={{ static("assets/favicon.png") }} />
+    <link rel="apple-touch-icon" type="image/png" href={{ static("assets/favicon.png") }} />
+    <link rel="mask-icon" type="image/png" href='{{ static("assets/favicon.png") }}' />
+
+    <meta charset="UTF-8">
+    <title>MHacks Docs</title>
+    <link rel="stylesheet" href="{{  static("rest_framework_docs/css/style.css") }}">
+<body>
+    <div class="container">
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#drfdoc-navbar" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">MHacks</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="drfdoc-navbar">
+                    <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jump To <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#general-group">General</a></li>
+                                    {% for group in endpoints|groupby('name_parent') %}
+                                    <li><a href="#{{ group.grouper|lower }}-group">{{ group.grouper }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="jumbotron">
+            <h1>MHacks Web API</h1>
+            <h3>Documentation of the MHacks API.</h3>
+        </div>
+        <h1 id="general-group">General Description and Rules</h1>
+        <div class="panel">Information about authentication, date time formats, etc. goes here!</div>
+        {% if endpoints %}
+            {% for group in endpoints|groupby('name_parent') %}
+                <h1 id="{{ group.grouper|lower }}-group">{{ group.grouper }}</h1>
+                <div class="panel-group" role="tablist">
+                    {% for endpoint in group.list %}
+                        <div class="panel panel-default endpoint">
+
+                            <div class="panel-heading" role="tab" data-toggle="collapse" data-target="#{{ endpoint.path|slugify }}">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <h4 class="panel-title title">
+                                            <i class="fa fa-link"></i> {{ endpoint.path }}
+                                        </h4>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <ul class="list-inline methods">
+                                            {% for method in endpoint.allowed_methods %}
+                                                <li class="method {{ method|lower }}">{{ method }}</li>
+                                            {% endfor %}
+                                            <li class="method plug"
+                                                data-toggle="modal"
+                                                data-path="{{ endpoint.path }}"
+                                                data-methods="{{ endpoint.allowed_methods }}"
+                                                data-permissions="{{ endpoint.permissions }}"
+                                                data-fields="{{ endpoint.fields_json }}">
+                                                <i class="fa fa-plug"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="{{ endpoint.path|slugify }}" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    {% if endpoint.docstring %}
+                                        <p class="lead">{{ endpoint.docstring }}</p>
+                                    {% endif %}
+
+                                    {% if endpoint.errors %}
+                                        <div class="alert alert-danger" role="alert">Oops! There was something wrong with {{ endpoint.errors }}. Please check your code.</div>
+                                    {% endif %}
+
+                                    {% if endpoint.fields %}
+                                        <p class="fields-desc">Fields:</p>
+                                        <ul class="list fields">
+                                            {% for field in endpoint.fields %}
+                                                <li class="field">{{ field.name }}: {{ field.type }} {% if field.required %}<span class="label label-primary label-required" title="Required">R</span>{% endif %}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% elif not endpoint.errors %}
+                                        <p>No fields.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+        {% elif not query %}
+            <h2 class="text-center">There are currently no api endpoints to document.</h2>
+        {% else %}
+            <h2 class="text-center">No endpoints found for {{ query }}.</h2>
+        {% endif %}
+        <!-- Modal -->
+        <div class="modal fade api-modal" id="liveAPIModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Live API Endpoints <span class="label label-info">Beta</span></h4>
+                    </div>
+
+                    <div id="liveAPIEndpoints"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">Copyright © 2016 MHacks</div>
+    </div>
+
+    <!-- Dist.js - Inlcuded Live API, jQuery, Bootstrap -->
+    <script type="text/javascript" src="{{ static("rest_framework_docs/js/dist.min.js") }}"></script>
+</body>
+</html>
