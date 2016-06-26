@@ -20,18 +20,19 @@ class MHacksUserManager(BaseUserManager):
         email = self.normalize_email(email)
         if not self.model:
             self.model = MHacksUser
-
+        try:
+            request = extra_fields.pop('request')
+        except KeyError:
+            request = None
         user = self.model(email=email, first_name=first_name, last_name=last_name, **extra_fields)
         user.set_password(password)
+        user.save(using=self._db)
         from django.contrib.auth.models import Group
         user.groups.add(Group.objects.get(name='hacker'))
         user.save(using=self._db)
         from utils import send_verification_email
-        try:
-            request = extra_fields.pop('request')
+        if request:
             send_verification_email(user, request)
-        except KeyError:
-            pass
         return user
 
     def create_user(self, email, password, first_name, last_name, **extra_fields):
