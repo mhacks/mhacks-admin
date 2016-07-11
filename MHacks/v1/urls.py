@@ -3,7 +3,7 @@ from rest_framework_docs.views import DRFDocsView
 from announcements import Announcements, Announcement
 from locations import Locations, Location
 from events import Events, Event
-from views import get_countdown, get_map
+from views import get_countdown, get_map, submit_application
 from auth import Authentication
 
 urlpatterns = [
@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^countdown$', get_countdown),
     url(r'^map$', get_map),
     url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs'),
+    url(r'^submit_application$', submit_application),
 ]

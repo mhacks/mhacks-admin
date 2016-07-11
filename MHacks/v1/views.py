@@ -4,6 +4,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from serializers import now_as_utc_epoch, parse_date_last_updated, to_utc_epoch
 from datetime import datetime
 from pytz import utc, timezone
+from MHacks.utils import send_application_confirmation_email
 
 
 @api_view(http_method_names=['GET'])
@@ -24,6 +25,16 @@ def get_countdown(request, *args, **kwargs):
                           'countdown_duration': 129600000,  # 36 hours
                           'hacks_submitted': 118800000,  # 33 hours
                           'date_updated': now_as_utc_epoch()})
+
+
+@api_view(http_method_names=['POST'])
+def submit_application(request, *args, **kwargs):
+    # TODO: Add form validation for applications.
+    if True:
+        send_application_confirmation_email(request.user, request)
+        return Response(data={'success': True})
+    else:
+        return Response(data={'success': False})
 
 
 @api_view(http_method_names=['GET'])
