@@ -9,8 +9,10 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import get_user_model
+from config.settings import MANDRILL_API_KEY
 import logging
 import mandrill
+import pdb
 
 # Sends mail through mandrill client.
 def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
@@ -48,14 +50,18 @@ def send_email(to_email, email_template_name, html_email_template_name, context)
 # Turns a relative URL into an absolute URL.
 def _get_absolute_url(request, relative_url):
     current_site = get_current_site(request)
-    confirmation_url = "{0}://{1}{2}".format(
+    return "{0}://{1}{2}".format(
         request.scheme,
         current_site.domain,
         relative_url
     )
 
 def send_application_confirmation_email(user, request):
-    send_mandrill_mail('application_confirmation', user.email)
+    send_mandrill_mail(
+        'application_confirmation',
+        'Your MHacks Application Is Submitted',
+        user.email
+    )
 
 def send_verification_email(user, request):
     token = default_token_generator.make_token(user)
@@ -67,7 +73,13 @@ def send_verification_email(user, request):
     email_vars = {
         'confirmation_url': _get_absolute_url(request, relative_confirmation_url)
     }
-    send_mandrill_mail('confirmation_instructions', user.email, email_vars)
+    pdb.set_trace()
+    send_mandrill_mail(
+        'confirmation_instructions',
+        'Confirm Your Email for MHacks',
+        user.email,
+        email_vars
+    )
 
 
 def send_password_reset_email(user, request):
@@ -80,7 +92,12 @@ def send_password_reset_email(user, request):
     email_vars = {
         'update_password_url': _get_absolute_url(request, update_password_url)
     }
-    send_mandrill_mail('password_reset_instructions', user.email, email_vars)
+    send_mandrill_mail(
+        'password_reset_instructions',
+        'Reset Your MHacks Password',
+        user.email,
+        email_vars
+    )
 
 
 def validate_signed_token(uid, token, require_token=True):
