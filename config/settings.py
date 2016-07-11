@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'rest_framework_docs',
     'MHacks',
     'push_notifications',
+    'django_extensions'
 ]
 
 
