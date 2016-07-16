@@ -1,65 +1,80 @@
 {% extends 'base.html' %}
 
 {% block headers %}
-	<link rel="stylesheet" media="all" href="{{ static('stylesheets/main.css') }}">
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/main.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="container">
-	<div class="header turquoise">
-		<img id="logo" src="{{ static('assets/logo.png') }}" style="height: 100%">
-	</div>
-	<div class="grid">
-		<div class="grid-item turquoise height2" data-remove="2" data-expandable="0">2</div>
-		<div class="grid-item lightTurquoise width2 height2" data-remove="2" data-expandable="1">
-			<div class="basic-info">
-				<h1>
-					Venue
-				</h1>
-					<p>This year, we’re returning to Detroit, somewhere we haven’t been since MHacks III. The Masonic Temple in Detroit is the largest in the world. </p>
-			</div>
-			<div class="extra-info">
-				<p>
-					 Built in 1922, this historic building is the perfect setting for a weekend in a city thriving with renewed entrepreneurial spirit. We hope you use this energy to drive your hacks.
-				</p>	
-			</div>
+    <!--canvas id="bgCanvas" class="background"></canvas-->
+    <div class="container">
+        <div class="header turquoise">
+            <img id="logo" src="{{ static('assets/logo.png') }}" style="height: 100%">
+        </div>
+        <div class="grid">
+            <div class="grid-item turquoise height2" data-remove="2" data-expandable="0">2</div>
+            <div class="grid-item lightTurquoise width2 height2" data-remove="2" data-expandable="1">
+                <div class="basic-info">
+                    <h1>Venue</h1>
+                    <p>
+                        This year, we’re returning to Detroit, somewhere we haven’t been since MHacks III. The Masonic
+                        Temple in Detroit is the largest in the world.
+                    </p>
+                </div>
+                <div class="extra-info">
+                    <p>
+                        Built in 1922, this historic building is the perfect setting for a weekend in a city thriving
+                        with renewed entrepreneurial spirit. We hope you use this energy to drive your hacks.
+                    </p>
+                </div>
 
-		</div>
-		<div class="grid-item blue width2 height2" data-remove="0" data-expandable="1">
-			<div class="basic-info">
-				<h1>
-				What is MHacks?
-				</h1>
-				<p>MHacks is a 36-hour hackathon hosted by University of Michigan students. </p>
-			</div>
-			<div class="extra-info">
-				<p>
-					 You and 2,500 others will gather from around the world and we’ll provide you with everything you need to be as curious, productive, and passionate as you can be. Whether it’s your first time hacking or your 8th, MHacks is the place to be.
-				</p>	
-			</div>
-		</div>
-		<div class="grid-item lightTurquoise" data-remove="0" data-expandable="0">1</div>
-		<div class="grid-item lightBlue width2" data-remove="1" data-expandable="0">1</div>
-		<div class="grid-item turquoise" data-remove="2" data-expandable="0">2</div>
-		<div class="grid-item blue" data-remove="1" data-expandable="0">1</div>
-		<div class="grid-item lightBlue" data-remove="2" data-expandable="1">2</div>
-		<div class="grid-item blue" data-remove="1" data-expandable="0">1</div>
-		<div class="grid-item lightBlue" data-remove="1" data-expandable="0">1</div>
-		<div class="grid-item turquoise width2 height2" data-remove="0" data-expandable="2">FAQ</div>
-		<div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">1</div>
-		<div class="grid-item blue height2" data-remove="1" data-expandable="1">1</div>
-		<div class="grid-item turquoise width2" data-remove="1" data-expandable="0">2</div>
-		<div class="grid-item darkBlue height2 width2" data-remove="1" data-expandable="1">0</div>
-		<div class="grid-item darkBlue" data-remove="1" data-expandable="0">1</div>
-		<div class="grid-item blue" data-remove="0" data-expandable="0">1</div>
-		<div class="grid-item lightBlue width3" data-remove="2" data-expandable="0">2</div>
-	</div>
-</div>
+            </div>
+            <div class="grid-item blue width2 height2" data-remove="0" data-expandable="1">
+                <div class="basic-info">
+                    <h1>What is MHacks?</h1>
+                    <p>
+                        MHacks is a 36-hour hackathon hosted by University of Michigan students.
+                    </p>
+                </div>
+                <div class="extra-info">
+                    <p>
+                        You and 2,500 others will gather from around the world and we’ll provide you with everything you
+                        need to be as curious, productive, and passionate as you can be. Whether it’s your first time
+                        hacking or your 8th, MHacks is the place to be.
+                    </p>
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="0" data-expandable="0">1</div>
+            <div class="grid-item lightBlue width2" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item turquoise" data-remove="2" data-expandable="0">2</div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item lightBlue" data-remove="2" data-expandable="1">2</div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item turquoise width2 height2" data-remove="0" data-expandable="1">
+                <h1>FAQ</h1>
+                <div class="extra-info">
+                <p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p>
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item blue height2" data-remove="1" data-expandable="1">1</div>
+            <div class="grid-item turquoise width2" data-remove="1" data-expandable="0">2</div>
+            <div class="grid-item darkBlue height2 width2" data-remove="1" data-expandable="1">0</div>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item blue" data-remove="0" data-expandable="0">1</div>
+            <div class="grid-item lightBlue width3" data-remove="2" data-expandable="0">2</div>
+            <div class="grid-item turquoise" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">1</div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
-	<script src="https://npmcdn.com/packery@2.1/dist/packery.pkgd.js" type="application/javascript"></script>
-	<script src="https://rawgithub.com/desandro/classie/master/classie.js" type="application/javascript"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js" type="application/javascript"></script>
-	<script src="{{ static('javascript/main.js') }}" type="application/javascript"></script>
+    <script src="https://npmcdn.com/packery@2.1/dist/packery.pkgd.js" type="application/javascript"></script>
+    <script src="https://rawgithub.com/desandro/classie/master/classie.js" type="application/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"
+            type="application/javascript"></script>
+    <script src="{{ static('javascript/main.js') }}" type="application/javascript"></script>
 {% endblock %}
