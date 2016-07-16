@@ -16,19 +16,27 @@ grid.addEventListener( 'click', function( event ) {
   if ( !matchesSelector( event.target, '.grid-item' ) ) {
     return;
   }
-  if ( $(event.target).data("expandable") != 1 ) {
+  if ( $(event.target).data("expandable") == 0 ) {
       return;
   }
-  
+
+
+
   // Only one object is expandable at a time 
   if( $('.grid-item--gigante')[0] != event.target){
     $('.grid-item--gigante').removeClass('stamp');
     $('.grid-item--gigante').removeClass('grid-item--gigante');
+    $('.grid-item--gigante').removeClass('faq');
   } 
 
   // change size of item via class
   event.target.classList.toggle('grid-item--gigante');
 	event.target.classList.toggle('stamp');
+
+  if($(event.target).data("expandable") == 2){
+      event.target.classList.toggle('faq');
+    }
+
 
   // trigger layout
   setTimeout(function(){

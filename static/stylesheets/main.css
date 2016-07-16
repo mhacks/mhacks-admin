@@ -75,6 +75,17 @@ p {
 
 /* ---- grid-item ---- */
 
+.title-text{
+	font-family: 'Ubuntu';
+	font-size: 14pt;
+	text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
+	letter-spacing: 0.4px;
+	font-weight: 400;
+	padding-top: 20px;
+	padding-left: 7px;
+
+}
+
 .grid-item {
 	width: 160px;
 	height: 120px;
@@ -103,6 +114,11 @@ p {
 	box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
 	transition:all 0.2s;
 }
+
+.faq {
+	height: 2000px;
+}
+
 
 .extra-info{
     visibility:hidden;
