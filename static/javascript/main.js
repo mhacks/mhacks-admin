@@ -6,6 +6,7 @@ var mason = new Packery( grid, {
 var prevWidth = $(window).width();
 var resizeEvent;
 
+var selected;
 /*
  * Do we want to limit it so that only one tile can be expanded?
  * i.e. contract the previously expanded tile while expanding the new one?
@@ -18,9 +19,17 @@ grid.addEventListener( 'click', function( event ) {
   if ( $(event.target).data("expandable") != 1 ) {
       return;
   }
+  
+  // Only one object is expandable at a time 
+  if( $('.grid-item--gigante')[0] != event.target){
+    $('.grid-item--gigante').removeClass('stamp');
+    $('.grid-item--gigante').removeClass('grid-item--gigante');
+  } 
+
   // change size of item via class
   event.target.classList.toggle('grid-item--gigante');
 	event.target.classList.toggle('stamp');
+
   // trigger layout
   setTimeout(function(){
       mason.layout();
