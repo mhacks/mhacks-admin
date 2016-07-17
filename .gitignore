@@ -4,3 +4,4 @@
 venv/*
 .idea/*
 
+config/production_settings.py
