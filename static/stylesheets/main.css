@@ -167,8 +167,8 @@ p {
 }
 
 .grid-item-expand{
-    width: 960px !important;
-    height: 480px !important;
+    width: 480px !important;
+    height: 360px !important;
     z-index: 2;
     cursor: pointer;
 }
