@@ -1,9 +1,9 @@
-var grid = document.querySelector('.grid');
-var packery = new Packery(grid, {
+var $packery = $('.grid').packery({
+    itemSelector: '.grid-item',
     columnWidth: 160,
-    isFitWidth: true
+    isFitWidth: true,
+    stamp: '.stamp'
 });
-var prevWidth = $(window).width();
 var resizeEvent;
 var openElement = null;
 
@@ -11,7 +11,37 @@ var openElement = null;
  * Do we want to limit it so that only one tile can be expanded?
  * i.e. contract the previously expanded tile while expanding the new one?
  */
-grid.addEventListener('click', function (event) {
+$packery.on('click', '.grid-item, .grid-item-expand', function(event){
+    var item = $(event.currentTarget);
+
+    if(item.data("expandable") != 1){
+        return;
+    }
+
+    if(openElement !== null && openElement !== event.currentTarget){
+        var openItem = $(openElement);
+
+        openItem.toggleClass('grid-item-expand');
+        openItem.toggleClass('grid-item');
+        openItem.toggleClass('stamp');
+    }
+
+    var isExpanded = item.hasClass('grid-item-expand');
+    item.toggleClass('grid-item-expand');
+    item.toggleClass('grid-item');
+    item.toggleClass('stamp');
+
+    if(isExpanded){
+        // was expanded, now shrinking
+        setTimeout(function(){$packery.packery();}, 250);
+    } else {
+        // is expanding
+        setTimeout(function(){$packery.packery('fit', event.currentTarget);}, 250);
+    }
+
+    openElement = isExpanded ? null : event.currentTarget;
+});
+/*grid.addEventListener('click', function (event) {
     // don't proceed if item was not clicked on
     if (!matchesSelector(event.target, '.grid-item')) {
         if (!matchesSelector(event.target, '.stamp')) {
@@ -46,20 +76,22 @@ grid.addEventListener('click', function (event) {
     setTimeout(function () {
         packery.layout();
     }, 200);
-});
+});*/
 
 $(window).resize(function () {
     clearTimeout(resizeEvent);
     resizeEvent = setTimeout(function () {
         //console.log("done with delay");
-        packery.layout();
-    }, 200);
+        $packery.packery();
+    }, 250);
 });
 
-packery.on('layoutComplete', function(event, items){
-    console.log($('.grid').height());
-    $('body').css('height', $('.grid').height());
-});
+/*packery.on('layoutComplete', function(event, items){
+    //$('body').css('height', $('.container').height());
+    setTimeout(function(){$('body').css("visibility", "visible")}, 100);
+});*/
+
+//$(window).ready(function(){$packery.packery();});
 
 /*
 //Potential fancy animated background, WIP
@@ -88,7 +120,7 @@ function anim_init(){
 
 function anim_draw(){
     for(var y = 0; y < Math.floor(canvas.height / 160); y++){
-        
+        //do interpolation stuff for each row, choose new colors at intervals, etc.
     }
 }
     */
