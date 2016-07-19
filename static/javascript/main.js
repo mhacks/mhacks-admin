@@ -6,6 +6,9 @@ var $packery = $('.grid').packery({
 });
 var resizeEvent;
 var openElement = null;
+var rowBG = [];
+
+var container = $('#container');
 
 /*
  * Do we want to limit it so that only one tile can be expanded?
@@ -33,7 +36,7 @@ $packery.on('click', '.grid-item, .grid-item-expand', function(event){
 
     if(isExpanded){
         // was expanded, now shrinking
-        setTimeout(function(){$packery.packery();}, 250);
+        setTimeout(function(){$packery.packery('shiftLayout');}, 250);
     } else {
         // is expanding
         setTimeout(function(){$packery.packery('fit', event.currentTarget);}, 250);
@@ -41,44 +44,12 @@ $packery.on('click', '.grid-item, .grid-item-expand', function(event){
 
     openElement = isExpanded ? null : event.currentTarget;
 });
-/*grid.addEventListener('click', function (event) {
-    // don't proceed if item was not clicked on
-    if (!matchesSelector(event.target, '.grid-item')) {
-        if (!matchesSelector(event.target, '.stamp')) {
-            return;
-        }
-    }
-    if ($(event.target).data("expandable") != 1) {
-        return;
-    }
-
-    if (openElement !== null) {
-        packery.unstamp(openElement);
-        openElement.classList.toggle('grid-item-expand');
-        openElement.classList.toggle('stamp');
-        openElement.classList.toggle('grid-item');
-        if (openElement === event.target) {
-            openElement = null;
-            setTimeout(function () {
-                packery.layout();
-            }, 200);
-            return;
-        }
-        openElement = null;
-    }
-    // change size of item via class
-    packery.stamp(event.target);
-    event.target.classList.toggle('grid-item-expand');
-    event.target.classList.toggle('stamp');
-    event.target.classList.toggle('grid-item');
-    openElement = event.target;
-    // trigger layout
-    setTimeout(function () {
-        packery.layout();
-    }, 200);
-});*/
 
 $(window).resize(function () {
+    canvas = document.querySelector('#bgCanvas');
+    canvas.height = (container.height() < window.innerHeight) ? window.innerHeight : container.height();
+    canvas.width = container.width();
+
     clearTimeout(resizeEvent);
     resizeEvent = setTimeout(function () {
         //console.log("done with delay");
@@ -86,41 +57,82 @@ $(window).resize(function () {
     }, 250);
 });
 
-/*packery.on('layoutComplete', function(event, items){
-    //$('body').css('height', $('.container').height());
-    setTimeout(function(){$('body').css("visibility", "visible")}, 100);
-});*/
-
-//$(window).ready(function(){$packery.packery();});
-
-/*
 //Potential fancy animated background, WIP
 var colors = [
-    'rgba(28, 165, 170, 1)', //turquoise
-    'rgba(24, 101, 174, 1)', //blue
-    'rgba(120, 204, 203, 1)', //light turquoise
-    'rgba(14, 46, 98, 1)', //dark blue
-    'rgba(33, 144, 203, 1)' //light blue
+    {r:028,g:165,b:170}, //turquoise 'rgba(28, 165, 170, 1)'
+    {r:024,g:101,b:174}, //blue 'rgba(24, 101, 174, 1)'
+    {r:120,g:204,b:203}, //light turquoise 'rgba(120, 204, 203, 1)'
+    {r:014,g:046,b:098}, //dark blue 'rgba(14, 46, 98, 1)'
+    {r:033,g:144,b:203} //light blue 'rgba(33, 144, 203, 1)'
 ];
 var canvas;
 var ctx;
+var rowHeight = 120;
 
 $(function(){
     anim_init();
 });
 
 function anim_init(){
-    canvas = document.querySelector('bgCanvas');
+    canvas = document.querySelector('#bgCanvas');
+
+    canvas.height = (container.height() < window.innerHeight) ? window.innerHeight : container.height();
+    canvas.width = container.width();
+
     ctx = canvas.getContext("2d");
     ctx.fillStyle = '#0c2949';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    for(var y = 0; y < Math.ceil(canvas.height / rowHeight); y++){
+        var cIndex = Math.floor(Math.random() * colors.length);
+        var c1 = colors[cIndex];
+        var c2 = colors[Math.floor(Math.random() * colors.length)];
+        var duration = Math.floor(Math.random() * 4 + 4) * 30;
+        rowBG.push({
+            framesLeft: duration,
+            currentColor: c1,
+            colorDelta: {
+                r:(c2.r-c1.r)/duration,
+                g:(c2.g-c1.g)/duration,
+                b:(c2.b-c1.b)/duration
+            },
+            colorIndex: cIndex
+        });
+    }
 
     window.requestAnimationFrame(anim_draw);
 }
 
 function anim_draw(){
-    for(var y = 0; y < Math.floor(canvas.height / 160); y++){
-        //do interpolation stuff for each row, choose new colors at intervals, etc.
+    for(var y = 0; y < Math.ceil(canvas.height / rowHeight); y++){
+        (rowBG[y].framesLeft)--;
+        rowBG[y].currentColor = {
+            r: rowBG[y].currentColor.r + rowBG[y].colorDelta.r,
+            g: rowBG[y].currentColor.g + rowBG[y].colorDelta.g,
+            b: rowBG[y].currentColor.b + rowBG[y].colorDelta.b
+        };
+
+        var newColor = 'rgba('+Math.floor(rowBG[y].currentColor.r)+','+Math.floor(rowBG[y].currentColor.g)+','+Math.floor(rowBG[y].currentColor.b)+',1)';
+        ctx.fillStyle = newColor;
+        ctx.fillRect(0, y * rowHeight, canvas.width, rowHeight);
+        
+        if(rowBG[y].framesLeft == 0){
+            var duration = Math.floor(Math.random() * 4 + 4) * 30;
+            rowBG[y].framesLeft = duration;
+            var c1 = rowBG[y].currentColor;
+            var newIndex = Math.floor(Math.random() * colors.length);
+            while(newIndex == rowBG[y].colorIndex){
+                newIndex = Math.floor(Math.random() * colors.length);
+            }
+            var c2 = colors[newIndex];
+            rowBG[y].colorDelta = {
+                r:(c2.r-c1.r)/duration,
+                g:(c2.g-c1.g)/duration,
+                b:(c2.b-c1.b)/duration
+            }
+            rowBG[y].colorIndex = newIndex;
+        }
     }
+
+    requestAnimationFrame(anim_draw);
 }
-    */

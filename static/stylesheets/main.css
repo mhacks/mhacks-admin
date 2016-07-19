@@ -4,7 +4,6 @@
 
 body {
     margin: 0;
-    padding: 0 0 1px 0;
     overflow-x: hidden;
     overflow-y: auto;
     font-family: 'Source Sans Pro';
@@ -65,7 +64,7 @@ p {
     z-index: -1000;
 }*/
 
-.container {
+#container {
     margin-left: 0px;
     width: 100%;
     position: absolute;
@@ -110,7 +109,7 @@ p {
 
 .grid {
     width: 100%;
-    box-shadow: 0 0 30px rgba(32, 32, 32, 0.6);
+    /*box-shadow: 0 0 30px rgba(32, 32, 32, 0.6);*/
 }
 
 /* clearfix */
@@ -268,6 +267,24 @@ li.answer {
     width: 160px;
     height: 120px;
     text-align: center;
+}
+
+#bgContainer {
+    /*height: 100vh;
+    width: 100vw;*/
+    position: fixed;
+}
+
+#bgCanvas {
+    /*min-width: 100%;
+    min-height: 100%;
+    width: 100vw;
+    height: 100vh;*/
+    z-index: -9999;
+    position: absolute;
+    float:left;
+    /*top: 50%;
+    left: 50%;*/
 }
 
 /*@media only screen and (max-width: 1441px) {
