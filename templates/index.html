@@ -5,76 +5,290 @@
 {% endblock %}
 
 {% block content %}
-    <!--canvas id="bgCanvas" class="background"></canvas-->
-    <div class="container">
+    <canvas id="bgCanvas"></canvas>
+    <div id="container">
         <div class="header turquoise">
-            <img id="logo" src="{{ static('assets/logo.png') }}" style="height: 100%">
+            <h1>MHacks 8</h1>
+            <h1>October 7-9 • Masonic Temple, Detroit</h1>
+            <a href="{{ url_for('mhacks-apply') }}">Apply!</a>
         </div>
         <div class="grid">
-            <div class="grid-item turquoise height2" data-remove="2" data-expandable="0">2</div>
-            <div class="grid-item lightTurquoise width2 height2" data-remove="2" data-expandable="1">
-                <div class="basic-info">
-                    <h1>Venue</h1>
-                    <p>
-                        This year, we’re returning to Detroit, somewhere we haven’t been since MHacks III. The Masonic
-                        Temple in Detroit is the largest in the world.
-                    </p>
+            <div id="logo" class="lightBlue stamp">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+            </div>
+            <div class="grid-item turquoise height2" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+
                 </div>
-                <div class="extra-info">
-                    <p>
-                        Built in 1922, this historic building is the perfect setting for a weekend in a city thriving
-                        with renewed entrepreneurial spirit. We hope you use this energy to drive your hacks.
-                    </p>
+            </div>
+            <div class="grid-item lightTurquoise width2 height2" data-remove="0" data-expandable="1">
+                <div class="grid-item-content">
+                    <div class="basic-info">
+                        <h1>Venue</h1>
+                        <p>
+                            This year, we’re returning to Detroit, somewhere we haven’t been since MHacks III. The
+                            Masonic
+                            Temple in Detroit is the largest in the world.
+                        </p>
+                    </div>
+                    <div class="extra-info">
+                        <p>
+                            Built in 1922, this historic building is the perfect setting for a weekend in a city
+                            thriving
+                            with renewed entrepreneurial spirit. We hope you use this energy to drive your hacks.
+                        </p>
+                    </div>
                 </div>
 
             </div>
             <div class="grid-item blue width2 height2" data-remove="0" data-expandable="1">
-                <div class="basic-info">
-                    <h1>What is MHacks?</h1>
-                    <p>
-                        MHacks is a 36-hour hackathon hosted by University of Michigan students.
-                    </p>
-                </div>
-                <div class="extra-info">
-                    <p>
-                        You and 2,500 others will gather from around the world and we’ll provide you with everything you
-                        need to be as curious, productive, and passionate as you can be. Whether it’s your first time
-                        hacking or your 8th, MHacks is the place to be.
-                    </p>
-                </div>
-            </div>
-            <div class="grid-item lightTurquoise" data-remove="0" data-expandable="0">1</div>
-            <div class="grid-item lightBlue width2" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item turquoise" data-remove="2" data-expandable="0">2</div>
-            <div class="grid-item blue" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item lightBlue" data-remove="2" data-expandable="1">2</div>
-            <div class="grid-item blue" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item turquoise width2 height2" data-remove="0" data-expandable="1">
-                <h1>FAQ</h1>
-                <div class="extra-info">
-                <p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p>
+                <div class="grid-item-content">
+                    <div class="basic-info">
+                        <h1>What is MHacks?</h1>
+                        <p>
+                            MHacks is a 36-hour hackathon hosted by University of Michigan students.
+                        </p>
+                    </div>
+                    <div class="extra-info">
+                        <p>
+                            2,500 hackers (that’s you!) will gather from around the world, and we’ll provide you with
+                            everything you need to be as curious, productive, and passionate as you can be. Whether it’s
+                            your first time hacking or your fifteenth, MHacks is the place to try, learn, and hack on
+                            something awesome.
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item blue height2" data-remove="1" data-expandable="1">1</div>
-            <div class="grid-item turquoise width2" data-remove="1" data-expandable="0">2</div>
-            <div class="grid-item darkBlue height2 width2" data-remove="1" data-expandable="1">0</div>
-            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item blue" data-remove="0" data-expandable="0">1</div>
-            <div class="grid-item lightBlue width3" data-remove="2" data-expandable="0">2</div>
-            <div class="grid-item turquoise" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item blue" data-remove="1" data-expandable="0">1</div>
-            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">1</div>
+            <div class="grid-item lightTurquoise" data-remove="0" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue width2" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item turquoise" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue" data-remove="2" data-expandable="1">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item turquoise" data-remove="0" data-expandable="1">
+                <div class="grid-item-content">
+                    <h1>FAQ</h1>
+                    <div class="extra-info">
+                        <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">General</h2>
+                        <ul style="padding-left:7px">
+                            <li class="question">What is MHacks?</li>
+                            <li class="answer">
+                                MHacks is a semiannual hackathon held at the University of Michigan.
+                            </li>
+                            <li class="question">What happens at a hackathon?</li>
+                            <li class="answer">
+                                Participants (“hackers”) spend 36 hours working in teams of 1-4 people to build or code
+                                something they’re excited about. There are workshops, mentors, and buckets of coffee to
+                                guide you along the way. You bring your ideas, and we give you everything you need to
+                                make them come to life.
+                            </li>
+                            <li class="question">How is MHacks run?</li>
+                            <li class="answer">
+                                MHacks is a nonprofit run by a group of dedicated and passionate young people, most of
+                                whom are students at the University of Michigan.
+                            </li>
+                            <li class="question">What do people normally make?</li>
+                            <li class="answer">
+                                You’re free to hack on anything and everything in the building. Common areas of focus
+                                include iOS or Android apps, web apps, and hardware hacks. Check out the hacks of MHacks
+                                6 on [Devpost].
+                            </li>
+                            <li class="question">Do I have to know how to code to attend?</li>
+                            <li class="answer">
+                                Nope! We’ll have lots of resources to help beginners get started, like workshops and a
+                                sweet new mentorship system.
+                            </li>
+                            <li class="question">I didn’t find my question here 😢</li>
+                            <li class="answer">
+                                If you’ve got something else on your mind, fire it off to <a
+                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>!
+                            </li>
+                        </ul>
+
+                        <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">Applications</h2>
+                        <ul style="padding-left:7px">
+                            <li class="question">When are applications closing?</li>
+                            <li class="answer">
+                                Applications close on _________! If you haven’t submitted by then, we’ll review
+                                whatever’s there.
+                            </li>
+                            <li class="question">How and when will I hear back?</li>
+                            <li class="answer">
+                                We’ll be releasing decisions weekly starting in August. If you’ve submitted your
+                                application by a Friday, you’ll be getting an email back by the next Friday!
+                            </li>
+                            <li class="question">Who can apply?</li>
+                            <li class="answer">
+                                If you’re enrolled in a high school, college, or university, or if you left school
+                                during the current school year, you’re good to go! (Minors are welcome to apply, but
+                                will need to fill out a couple extra forms in order to attend.)
+                            </li>
+                            <li class="question">Can we apply as a team?</li>
+                            <li class="answer">
+                                Not quite—you and your intended teammates should all submit individual applications. But
+                                if you get an invitation and some of your teammates don’t, shoot us an email at <a
+                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a> and we’ll try to sort
+                                things out.
+                            </li>
+                            <li class="question">Do I have to register?</li>
+                            <li class="answer">
+                                Yep! You’ll receive a link to register ______.
+                            </li>
+                            <li class="question">What if I’m a Michigan student?</li>
+                            <li class="answer">
+                                All Michigan students are welcome to attend MHacks, but we still need you to apply.
+                                Start by clicking that Apply button at the top.
+                            </li>
+                            <li class="question">What are you looking for in an application?</li>
+                            <li class="answer">
+                                Above anything else—passion. Tell us what you care about, what excites you. We want to
+                                know what’ll drive you to start and continue hacking, whether it’s your first time or
+                                your fifteenth. If there’s something about you that stands out from the “typical”
+                                hacker, we’d love to hear about that, too!
+                            </li>
+                        </ul>
+
+                        <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">Hacking</h2>
+                        <ul style="padding-left:7px">
+                            <li class="question">What if I don’t have a team or idea?</li>
+                            <li class="answer">
+                                Not to worry, most people don’t! We have some great activities planned before and during
+                                the event to help you meet teammates and start thinking through your ideas.
+                            </li>
+                            <li class="question">What kind of hardware will there be?</li>
+                            <li class="answer">
+                                There’ll be tons of cool hardware for you to hack on! We’ll put out a list closer to the
+                                event so you can see what’s available. You can also feel free to bring your own from
+                                home or <a href="mailto:hackathon@umich.edu">email us</a> with any suggestions!
+                            </li>
+                        </ul>
+
+                        <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">🚀 Logistics 🚆</h2>
+                        <ul style="padding-left:7px">
+                            <li class="question">How much does it cost to attend?</li>
+                            <li class="answer">
+                                Nothing! MHacks is free for all hackers.
+                            </li>
+                            <li class="question">How will I get there?</li>
+                            <li class="answer">
+                                By ✈, 🚄, or 🚗! If you need help figuring out a way that works for you, feel free to
+                                email us for suggestions. We’ll also be sending 🚌s to the schools with the most
+                                hackers, so encourage your friends to apply!
+                            </li>
+                            <li class="question">Will you be offering travel reimbursements?</li>
+                            <li class="answer">
+                                We can’t guarantee reimbursements for everyone, but we don’t want money to keep you from
+                                experiencing MHacks. You’ll get a reimbursement amount along with your invitation. Let
+                                us know if you still need help making your way to Detroit and we’ll see what we can do.
+                            </li>
+                            <li class="question">What should I bring?</li>
+                            <li class="answer">
+                                We’ll send you a comprehensive list once it’s closer to showtime, but it’ll be basically
+                                what you’d need for any sleepover: laptop, charger, deodorant (!), change of clothes.
+                                You won’t need food or drinks; we’ve got you covered there.
+                            </li>
+                            <li class="question">Help! I don’t want to hack, I want to ________!</li>
+                            <li class="answer">
+                                If you’re contemplating judging, volunteering, or mentoring, shoot us an email at <a
+                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>. If your company is
+                                interested in becoming a sponsor, check out the sponsorship tile.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item blue height2" data-remove="1" data-expandable="1">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item turquoise width2" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item darkBlue height2 width2" data-remove="0" data-expandable="1">
+                <div class="grid-item-content">
+                    <div class="basic-info">
+                        <h1>What's new with MHacks 8?</h1>
+                    </div>
+                    <div class="extra-info">
+                        <p>
+                            This year, we’re returning to Detroit for the first time since MHacks III.
+                            <a href="http://www.themasonic.com/">The Masonic Temple</a> in Detroit is the largest in the
+                            world and is located in the heart of the Motor City. Built in 1922, this historic building
+                            is
+                            the perfect setting for a weekend in a city thriving with renewed entrepreneurial spirit.
+                            We’re
+                            also upping our attendance to <strong>2000</strong> hackers. We hope you use this energy and
+                            atmosphere to drive your hacks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="0" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue width3" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item turquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://npmcdn.com/packery@2.1/dist/packery.pkgd.js" type="application/javascript"></script>
-    <script src="https://rawgithub.com/desandro/classie/master/classie.js" type="application/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
             type="application/javascript"></script>
+    <!--script src="https://npmcdn.com/packery@2.1/dist/packery.pkgd.js" type="application/javascript"></script-->
+    <script src="http://mfzy.co/packery.pkgd.js" type="application/javascript"></script>
+    <!--script src="https://rawgithub.com/desandro/classie/master/classie.js" type="application/javascript"></script-->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"type="application/javascript"></script-->
+
     <script src="{{ static('javascript/main.js') }}" type="application/javascript"></script>
 {% endblock %}

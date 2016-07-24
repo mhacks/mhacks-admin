@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^dashboard/$', dashboard, name='mhacks-dashboard'),
     url(r'^live/$', live, name='mhacks-live'),
     url(r'^$', index, name='mhacks-home'),  # Note: Currently not blackout page
+    url(r'^apply/$', apply, name='mhacks-apply')
 ]
