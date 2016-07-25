@@ -8,14 +8,14 @@
     <canvas id="bgCanvas"></canvas>
     <div id="container">
         <div class="header turquoise">
-            <h1>MHacks 8</h1>
+            <img style="height:120px" src="{{ static('assets/logo.png') }}">
             <h1>October 7-9 • Masonic Temple, Detroit</h1>
             <a href="{{ url_for('mhacks-apply') }}">Apply!</a>
         </div>
         <div class="grid">
-            <div id="logo" class="lightBlue stamp">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-            </div>
+            <!--div id="logo" class="lightBlue stamp">
+
+            </div-->
             <div class="grid-item turquoise height2" data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
 
@@ -51,15 +51,14 @@
                     </div>
                     <div class="extra-info">
                         <p>
-                            2,500 hackers (that’s you!) will gather from around the world, and we’ll provide you with
-                            everything you need to be as curious, productive, and passionate as you can be. Whether it’s
-                            your first time hacking or your fifteenth, MHacks is the place to try, learn, and hack on
-                            something awesome.
+                            2,000 hackers will gather from around the world, and we’ll provide you with everything you
+                            need to be as curious, productive, and passionate as you can be. Whether it’s your first
+                            time hacking or your eighth, MHacks is a weekend experience you won’t want to miss.
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="grid-item lightTurquoise" data-remove="0" data-expandable="0">
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
@@ -69,6 +68,20 @@
             </div>
             <div class="grid-item turquoise" data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue" data-remove="0" data-expandable="1">
+                <div class="grid-item-content">
+                    <div class="basic-info">
+                        <h1>Schedule</h1>
+                    </div>
+                    <div class="extra-info">
+                        <p>~~Need Styling~~</p>
+                        <p>Friday afternoon: buses to Masonic Temple, check-in, sponsor expo</p>
+                        <p>Friday evening: opening ceremony, hacking starts</p>
+                        <p>Saturday: hacking, tech talks, workshops, and events</p>
+                        <p>Sunday morning: hacking ends, hacker expo, closing ceremony</p>
+                    </div>
                 </div>
             </div>
             <div class="grid-item blue" data-remove="1" data-expandable="0">
@@ -93,34 +106,30 @@
                     <div class="extra-info">
                         <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">General</h2>
                         <ul style="padding-left:7px">
-                            <li class="question">What is MHacks?</li>
-                            <li class="answer">
-                                MHacks is a semiannual hackathon held at the University of Michigan.
-                            </li>
                             <li class="question">What happens at a hackathon?</li>
                             <li class="answer">
-                                Participants (“hackers”) spend 36 hours working in teams of 1-4 people to build or code
-                                something they’re excited about. There are workshops, mentors, and buckets of coffee to
-                                guide you along the way. You bring your ideas, and we give you everything you need to
-                                make them come to life.
-                            </li>
-                            <li class="question">How is MHacks run?</li>
-                            <li class="answer">
-                                MHacks is a nonprofit run by a group of dedicated and passionate young people, most of
-                                whom are students at the University of Michigan.
+                                Participants (“hackers”) spend 36 hours working in teams of 1 - 4 people to build or
+                                code projects (“hacks”) they’re excited about. There are workshops, mentors, food, swag,
+                                and buckets of coffee to guide you along the way. You bring your ideas, and we give you
+                                everything you need to make them come to life.
                             </li>
                             <li class="question">What do people normally make?</li>
                             <li class="answer">
-                                You’re free to hack on anything and everything in the building. Common areas of focus
-                                include iOS or Android apps, web apps, and hardware hacks. Check out the hacks of MHacks
-                                6 on [Devpost].
+                                Common areas of focus include iOS or Android apps, web apps, and hardware hacks. Check
+                                out the hacks from MHacks Refactor on <a
+                                    href="http://mhacksrefactor.devpost.com/submissions">Devpost</a>.
                             </li>
                             <li class="question">Do I have to know how to code to attend?</li>
                             <li class="answer">
-                                Nope! We’ll have lots of resources to help beginners get started, like workshops and a
-                                sweet new mentorship system.
+                                Nope! We’ll have lots of resources—including workshops and a sweet, new mentorship
+                                system—to help beginners get started.
                             </li>
-                            <li class="question">I didn’t find my question here 😢</li>
+                            <li class="question">Who runs MHacks?</li>
+                            <li class="answer">
+                                MHacks is run by a group of dedicated and passionate young people, most of whom are
+                                students at the University of Michigan.
+                            </li>
+                            <li class="question">I didn’t find my question here...</li>
                             <li class="answer">
                                 If you’ve got something else on your mind, fire it off to <a
                                     href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>!
@@ -131,8 +140,8 @@
                         <ul style="padding-left:7px">
                             <li class="question">When are applications closing?</li>
                             <li class="answer">
-                                Applications close on _________! If you haven’t submitted by then, we’ll review
-                                whatever’s there.
+                                Applications are rolling until a week or so before the event. Space fills up quick, so
+                                apply early!
                             </li>
                             <li class="question">How and when will I hear back?</li>
                             <li class="answer">
@@ -147,26 +156,31 @@
                             </li>
                             <li class="question">Can we apply as a team?</li>
                             <li class="answer">
-                                Not quite—you and your intended teammates should all submit individual applications. But
-                                if you get an invitation and some of your teammates don’t, shoot us an email at <a
+                                You and your intended teammates should all apply individually. But if you get an
+                                invitation and some of your teammates don’t, shoot us an email at <a
                                     href="mailto:hackathon@umich.edu">hackathon@umich.edu</a> and we’ll try to sort
                                 things out.
                             </li>
                             <li class="question">Do I have to register?</li>
                             <li class="answer">
-                                Yep! You’ll receive a link to register ______.
+                                Anyone attending MHacks 8 must register! You’ll receive a link to register when you
+                                receive your invitation.
                             </li>
                             <li class="question">What if I’m a Michigan student?</li>
                             <li class="answer">
-                                All Michigan students are welcome to attend MHacks, but we still need you to apply.
-                                Start by clicking that Apply button at the top.
+                                All Michigan students are welcome to attend MHacks, but we still need you to apply &
+                                register beforehand. When you apply with your umich.edu email address, you’ll receive an
+                                invitation within the next week or so.
                             </li>
                             <li class="question">What are you looking for in an application?</li>
                             <li class="answer">
                                 Above anything else—passion. Tell us what you care about, what excites you. We want to
-                                know what’ll drive you to start and continue hacking, whether it’s your first time or
-                                your fifteenth. If there’s something about you that stands out from the “typical”
-                                hacker, we’d love to hear about that, too!
+                                know what’ll drive you to start and continue hacking. If there’s something about MHacks
+                                in particular that you’re excited about, we’d love to hear about that too!
+                            </li>
+                            <li class="question">Are you allowing walk-ins?</li>
+                            <li class="answer">
+                                ~~Answer pending~~
                             </li>
                         </ul>
 
@@ -185,17 +199,30 @@
                             </li>
                         </ul>
 
-                        <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">🚀 Logistics 🚆</h2>
+                        <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">Logistics</h2>
                         <ul style="padding-left:7px">
-                            <li class="question">How much does it cost to attend?</li>
+                            <li class="question">How will I get there from UM?</li>
                             <li class="answer">
-                                Nothing! MHacks is free for all hackers.
+                                We’ll have buses to bring you to Masonic! More information on the bus schedule will be
+                                released closer to the event. The <a href="http://www.ridemdcc.umich.edu/">Detroit
+                                Connector</a> also runs between campus and Detroit in case you need to get back to Ann
+                                Arbor for some reason.
                             </li>
-                            <li class="question">How will I get there?</li>
+                            <li class="question">How will I get there from other schools?</li>
                             <li class="answer">
-                                By ✈, 🚄, or 🚗! If you need help figuring out a way that works for you, feel free to
-                                email us for suggestions. We’ll also be sending 🚌s to the schools with the most
-                                hackers, so encourage your friends to apply!
+                                After you’ve applied and received word that you're coming to MHacks, we'll share
+                                information about buses and travel reimbursements. More than likely, we'll be sending a
+                                bus to a school near you. If you’re flying in, we’ll have shuttles from DTW as well. All
+                                bus schedules will be released closer to the event.
+                            </li>
+                            <li class="question">What if I'm an International Student?</li>
+                            <li class="answer">
+                                If you go to school in Canada, we may be sending a bus to your university or one near
+                                you. If you are traveling from another country, the first step is to make sure you have
+                                a valid travel Visa. Please refer to <a href="https://www.visahq.com/">this</a> website
+                                to make sure you meet the requirements and get started on the process if you haven’t
+                                already. If you need anything from the organizers, such as a letter of invitation,
+                                please contact us as soon as possible at <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>.
                             </li>
                             <li class="question">Will you be offering travel reimbursements?</li>
                             <li class="answer">
@@ -203,11 +230,30 @@
                                 experiencing MHacks. You’ll get a reimbursement amount along with your invitation. Let
                                 us know if you still need help making your way to Detroit and we’ll see what we can do.
                             </li>
+                            <li class="question">Will there be parking available?</li>
+                            <li class="answer">
+                                We’ll have a limited number of free parking spaces available at Masonic. If you’re
+                                planning on driving, make sure to indicate that on the registration form!
+                            </li>
                             <li class="question">What should I bring?</li>
                             <li class="answer">
-                                We’ll send you a comprehensive list once it’s closer to showtime, but it’ll be basically
-                                what you’d need for any sleepover: laptop, charger, deodorant (!), change of clothes.
-                                You won’t need food or drinks; we’ve got you covered there.
+                                You should bring anything you’d need for a sleepover: laptop, charger, deodorant (!),
+                                change of clothes, sleeping bag. You won’t need food or drinks; we’ve got you covered
+                                there.
+                            </li>
+                            <li class="question">What shouldn't I bring?</li>
+                            <li class="answer">
+                                Weapons of any kind, drugs, or alcohol. If you’re not sure whether something will be
+                                okay, please ask ahead of time!
+                            </li>
+                            <li class="question">Can I sleep?</li>
+                            <li class="answer">
+                                Yep! We’ll have a sleeping area but no cots, so bring a sleeping bag and a pillow if
+                                you’ll need them.
+                            </li>
+                            <li class="question">Can I shower?</li>
+                            <li class="answer">
+                                There won't be showers available at the venue.
                             </li>
                             <li class="question">Help! I don’t want to hack, I want to ________!</li>
                             <li class="answer">
@@ -223,8 +269,16 @@
                 <div class="grid-item-content">
                 </div>
             </div>
-            <div class="grid-item blue height2" data-remove="1" data-expandable="1">
+            <div class="grid-item blue height2" data-remove="1" data-expandable="0">
                 <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue width2 height3" data-remove="0" data-expandable="0">
+                <div class="grid-item-content">
+                    <div class="basic-info" style="text-align:center;">
+                        <h1 style="text-align:left;">Presented by:</h1>
+                        <img style="height:260px" src="{{ static('assets/logo.png') }}">
+                    </div>
                 </div>
             </div>
             <div class="grid-item turquoise width2" data-remove="1" data-expandable="0">
@@ -238,14 +292,24 @@
                     </div>
                     <div class="extra-info">
                         <p>
-                            This year, we’re returning to Detroit for the first time since MHacks III.
-                            <a href="http://www.themasonic.com/">The Masonic Temple</a> in Detroit is the largest in the
-                            world and is located in the heart of the Motor City. Built in 1922, this historic building
-                            is
-                            the perfect setting for a weekend in a city thriving with renewed entrepreneurial spirit.
-                            We’re
-                            also upping our attendance to <strong>2000</strong> hackers. We hope you use this energy and
-                            atmosphere to drive your hacks.
+                            This year, we’re returning to <b>Detroit</b> for the first time since MHacks III. <a
+                                href="http://www.themasonic.com/">The Masonic Temple</a> in Detroit is the largest in
+                            the world and is located in the heart of the Motor City. Built in 1922, this historic
+                            building is the perfect setting for a weekend in a city thriving with renewed
+                            entrepreneurial spirit. We hope you use this energy and atmosphere to drive your hacks.
+                        </p>
+                        <p>
+                            A change of venue gives us a chance to increase our attendance to 2,000 hackers, which
+                            allows us to grow the MHacks community. In doing so, we’re able to provide the support our
+                            hackers need to discover hacking and develop their skills alongside teammates, mentors,
+                            competitors, and friends.
+                        </p>
+                        <p>
+                            This Fall, we’re also going to focus on wellness. Sometimes, hackathons have been notorious
+                            for unhealthy food, sleep deprivation, and uncomfortable hacking spaces. And we don’t think
+                            it should take two weeks to recover from one. We will have healthier food options, sleeping
+                            spaces, and more health life hacks to keep you feeling your best during the weekend, and
+                            after.
                         </p>
                     </div>
                 </div>
@@ -254,12 +318,21 @@
                 <div class="grid-item-content">
                 </div>
             </div>
-            <div class="grid-item blue" data-remove="0" data-expandable="0">
+            <div class="grid-item blue" data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
-            <div class="grid-item lightBlue width3" data-remove="2" data-expandable="0">
+            <div class="grid-item lightBlue width2 height2" data-remove="0" data-expandable="0">
                 <div class="grid-item-content">
+                    <div class="basic-info">
+                        <h1>Links</h1>
+                        <ul>
+                            <li><a href="https://twitter.com/mhacks">MHacks Twitter</a></li>
+                            <li><a href="https://www.facebook.com/MHacksHackathon/">MHacks Facebook</a></li>
+                            <li><a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a></li>
+                        </ul>
+                        <p>~~Lemme know what links this is missing~~</p>
+                    </div>
                 </div>
             </div>
             <div class="grid-item turquoise" data-remove="1" data-expandable="0">
@@ -277,6 +350,47 @@
             <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
+            </div>
+        </div>
+        <div class="turquoise sponsors">
+            <h1>Sponsorship</h1>
+            <p>MHacks is the gateway between you and the top tech talent in the world. Whether you come to network, promote brand awareness, or get feedback on a product or API, we’ll provide the tools you need to make the most out of your experience.</p>
+            <p class="quote"><i>“MHacks has been a staple event in Concur’s University Tour over the past two years. The MHacks atmosphere fosters creativity and innovation from developers and entrepreneurs alike. When it comes to collegiate hackathons, MHacks is the place to be!”</i> -Concur</p>
+            <p class="quote"><i>“The caliber and number of students that MHacks attracts is like no other hacking event.”</i> -Walmart</p>
+            <p class="quote"><i>“This was one of the most well organized student-run hackathons that we’ve ever sponsored.”</i> -Google</p>
+            <p>Interested in sponsoring? Want more information? Shoot us an email at<br/><a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>
+                <!--<br/><br/>We have an awesome lineup of sponsors for you.<br/>Check back soon for company logos.--></p>
+            <h2>MHacks 8 Sponsors</h2>
+            <div class="logos">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+            </div>
+            <h2>Previous Sponsors</h2>
+            <div class="logos">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                <img style="height:120px" src="{{ static('assets/logo.png') }}">
             </div>
         </div>
     </div>
