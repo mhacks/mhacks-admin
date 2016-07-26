@@ -1,0 +1,18 @@
+body {
+	background-color: #ffffff;
+	    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 12pt;
+    display: flex;
+}
+
+.title-apply{
+	color: rgba(14, 46, 98, 1);
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.header-apply{
+    height: 120px; 
+}
