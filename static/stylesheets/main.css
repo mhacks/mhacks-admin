@@ -102,11 +102,16 @@ a {
 
     padding: 5px 10px;
     width: 90px;
+
+    transition: all 0.2s;
 }
 
-.header a:active{
-    font-size: 13pt;
-    padding: 2px 5px;
+.header a:hover{
+    background-color: #ffffff;
+    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
+    color: rgba(37, 37, 37, 0.63);
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .sponsors {
@@ -119,7 +124,8 @@ a {
 
 .sponsors .quote {
     border-left: 6px solid rgba(128, 128, 128, 0.35);
-    padding-left: 10px;
+    border-bottom: 2px solid rgba(128, 128, 128, 0.35);
+    padding: 6px;
     text-align:left;
     padding-top:0;
     margin: 4px 0;
@@ -248,16 +254,39 @@ a {
     transition: all 0.2s;
 }
 
-.grid-item[data-expandable='1'] .grid-item-content{
-    /*special styling to indicate clickable?*/
-}
-
 .grid-item[data-expandable='1']:hover .grid-item-content{
     background: #ffffff;
     box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
     color: rgba(37, 37, 37, 0.63);
     cursor: pointer;
     transition: all 0.2s;
+}
+
+.grid-item-image {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tile-image{
+    margin: 0;
+    max-height: 90%;
+    max-width: 90%;
+    opacity: 0.6;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.contact-links img {
+    height: 40px;
 }
 
 .turquoise {
