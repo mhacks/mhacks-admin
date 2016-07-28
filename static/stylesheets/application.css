@@ -8,7 +8,7 @@ body {
 }
 
 .title-apply{
-	color: rgba(14, 46, 98, 1);
+	color: #1CA5AA;
 	margin-top: 10px;
 	font-weight: bold;
 }
@@ -20,4 +20,14 @@ body {
 .application-text{
 	color: #000;
 	font-size: 16pt;
+}
+
+
+.application-title{
+	font-size: 16pt;
+}
+
+.application-subtitle{
+	font-size: 12pt;
+	color:  #78CCCB;
 }
