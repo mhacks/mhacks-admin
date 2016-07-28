@@ -38,7 +38,7 @@
                         <input placeholder="Email Address" value="" id="email" name="email" type="email" class="form-control input-md" required="">
                     </div>
                 </div>
-                <div class="row ">
+                <div class="row two">
                     <div class="col-lg-6 ">
                         <input placeholder="University" value="" id="university" name="university" type="text" class="form-control input-md" required="">
                     </div>
@@ -47,6 +47,40 @@
                                I am a highschool student</label>
                     </div>
                 </div>
+                <div class="row two">
+                    <div class="col-lg-6 ">
+                        <div class="dropdown ">
+                          <button class="btn dropdown-toggle drop-down-button full_width" type="button" data-toggle="dropdown">State
+                          <span class="caret"></span></button>
+                          <ul class="dropdown-menu full_width">
+                            <li><a href="#">Alabama</a></li>
+                            <li><a href="#">Michigan</a></li>
+                            <li><a href="#">Mississipi</a></li>
+                          </ul>
+                        </div>
+                    </div>
+                   <div class="col-lg-2 "> 
+                        <input id="month" name="grad_month" placeholder="MM" type="number" min="01" max="12" maxlength="2" class="form-control input-md" required="" value=""> 
+                   </div> 
+                   <div class="col-lg-4">
+                     <input id="year" name="grad_year" placeholder="YYYY" type="number" min="2015" max="2020" maxlength="4" class="form-control input-md" required="" value=""> 
+                   </div>
+               </div>
+                <div class="row two">
+                      <div class="col-lg-4">
+                        <div class="application-text text-center"> Age: </div>
+                    </div>
+                     <div class="col-lg-2">
+                        <input name="birth_month" placeholder="MM" type="number" min="01" max="12" class="form-control input-md" maxlength="2" required="" id="birthMonth">
+                    </div>
+                    <div class="col-lg-2">
+                         <input name="birth_day" placeholder="DD" type="number" min="01" max="31" class="form-control input-md" maxlength="2" required="" id="birthDay">
+                    </div>
+                     <div class="col-lg-4">
+                         <input name="birth_year" placeholder="YYYY" type="number" min="1900" ="2015" class="form-control input-md" maxlength="2"  required="" id="birthYear">
+                    </div>
+                  </div>
+
     </div>
 </form>
 {% endblock %}
