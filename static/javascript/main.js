@@ -47,8 +47,8 @@ $packery.on('click', '.grid-item, .grid-item-expand', function(event){
 
 $(window).resize(function () {
     canvas = document.querySelector('#bgCanvas');
-    canvas.height = (container.height() < window.innerHeight) ? window.innerHeight : container.height();
-    canvas.width = container.width();
+    canvas.height = (container.height() < window.innerHeight) ? window.innerHeight : container.height(); //(container.height() > canvas.height) ? container.height() : canvas.height;
+    canvas.width = container.width(); //(container.width() > canvas.width) ? container.width() : canvas.width;
 
     clearTimeout(resizeEvent);
     resizeEvent = setTimeout(function () {
@@ -87,7 +87,7 @@ function anim_init(){
         var cIndex = Math.floor(Math.random() * colors.length);
         var c1 = colors[cIndex];
         var c2 = colors[Math.floor(Math.random() * colors.length)];
-        var duration = Math.floor(Math.random() * 4 + 4) * 30;
+        var duration = Math.floor(Math.random() * 2 + 3) * 30;
         rowBG.push({
             framesLeft: duration,
             currentColor: c1,
@@ -103,8 +103,25 @@ function anim_init(){
     window.requestAnimationFrame(anim_draw);
 }
 
-function anim_draw(){
-    for(var y = 0; y < Math.ceil(canvas.height / rowHeight); y++){
+function anim_draw() {
+    for (var y = 0; y < Math.ceil(canvas.height / rowHeight); y++) {
+        if (rowBG[y] === undefined) {
+            var cIndex = Math.floor(Math.random() * colors.length);
+            var c1 = colors[cIndex];
+            var c2 = colors[Math.floor(Math.random() * colors.length)];
+            var duration = Math.floor(Math.random() * 2 + 3) * 30;
+            rowBG[y] = {
+                framesLeft: duration,
+                currentColor: c1,
+                colorDelta: {
+                    r: (c2.r - c1.r) / duration,
+                    g: (c2.g - c1.g) / duration,
+                    b: (c2.b - c1.b) / duration
+                },
+                colorIndex: cIndex
+            };
+        }
+
         (rowBG[y].framesLeft)--;
         rowBG[y].currentColor = {
             r: rowBG[y].currentColor.r + rowBG[y].colorDelta.r,
@@ -112,24 +129,24 @@ function anim_draw(){
             b: rowBG[y].currentColor.b + rowBG[y].colorDelta.b
         };
 
-        var newColor = 'rgba('+Math.floor(rowBG[y].currentColor.r)+','+Math.floor(rowBG[y].currentColor.g)+','+Math.floor(rowBG[y].currentColor.b)+',1)';
+        var newColor = 'rgba(' + Math.floor(rowBG[y].currentColor.r) + ',' + Math.floor(rowBG[y].currentColor.g) + ',' + Math.floor(rowBG[y].currentColor.b) + ',1)';
         ctx.fillStyle = newColor;
         ctx.fillRect(0, y * rowHeight, canvas.width, rowHeight);
-        
-        if(rowBG[y].framesLeft == 0){
-            var duration = Math.floor(Math.random() * 4 + 4) * 30;
+
+        if (rowBG[y].framesLeft == 0) {
+            var duration = Math.floor(Math.random() * 2 + 3) * 30;
             rowBG[y].framesLeft = duration;
             var c1 = rowBG[y].currentColor;
             var newIndex = Math.floor(Math.random() * colors.length);
-            while(newIndex == rowBG[y].colorIndex){
+            while (newIndex == rowBG[y].colorIndex) {
                 newIndex = Math.floor(Math.random() * colors.length);
             }
             var c2 = colors[newIndex];
             rowBG[y].colorDelta = {
-                r:(c2.r-c1.r)/duration,
-                g:(c2.g-c1.g)/duration,
-                b:(c2.b-c1.b)/duration
-            }
+                r: (c2.r - c1.r) / duration,
+                g: (c2.g - c1.g) / duration,
+                b: (c2.b - c1.b) / duration
+            };
             rowBG[y].colorIndex = newIndex;
         }
     }
