@@ -404,4 +404,167 @@ li.answer {
     .grid-item, .grid-item .grid-item-content {
         width: 100% !important;
     }
+
 }
+
+/*@media only screen and (min-device-width: 414px)
+  and (max-device-width: 736px)
+  and (-webkit-min-device-pixel-ratio: 3){
+    .grid-item[data-remove='2']{
+        width: 0px;
+        height: 0px;
+        visibility: hidden;
+        transition: all 0.2s;
+    }
+    .grid-item[data-remove='1']{
+        width: 0px;
+        height: 0px;
+        visibility: hidden;
+        transition: all 0.2s;
+    }
+    .grid-item{
+	    width: 100%;
+    }
+    .logo{
+	    width: 100%;
+    }
+}*/
+.logo{
+    margin: 0px auto;
+    display: block;
+}
+
+.container_apply {
+    width: 50%;
+    margin-top: 50px;
+    height: 1000px;
+-webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+-moz-box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+ box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+ margin-left: auto;
+margin-right: auto;
+    border: 1px solid  rgba(0,0,0,0.33);
+}
+
+.full{
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 15px;
+}
+
+
+/* Inputs  */
+
+html input[type="number"]{
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 18px;
+    padding-right: 8px;
+}
+
+html input[type="text"],
+html input[type="tel"],
+
+html input[type="number"],
+html input[type="url"],
+html input[type="email"],
+html input[type="password"],
+html input[type="school"],
+html input{
+    box-shadow: none;
+    opacity: 0.7;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    -webkit-transition: .4s;
+    transition: .4s;
+    padding: 0px;
+}
+
+html input[type="text"]:hover,
+html input[type="tel"]:hover,
+
+html input[type="number"]:hover,
+html input[type="url"]:hover,
+html input[type="email"]:hover,
+html input[type="password"]:hover,
+html input[type="school"]:hover,
+html input:hover {
+    border-color: #1865AE; /* UPDATE COLOR */
+}
+
+html input[type="text"]:active,
+html input[type="text"]:focus,
+html input[type="tel"]:active,
+html input[type="tel"]:focus,
+html input[type="number"]:active,
+html input[type="number"]:focus,
+html input[type="url"]:active,
+html input[type="url"]:focus,
+html input[type="email"]:active,
+html input[type="email"]:focus,
+html input[type="password"]:active,
+html input[type="password"]:focus,
+html input[type="school"]:active,
+html input[type="school"]:focus,
+html input:active,
+html input:focus {
+    box-shadow:none !important;
+    border-color: #1CA5AA; /* UPDATE COLOR */
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    opacity: 1;
+
+}
+
+html input[type="radio"],
+html input[type="checkbox"] {
+}
+
+html button {
+    color: #000000;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    border-radius: 0;
+    -webkit-transition: .4s;
+    transition: .4s;
+    font-size:  16px;
+}
+
+
+/* Rows */
+
+.row {
+    margin-top: 12px;
+}
+
+.row.two {
+    margin-top: 32px;
+}
+
+.row.three {
+    margin-top: 48px;
+}
+
+.row.four {
+    margin-top: 64px;
+}
+
+.row.five {
+    margin-top: 80px;
+}
+
+.row.none{
+    margin-top: 0px;
+}
+.drop-down-button{
+   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+     margin-left: auto;
+    margin-right: auto;
+    border: 1px solid  rgba(0,0,0,0.33);
+    border-radius: 0px;
+    background-color: #fff;
+}
+
+.full_width{
+    width: 100%;
+}
+
