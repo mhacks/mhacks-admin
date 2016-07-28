@@ -237,11 +237,11 @@ p {
     display:none;
     visibility: hidden;
     transition: all 0.2s;
-    pointer-events: none;
+    /*pointer-events: none;*/
 }
 
 .basic-info {
-    pointer-events: none;
+    /*pointer-events: none;*/
     visibility: visible;
     transition: all 0.2s;
 }
