@@ -1,6 +1,6 @@
 import requests
 from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
-                         HttpResponseForbidden)
+                         HttpResponseForbidden, JsonResponse)
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -15,17 +15,28 @@ from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INT
 from MHacks.forms import RegisterForm, LoginForm
 from MHacks.decorator import anonymous_required
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token
+from config.settings import MAILCHIMP_API_KEY
+import mailchimp
 
+MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
 
-def blackout_page(request):
+def subscribe_email(request):
     if request.method == 'POST':
         # TODO: Test
         if 'email' not in request.POST:
             return HttpResponseBadRequest()
-        response = requests.post(MAILCHIMP_INTEREST_LIST,
-                                 json={'email_address': request.POST['email'], 'status': 'subscribed'},
-                                 headers={'Content-Type': 'application/json'}, auth=('user', MAILCHIMP_API_KEY))
-        return HttpResponse(status=response.status_code)
+        
+        email = request.POST.get("email")
+        list_id = "52259aef0d"
+        try:
+            MAILCHIMP_API.lists.subscribe(list_id, {'email': email}, double_optin=False)
+        except mailchimp.ListAlreadySubscribedError:
+            return JsonResponse({'success': False, 'error': 'Looks like you\'re already subscribed!'})
+        except mailchimp.List_RoleEmailMember:
+            return JsonResponse({'success': False, 'error': 'Unfortunately that\'s an invalid email address'})
+        except:
+            return JsonResponse({'success': False, 'error': 'Looks like there\'s been an error registering you. Try again or email us at hackathon@umich.edu'})
+        return JsonResponse({'success': True})
     elif request.method == 'GET':
         return render(request, 'blackout.html', {})
     else:
@@ -33,7 +44,7 @@ def blackout_page(request):
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'blackout.html')
 
 
 @anonymous_required

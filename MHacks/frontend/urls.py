@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^reset/$', reset_password, name='mhacks-reset_password'),
     url(r'^update_password/(?P<uid>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         update_password, name='mhacks-update_password'),
+    url(r'^subscribe_email/$', subscribe_email, name='subscribe-email'),
 
     # Content
     url(r'^dashboard/$', dashboard, name='mhacks-dashboard'),

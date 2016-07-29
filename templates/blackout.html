@@ -12,8 +12,11 @@
             var data = {
                 "email": $("#emailBox").val()
             };
-            $.post(".", data, function(response) {
+            $.post("/subscribe_email/", data, function(response) {
                 console.log(response);
+                if(!response.success) {
+                    alert(response.error);
+                }
             }, "json");
             $("#changeOnSubmission").html("Great! We'll keep you updated.");
             $("#emailBox, #SubmitButton").hide(150);

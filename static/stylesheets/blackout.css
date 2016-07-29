@@ -81,6 +81,7 @@ body {
     padding-left: 10px;
     background-color: #c7c7c7;
     -webkit-appearance: none;
+    border-radius: 0px;
 }
 
 #email input:focus {
