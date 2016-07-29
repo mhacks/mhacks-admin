@@ -8,9 +8,9 @@
     <canvas id="bgCanvas"></canvas>
     <div id="container">
         <div class="header turquoise">
-            <img style="height:120px" src="{{ static('assets/logo.png') }}">
+            <img style="height:120px" src="{{ static('assets/logo.png')}}" alt="MHacks Logo">
             <h1>October 7-9 • Masonic Temple, Detroit</h1>
-            <a href="{{ url_for('mhacks-apply') }}">Apply!</a>
+            <a href="{{ url_for('mhacks-apply') }} target=" _blank"">Apply!</a>
         </div>
         <div class="grid">
             <!--div id="logo" class="lightBlue stamp">
@@ -29,11 +29,11 @@
                 <div class="grid-item-content">
                     <div class="basic-info">
                         <h1>What is MHacks?</h1>
+                    </div>
+                    <div class="extra-info">
                         <p>
                             MHacks is a 36-hour hackathon hosted by University of Michigan students.
                         </p>
-                    </div>
-                    <div class="extra-info">
                         <p>
                             2,000 hackers will gather from around the world, and we’ll provide you with everything you
                             need to be as curious, productive, and passionate as you can be. Whether it’s your first
@@ -52,7 +52,7 @@
             </div>
             <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
                 <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/webic-05.png') }}">
+                    <img class="tile-image" src="{{ static('assets/webic-05.png') }}" alt="Smartphone">
                 </div>
             </div>
             <div class="grid-item turquoise" data-remove="2" data-expandable="0">
@@ -61,7 +61,7 @@
             </div>
             <div class="grid-item blue" data-remove="1" data-expandable="0">
                 <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/webic-06.png') }}">
+                    <img class="tile-image" src="{{ static('assets/webic-06.png') }}" alt="Virtual Reality Headset">
                 </div>
             </div>
             <div class="grid-item lightBlue height3" data-remove="2" data-expandable="0">
@@ -105,7 +105,7 @@
                             <li class="answer">
                                 Common areas of focus include iOS or Android apps, web apps, and hardware hacks. Check
                                 out the hacks from MHacks Refactor on <a
-                                    href="http://mhacksrefactor.devpost.com/submissions">Devpost</a>.
+                                    href="http://mhacksrefactor.devpost.com/submissions" target="_blank">Devpost</a>.
                             </li>
                             <li class="question">Do I have to know how to code to attend?</li>
                             <li class="answer">
@@ -120,7 +120,7 @@
                             <li class="question">I didn’t find my question here...</li>
                             <li class="answer">
                                 If you’ve got something else on your mind, fire it off to <a
-                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>!
+                                    href="mailto:hackathon@umich.edu" target="_blank">hackathon@umich.edu</a>!
                             </li>
                         </ul>
 
@@ -146,7 +146,8 @@
                             <li class="answer">
                                 You and your intended teammates should all apply individually. But if you get an
                                 invitation and some of your teammates don’t, shoot us an email at <a
-                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a> and we’ll try to sort
+                                    href="mailto:hackathon@umich.edu" target="_blank">hackathon@umich.edu</a> and we’ll
+                                try to sort
                                 things out.
                             </li>
                             <li class="question">Do I have to register?</li>
@@ -183,7 +184,8 @@
                             <li class="answer">
                                 There’ll be tons of cool hardware for you to hack on! We’ll put out a list closer to the
                                 event so you can see what’s available. You can also feel free to bring your own from
-                                home or <a href="mailto:hackathon@umich.edu">email us</a> with any suggestions!
+                                home or <a href="mailto:hackathon@umich.edu" target="_blank">email us</a> with any
+                                suggestions!
                             </li>
                         </ul>
 
@@ -192,7 +194,8 @@
                             <li class="question">How will I get there from UM?</li>
                             <li class="answer">
                                 We’ll have buses to bring you to Masonic! More information on the bus schedule will be
-                                released closer to the event. The <a href="http://www.ridemdcc.umich.edu/">Detroit
+                                released closer to the event. The <a href="http://www.ridemdcc.umich.edu/"
+                                                                     target="_blank">Detroit
                                 Connector</a> also runs between campus and Detroit in case you need to get back to Ann
                                 Arbor for some reason.
                             </li>
@@ -207,10 +210,12 @@
                             <li class="answer">
                                 If you go to school in Canada, we may be sending a bus to your university or one near
                                 you. If you are traveling from another country, the first step is to make sure you have
-                                a valid travel Visa. Please refer to <a href="https://www.visahq.com/">this</a> website
+                                a valid travel Visa. Please refer to <a href="https://www.visahq.com/" target="_blank">this</a>
+                                website
                                 to make sure you meet the requirements and get started on the process if you haven’t
                                 already. If you need anything from the organizers, such as a letter of invitation,
-                                please contact us as soon as possible at <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>.
+                                please contact us as soon as possible at <a href="mailto:hackathon@umich.edu"
+                                                                            target="_blank">hackathon@umich.edu</a>.
                             </li>
                             <li class="question">Will you be offering travel reimbursements?</li>
                             <li class="answer">
@@ -246,7 +251,8 @@
                             <li class="question">Help! I don’t want to hack, I want to ________!</li>
                             <li class="answer">
                                 If you’re contemplating judging, volunteering, or mentoring, shoot us an email at <a
-                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>. If your company is
+                                    href="mailto:hackathon@umich.edu" target="_blank">hackathon@umich.edu</a>. If your
+                                company is
                                 interested in becoming a sponsor, check out the sponsorship tile.
                             </li>
                         </ul>
@@ -259,7 +265,7 @@
             </div>
             <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
                 <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/webic-07.png') }}">
+                    <img class="tile-image" src="{{ static('assets/webic-07.png') }}" alt="Android Robot">
                 </div>
             </div>
             <div class="grid-item blue height2" data-remove="1" data-expandable="0">
@@ -282,7 +288,8 @@
                     <div class="extra-info">
                         <p>
                             This year, we’re returning to <b>Detroit</b> for the first time since MHacks III. <a
-                                href="http://www.themasonic.com/">The Masonic Temple</a> in Detroit is the largest in
+                                href="http://www.themasonic.com/" target="_blank">The Masonic Temple</a> in Detroit is
+                            the largest in
                             the world and is located in the heart of the Motor City. Built in 1922, this historic
                             building is the perfect setting for a weekend in a city thriving with renewed
                             entrepreneurial spirit. We hope you use this energy and atmosphere to drive your hacks.
@@ -320,9 +327,15 @@
                     <div class="basic-info">
                         <h1>Contact Us</h1>
                         <div class="contact-links">
-                            <a href="https://twitter.com/mhacks"><img src="{{ static('assets/twitter-link.png') }}" /></a>
-                            <a href="https://www.facebook.com/MHacksHackathon/"><img src="{{ static('assets/fb-link.png') }}" /></a>
-                            <a href="mailto:hackathon@umich.edu"><img src="{{ static('assets/email-link.png') }}" /></a>
+                            <a href="https://twitter.com/mhacks" target="_blank"><img
+                                    src="{{ static('assets/twitter-link.png') }}"
+                                    alt="MHacks Twitter, https://twitter.com/mhacks"/></a>
+                            <a href="https://www.facebook.com/MHacksHackathon/" target="_blank"><img
+                                    src="{{ static('assets/fb-link.png') }}"
+                                    alt="MHacks Facebook, https://www.facebook.com/MHacksHackathon"/></a>
+                            <a href="mailto:hackathon@umich.edu" target="_blank"><img
+                                    src="{{ static('assets/email-link.png') }}"
+                                    alt="MHacks Email, hackathon@umich.edu"/></a>
                         </div>
                     </div>
                 </div>
@@ -337,7 +350,7 @@
             </div>
             <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
                 <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/webic-10.png') }}">
+                    <img class="tile-image" src="{{ static('assets/webic-10.png') }}" alt="Hardware">
                 </div>
             </div>
             <div class="grid-item blue" data-remove="2" data-expandable="0">
@@ -349,44 +362,54 @@
                 </div>
             </div>
         </div>
-        <div class="turquoise sponsors">
+        <div class="sponsors">
             <h3>Sponsorship</h3>
-            <p>MHacks is the gateway between you and the top tech talent in the world. Whether you come to network, promote brand awareness, or get feedback on a product or API, we’ll provide the tools you need to make the most out of your experience.</p>
-            <p class="quote"><i>“MHacks has been a staple event in Concur’s University Tour over the past two years. The MHacks atmosphere fosters creativity and innovation from developers and entrepreneurs alike. When it comes to collegiate hackathons, MHacks is the place to be!”</i><br/><span style="text-align: left; margin-left: 50px"><b>-Concur</b></span></p>
-            <p class="quote"><i>“The caliber and number of students that MHacks attracts is like no other hacking event.”</i><br/><span style="text-align: left; margin-left: 50px"><b>-Walmart</b></span></p>
-            <p class="quote"><i>“This was one of the most well organized student-run hackathons that we’ve ever sponsored.”</i><br/><span style="text-align: left; margin-left: 50px"><b>-Google</b></span></p>
-            <p> Interested in sponsoring? Want more information? Shoot us an email at<br/><a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>
-                <!--<br/><br/>We have an awesome lineup of sponsors for you.<br/>Check back soon for company logos.--></p>
-            <!--h2>MHacks 8 Sponsors</h2>
-            <div class="logos">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                <img style="height:120px" src="{{ static('assets/logo.png') }}">
-            </div-->
+            <p>MHacks is the gateway between you and the top tech talent in the world. Whether you come to network,
+                promote brand awareness, or get feedback on a product or API, we’ll provide the tools you need to make
+                the most out of your experience.</p>
+            <div class="quotes">
+                <p class="quote"><i>“MHacks has been a staple event in Concur’s University Tour over the past two years.
+                    The MHacks atmosphere fosters creativity and innovation from developers and entrepreneurs alike.
+                    When it comes to collegiate hackathons, MHacks is the place to be!”</i><br/>
+                    <span class="source"><b>-Concur</b></span>
+                </p>
+                <p class="quote"><i>“This was one of the most well organized student-run hackathons that we’ve ever
+                    sponsored.”</i><br/>
+                    <span class="source"><b>-Google</b></span>
+                </p>
+                <p class="quote"><i>“The caliber and number of students that MHacks attracts is like no other hacking
+                    event.”</i><br/>
+                    <span class="source"><b>-Walmart</b></span>
+                </p>
+            </div>
+            <p> Interested in sponsoring? Want more information? Shoot us an email at<br/><a
+                    href="mailto:sponsor-mhacks@umich.edu" target="_blank">sponsor-mhacks@umich.edu</a>
+                <br/><br/>We have an awesome lineup of sponsors for you.<br/>Check back soon for company logos.
+            </p>
+
             <h1 style="font-size:16pt">Previous Sponsors</h1>
-            <div class="logos">
-                <img src="{{ static('assets/Apple_logo.png') }}">
-                <img src="{{ static('assets/cfe_logo.png') }}">
-                <img src="{{ static('assets/Disney_Logo.png') }}">
-                <img src="{{ static('assets/Esri_logo.png') }}">
-                <img src="{{ static('assets/Facebook_logo.jpg') }}">
-                <img src="{{ static('assets/Firebase_logo.png') }}">
-                <img src="{{ static('assets/intel_logo.png') }}">
-                <img src="{{ static('assets/Microsoft_logo.png') }}">
-                <img src="{{ static('assets/MongoDB_Logo.jpg') }}">
-                <img src="{{ static('assets/target_logo.png') }}">
-                <img src="{{ static('assets/twilio_logo.png') }}">
-                <img src="{{ static('assets/Visa_logo.png') }}">
+            <div class="logo-container">
+                <div class="logo-row">
+                    <img src="{{ static('assets/Walmart_Logo.jpg') }}" alt="Previous Sponsor Logo - Walmart">
+                    <img src="{{ static('assets/cfe_logo.png') }}" alt="Previous Sponsor Logo - U of M CFE">
+                    <img src="{{ static('assets/Google_logo.png') }}" alt="Previous Sponsor Logo - Google">
+                </div>
+                <div class="logo-row">
+                    <img src="{{ static('assets/Disney_Logo.png') }}" alt="Previous Sponsor Logo - Disney">
+                    <img src="{{ static('assets/Esri_logo.png') }}" alt="Previous Sponsor Logo - Esri">
+                    <img src="{{ static('assets/Facebook_logo.jpg') }}" alt="Previous Sponsor Logo - Facebook">
+                </div>
+                <div class="logo-row">
+                    <img src="{{ static('assets/Firebase_logo.png') }}" alt="Previous Sponsor Logo - Firebase">
+                    <img src="{{ static('assets/intel_logo.png') }}" alt="Previous Sponsor Logo - Intel">
+                    <img src="{{ static('assets/Microsoft_logo.png') }}" alt="Previous Sponsor Logo - Microsoft">
+                </div>
+                <div class="logo-row">
+                    <img src="{{ static('assets/MongoDB_Logo.jpg') }}" alt="Previous Sponsor Logo - MongoDB">
+                    <img src="{{ static('assets/target_logo.png') }}" alt="Previous Sponsor Logo - Target">
+                    <img src="{{ static('assets/twilio_logo.png') }}" alt="Previous Sponsor Logo - Twilio">
+                    <img src="{{ static('assets/Visa_logo.png') }}" alt="Previous Sponsor Logo - Visa">
+                </div>
             </div>
         </div>
     </div>
@@ -395,10 +418,7 @@
 {% block scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
             type="application/javascript"></script>
-    <!--script src="https://npmcdn.com/packery@2.1/dist/packery.pkgd.js" type="application/javascript"></script-->
     <script src="http://mfzy.co/packery.pkgd.js" type="application/javascript"></script>
-    <!--script src="https://rawgithub.com/desandro/classie/master/classie.js" type="application/javascript"></script-->
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"type="application/javascript"></script-->
 
     <script src="{{ static('javascript/main.js') }}" type="application/javascript"></script>
 {% endblock %}
