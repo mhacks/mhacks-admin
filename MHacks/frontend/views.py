@@ -36,11 +36,10 @@ def index(request):
     return render(request, 'index.html')
 
 
-@login_required()
+#@login_required()
 def apply(request):
     if request.method == 'GET':
-        return "Applications doe"  # TODO: render the application form
-    elif request.method == 'POST':
+        return render(request, 'apply.html' , {})
         pass  # TODO: create the object and save it to the db
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
