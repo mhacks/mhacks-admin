@@ -119,6 +119,7 @@ p {
     align-items: center;
     background-color: white;
     color: black;
+    padding: 0 5%;
 }
 
 .sponsors .quotes {
@@ -126,7 +127,13 @@ p {
     display: flex;
 }
 
-.quotes .quote {
+.quotes .quote-column {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.quote-column .quote {
     padding: 6px;
     margin: 4px 0;
     width: 100%;
@@ -144,6 +151,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .logo-container .logo-row {
@@ -152,12 +160,17 @@ p {
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 10px 20px;
+}
+
+.logo-row a {
+    width: 32%;
+    margin: 1% 20px;
 }
 
 .logo-row img {
+    max-width: 100%;
     max-height: 120px;
-    max-width: 25%;
-    margin: 5px 10px;
 }
 
 /* ---- grid ---- */
@@ -201,8 +214,8 @@ p {
     border: 1px solid rgba(20, 20, 20, 0.1);
 }
 
-*[data-expandable='1'] .grid-item-content {
-    border: 5px solid #FFE641;
+.grid-item[data-expandable='1'] {
+    cursor: pointer;
 }
 
 .grid-item[data-expandable='1'] .grid-item-content {
@@ -212,8 +225,21 @@ p {
     padding: 0;
 }
 
-.grid-item[data-expandable='1'] .grid-item-content .basic-info h1 {
+.grid-item[data-expandable='1'] .expand-icon {
+    background-image: url("../assets/glyphicons-plus.png");
+    position:absolute;
+    right: 0;
+    transition: all 0.2s;
+    height: 26px;
+    width: 26px;
+    margin: 10px;
+}
+
+.grid-item[data-expandable='1'] .grid-item-content h1 {
     padding: 0;
+    font-size: 22pt;
+    text-align:center;
+    margin: 0 15px;
 }
 
 .width2.grid-item, .width2 .grid-item-content {
@@ -233,10 +259,15 @@ p {
 }
 
 .grid-item-expand {
-    width: 480px !important;
-    height: 360px !important;
+    width: 480px;
+    height: 360px;
     z-index: 2;
     cursor: pointer;
+}
+
+.grid-item-expand.expand-small {
+    width: 480px !important;
+    height: 360px !important;
 }
 
 .grid-item-expand .grid-item-content {
@@ -250,6 +281,21 @@ p {
     overflow-x: hidden;
     overflow-y: auto;
     transition: all 0.2s;
+}
+
+.grid-item-expand.expand-small .grid-item-content {
+    width: 480px !important;
+    height: 360px !important;
+}
+
+.grid-item-expand[data-expandable='1'] .expand-icon {
+    background-image: url("../assets/glyphicons-minus.png");
+    position:absolute;
+    right: 0;
+    transition: all 0.2s;
+    height: 26px;
+    width: 26px;
+    margin: 10px 20px;
 }
 
 .stamp {
@@ -283,7 +329,7 @@ p {
 }
 
 .grid-item[data-expandable='1']:hover .grid-item-content {
-    background: #ffffff;
+    background: #FFE641;
     box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
     color: rgba(37, 37, 37, 0.63);
     cursor: pointer;
@@ -304,6 +350,11 @@ p {
     max-height: 90%;
     max-width: 90%;
     opacity: 0.6;
+}
+
+.faq-container {
+    width: 90%;
+    margin: 0 auto;
 }
 
 .contact-links {
@@ -337,6 +388,10 @@ p {
     background: #2190cb;
 }
 
+.yellow {
+    background: #FFE641;
+}
+
 li.question {
     list-style-type: none;
     font-style: italic;
@@ -362,6 +417,18 @@ li.answer {
 }
 
 @media only screen and (min-width: 1140px) {
+    .grid-item-expand {
+        width: 1120px !important;
+        height: 600px !important;
+    }
+
+    .grid-item-expand .grid-item-content {
+        width: 1120px;
+        height: 600px;
+    }
+}
+
+@media only screen and (max-width: 1300px){
     .grid-item-expand {
         width: 800px !important;
         height: 480px !important;
@@ -410,15 +477,7 @@ li.answer {
     }
 }
 
-@media only screen and (max-width: 700px) {
-    #logo {
-        width: 100%;
-    }
-
-    .grid-item-expand, .grid-item-expand .grid-item-content {
-        width: 100% !important;
-    }
-
+@media only screen and (max-width: 720px) {
     .grid-item[data-remove='1'] {
         width: 0px;
         height: 0px;
@@ -430,22 +489,29 @@ li.answer {
         display: none;
     }
 
-    .grid-item, .grid-item .grid-item-content {
+    #logo {
+        width: 100%;
+    }
+
+    .grid-item-expand, .grid-item-expand .grid-item-content {
         width: 100% !important;
     }
 
-    *[data-expandable='1'] .grid-item-content {
-        border: 1px solid rgba(20, 20, 20, 0.1);
+    .grid-item, .grid-item .grid-item-content {
+        width: 100% !important;
     }
 
     .logo-container .logo-row {
         flex-direction: column;
     }
 
-    .logo-row img {
-        max-width: 300px;
-        min-height: 0;
-        min-width: 0;
+    .logo-row a {
+        width: 75%;
+        margin: 20px;
+    }
+
+    .quotes .quote-column {
+        width: 100%;
     }
 
     .sponsors .quotes {

@@ -14,8 +14,12 @@ var container = $('#container');
  * Do we want to limit it so that only one tile can be expanded?
  * i.e. contract the previously expanded tile while expanding the new one?
  */
-$packery.on('click', '.grid-item, .grid-item-expand, :not(a)', function(event){
+$packery.on('click', '.grid-item, .grid-item-expand', function(event){
     var item = $(event.currentTarget);
+
+    if(event.target.tagName.toUpperCase() == "A"){
+        return;
+    }
 
     if(item.data("expandable") != 1){
         return;
