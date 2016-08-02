@@ -266,13 +266,13 @@ p {
 }
 
 .grid-item-expand.expand-small {
-    max-width: 480px;
-    max-height: 360px;
+    width: 480px !important;
+    height: 360px !important;
 }
 
 .grid-item-expand.expand-medium {
-    max-width: 640px;
-    max-height: 480px;
+    width: 640px;
+    height: 480px;
 }
 
 .grid-item-expand .grid-item-content {
@@ -289,13 +289,13 @@ p {
 }
 
 .grid-item-expand.expand-small .grid-item-content {
-    max-width: 480px;/* !important;*/
-    max-height: 360px;/* !important;*/
+    width: 480px;/* !important;*/
+    height: 360px;/* !important;*/
 }
 
 .grid-item-expand.expand-medium .grid-item-content {
-    max-width: 640px;
-    max-height: 480px;
+    width: 640px;
+    height: 480px;
 }
 
 .grid-item-expand[data-expandable='1'] .expand-icon {
