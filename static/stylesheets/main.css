@@ -91,7 +91,7 @@ p {
 
 .header a {
     background-color: #2190cb;
-    border: 2px solid #FFE641;
+    border: 2px solid white;
 
     font-size: 14pt;
     text-decoration: none;
@@ -104,7 +104,7 @@ p {
 }
 
 .header a:hover {
-    background-color: #ffffff;
+    background-color: #FFE641;
     box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
     color: rgba(37, 37, 37, 0.63);
     cursor: pointer;
@@ -118,7 +118,7 @@ p {
     justify-content: center;
     align-items: center;
     background-color: white;
-    color: black;
+    color: rgba(37, 37, 37, 0.63);
     padding: 0 5%;
 }
 
@@ -266,8 +266,13 @@ p {
 }
 
 .grid-item-expand.expand-small {
-    width: 480px !important;
-    height: 360px !important;
+    max-width: 480px;
+    max-height: 360px;
+}
+
+.grid-item-expand.expand-medium {
+    max-width: 640px;
+    max-height: 480px;
 }
 
 .grid-item-expand .grid-item-content {
@@ -275,7 +280,7 @@ p {
     height: 360px;
     padding-left: 20px;
     padding-top: 0px;
-    background: #ffffff !important;
+    background: #b9d0e6;
     color: rgba(37, 37, 37, 0.63);
     box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
     overflow-x: hidden;
@@ -284,8 +289,13 @@ p {
 }
 
 .grid-item-expand.expand-small .grid-item-content {
-    width: 480px !important;
-    height: 360px !important;
+    max-width: 480px;/* !important;*/
+    max-height: 360px;/* !important;*/
+}
+
+.grid-item-expand.expand-medium .grid-item-content {
+    max-width: 640px;
+    max-height: 480px;
 }
 
 .grid-item-expand[data-expandable='1'] .expand-icon {
@@ -493,13 +503,21 @@ li.answer {
         width: 100%;
     }
 
-    .grid-item-expand, .grid-item-expand .grid-item-content {
+    .grid-item-expand, .grid-item-expand .grid-item-content,
+    .grid-item, .grid-item .grid-item-content,
+    .grid-item-expand.expand-medium, .grid-item-expand.expand-medium .grid-item-content,
+    .grid-item-expand.expand-small, .grid-item-expand.expand-small .grid-item-content{
         width: 100% !important;
     }
 
-    .grid-item, .grid-item .grid-item-content {
-        width: 100% !important;
+    .grid-item-expand.expand-medium, .grid-item-expand.expand-medium .grid-item-content,
+    .grid-item-expand.expand-small, .grid-item-expand.expand-small .grid-item-content {
+        max-width: 100%;
     }
+
+    /*.grid-item-expand.expand-small .grid-item-content, .grid-item-expand.expand-medium .grid-item-content {
+        max-width: 100%;
+    }*/
 
     .logo-container .logo-row {
         flex-direction: column;

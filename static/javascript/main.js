@@ -7,6 +7,8 @@ var $packery = $('.grid').packery({
 var resizeEvent;
 var openElement = null;
 var rowBG = [];
+var currRow = 0;
+var prevMax = 0;
 
 var container = $('#container');
 
@@ -74,7 +76,7 @@ var ctx;
 var rowHeight = 120;
 
 $(function(){
-    anim_init();
+    //anim_init();
 });
 
 function anim_init(){
@@ -89,7 +91,7 @@ function anim_init(){
     
     for(var y = 0; y < Math.ceil(canvas.height / rowHeight); y++){
         var cIndex = Math.floor(Math.random() * colors.length);
-        var c1 = colors[cIndex];
+        /*var c1 = colors[cIndex];
         var c2 = colors[Math.floor(Math.random() * colors.length)];
         var duration = Math.floor(Math.random() * 2 + 3) * 30;
         rowBG.push({
@@ -101,59 +103,78 @@ function anim_init(){
                 b:(c2.b-c1.b)/duration
             },
             colorIndex: cIndex
-        });
+        });*/
+        ctx.fillStyle = 'rgba(' + colors[cIndex].r + ',' + colors[cIndex].g + ',' + colors[cIndex].b + ',1)';
+        ctx.fillRect(0, y * rowHeight, canvas.width, rowHeight);
     }
+    prevMax = Math.ceil(canvas.height / rowHeight) - 1;
 
     window.requestAnimationFrame(anim_draw);
 }
 
 function anim_draw() {
-    for (var y = 0; y < Math.ceil(canvas.height / rowHeight); y++) {
-        if (rowBG[y] === undefined) {
+
+    if(prevMax < Math.ceil(canvas.height / rowHeight) - 1){
+        for(var y = prevMax; y < Math.ceil(canvas.height / rowHeight); y++){
             var cIndex = Math.floor(Math.random() * colors.length);
-            var c1 = colors[cIndex];
-            var c2 = colors[Math.floor(Math.random() * colors.length)];
-            var duration = Math.floor(Math.random() * 2 + 3) * 30;
-            rowBG[y] = {
-                framesLeft: duration,
-                currentColor: c1,
-                colorDelta: {
-                    r: (c2.r - c1.r) / duration,
-                    g: (c2.g - c1.g) / duration,
-                    b: (c2.b - c1.b) / duration
-                },
-                colorIndex: cIndex
-            };
+            ctx.fillStyle = 'rgba(' + colors[cIndex].r + ',' + colors[cIndex].g + ',' + colors[cIndex].b + ',1)';
+            ctx.fillRect(0, y * rowHeight, canvas.width, rowHeight);
         }
+        prevMax = Math.ceil(canvas.height / rowHeight) - 1;
+    }
 
-        (rowBG[y].framesLeft)--;
-        rowBG[y].currentColor = {
-            r: rowBG[y].currentColor.r + rowBG[y].colorDelta.r,
-            g: rowBG[y].currentColor.g + rowBG[y].colorDelta.g,
-            b: rowBG[y].currentColor.b + rowBG[y].colorDelta.b
-        };
+    /*if(currRow >= rowBG.length){
+        currRow = 0;
+    }
 
-        var newColor = 'rgba(' + Math.floor(rowBG[y].currentColor.r) + ',' + Math.floor(rowBG[y].currentColor.g) + ',' + Math.floor(rowBG[y].currentColor.b) + ',1)';
-        ctx.fillStyle = newColor;
-        ctx.fillRect(0, y * rowHeight, canvas.width, rowHeight);
+    var y = currRow;
 
-        if (rowBG[y].framesLeft == 0) {
-            var duration = Math.floor(Math.random() * 2 + 3) * 30;
-            rowBG[y].framesLeft = duration;
-            var c1 = rowBG[y].currentColor;
-            var newIndex = Math.floor(Math.random() * colors.length);
-            while (newIndex == rowBG[y].colorIndex) {
-                newIndex = Math.floor(Math.random() * colors.length);
-            }
-            var c2 = colors[newIndex];
-            rowBG[y].colorDelta = {
+    if (rowBG[y] === undefined) {
+        var cIndex = Math.floor(Math.random() * colors.length);
+        var c1 = colors[cIndex];
+        var c2 = colors[Math.floor(Math.random() * colors.length)];
+        var duration = Math.floor(Math.random() * 2 + 3) * 30;
+        rowBG[y] = {
+            framesLeft: duration,
+            currentColor: c1,
+            colorDelta: {
                 r: (c2.r - c1.r) / duration,
                 g: (c2.g - c1.g) / duration,
                 b: (c2.b - c1.b) / duration
-            };
-            rowBG[y].colorIndex = newIndex;
-        }
+            },
+            colorIndex: cIndex
+        };
     }
+
+    (rowBG[y].framesLeft)--;
+    rowBG[y].currentColor = {
+        r: rowBG[y].currentColor.r + rowBG[y].colorDelta.r,
+        g: rowBG[y].currentColor.g + rowBG[y].colorDelta.g,
+        b: rowBG[y].currentColor.b + rowBG[y].colorDelta.b
+    };
+
+    var newColor = 'rgba(' + Math.floor(rowBG[y].currentColor.r) + ',' + Math.floor(rowBG[y].currentColor.g) + ',' + Math.floor(rowBG[y].currentColor.b) + ',1)';
+    ctx.fillStyle = newColor;
+    ctx.fillRect(0, y * rowHeight, canvas.width, rowHeight);
+
+    if (rowBG[y].framesLeft == 0) {
+        var duration = Math.floor(Math.random() * 2 + 3) * 30;
+        rowBG[y].framesLeft = duration;
+        var c1 = rowBG[y].currentColor;
+        var newIndex = Math.floor(Math.random() * colors.length);
+        while (newIndex == rowBG[y].colorIndex) {
+            newIndex = Math.floor(Math.random() * colors.length);
+        }
+        var c2 = colors[newIndex];
+        rowBG[y].colorDelta = {
+            r: (c2.r - c1.r) / duration,
+            g: (c2.g - c1.g) / duration,
+            b: (c2.b - c1.b) / duration
+        };
+        rowBG[y].colorIndex = newIndex;
+    }
+
+    currRow++;*/
 
     requestAnimationFrame(anim_draw);
 }
