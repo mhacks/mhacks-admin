@@ -1,39 +1,48 @@
 {% extends 'base.html' %}
 
 {% block headers %}
-    <link rel="stylesheet" media="all" href="{{ static('stylesheets/style.css') }}">
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/main.css') }}">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/application.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+    type="application/javascript"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 {% endblock %}
 {% block content %}
     {% if form %}
         <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}">
             {{ csrf_input }}
             <fieldset>
-                <div class="header">
-                    <div class="container">
-                        <a href="{{ url_for('mhacks-home') }}"><img src="{{ static('assets/logo_orange.png') }}" id="headerLogo" alt="MHacks: Refactor"/></a>
-                    </div>
-                </div>
-
-                <h3 class="first container head"><span>{% block form_title %}{% endblock %}</span></h3>
-                <div class="section container">
+              <div class="header header-apply turquoise">
+                        <div id="logo" class = "logo">
+                          <img style="height:120px" src="{{ static('assets/logo.png') }}">
+                      </div>
+                  </div>
+                <div class="container container_apply">
+                <h3 class="first head"><span>{% block form_title %}{% endblock %}</span></h3>
+                <div class="section">
                     {% block non_field_errors %}
                         {% for error in form.non_field_errors() %}
                             <p class="alert alert-danger">{{ error }}</p>
                         {% endfor %}
                     {% endblock %}
                     {% for field in form %}
-                        <div class="row flexLine">
+                        <div class="row ">
+                            <div class="col-lg-12 text-center ">
                             <h4 class="input_word" {% if field.field.longest %}id="longest"{% endif %}>{{ field.label }}</h4>
                             {{ field.as_widget(attrs={'class': 'form-control input-md'}) }}
                             {% for error in form.errors[field.name] %}
                                 <p class="alert alert-danger">{{ error }}</p>
                             {% endfor %}
                         </div>
+                    </div>
                     {% endfor %}
                 </div>
-                <div class="final container">
+                <div class="final ">
                     <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
                 </div>
+                        </div>
+
             </fieldset>
         </form>
         <div class="container horizontal-center">

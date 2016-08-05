@@ -4,7 +4,6 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     font-size: 12pt;
-    display: flex;
 }
 
 .title-apply{
