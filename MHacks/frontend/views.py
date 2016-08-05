@@ -20,9 +20,8 @@ import mailchimp
 
 MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
 
-def subscribe_email(request):
+def blackout(request):
     if request.method == 'POST':
-        # TODO: Test
         if 'email' not in request.POST:
             return HttpResponseBadRequest()
         
@@ -31,12 +30,10 @@ def subscribe_email(request):
         try:
             MAILCHIMP_API.lists.subscribe(list_id, {'email': email}, double_optin=False)
         except mailchimp.ListAlreadySubscribedError:
-            return JsonResponse({'success': False, 'error': 'Looks like you\'re already subscribed!'})
-        except mailchimp.List_RoleEmailMember:
-            return JsonResponse({'success': False, 'error': 'Unfortunately that\'s an invalid email address'})
+            return render(request, 'blackout.html', {'error': 'Looks like you\'re already subscribed!'})
         except:
-            return JsonResponse({'success': False, 'error': 'Looks like there\'s been an error registering you. Try again or email us at hackathon@umich.edu'})
-        return JsonResponse({'success': True})
+            return render(request, 'blackout.html', {'error': 'Looks like there\'s been an error registering you. Try again or email us at hackathon@umich.edu'})
+        return render(request, 'blackout.html', {'success': True})
     elif request.method == 'GET':
         return render(request, 'blackout.html', {})
     else:
