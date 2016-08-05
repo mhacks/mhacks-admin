@@ -12,7 +12,6 @@ from django.contrib.auth import get_user_model
 from config.settings import MANDRILL_API_KEY
 import logging
 import mandrill
-import pdb
 
 # Sends mail through mandrill client.
 def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
@@ -73,7 +72,6 @@ def send_verification_email(user, request):
     email_vars = {
         'confirmation_url': _get_absolute_url(request, relative_confirmation_url)
     }
-    pdb.set_trace()
     send_mandrill_mail(
         'confirmation_instructions',
         'Confirm Your Email for MHacks',
