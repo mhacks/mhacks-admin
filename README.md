@@ -7,6 +7,34 @@ Pre-installed packages:
 - Postgre SQL (make sure its setup and running!)
     - For this make sure you have a database named mhacks and an empty user and password on localhost. If this is not the case update the development settings DATABASE settings to your own authentication details.
 
+If you're running on Ubuntu/Linux and you run into this output while doing `pip install -r requirements.txt`:
+```
+Complete output from command python setup.py egg_info:
+    running egg_info
+    creating pip-egg-info/psycopg2.egg-info
+    writing pip-egg-info/psycopg2.egg-info/PKG-INFO
+    writing top-level names to pip-egg-info/psycopg2.egg-info/top_level.t$
+t
+    writing dependency_links to pip-egg-info/psycopg2.egg-info/dependency$
+links.txt
+    writing manifest file 'pip-egg-info/psycopg2.egg-info/SOURCES.txt'
+    warning: manifest_maker: standard file '-c' not found
+    
+    Error: pg_config executable not found.
+    
+    Please add the directory containing pg_config to the PATH
+    or specify the full executable path with the option:
+    
+        python setup.py build_ext --pg-config /path/to/pg_config build ..$
+    
+    or with the pg_config option in 'setup.cfg'.
+    
+    ----------------------------------------
+Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-b$
+ild-vqrPuW/psycopg2/
+```
+run `sudo apt-get install libpq-dev python-dev` to fix it and then run `pip install -r requirements.txt` to begin installation again.
+
 Getting started:
 ```bash
     git clone <ssh or git link from repo>
