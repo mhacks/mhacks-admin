@@ -2,7 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from models import MHacksUser
+from models import MHacksUser, Application
 
 
 class LoginForm(AuthenticationForm):
@@ -31,3 +31,23 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = MHacksUser
         fields = ('first_name', 'last_name', "email",)
+
+
+class ApplicationForm(forms.ModelForm):
+    def save(self, commit=True):
+        # override the save to db if necessary
+        pass
+
+    class Meta:
+        model = Application
+        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these 2
+        labels = {
+            'school': 'School or University',
+            'grad_year': 'Expected graduation year',
+            'cortex': 'Interests',
+            'proud_of': 'What\'s something that you made that you\'re proud of (it doesn\'t have to be a hack)? (150 words max)',
+            'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
+            'other_info': 'Anything else you want to tell us?',
+            'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
+            'can_pay': 'How much can you pay?'
+        }

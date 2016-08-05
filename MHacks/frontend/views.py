@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
-from MHacks.forms import RegisterForm, LoginForm
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
 from MHacks.decorator import anonymous_required
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token
 
@@ -36,11 +36,15 @@ def index(request):
     return render(request, 'index.html')
 
 
-#@login_required()
+# @login_required()
 def apply(request):
     if request.method == 'GET':
-        return render(request, 'apply.html' , {})
-        pass  # TODO: create the object and save it to the db
+        form = ApplicationForm(initial=request.GET)
+        context = {'form': form}
+        return render(request, 'application.html', context=context)
+    elif request.method == 'POST':
+        # submit the form
+        pass
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
