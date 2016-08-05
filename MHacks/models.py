@@ -7,6 +7,8 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from managers import MHacksQuerySet
 
+from application_lists import MAJORS, COLLEGES
+
 
 class MHacksUserManager(BaseUserManager):
     use_in_migrations = True
@@ -145,49 +147,55 @@ class PushToken(models.Model):
 
 class Application(Any):
     # Constants
-    GENDERS = (('m', 'Male'), ('f', 'Female'), ('non-binary', 'Non Binary'), ('none', 'Prefer not to answer'))
-    RACES = (('white', 'White'),
+    GENDERS = [('m', 'Male'), ('f', 'Female'), ('non-binary', 'Non Binary'), ('none', 'Prefer not to answer')]
+    RACES = [('white', 'White'),
              ('black', 'Black'),
              ('native', 'American Indian or Alaskan Native'),
              ('asian', 'Asian or Pacific Islander'),
              ('hispanic', 'Hispanic'),
-             ('none', 'Prefer not to answer'))
-    TECH_OPTIONS = (('ios', 'iOS'),
+             ('none', 'Prefer not to answer')]
+    TECH_OPTIONS = [('ios', 'iOS'),
                     ('android', 'Android'),
                     ('web_dev', 'Web Dev'),
                     ('vr', 'Virtual/Augmented Reality'),
                     ('game_dev', 'Game Development'),
-                    ('hardware', 'Hardware'))
-    # Main information
+                    ('hardware', 'Hardware')]
+    MAJORS = MAJORS  # imported from application_lists.py
+    COLLEGES = COLLEGES  # imported from application_lists.py
+
+    # General Information
     user = models.OneToOneField(AUTH_USER_MODEL)
     is_high_school = models.BooleanField()
-    school = models.CharField(max_length=255)
-    major = models.CharField(max_length=255, default='')
-    grad_year = models.DateField()
-    birthday = models.DateField()
+    school = models.CharField(max_length=255, default='', choices=zip(range(0, len(COLLEGES)), COLLEGES))
+    major = models.CharField(max_length=255, default='', choices=zip(range(0, len(MAJORS)), MAJORS))
+    grad_date = models.DateField()
+    age = models.IntegerField(default=18)
 
     # Demographic
     gender = models.CharField(choices=GENDERS, max_length=16)
     race = models.CharField(max_length=16, choices=RACES)
+    pronouns = models.CharField(max_length=255)
 
-    # External Links
+    # Previous Experience
+    num_hackathons = models.IntegerField(default=0)
     github = models.URLField()  # TODO: Add validator for github hostname
+    linkedin = models.URLField()  # TODO: Add validator for linkedin hostname
     devpost = models.URLField()  # TODO: Add validator for devpost hostname
     personal_page = models.URLField()
     resume = models.FileField()
+    other_link = models.URLField()
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS))
-    passionate = models.TextField()
+    proud_of = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()
 
-    # Experience
-    num_hackathons = models.IntegerField(default=0)
-    hack_link = models.URLField()
-    hack_explanation = models.TextField()
-
-    # Miscellaneous
+    # Logistics
+    needs_reimbursement = models.BooleanField(default=False)
+    can_pay = models.FloatField()
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=2)  # state abbreviations
     mentoring = models.BooleanField(default=False)
     submitted = models.BooleanField(default=False)
 
