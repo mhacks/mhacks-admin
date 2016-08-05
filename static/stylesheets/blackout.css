@@ -130,3 +130,9 @@ input::-webkit-input-placeholder {
     opacity: 0.7;
     text-decoration: underline
 }
+
+#email form {
+    display: inherit;
+    width: 500px;
+    margin: auto;
+}
