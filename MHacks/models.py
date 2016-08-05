@@ -160,16 +160,14 @@ class Application(Any):
                     ('vr', 'Virtual/Augmented Reality'),
                     ('game_dev', 'Game Development'),
                     ('hardware', 'Hardware')]
-    MAJORS = MAJORS  # imported from application_lists.py
-    COLLEGES = COLLEGES  # imported from application_lists.py
 
     # General Information
     user = models.OneToOneField(AUTH_USER_MODEL)
     is_high_school = models.BooleanField()
-    school = models.CharField(max_length=255, default='', choices=zip(range(0, len(COLLEGES)), COLLEGES))
-    major = models.CharField(max_length=255, default='', choices=zip(range(0, len(MAJORS)), MAJORS))
+    school = models.CharField(max_length=255, choices=zip(COLLEGES, COLLEGES))
+    major = models.CharField(max_length=255, choices=zip(MAJORS, MAJORS))
     grad_date = models.DateField()
-    age = models.IntegerField(default=18)
+    dob = models.DateField()
 
     # Demographic
     gender = models.CharField(choices=GENDERS, max_length=16)
