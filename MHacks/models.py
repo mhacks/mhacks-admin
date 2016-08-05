@@ -170,11 +170,10 @@ class Application(Any):
     # General Information
     user = models.OneToOneField(AUTH_USER_MODEL)
     is_high_school = models.BooleanField()
-    school = models.CharField(max_length=255)
-    major = models.CharField(max_length=255, default='')
+    school = models.CharField(max_length=255, choices=zip(COLLEGES, COLLEGES))
+    major = models.CharField(max_length=255, choices=zip(MAJORS, MAJORS))
     grad_date = models.DateField()
-    birthday = models.DateField()
-    age = models.IntegerField
+    dob = models.DateField()
 
     # Demographic
     gender = models.CharField(choices=GENDERS, max_length=16)
