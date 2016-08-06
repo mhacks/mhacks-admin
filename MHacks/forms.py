@@ -44,10 +44,16 @@ class ApplicationForm(forms.ModelForm):
         labels = {
             'school': 'School or University',
             'grad_year': 'Expected graduation year',
+            'dob': 'Date of birth',
+            'is_high_school': 'Are you in high school?',
+            'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
             'cortex': 'Interests',
             'proud_of': 'What\'s something that you made that you\'re proud of (it doesn\'t have to be a hack)? (150 words max)',
             'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
-            'can_pay': 'How much can you pay?'
+            'can_pay': 'How much of the travel costs can you pay?',
+            'city': 'Which city will you be traveling from?',
+            'state': 'Which state will you be traveling from?',
+            'mentoring': 'Are you interested in mentoring other hackers?'
         }
