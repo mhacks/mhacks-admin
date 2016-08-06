@@ -57,3 +57,5 @@ class ApplicationForm(forms.ModelForm):
             'state': 'Which state will you be traveling from?',
             'mentoring': 'Are you interested in mentoring other hackers?'
         }
+        dob = forms.TextInput(attrs={'class': 'form-control input-md', 'placeholder': 'MM/YYYY'})
+       
