@@ -42,6 +42,8 @@ class ApplicationForm(forms.ModelForm):
         model = Application
         exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these 2
         labels = {
+            'first_name': '',
+            'last_name': '',
             'school': 'School or University',
             'grad_year': 'Expected graduation year',
             'dob': 'Date of birth',
@@ -57,5 +59,11 @@ class ApplicationForm(forms.ModelForm):
             'state': 'Which state will you be traveling from?',
             'mentoring': 'Are you interested in mentoring other hackers?'
         }
-        dob = forms.TextInput(attrs={'class': 'form-control input-md', 'placeholder': 'MM/YYYY'})
+        widgets = {
+            'first_name' : forms.TextInput(attrs={'placeholder':'First Name'}),
+            'last_name' : forms.TextInput(attrs={'placeholder':'Last Name'}),
+            'dob': forms.TextInput(attrs={'placeholder':'DD/MM/YYYY'}),
+            'grad_year': forms.TextInput(attrs={'placeholder':'YYYY'})
+
+        }
        
