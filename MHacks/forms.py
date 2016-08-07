@@ -66,5 +66,5 @@ class ApplicationForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
             'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY'}),
             'grad_year': forms.TextInput(attrs={'placeholder': 'YYYY'}),
-            'cortex': forms.RadioSelect
+            'cortex': forms.RadioSelect(attrs={'class': 'checkbox-inline checkbox-style'})
             }
