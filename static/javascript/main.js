@@ -11,6 +11,11 @@ var currRow = 0;
 var prevMax = 0;
 
 var container = $('#container');
+var $header = $('.header');
+var $logoText = $('#logoText');
+var $logoM = $('#logoM');
+var $eventInfo = $('#eventInfo');
+var $headerButtons = $('#headerButtons');
 
 /*
  * Do we want to limit it so that only one tile can be expanded?
@@ -61,6 +66,36 @@ $(window).resize(function () {
         //console.log("done with delay");
         $packery.packery();
     }, 250);
+});
+
+$(window).scroll(function() {
+    var scrollValue = $(this).scrollTop();
+
+    if(scrollValue < 60){
+        $header.css("height", 120 - scrollValue);
+        $header.removeClass("header-condensed");
+        $eventInfo.css("padding-left", 50 - 25 * scrollValue / 60);
+        $headerButtons.css("padding-right", 50 - 25 * scrollValue / 60);
+        if(scrollValue < 45){
+            $logoText.removeClass("visibilityHidden");
+            if(scrollValue > 15) {
+                $logoText.css("opacity", (45.0 - scrollValue) / 30.0);
+                $logoM.css("height", (74.2 + 15.8 * (1 - (45.0 - scrollValue) / 30.0)) + "%");
+            } else {
+                $logoText.css("opacity", 1);
+                $logoM.css("height", "74.2%");
+            }
+        } else {
+            $logoText.css("opacity", 0);
+            $logoText.addClass("visibilityHidden");
+            $logoM.css("height", "90%");
+        }
+    } else {
+        $header.addClass("header-condensed");
+        $logoText.css("opacity", 0);
+        $logoText.addClass("visibilityHidden");
+        $logoM.css("height", "90%");
+    }
 });
 
 //Potential fancy animated background, WIP

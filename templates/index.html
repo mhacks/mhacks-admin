@@ -5,27 +5,40 @@
 {% endblock %}
 
 {% block content %}
-    <canvas id="bgCanvas"></canvas>
+    <!--canvas id="bgCanvas"></canvas-->
     <div id="container">
         <div class="header turquoise">
-            <img style="height:120px" src="{{ static('assets/logo.png') }}" alt="MHacks 8 Logo">
-            <h1>October 7-9 • Masonic Temple, Detroit</h1>
-            <a href="{{ url_for('mhacks-apply') }}" target="_blank">Apply!</a>
+            <div id="eventInfo">
+                <h2>October 7-9</h2>
+                <p>Detroit Masonic Temple</p>
+            </div>
+            <div id="logo">
+                <img id="logoM" src="{{ static('assets/logo-m.png') }}" alt="MHacks 8 Logo - M">
+                <img id="logoText" src="{{ static('assets/logo-text.png') }}" alt="MHacks 8 Logo - Hacks 8">
+            </div>
+            <div id="headerButtons">
+                <a href="mailto:hackathon@umich.edu" target="_blank">Email</a>
+                <a href="{{ url_for('mhacks-applyMentor') }}">Mentor</a>
+                <a href="{{ url_for('mhacks-apply') }}">Apply</a>
+            </div>
         </div>
         <div class="grid">
-            <!--div id="logo" class="lightBlue stamp">
-
-            </div-->
-            <div class="grid-item darkBlue height2" data-remove="2" data-expandable="0">
+            <div class="grid-item darkBlue " data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
 
                 </div>
             </div>
-            <div class="grid-item lightTurquoise width2 height2" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
+            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-11.png') }}" alt="Hardware">
                 </div>
             </div>
-            <div class="grid-item expand-small blue width2 height2" data-remove="0" data-expandable="1">
+            <div class="grid-item lightTurquoise  " data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+
+                </div>
+            </div>
+            <div class="grid-item expand-small blue  " data-remove="0" data-expandable="1">
                 <div class="expand-icon"></div>
                 <div class="grid-item-content">
                     <div class="basic-info">
@@ -43,17 +56,22 @@
                     </div>
                 </div>
             </div>
+            <div class="grid-item width2" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="flavor-image" src="{{ static('assets/main-page-1.png') }}" alt="Headset Technology">
+                </div>
+            </div>
             <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
-            <div class="grid-item lightBlue width2" data-remove="1" data-expandable="0">
+            <div class="grid-item lightBlue " data-remove="1" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
             <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
                 <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/webic-05.png') }}" alt="Smartphone">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-06.png') }}" alt="Video Games">
                 </div>
             </div>
             <div class="grid-item turquoise" data-remove="2" data-expandable="0">
@@ -62,26 +80,34 @@
             </div>
             <div class="grid-item blue" data-remove="1" data-expandable="0">
                 <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/webic-06.png') }}" alt="Virtual Reality Headset">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-07.png') }}" alt="Virtual Reality Headset">
                 </div>
             </div>
-            <div class="grid-item lightBlue height3" data-remove="2" data-expandable="0">
+            <div class="grid-item lightBlue " data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
-            <div class="grid-item darkBlue" data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
+            <div class="grid-item darkBlue" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <a href="https://www.facebook.com/MHacksHackathon/" target="_blank"><img
+                        src="{{ static('assets/fb-link.png') }}"
+                        alt="MHacks Facebook, https://www.facebook.com/MHacksHackathon"/></a>
                 </div>
             </div>
             <div class="grid-item blue" data-remove="1" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
+            <div class="grid-item width2" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="flavor-image" src="{{ static('assets/main-page-2.png') }}" alt="LED Strip Device">
+                </div>
+            </div>
             <div class="grid-item lightBlue" data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
-            <div class="grid-item lightTurquoise width2" data-remove="2" data-expandable="0">
+            <div class="grid-item lightTurquoise " data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
@@ -92,7 +118,9 @@
             <div class="grid-item turquoise" data-remove="0" data-expandable="1">
                 <div class="expand-icon"></div>
                 <div class="grid-item-content">
-                    <h1>FAQ</h1>
+                    <div class="basic-info">
+                        <h1>FAQ</h1>
+                    </div>
                     <div class="extra-info">
                         <div class="faq-container">
                             <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">General</h2>
@@ -287,28 +315,25 @@
                     </div>
                 </div>
             </div>
-            <div class="grid-item lightTurquoise height2 width2" data-remove="2" data-expandable="0">
+            <div class="grid-item lightTurquoise  " data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
             <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
                 <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/webic-07.png') }}" alt="Android Robot">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-08.png') }}" alt="Smartphone">
                 </div>
             </div>
-            <div class="grid-item blue height2" data-remove="1" data-expandable="0">
+            <div class="grid-item width2" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="flavor-image" src="{{ static('assets/main-page-3.png') }}" alt="Mentor Helping Students">
+                </div>
+            </div>
+            <div class="grid-item blue " data-remove="1" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
-            <!--div class="grid-item lightBlue width2 height3" data-remove="0" data-expandable="0">
-                <div class="grid-item-content">
-                    <div class="basic-info" style="text-align:center;">
-                        <h1 style="text-align:left;">Presented by:</h1>
-                        <img style="height:260px; margin-left:-20px;" src="{{ static('assets/logo.png') }}">
-                    </div>
-                </div>
-            </div-->
-            <div class="grid-item grid-expand-medium darkBlue height2 width2" data-remove="0" data-expandable="1">
+            <div class="grid-item grid-expand-medium darkBlue  " data-remove="0" data-expandable="1">
                 <div class="expand-icon"></div>
                 <div class="grid-item-content">
                     <div class="basic-info">
@@ -339,7 +364,7 @@
                     </div>
                 </div>
             </div>
-            <div class="grid-item turquoise width2" data-remove="1" data-expandable="0">
+            <div class="grid-item turquoise " data-remove="1" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
@@ -347,39 +372,33 @@
                 <div class="grid-item-content">
                 </div>
             </div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-10.png') }}" alt="Computer">
+                </div>
+            </div>
             <div class="grid-item blue" data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
-            <div class="grid-item lightBlue width2" data-remove="0" data-expandable="0">
-                <div class="grid-item-content">
-                    <div class="basic-info">
-                        <h1>Contact Us</h1>
-                        <div class="contact-links">
+            <div class="grid-item lightBlue " data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
                             <a href="https://twitter.com/mhacks" target="_blank"><img
                                     src="{{ static('assets/twitter-link.png') }}"
                                     alt="MHacks Twitter, https://twitter.com/mhacks"/></a>
-                            <a href="https://www.facebook.com/MHacksHackathon/" target="_blank"><img
-                                    src="{{ static('assets/fb-link.png') }}"
-                                    alt="MHacks Facebook, https://www.facebook.com/MHacksHackathon"/></a>
-                            <a href="mailto:hackathon@umich.edu" target="_blank"><img
-                                    src="{{ static('assets/email-link.png') }}"
-                                    alt="MHacks Email, hackathon@umich.edu"/></a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="grid-item turquoise" data-remove="2" data-expandable="0">
                 <div class="grid-item-content">
                 </div>
             </div>
-            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
+            <div class="grid-item width2" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="flavor-image" src="{{ static('assets/main-page-4.png') }}" alt="Students Collaborating">
                 </div>
             </div>
-            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/webic-10.png') }}" alt="Hardware">
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
                 </div>
             </div>
             <div class="grid-item blue" data-remove="2" data-expandable="0">
@@ -390,78 +409,117 @@
                 <div class="grid-item-content">
                 </div>
             </div>
+            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-09.png') }}" alt="Android Robot">
+                </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
         </div>
-        <div class="sponsors">
-            <h3>Sponsorship</h3>
-            <p>MHacks is the gateway between you and the top tech talent in the world. Whether you come to network,
-                promote brand awareness, or get feedback on a product or API, we’ll provide the tools you need to make
-                the most out of your experience.</p>
-            <div class="quotes">
-                <div class="quote-column">
-                    <p class="quote"><i>“MHacks has been a staple event in Concur’s University Tour over the past two
-                        years.
-                        The MHacks atmosphere fosters creativity and innovation from developers and entrepreneurs alike.
-                        When it comes to collegiate hackathons, MHacks is the place to be!”</i><br/>
-                        <span class="source"><b>-Concur</b></span>
-                    </p>
-                </div>
-                <div class="quote-column">
-                    <p class="quote"><i>“This was one of the most well organized student-run hackathons that we’ve ever
-                        sponsored.”</i><br/>
-                        <span class="source"><b>-Google</b></span>
-                    </p>
-                    <p class="quote"><i>“The caliber and number of students that MHacks attracts is like no other
-                        hacking
-                        event.”</i><br/>
-                        <span class="source"><b>-Walmart</b></span>
-                    </p>
-                </div>
-            </div>
-            <p> Interested in sponsoring? Want more information? Shoot us an email at<br/><a
-                    href="mailto:sponsor-mhacks@umich.edu" target="_blank">sponsor-mhacks@umich.edu</a>
-                <br/><br/>We have an awesome lineup of sponsors for you.<br/>Check back soon for company logos.
-            </p>
 
-            <h1 style="font-size:16pt">Previous Sponsors</h1>
-            <div class="logo-container">
-                <div class="logo-row">
-                    <a target="_blank" href="http://www.cfe.umich.edu"><img src="{{ static('assets/cfe_logo.png') }}"
-                                                                            alt="Previous Sponsor Logo - U of M CFE"></a>
+        <div class="sponsors">
+            <div class="flex-row">
+                <div class="col-2-bigL">
+                    <h1>Sponsorship</h1>
+                    <p>MHacks is the gateway between you and the top tech talent in the world. Whether you come to network,
+                        promote brand awareness, or get feedback on a product or API, we’ll provide the tools you need to make
+                        the most out of your experience.</p>
+                    <p>Interested in sponsoring? Want more information? Shoot us an email at
+                       <a href="mailto:sponsor-mhacks@umich.edu" target="_blank">sponsor-mhacks@umich.edu</a>
+                       <br/><br/>We have an awesome lineup of sponsors for you.<br/>Check back soon for company logos.
+                    </p>
                 </div>
-                <div class="logo-row">
-                    <a target="_blank" href="http://www.campus2walmart.com"><img
-                            src="{{ static('assets/Walmart_Logo.png') }}" alt="Previous Sponsor Logo - Walmart"></a>
-                    <a target="_blank" href="https://corporate.target.com/careers/career-areas/technology"><img
-                            src="{{ static('assets/target_logo.png') }}" alt="Previous Sponsor Logo - Target"></a>
-                    <a target="_blank" href="https://www.google.com/about/careers"><img
-                            src="{{ static('assets/Google_logo.png') }}" alt="Previous Sponsor Logo - Google"></a>
-                </div>
-                <div class="logo-row">
-                    <a target="_blank"
-                       href="https://jobs.disneycareers.com/category/technology-information-technology-jobs/391/1945/1"><img
-                            src="{{ static('assets/Disney_Logo.png') }}" alt="Previous Sponsor Logo - Disney"></a>
-                    <a target="_blank" href="http://www.developers.arcgis.com"><img
-                            src="{{ static('assets/Esri_logo.png') }}" alt="Previous Sponsor Logo - Esri"></a>
-                    <a target="_blank" href="http://www.facebook.com/university"><img
-                            src="{{ static('assets/Facebook_logo.png') }}" alt="Previous Sponsor Logo - Facebook"></a>
-                </div>
-                <div class="logo-row">
-                    <a target="_blank" href="http://www.firebase.com"><img
-                            src="{{ static('assets/Firebase_logo.png') }}" alt="Previous Sponsor Logo - Firebase"></a>
-                    <a target="_blank" href="http://www.intel.com/content/www/us/en/homepage.html"><img
-                            src="{{ static('assets/intel_logo.png') }}" alt="Previous Sponsor Logo - Intel"></a>
-                    <a target="_blank" href="http://www.microsoft.com"><img
-                            src="{{ static('assets/Microsoft_logo.png') }}" alt="Previous Sponsor Logo - Microsoft"></a>
-                </div>
-                <div class="logo-row">
-                    <a target="_blank" href="https://www.mongodb.com"><img src="{{ static('assets/MongoDB_Logo.png') }}"
-                                                                           alt="Previous Sponsor Logo - MongoDB"></a>
-                    <a target="_blank" href="http://www.twilio.com"><img src="{{ static('assets/twilio_logo.png') }}"
-                                                                         alt="Previous Sponsor Logo - Twilio"></a>
-                    <a target="_blank" href="https://www.usa.visa.com"><img src="{{ static('assets/Visa_logo.png') }}"
-                                                                            alt="Previous Sponsor Logo - Visa"></a>
+                <div class="col-2-smallR" style="text-align: center">
+                    <img class="sponsors-image" src="{{ static('assets/sponsorIllustration-13.png') }}" alt="Sponsorship">
                 </div>
             </div>
+
+
+            <div class="col-1 flex-row">
+                <div class="col-2 sponsors-tile">
+                    <p class="quote">This was one of the most well organized student-run hackathons that we’ve ever sponsored.</p>
+                    <p class="source">Google</p>
+                </div>
+                <div class="col-2 sponsors-tile">
+                    <p class="quote">The caliber and number of students that MHacks attracts is like no other hacking event.</p>
+                    <p class="source">Walmart</p>
+                </div>
+                <div style="width: 100%" class="sponsors-tile">
+                    <p class="quote">MHacks has been a staple event in Concur’s University Tour over the past two years.
+                    The MHacks atmosphere fosters creativity and innovation from developers and entrepreneurs alike.
+                    When it comes to collegiate hackathons, MHacks is the place to be!</p>
+                    <p class="source">Concur</p>
+                </div>
+            </div>
+
+
+            <h1 style="margin-top:25px;">Past Sponsors</h1>
+            <div class="col-1 center-col" style="margin-top: 25px;">
+                <div class="logo-container sponsors-tile">
+                    <div class="logo-row">
+                        <a target="_blank" href="http://www.cfe.umich.edu"><img
+                                src="{{ static('assets/cfe_logo.png') }}"
+                                alt="Previous Sponsor Logo - U of M CFE"></a>
+                    </div>
+                    <div class="logo-row">
+                        <a target="_blank" href="http://www.campus2walmart.com"><img
+                                src="{{ static('assets/Walmart_Logo.png') }}" alt="Previous Sponsor Logo - Walmart"></a>
+                        <a target="_blank" href="https://corporate.target.com/careers/career-areas/technology"><img
+                                src="{{ static('assets/target_logo.png') }}" alt="Previous Sponsor Logo - Target"></a>
+                        <a target="_blank" href="https://www.google.com/about/careers"><img
+                                src="{{ static('assets/Google_logo.png') }}" alt="Previous Sponsor Logo - Google"></a>
+                    </div>
+                    <div class="logo-row">
+                        <a target="_blank"
+                           href="https://jobs.disneycareers.com/category/technology-information-technology-jobs/391/1945/1"><img
+                                src="{{ static('assets/Disney_Logo.png') }}" alt="Previous Sponsor Logo - Disney"></a>
+                        <a target="_blank" href="http://www.developers.arcgis.com"><img
+                                src="{{ static('assets/Esri_logo.png') }}" alt="Previous Sponsor Logo - Esri"></a>
+                        <a target="_blank" href="http://www.facebook.com/university"><img
+                                src="{{ static('assets/Facebook_logo.png') }}"
+                                alt="Previous Sponsor Logo - Facebook"></a>
+                    </div>
+                    <div class="logo-row">
+                        <a target="_blank" href="http://www.firebase.com"><img
+                                src="{{ static('assets/Firebase_logo.png') }}"
+                                alt="Previous Sponsor Logo - Firebase"></a>
+                        <a target="_blank" href="http://www.intel.com/content/www/us/en/homepage.html"><img
+                                src="{{ static('assets/intel_logo.png') }}" alt="Previous Sponsor Logo - Intel"></a>
+                        <a target="_blank" href="http://www.microsoft.com"><img
+                                src="{{ static('assets/Microsoft_logo.png') }}" alt="Previous Sponsor Logo - Microsoft"></a>
+                    </div>
+                    <div class="logo-row">
+                        <a target="_blank" href="https://www.mongodb.com"><img
+                                src="{{ static('assets/MongoDB_Logo.png') }}"
+                                alt="Previous Sponsor Logo - MongoDB"></a>
+                        <a target="_blank" href="http://www.twilio.com"><img
+                                src="{{ static('assets/twilio_logo.png') }}"
+                                alt="Previous Sponsor Logo - Twilio"></a>
+                        <a target="_blank" href="https://www.usa.visa.com"><img
+                                src="{{ static('assets/Visa_logo.png') }}"
+                                alt="Previous Sponsor Logo - Visa"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bar">
+            &copy; MHacks 2016
         </div>
     </div>
 {% endblock %}
