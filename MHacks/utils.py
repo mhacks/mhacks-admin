@@ -9,7 +9,30 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import get_user_model
+from config.settings import MANDRILL_API_KEY
+import logging
+import mandrill
 
+# Sends mail through mandrill client.
+def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
+    try:
+        MANDRILL_CLIENT = mandrill.Mandrill(MANDRILL_API_KEY)
+        message = {
+            'subject': subject,
+            'from_email': 'hackathon@umich.edu',
+            'from_name': 'MHacks',
+            'to': [{'email': email_to}],
+            'global_merge_vars': []
+        }
+        for k, v in email_vars.iteritems():
+            message['global_merge_vars'].append(
+                    {'name': k, 'content': v}
+            )
+        return MANDRILL_CLIENT.messages.send_template(template_name, [], message)
+    except mandrill.Error, e:
+        logger = logging.getLogger(__name__)
+        logger.error('A mandrill error occurred: %s - %s' % (e.__class__, e))
+        raise
 
 def send_email(to_email, email_template_name, html_email_template_name, context):
 
@@ -23,34 +46,56 @@ def send_email(to_email, email_template_name, html_email_template_name, context)
     send_mail(subject=subject, message=body, from_email=EMAIL_HOST_USER, recipient_list=[to_email],
               html_message=html_email)
 
-
-def _send_email_with_signed_token(user, request, subject, email_template_name, html_email_template_name):
-    """
-    Create a cryptographically signed token to validate the email or reset password
-    We don't need to store it on the backend so its a major win!
-    :param user: The user for who needs to verify his/her email
-    :param request: The request that generated the need for a verification
-    """
+# Turns a relative URL into an absolute URL.
+def _get_absolute_url(request, relative_url):
     current_site = get_current_site(request)
-    context = {
-        'email': user.email,
-        'domain': current_site.domain,
-        'site_name': current_site.name,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'user': user,
-        'token': default_token_generator.make_token(user),
-        'protocol': request.scheme,
-        'subject': subject
-    }
-    send_email(user.email, email_template_name, html_email_template_name, context)
+    return "{0}://{1}{2}".format(
+        request.scheme,
+        current_site.domain,
+        relative_url
+    )
 
+def send_application_confirmation_email(user, request):
+    send_mandrill_mail(
+        'application_confirmation',
+        'Your MHacks Application Is Submitted',
+        user.email
+    )
 
 def send_verification_email(user, request):
-    _send_email_with_signed_token(user, request, 'Confirmation Instructions', 'confirm_email.txt', 'confirm_email.html')
+    token = default_token_generator.make_token(user)
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    relative_confirmation_url = reverse(
+        'mhacks-validate',
+        kwargs={'uid':uid, 'token': token}
+    )
+    email_vars = {
+        'confirmation_url': _get_absolute_url(request, relative_confirmation_url)
+    }
+    send_mandrill_mail(
+        'confirmation_instructions',
+        'Confirm Your Email for MHacks',
+        user.email,
+        email_vars
+    )
 
 
 def send_password_reset_email(user, request):
-    _send_email_with_signed_token(user, request, 'Password Reset Instructions', 'password_reset_email.txt', 'password_reset_email.html')
+    token = default_token_generator.make_token(user)
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    update_password_url = reverse(
+        'mhacks-update_password',
+        kwargs={'uid':uid, 'token': token}
+    )
+    email_vars = {
+        'update_password_url': _get_absolute_url(request, update_password_url)
+    }
+    send_mandrill_mail(
+        'password_reset_instructions',
+        'Reset Your MHacks Password',
+        user.email,
+        email_vars
+    )
 
 
 def validate_signed_token(uid, token, require_token=True):

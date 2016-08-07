@@ -20,6 +20,12 @@ DATABASES = {
     }
 }
 
+# This is for push_notifications
+PUSH_NOTIFICATIONS_SETTINGS = {
+    "GCM_API_KEY": "",
+    "APNS_CERTIFICATE": ""
+}
+
 # Security
 # https://docs.djangoproject.com/en/1.9/topics/security/#ssl-https
 # TODO: Use True for all of these for HTTPS on production settings
@@ -32,6 +38,8 @@ EMAIL_HOST_USER = 'hackathon@umich.edu'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Remove this line from production
 EMAIL_HOST = 'localhost'
 
+MANDRILL_API_KEY = 'THIS IS A DUMMY API KEY'
 MAILCHIMP_API_KEY = ''  # Use API KEY for MAILCHIMP on production
 MAILCHIMP_INTEREST_LIST = 'https://us6.api.mailchimp.com/3.0/lists'  # Fill with actual list URL on production
 # ^ This is for the blackout interest link
+
