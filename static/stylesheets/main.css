@@ -496,7 +496,7 @@ p {
 
 .grid-item-expand[data-expandable='1'] .expand-icon:before {
     font-family: FontAwesome;
-    content: "\f055";
+    content: "\f056";
     color: #0093B1;
     position:absolute;
     right: 0;
