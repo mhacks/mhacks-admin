@@ -182,7 +182,7 @@ class Application(Any):
     resume = models.FileField()
 
     # Interests
-    cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS))
+    cortex = models.CharField(max_length=16, choices=TECH_OPTIONS)
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()

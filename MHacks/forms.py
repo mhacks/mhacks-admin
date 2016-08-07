@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import widgets
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -65,4 +66,5 @@ class ApplicationForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
             'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY'}),
             'grad_year': forms.TextInput(attrs={'placeholder': 'YYYY'}),
-        }
+            'cortex': forms.RadioSelect
+            }
