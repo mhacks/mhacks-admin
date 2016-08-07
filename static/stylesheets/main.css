@@ -368,8 +368,8 @@ p {
 }
 
 .grid-item-expand.expand-medium {
-    width: 640px;
-    height: 480px;
+    width: 640px !important;
+    height: 480px !important;
 }
 
 .grid-item-expand .grid-item-content {
@@ -564,7 +564,7 @@ li.answer {
     align-items: center;
 }
 
-@media only screen and (min-width: 1140px) {
+@media only screen and (min-width: 1300px) {
     .grid-item-expand {
         width: 1120px /*!important*/;
         height: 600px /*!important*/;
