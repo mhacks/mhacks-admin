@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from managers import MHacksQuerySet
+from django import forms
 
 
 class MHacksUserManager(BaseUserManager):
@@ -144,6 +145,7 @@ class PushToken(models.Model):
 
 
 class Application(Any):
+    from application_lists import COLLEGES, MAJORS
     # Constants
     GENDERS = (('m', 'Male'), ('f', 'Female'), ('non-binary', 'Non Binary'), ('none', 'Prefer not to answer'))
     RACES = (('white', 'White'),
@@ -164,7 +166,7 @@ class Application(Any):
     school = models.CharField(max_length=255)
     user = models.OneToOneField(AUTH_USER_MODEL)
     is_high_school = models.BooleanField()
-    school = models.CharField(max_length=255)
+    school = models.CharField(max_length=255, default='')
     major = models.CharField(max_length=255, default='')
     grad_year = models.DateField()
     birthday = models.DateField()

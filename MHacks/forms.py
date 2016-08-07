@@ -1,7 +1,8 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+
 from models import MHacksUser, Application
 
 
@@ -40,7 +41,7 @@ class ApplicationForm(forms.ModelForm):
 
     class Meta:
         model = Application
-        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these 2
+        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these
         labels = {
             'first_name': '',
             'last_name': '',
@@ -50,7 +51,7 @@ class ApplicationForm(forms.ModelForm):
             'is_high_school': 'Are you in high school?',
             'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
             'cortex': 'Interests',
-            'proud_of': 'What\'s something that you made that you\'re proud of (it doesn\'t have to be a hack)? (150 words max)',
+            'passionate': 'What\'s something that you made that you\'re proud of (it doesn\'t have to be a hack)? (150 words max)',
             'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
@@ -60,10 +61,8 @@ class ApplicationForm(forms.ModelForm):
             'mentoring': 'Are you interested in mentoring other hackers?'
         }
         widgets = {
-            'first_name' : forms.TextInput(attrs={'placeholder':'First Name'}),
-            'last_name' : forms.TextInput(attrs={'placeholder':'Last Name'}),
-            'dob': forms.TextInput(attrs={'placeholder':'DD/MM/YYYY'}),
-            'grad_year': forms.TextInput(attrs={'placeholder':'YYYY'})
-
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
+            'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY'}),
+            'grad_year': forms.TextInput(attrs={'placeholder': 'YYYY'}),
         }
-       
