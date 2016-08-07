@@ -57,10 +57,10 @@ $packery.on('click', '.grid-item, .grid-item-expand', function(event){
 });
 
 $(window).resize(function () {
-    canvas = document.querySelector('#bgCanvas');
+    /*canvas = document.querySelector('#bgCanvas');
     canvas.height = (container.height() < window.innerHeight) ? window.innerHeight : container.height(); //(container.height() > canvas.height) ? container.height() : canvas.height;
     canvas.width = container.width(); //(container.width() > canvas.width) ? container.width() : canvas.width;
-
+    */
     clearTimeout(resizeEvent);
     resizeEvent = setTimeout(function () {
         //console.log("done with delay");
