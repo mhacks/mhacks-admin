@@ -40,12 +40,16 @@ class ApplicationForm(forms.ModelForm):
         # override the save to db if necessary
         pass
 
+    def __init__(self, *args, **kwargs):
+        super(ApplicationForm, self).__init__(*args, **kwargs)
+        self.fields['school'].cols = 10
+        self.fields['is_high_school'].cols = 2
+        self.fields['is_high_school'].end_row = True
+
     class Meta:
         model = Application
         exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these
         labels = {
-            'first_name': '',
-            'last_name': '',
             'school': 'School or University',
             'grad_year': 'Expected graduation year',
             'dob': 'Date of birth',
@@ -61,9 +65,8 @@ class ApplicationForm(forms.ModelForm):
             'state': 'Which state will you be traveling from?',
             'mentoring': 'Are you interested in mentoring other hackers?'
         }
+
         widgets = {
-            'first_name': forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'first_name form-control input-md'}),
-            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control input-md'}),
             'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             'grad_year': forms.TextInput(attrs={'placeholder': 'YYYY', 'class': 'form-control input-md'}),
             'cortex': forms.RadioSelect(attrs={'class': 'checkbox-inline checkbox-style'})
