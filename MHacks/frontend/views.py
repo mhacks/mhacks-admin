@@ -65,6 +65,15 @@ def apply(request):
     return render(request, 'application.html', context=context)
 
 
+# I just copied the code from apply, not sure if the mentorship form needs anything different -Nevin
+def applyMentor(request):
+    if request.method == 'GET':
+        return render(request, 'applyMentor.html', {})
+        pass
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
+
 @anonymous_required
 def login(request):
     """
