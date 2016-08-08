@@ -32,7 +32,7 @@
                         <div class="row ">
                             <div class="col-lg-12 text-center ">
                             <h4 class="input_word" {% if field.field.longest %}id="longest"{% endif %}>{{ field.label }}</h4>
-                            {{ field.as_widget(attrs={'class': 'form-control input-md'}) }}
+                            {{ field.as_widget() }}
                             {% for error in form.errors[field.name] %}
                                 <p class="alert alert-danger">{{ error }}</p>
                             {% endfor %}

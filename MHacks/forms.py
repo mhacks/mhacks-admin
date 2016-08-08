@@ -62,9 +62,9 @@ class ApplicationForm(forms.ModelForm):
             'mentoring': 'Are you interested in mentoring other hackers?'
         }
         widgets = {
-            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
-            'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY'}),
-            'grad_year': forms.TextInput(attrs={'placeholder': 'YYYY'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'first_name form-control input-md'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control input-md'}),
+            'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
+            'grad_year': forms.TextInput(attrs={'placeholder': 'YYYY', 'class': 'form-control input-md'}),
             'cortex': forms.RadioSelect(attrs={'class': 'checkbox-inline checkbox-style'})
-            }
+        }
