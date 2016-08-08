@@ -161,12 +161,9 @@ class Application(Any):
                     ('game_dev', 'Game Development'),
                     ('hardware', 'Hardware'))
     # Main information
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    school = models.CharField(max_length=255)
     user = models.OneToOneField(AUTH_USER_MODEL)
-    is_high_school = models.BooleanField()
     school = models.CharField(max_length=255, default='', choices=zip(COLLEGES, COLLEGES))
+    is_high_school = models.BooleanField()
     major = models.CharField(max_length=255, default='', choices=zip(MAJORS, MAJORS))
     grad_year = models.DateField()
     birthday = models.DateField()
