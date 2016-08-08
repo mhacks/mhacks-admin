@@ -13,6 +13,7 @@ from config.settings import MANDRILL_API_KEY
 import logging
 import mandrill
 
+
 # Sends mail through mandrill client.
 def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
     try:
@@ -24,15 +25,16 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
             'to': [{'email': email_to}],
             'global_merge_vars': []
         }
-        for k, v in email_vars.iteritems():
+        for k, v in email_vars.items():
             message['global_merge_vars'].append(
                     {'name': k, 'content': v}
             )
         return MANDRILL_CLIENT.messages.send_template(template_name, [], message)
-    except mandrill.Error, e:
+    except mandrill.Error as e:
         logger = logging.getLogger(__name__)
         logger.error('A mandrill error occurred: %s - %s' % (e.__class__, e))
         raise
+
 
 def send_email(to_email, email_template_name, html_email_template_name, context):
 
@@ -46,6 +48,7 @@ def send_email(to_email, email_template_name, html_email_template_name, context)
     send_mail(subject=subject, message=body, from_email=EMAIL_HOST_USER, recipient_list=[to_email],
               html_message=html_email)
 
+
 # Turns a relative URL into an absolute URL.
 def _get_absolute_url(request, relative_url):
     current_site = get_current_site(request)
@@ -55,12 +58,14 @@ def _get_absolute_url(request, relative_url):
         relative_url
     )
 
+
 def send_application_confirmation_email(user, request):
     send_mandrill_mail(
         'application_confirmation',
         'Your MHacks Application Is Submitted',
         user.email
     )
+
 
 def send_verification_email(user, request):
     token = default_token_generator.make_token(user)

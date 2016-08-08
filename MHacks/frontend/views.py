@@ -15,6 +15,7 @@ from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INT
 from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
 from MHacks.decorator import anonymous_required
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token
+from MHacks.models import Application, MHacksUser
 
 
 def blackout_page(request):
@@ -36,25 +37,33 @@ def index(request):
     return render(request, 'index.html')
 
 
-# @login_required()
+@login_required()
 def apply(request):
     if request.method == 'GET':
-        form = ApplicationForm(initial=request.GET)
-        context = {'form': form}
-        return render(request, 'application.html', context=context)
+        # find the user's application if it exists
+        try:
+            application = Application.objects.get(user=request.user)
+        except Application.DoesNotExist:
+            application = None
+
+        if application and application.submitted:
+            return redirect(reverse('mhacks-dashboard'))
+
+        form = ApplicationForm(initial=application)
     elif request.method == 'POST':
-        # submit the form
-        pass
+        form = ApplicationForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            app = form.save(commit=False)
+            app.submitted = True
+            app.user = request.user
+            app.save()
+            return redirect(reverse('mhacks-dashboard'))
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
-#I just copied the code from apply, not sure if the mentorship form needs anything different -Nevin
-def applyMentor(request):
-    if request.method == 'GET':
-        return render(request, 'applyMentor.html', {})
-        pass
-    else:
-        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+    context = {'form': form}
+    return render(request, 'application.html', context=context)
+
 
 @anonymous_required
 def login(request):

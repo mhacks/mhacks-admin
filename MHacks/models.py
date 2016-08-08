@@ -173,12 +173,6 @@ class Application(Any):
     # Demographic
     gender = models.CharField(choices=GENDERS, max_length=16)
     race = models.CharField(max_length=16, choices=RACES)
-    preferred_pronouns = models.CharField(max_length=32)
-
-    # Previous Experience
-    hackathons_attended = models.IntegerField(default=0)
-    side_projects = models.BooleanField()
-    cs_courses = models.IntegerField()
 
     # External Links
     github = models.URLField()  # TODO: Add validator for github hostname
@@ -202,8 +196,8 @@ class Application(Any):
     submitted = models.BooleanField(default=False)
 
     # Private administrative use
-    score = models.FloatField()
-    reimbursement = models.FloatField()
+    score = models.FloatField(default=0)
+    reimbursement = models.FloatField(default=0)
 
     def __unicode__(self):
         return self.user.get_full_name() + '\'s Application'

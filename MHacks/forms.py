@@ -36,10 +36,6 @@ class RegisterForm(UserCreationForm):
 
 
 class ApplicationForm(forms.ModelForm):
-    def save(self, commit=True):
-        # override the save to db if necessary
-        pass
-
     def __init__(self, *args, **kwargs):
         super(ApplicationForm, self).__init__(*args, **kwargs)
         self.fields['school'].cols = 10
