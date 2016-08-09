@@ -52,7 +52,7 @@ class ApplicationForm(forms.ModelForm):
             'dob': 'Date of birth',
             'is_high_school': 'Are you in high school?',
             'cortex': 'Interests',
-            'passionate': 'What\'s something that you made that you\'re proud of (it doesn\'t have to be a hack)? (150 words max)',
+            'passionate': 'What\'s something that you made that you\'re proud of? It doesn\'t have to be a hack. (150 words max)',
             'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
@@ -67,7 +67,7 @@ class ApplicationForm(forms.ModelForm):
 
         widgets = {
             'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
-            "grad_date": forms.TextInput(attrs={'placeholder': 'YYYY', 'class': 'form-control input-md'}),
+            "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YY', 'class': 'form-control input-md'}),
             'cortex': forms.RadioSelect(attrs={'class': 'checkbox-inline checkbox-style'})
         }
 

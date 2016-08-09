@@ -7849,6 +7849,7 @@ MAJORS = [
     'Undecided'
 ]
 STATES = [
+    'Other',
     'AL',
     'AK',
     'AZ',

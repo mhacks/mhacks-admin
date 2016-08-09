@@ -192,7 +192,7 @@ class Application(Any):
     # Logistics
     needs_reimbursement = models.BooleanField(default=False)
     from_city = models.CharField(max_length=255, default='')
-    from_state = models.CharField(max_length=2, choices=zip(STATES, STATES), default='')
+    from_state = models.CharField(max_length=5, choices=zip(STATES, STATES))
 
     # Miscellaneous
     mentoring = models.BooleanField(default=False)
