@@ -146,7 +146,7 @@ class PushToken(models.Model):
 
 
 class Application(Any):
-    from application_lists import COLLEGES, MAJORS
+    from application_lists import COLLEGES, MAJORS, STATES
     # Constants
     GENDERS = (('m', 'Male'), ('f', 'Female'), ('non-binary', 'Non Binary'), ('none', 'Prefer not to answer'))
     RACES = (('white', 'White'),
@@ -162,12 +162,12 @@ class Application(Any):
                     ('game_dev', 'Game Development'),
                     ('hardware', 'Hardware'))
 
-    # Main information
+    # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
     school = models.CharField(max_length=255, default='', choices=zip(COLLEGES, COLLEGES))
     is_high_school = models.BooleanField()
     major = models.CharField(max_length=255, default='', choices=zip(MAJORS, MAJORS))
-    grad_year = models.DateField()
+    grad_date = models.DateField()
     birthday = models.DateField()
 
     # Demographic
@@ -175,8 +175,8 @@ class Application(Any):
     race = models.CharField(max_length=16, choices=RACES)
 
     # External Links
-    github = models.URLField()  # TODO: Add validator for github hostname
-    devpost = models.URLField()  # TODO: Add validator for devpost hostname
+    github = models.URLField()
+    devpost = models.URLField()
     personal_website = models.URLField()
     resume = models.FileField()
 
@@ -188,8 +188,11 @@ class Application(Any):
 
     # Experience
     num_hackathons = models.IntegerField(default=0)
-    hack_link = models.URLField()
-    hack_explanation = models.TextField()
+
+    # Logistics
+    needs_reimbursement = models.BooleanField(default=False)
+    from_city = models.CharField(max_length=255, default='')
+    from_state = models.CharField(max_length=2, choices=zip(STATES, STATES), default='')
 
     # Miscellaneous
     mentoring = models.BooleanField(default=False)

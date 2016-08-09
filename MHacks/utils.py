@@ -10,6 +10,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import get_user_model
 from config.settings import MANDRILL_API_KEY
+from django import forms
 import logging
 import mandrill
 
@@ -146,3 +147,14 @@ def environment(**options):
     env.filters['slugify'] = slugify
     env.filters['belongs_to'] = user_belongs_to_group
     return env
+
+
+def validate_url(data, query):
+    """
+    Checks if the given url contains the specified query. Used for custom url validation in the ModelForms
+    :param data: full url
+    :param query: string to search within the url
+    :return:
+    """
+    if query not in data:
+        raise forms.ValidationError('Please enter a valid {} url'.format(query))
