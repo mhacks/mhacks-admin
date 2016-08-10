@@ -1,6 +1,5 @@
 {% extends 'generic_form.html' %}
 
-{# TODO: this is hacky as fuck we need to fix this #}
-{% block form_action %}" enctype="multipart/form-data{% endblock %}
+{% block form_enctype %}enctype="multipart/form-data"{% endblock %}
 
 {% block form_title %}Apply{% endblock %}

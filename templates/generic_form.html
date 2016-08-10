@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
     {% if form %}
-        <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}">
+        <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}" {% block form_enctype %}{% endblock %}>
             {{ csrf_input }}
             <fieldset>
               <div class="header header-apply turquoise">
