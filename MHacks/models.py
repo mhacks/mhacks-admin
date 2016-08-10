@@ -178,16 +178,19 @@ class Application(Any):
     personal_page = models.URLField()
     resume = models.FileField()
 
-    # Interests
-    cortex = models.CharField(max_length=16, choices=TECH_OPTIONS)
-    passionate = models.TextField()
-    coolest_thing = models.TextField()
-    other_info = models.TextField()
-
     # Experience
     num_hackathons = models.IntegerField(default=0)
     hack_link = models.URLField()
     hack_explanation = models.TextField()
+
+    # Interests
+    cortex = models.CharField(max_length=16, choices=TECH_OPTIONS)
+
+    # Short Answer
+    passionate = models.TextField()
+    coolest_thing = models.TextField()
+    other_info = models.TextField()
+
 
     # Miscellaneous
     mentoring = models.BooleanField(default=False)

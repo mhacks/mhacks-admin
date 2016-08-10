@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_docs',
     'MHacks',
+    'crispy_forms',
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -14,7 +14,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'HOST': 'localhost',
-        'NAME': 'mhacks',
+        'NAME': 'postgres',
+        'USER': 'user',
+        'PASSWORD': 'password',
         'CONN_MAX_AGE': None,  # Unlimited
         'USE_TZ': True,
     }
