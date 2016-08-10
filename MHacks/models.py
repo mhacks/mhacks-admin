@@ -172,7 +172,7 @@ class Application(Any):
     num_hackathons = models.IntegerField(default=0)
 
     # Interests
-    cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default=''), size=len(TECH_OPTIONS))
+    cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True), size=len(TECH_OPTIONS))
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()

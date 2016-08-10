@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-
+from MHacks.utils import ArrayFieldSelectMultiple
 
 from models import MHacksUser, Application
 from utils import validate_url
@@ -66,8 +66,6 @@ class ApplicationForm(forms.ModelForm):
 
         self.fields['cortex'].short = True
 
-
-
     class Meta:
         from application_lists import TECH_OPTIONS
         model = Application
@@ -94,7 +92,7 @@ class ApplicationForm(forms.ModelForm):
 
         widgets = {
             "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
-            'cortex': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
+            'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
             'birthday': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             'school': forms.Select(attrs={'class': 'select_style'}),
             'major': forms.Select(attrs={'class': 'select_style'}),
