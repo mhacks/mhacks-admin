@@ -1,5 +1,20 @@
 # -*- coding: utf-8 -*-
-
+GENDERS = (('none', 'Prefer not to answer'),
+           ('m', 'Male'),
+           ('f', 'Female'),
+           ('non-binary', 'Non Binary'))
+RACES = (('none', 'Prefer not to answer'),
+         ('white', 'White'),
+         ('black', 'Black'),
+         ('native', 'American Indian or Alaskan Native'),
+         ('asian', 'Asian or Pacific Islander'),
+         ('hispanic', 'Hispanic'))
+TECH_OPTIONS = (('ios', 'iOS'),
+                ('android', 'Android'),
+                ('web_dev', 'Web Dev'),
+                ('vr', 'Virtual/Augmented Reality'),
+                ('game_dev', 'Game Development'),
+                ('hardware', 'Hardware'))
 COLLEGES = [
     'Other',
     'A & W Healthcare Educators',

@@ -1,12 +1,11 @@
 from __future__ import unicode_literals
 
-from django.db import models
-from config.settings import AUTH_USER_MODEL
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, User
-from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+
+from config.settings import AUTH_USER_MODEL
 from managers import MHacksQuerySet
-from django import forms
 
 
 class MHacksUserManager(BaseUserManager):
@@ -146,21 +145,7 @@ class PushToken(models.Model):
 
 
 class Application(Any):
-    from application_lists import COLLEGES, MAJORS, STATES
-    # Constants
-    GENDERS = (('m', 'Male'), ('f', 'Female'), ('non-binary', 'Non Binary'), ('none', 'Prefer not to answer'))
-    RACES = (('white', 'White'),
-             ('black', 'Black'),
-             ('native', 'American Indian or Alaskan Native'),
-             ('asian', 'Asian or Pacific Islander'),
-             ('hispanic', 'Hispanic'),
-             ('none', 'Prefer not to answer'))
-    TECH_OPTIONS = (('ios', 'iOS'),
-                    ('android', 'Android'),
-                    ('web_dev', 'Web Dev'),
-                    ('vr', 'Virtual/Augmented Reality'),
-                    ('game_dev', 'Game Development'),
-                    ('hardware', 'Hardware'))
+    from application_lists import GENDERS, RACES, TECH_OPTIONS, COLLEGES, MAJORS, STATES
 
     # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
@@ -171,8 +156,8 @@ class Application(Any):
     birthday = models.DateField()
 
     # Demographic
-    gender = models.CharField(choices=GENDERS, max_length=16)
-    race = models.CharField(max_length=16, choices=RACES)
+    gender = models.CharField(max_length=16, choices=GENDERS, default='none')
+    race = models.CharField(max_length=16, choices=RACES, default='none')
 
     # External Links
     github = models.URLField()
@@ -181,7 +166,7 @@ class Application(Any):
     resume = models.FileField()
 
     # Interests
-    cortex = models.CharField(max_length=16, choices=TECH_OPTIONS)
+    cortex = models.CharField(max_length=16, choices=TECH_OPTIONS, default='')
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()
