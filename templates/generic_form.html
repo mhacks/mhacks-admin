@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
 
 {% block headers %}
-    <link rel="stylesheet" media="all" href="{{ static('stylesheets/main.css') }}">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" media="all" href="{{ static('stylesheets/application.css') }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
-    type="application/javascript"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="{{ static('stylesheets/form.css') }}">
+{% block form_headers %}
 {% endblock %}
+{% endblock %}
+
 {% block content %}
     {% if form %}
         <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}" {% block form_enctype %}{% endblock %}>
             {{ csrf_input }}
             <fieldset>
               <div class="header header-apply turquoise">
-                        <div id="logo" class = "logo">
+                        <div class ="logo">
                           <img style="height:120px" src="{{ static('assets/logo.png') }}">
                       </div>
                   </div>
-                <div class="container container_apply">
+                <div class="container container-apply">
                        <div class="col-12 text-center title-apply">
                 <h3 class="first head"><span>{% block form_title %}{% endblock %}</span></h3>
             </div>
@@ -94,7 +92,7 @@
 
                     {% endfor %}
                 </div>
-                <div class="final ">
+                <div class="submit-row">
                     <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
                 </div>
               </div>

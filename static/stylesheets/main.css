@@ -786,6 +786,7 @@ html input{
     -webkit-transition: .4s;
     transition: .4s;
     padding: 0px;
+    outline: none;
 }
 
 html input[type="text"]:hover,
