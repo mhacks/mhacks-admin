@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, User
+from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from globals import GroupEnum
 from config.settings import AUTH_USER_MODEL
 from managers import MHacksQuerySet
 
@@ -28,7 +30,7 @@ class MHacksUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         from django.contrib.auth.models import Group
-        user.groups.add(Group.objects.get(name='hacker'))
+        user.groups.add(Group.objects.get(name=GroupEnum.HACKER))
         user.save(using=self._db)
         from utils import send_verification_email
         if request:
@@ -166,7 +168,7 @@ class Application(Any):
     resume = models.FileField()
 
     # Interests
-    cortex = models.CharField(max_length=16, choices=TECH_OPTIONS, default='')
+    cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default=''), size=len(TECH_OPTIONS))
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()
@@ -177,7 +179,7 @@ class Application(Any):
     # Logistics
     needs_reimbursement = models.BooleanField(default=False)
     from_city = models.CharField(max_length=255, default='')
-    from_state = models.CharField(max_length=5, choices=zip(STATES, STATES))
+    from_state = models.CharField(max_length=5, choices=zip(STATES, STATES), default='')
 
     # Miscellaneous
     mentoring = models.BooleanField(default=False)

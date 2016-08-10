@@ -43,6 +43,7 @@ class ApplicationForm(forms.ModelForm):
         self.fields['is_high_school'].end_row = True
 
     class Meta:
+        from application_lists import TECH_OPTIONS
         model = Application
         exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these
         labels = {
@@ -67,7 +68,7 @@ class ApplicationForm(forms.ModelForm):
         widgets = {
             'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
-            'cortex': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'})
+            'cortex': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS)
         }
 
     # custom validator for urls
