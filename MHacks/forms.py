@@ -1,11 +1,11 @@
 from django import forms
-from django.forms import widgets
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
 
 from models import MHacksUser, Application
+from utils import validate_url
 
 
 class LoginForm(AuthenticationForm):
@@ -37,10 +37,6 @@ class RegisterForm(UserCreationForm):
 
 
 class ApplicationForm(forms.ModelForm):
-    def save(self, commit=True):
-        # override the save to db if necessary
-        pass
-
     def __init__(self, *args, **kwargs):
         super(ApplicationForm, self).__init__(*args, **kwargs)
         self.fields['school'].cols = 10
@@ -79,7 +75,7 @@ class ApplicationForm(forms.ModelForm):
         exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these
         labels = {
             'school': 'School or University',
-            'grad_year': 'Expected graduation year',
+            "grad_date": 'Expected graduation date',
             'dob': 'Date of birth',
             'is_high_school': 'Are you in high school?',
             'github':'',
@@ -87,20 +83,22 @@ class ApplicationForm(forms.ModelForm):
             'personal_page':'',
             'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
             'cortex': '',
-            'passionate': 'What\'s something that you made that you\'re proud of (it doesn\'t have to be a hack)? (150 words max)',
+            'passionate': 'What\'s something that you made that you\'re proud of? It doesn\'t have to be a hack. (150 words max)',
             'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
             'can_pay': 'How much of the travel costs can you pay?',
             'city': 'Which city will you be traveling from?',
             'state': 'Which state will you be traveling from?',
-            'mentoring': 'Are you interested in mentoring other hackers?'
-
+            'mentoring': 'Are you interested in mentoring other hackers?',
+            'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
+            'from_city': 'Which city will you be traveling from?',
+            'from_state': 'Which state will you be traveling from?'
         }
 
         widgets = {
             'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
-            'grad_year': forms.TextInput(attrs={'placeholder': 'YYYY', 'class': 'form-control input-md'}),
+            "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             'birthday': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             'cortex': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}),
             'school': forms.Select(attrs={'class': 'select_style'}),
@@ -115,5 +113,15 @@ class ApplicationForm(forms.ModelForm):
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'hack_explanation': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'resume': forms.FileInput(attrs={'class': 'input-md form-control'})
-
         }
+
+    # custom validator for urls
+    def clean_github(self):
+        data = self.cleaned_data['github']
+        validate_url(data, 'github.com')
+        return data
+
+    def clean_devpost(self):
+        data = self.cleaned_data['devpost']
+        validate_url(data, 'devpost.com')
+        return data
