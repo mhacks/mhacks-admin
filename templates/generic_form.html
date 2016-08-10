@@ -28,29 +28,76 @@
                             <p class="alert alert-danger">{{ error }}</p>
                         {% endfor %}
                     {% endblock %}
+                     <div class="row">
                     {% for field in form %}
-                        {% if loop.first %}
-                            <div class="row">
-                        {% endif %}
 
-                            <div class="col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center ">
-                            <h4 class="input_word" {% if field.field.longest %}id="longest"{% endif %}>{{ field.label }}</h4>
+
+                            <div class="col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center addMargin ">
+                            <label class="label_apply" {% if field.field.longest %}id="longest"{% endif %}>{{ field.label }}</label>
                             {{ field.as_widget() }}
                             {% for error in form.errors[field.name] %}
                                 <p class="alert alert-danger">{{ error }}</p>
                             {% endfor %}
 
+                            </div>
+
                         {% if field.field.end_row %}
                             </div>
                             <div class="row">
                         {% endif %}
-                    </div>
+   
+                        {% if field.field.demographic %}
+                         </div>
+                              <div class="row three">
+                               <div class="col-lg-12 text-center title-apply">
+                                   <div class="application-title ">Demographic Info</div>
+                               </div>
+                           </div>
+                           <div class="row none">
+                               <div class="col-lg-12 text-center">
+                                   <div class="application-subtitle">Not Required</div>
+                               </div>
+                           </div>  
+                           <div class="row ">
+                        {% endif %}
+
+                        {% if field.field.previous %}
+                        </div>
+                          <div class="row three">
+                            <div class="col-lg-12 text-center title-apply">
+                                <div class="application-title ">Previous Experience</div>
+                            </div>
+                           </div>
+                            <div class="row ">
+
+                         {% endif %}
+                           {% if field.field.interests %}
+                        </div>
+                          <div class="row three">
+                            <div class="col-lg-12 text-center title-apply">
+                                <div class="application-title ">Interests</div>
+                            </div>
+                           </div>
+                            <div class="row ">
+
+                         {% endif %}
+                         {% if field.field.short %}
+                          </div>
+                          <div class="row three">
+                            <div class="col-lg-12 text-center title-apply ">
+                                <div class="application-title ">Short Answer</div>
+                            </div>
+                          </div>
+                            <div class="row ">
+
+                         {% endif %}   
+
                     {% endfor %}
                 </div>
                 <div class="final ">
                     <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
                 </div>
-                        </div>
+              </div>
 
             </fieldset>
         </form>

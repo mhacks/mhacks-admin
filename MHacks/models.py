@@ -167,14 +167,16 @@ class Application(Any):
     personal_website = models.URLField()
     resume = models.FileField()
 
+    # Experience
+    num_hackathons = models.IntegerField(default=0)
+    hack_link = models.URLField()
+    hack_explanation = models.TextField()
+
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default=''), size=len(TECH_OPTIONS))
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()
-
-    # Experience
-    num_hackathons = models.IntegerField(default=0)
 
     # Logistics
     needs_reimbursement = models.BooleanField(default=False)

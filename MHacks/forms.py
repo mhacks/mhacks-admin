@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
+
 from models import MHacksUser, Application
 from utils import validate_url
 
@@ -41,6 +42,33 @@ class ApplicationForm(forms.ModelForm):
         self.fields['school'].cols = 10
         self.fields['is_high_school'].cols = 2
         self.fields['is_high_school'].end_row = True
+        self.fields['birthday'].end_row = True
+
+        self.fields['major'].end_row = True
+        self.fields['grad_year'].end_row = True
+
+        self.fields['race'].cols = 6
+        self.fields['gender'].cols = 6
+        self.fields['birthday'].demographic = True
+        self.fields['race'].previous = True
+
+
+        self.fields['github'].cols = 6
+        self.fields['devpost'].cols = 6
+        self.fields['devpost'].end_row = True
+
+        self.fields['personal_page'].cols = 6
+        self.fields['resume'].cols = 6
+        self.fields['resume'].end_row = True
+
+        self.fields['num_hackathons'].cols = 6
+        self.fields['hack_link'].cols = 6
+        self.fields['hack_link'].end_row = True
+        self.fields['hack_explanation'].interests = True
+
+        self.fields['cortex'].short = True
+
+
 
     class Meta:
         from application_lists import TECH_OPTIONS
@@ -51,7 +79,10 @@ class ApplicationForm(forms.ModelForm):
             "grad_date": 'Expected graduation date',
             'dob': 'Date of birth',
             'is_high_school': 'Are you in high school?',
-            'cortex': 'Interests (Select all that apply)',
+            'github':'',
+            'devpost':'',
+            'personal_page':'',
+            'cortex': '',
             'passionate': 'What\'s something that you made that you\'re proud of? It doesn\'t have to be a hack. (150 words max)',
             'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
@@ -68,7 +99,20 @@ class ApplicationForm(forms.ModelForm):
         widgets = {
             'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
-            'cortex': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS)
+            'cortex': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
+            'birthday': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
+            'school': forms.Select(attrs={'class': 'select_style'}),
+            'major': forms.Select(attrs={'class': 'select_style'}),
+            'gender': forms.Select(attrs={'class': 'select_style'}),
+            'race': forms.Select(attrs={'class': 'select_style'}),
+            'github': forms.TextInput(attrs={'placeholder': 'Github', 'class': 'form-control input-md'}),
+            'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
+            'personal_page': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
+            'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'hack_explanation': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'resume': forms.FileInput(attrs={'class': 'input-md form-control'})
         }
 
     # custom validator for urls
