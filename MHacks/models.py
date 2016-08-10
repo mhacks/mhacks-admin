@@ -169,8 +169,6 @@ class Application(Any):
 
     # Experience
     num_hackathons = models.IntegerField(default=0)
-    hack_link = models.URLField()
-    hack_explanation = models.TextField()
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default=''), size=len(TECH_OPTIONS))
@@ -180,6 +178,7 @@ class Application(Any):
 
     # Logistics
     needs_reimbursement = models.BooleanField(default=False)
+    can_pay = models.FloatField(default=0)
     from_city = models.CharField(max_length=255, default='')
     from_state = models.CharField(max_length=5, choices=zip(STATES, STATES), default='')
 

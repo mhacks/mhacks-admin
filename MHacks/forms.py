@@ -45,26 +45,24 @@ class ApplicationForm(forms.ModelForm):
         self.fields['birthday'].end_row = True
 
         self.fields['major'].end_row = True
-        self.fields['grad_year'].end_row = True
+        self.fields['grad_date'].end_row = True
 
         self.fields['race'].cols = 6
         self.fields['gender'].cols = 6
         self.fields['birthday'].demographic = True
         self.fields['race'].previous = True
 
-
         self.fields['github'].cols = 6
         self.fields['devpost'].cols = 6
         self.fields['devpost'].end_row = True
 
-        self.fields['personal_page'].cols = 6
+        self.fields['personal_website'].cols = 6
         self.fields['resume'].cols = 6
         self.fields['resume'].end_row = True
 
         self.fields['num_hackathons'].cols = 6
-        self.fields['hack_link'].cols = 6
-        self.fields['hack_link'].end_row = True
-        self.fields['hack_explanation'].interests = True
+        self.fields['num_hackathons'].end_row = True
+        self.fields['num_hackathons'].interests = True
 
         self.fields['cortex'].short = True
 
@@ -77,19 +75,17 @@ class ApplicationForm(forms.ModelForm):
         labels = {
             'school': 'School or University',
             "grad_date": 'Expected graduation date',
-            'dob': 'Date of birth',
+            'birthday': 'Date of birth',
             'is_high_school': 'Are you in high school?',
             'github':'',
             'devpost':'',
-            'personal_page':'',
+            'personal_website':'',
             'cortex': '',
             'passionate': 'What\'s something that you made that you\'re proud of? It doesn\'t have to be a hack. (150 words max)',
             'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
             'can_pay': 'How much of the travel costs can you pay?',
-            'city': 'Which city will you be traveling from?',
-            'state': 'Which state will you be traveling from?',
             'mentoring': 'Are you interested in mentoring other hackers?',
             'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
             'from_city': 'Which city will you be traveling from?',
@@ -97,7 +93,6 @@ class ApplicationForm(forms.ModelForm):
         }
 
         widgets = {
-            'dob': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             'cortex': forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
             'birthday': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
@@ -107,11 +102,10 @@ class ApplicationForm(forms.ModelForm):
             'race': forms.Select(attrs={'class': 'select_style'}),
             'github': forms.TextInput(attrs={'placeholder': 'Github', 'class': 'form-control input-md'}),
             'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
-            'personal_page': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
+            'personal_website': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'hack_explanation': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'resume': forms.FileInput(attrs={'class': 'input-md form-control'})
         }
 

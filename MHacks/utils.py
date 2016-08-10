@@ -9,16 +9,19 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import get_user_model
-from config.settings import MANDRILL_API_KEY
+from config.settings import MAILCHIMP_API_KEY
 from django import forms
 import logging
 import mandrill
 
 
 # Sends mail through mandrill client.
-def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
+def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
+    if not email_vars:
+        email_vars = dict()
+
     try:
-        MANDRILL_CLIENT = mandrill.Mandrill(MANDRILL_API_KEY)
+        MANDRILL_CLIENT = mandrill.Mandrill(MAILCHIMP_API_KEY)
         message = {
             'subject': subject,
             'from_email': 'hackathon@umich.edu',
