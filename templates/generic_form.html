@@ -11,16 +11,16 @@
         <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}" {% block form_enctype %}{% endblock %}>
             {{ csrf_input }}
             <fieldset>
-              <div class="header header-apply turquoise">
+              <div class="header header-form turquoise">
                         <div class ="logo">
                           <img style="height:120px" src="{{ static('assets/logo.png') }}">
                       </div>
                   </div>
-                <div class="container container-apply">
-                       <div class="col-12 text-center title-apply">
+                <div class="container container-form">
+                       <div class="col-12 text-center title-form">
                 <h3 class="first head"><span>{% block form_title %}{% endblock %}</span></h3>
             </div>
-                <div class="section">
+                <div class="section body-form">
                     {% block non_field_errors %}
                         {% for error in form.non_field_errors() %}
                             <p class="alert alert-danger">{{ error }}</p>
@@ -30,13 +30,14 @@
                     {% for field in form %}
 
 
-                            <div class="col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center addMargin ">
-                            <label class="label_apply" {% if field.field.longest %}id="longest"{% endif %}>{{ field.label }}</label>
-                            {{ field.as_widget() }}
-                            {% for error in form.errors[field.name] %}
-                                <p class="alert alert-danger">{{ error }}</p>
-                            {% endfor %}
-
+                            <div class="field-form col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center addMargin ">
+                                <label class="label-apply">
+                                    {{ field.label }}
+                                </label>
+                                {{ field.as_widget() }}
+                                {% for error in form.errors[field.name] %}
+                                    <p class="alert alert-danger">{{ error }}</p>
+                                {% endfor %}
                             </div>
 
                         {% if field.field.end_row %}

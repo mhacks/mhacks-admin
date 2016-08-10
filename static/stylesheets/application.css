@@ -61,11 +61,6 @@
 .addMargin{
     padding: 15px;
 }
-.label_apply {
-    font-weight: 200;
-    margin-right: 5px;
-    display: block;
-}
 
 .textfield{
     box-shadow: 0 3px 6px rgba(0,0,0,0.05), 0 3px 6px rgba(0,0,0,0.05);
@@ -77,4 +72,8 @@
 
 .subtitle {
     margin-top: 30px;
+}
+
+.field-form .label-apply {
+    display: block;
 }
