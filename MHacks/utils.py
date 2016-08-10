@@ -1,18 +1,20 @@
-from config.settings import EMAIL_HOST_USER
-from django.template import loader
-from django.core.mail import send_mail
-from jinja2 import Environment
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text
-from django.contrib.auth import get_user_model
-from config.settings import MAILCHIMP_API_KEY
-from django import forms
 import logging
+
 import mandrill
+from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.template import loader
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from jinja2 import Environment
+
+from config.settings import EMAIL_HOST_USER
+from config.settings import MAILCHIMP_API_KEY
 
 
 # Sends mail through mandrill client.
@@ -131,8 +133,6 @@ def validate_signed_token(uid, token, require_token=True):
 
 
 def user_belongs_to_group(user, group_name):
-    from globals import groups
-    assert group_name in groups.ALL
     return user.groups.filter(name=group_name).exists()
 
 

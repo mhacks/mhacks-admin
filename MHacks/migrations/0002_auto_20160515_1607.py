@@ -7,9 +7,23 @@ from django.db import migrations
 
 def create_groups(apps, schema_editor):
     group_model = apps.get_model('auth', model_name='group')
+    permission_model = apps.get_model('auth', model_name='permission')
+
     from MHacks.globals import groups
-    group_model.objects.bulk_create(map(lambda g: group_model(name=g), groups.ALL))
-    # TODO: Eventually add in permissions
+    group_model.objects.bulk_create(map(lambda g: group_model(name=g), (groups.HACKER,
+                                                                        groups.SPONSOR,
+                                                                        groups.APP_READER,
+                                                                        groups.STATS)))
+
+    def add_permissions(group_name, permission_list):
+        group = group_model.objects.get(name=group_name)
+        permissions = map(lambda p: permission_model.objects.get(code=p), permission_list)
+        group.permissions.add(permissions)
+
+    add_permissions(groups.HACKER, ['add_pushtoken', 'change_pushtoken', 'add_application', 'change_application'])
+    add_permissions(groups.SPONSOR, ['add_event', 'add_announcement'])
+    add_permissions(groups.APP_READER, ['add_mhacksuser', 'change_mhacksuser', 'delete_mhacksuser', 'add_application', 'change_application', 'delete_application'])
+    add_permissions(groups.STATS, [])
 
 
 class Migration(migrations.Migration):

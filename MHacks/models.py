@@ -61,6 +61,7 @@ class MHacksUser(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         verbose_name = 'User'
+        default_permissions = ()
 
     @property
     def is_active(self):

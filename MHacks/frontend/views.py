@@ -1,21 +1,21 @@
 import requests
+from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.core.urlresolvers import reverse
 from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.core.urlresolvers import reverse
-from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
-from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
-from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
 from MHacks.decorator import anonymous_required
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
+from MHacks.models import Application
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token
-from MHacks.models import Application, MHacksUser
+from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
 
 
 def blackout_page(request):
@@ -38,18 +38,20 @@ def index(request):
 
 
 @login_required()
-def apply(request):
+@permission_required('MHacks.add_application')
+@permission_required('MHacks.change_application')
+def application(request):
     if request.method == 'GET':
         # find the user's application if it exists
         try:
-            application = Application.objects.get(user=request.user)
+            app = Application.objects.get(user=request.user)
         except Application.DoesNotExist:
-            application = None
+            app = None
 
-        if application and application.submitted:
+        if app and app.submitted:
             return redirect(reverse('mhacks-dashboard'))
 
-        form = ApplicationForm(initial=application)
+        form = ApplicationForm(initial=app)
     elif request.method == 'POST':
         form = ApplicationForm(data=request.POST, files=request.FILES)
         if form.is_valid():

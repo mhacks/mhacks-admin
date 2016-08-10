@@ -27,16 +27,6 @@ def get_countdown(request, *args, **kwargs):
                           'date_updated': now_as_utc_epoch()})
 
 
-@api_view(http_method_names=['POST'])
-def submit_application(request, *args, **kwargs):
-    # TODO: Add form validation for applications.
-    if True:
-        send_application_confirmation_email(request.user, request)
-        return Response(data={'success': True})
-    else:
-        return Response(data={'success': False})
-
-
 @api_view(http_method_names=['GET'])
 def get_map(request, *args, **kwargs):
     """
