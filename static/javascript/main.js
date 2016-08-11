@@ -34,6 +34,7 @@ var $packery = $grid.packery({
     isFitWidth: true,
     stamp: '.stamp'
 });
+var prevGridHeight = $grid.height();
 var resizeEvent;
 var openElement = null;
 
@@ -66,13 +67,20 @@ $packery.on('click', '.grid-item, .grid-item-expand', function(event){
         setTimeout(function(){$packery.packery('shiftLayout');}, 250);
     } else {
         // is expanding
-        setTimeout(function(){$packery.packery('fit', event.currentTarget);}, 250);
+        setTimeout(function(){
+            $packery.packery('fit', event.currentTarget);
+            setTimeout(function(){
+                $('html, body').animate({
+                  scrollTop: item.offset().top - 120
+                }, 1000);
+            }, 250);
+        }, 250);
     }
 
     openElement = isExpanded ? null : event.currentTarget;
 });
 
-$(window).resize(function () {
+$(window).resize(function (){
     $bg.height = $grid.height();
     $bg.width = $(window).innerWidth();
 
@@ -96,6 +104,16 @@ $(window).resize(function () {
         $menuContent.slideUp();
     }
 });
+
+function gridResize() {
+    if($grid.height() != prevGridHeight){
+        $bg.height = $grid.height();
+        $bg.width = $(window).innerWidth();
+        prevGridHeight = $grid.height();
+    }
+
+    setTimeout(gridResize, 200);
+}
 
 $(window).scroll(function() {
     var scrollValue = $(this).scrollTop();
@@ -147,6 +165,7 @@ function lerpColor(c1, c2, frame){
 }
 
 $(function(){
+    gridResize();
     anim_init();
 });
 

@@ -16,21 +16,19 @@
                 <img id="logoM" src="{{ static('assets/logo-m.png') }}" alt="MHacks 8 Logo - M">
                 <img id="logoText" src="{{ static('assets/logo-text.png') }}" alt="MHacks 8 Logo - Hacks 8">
             </div>
-{#            <div id="headerLinks">#}
-                <div id="headerButtons">
-                    <a href="mailto:hackathon@umich.edu" target="_blank">Email</a>
+            <div id="headerButtons">
+                <a href="mailto:hackathon@umich.edu">Email</a>
+                <a href="{{ url_for('mhacks-applyMentor') }}">Mentor</a>
+                <a href="{{ url_for('mhacks-apply') }}">Apply</a>
+            </div>
+            <div id="headerDropdown">
+                <i id="dropdownTrigger" class="fa fa-bars fa-2x" aria-hidden="false"></i>
+                <div id="dropdownContent" class="turquoise">
+                    <a href="mailto:hackathon@umich.edu">Email</a>
                     <a href="{{ url_for('mhacks-applyMentor') }}">Mentor</a>
                     <a href="{{ url_for('mhacks-apply') }}">Apply</a>
                 </div>
-                <div id="headerDropdown">
-                    <i id="dropdownTrigger" class="fa fa-bars fa-2x" aria-hidden="false"></i>
-                    <div id="dropdownContent" class="turquoise">
-                        <a href="mailto:hackathon@umich.edu" target="_blank">Email</a>
-                        <a href="{{ url_for('mhacks-applyMentor') }}">Mentor</a>
-                        <a href="{{ url_for('mhacks-apply') }}">Apply</a>
-                    </div>
-                </div>
-{#            </div>#}
+            </div>
         </div>
         <div class="grid">
             <div class="grid-item darkBlue " data-remove="2" data-expandable="0">
@@ -99,7 +97,7 @@
                 </div>
             </div>
             <div class="grid-item darkBlue" data-remove="0" data-expandable="0">
-                <div class="grid-item-image">
+                <div class="grid-item-image social-link">
                     <a href="https://www.facebook.com/MHacksHackathon/" target="_blank"><img
                         src="{{ static('assets/fb-link.png') }}"
                         alt="MHacks Facebook, https://www.facebook.com/MHacksHackathon"/></a>
@@ -134,7 +132,7 @@
                     </div>
                     <div class="extra-info">
                         <div class="faq-container">
-                            <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">General</h2>
+                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">General</h2>
                             <ul style="padding-left:7px">
                                 <li class="question">What happens at a hackathon?</li>
                                 <li class="answer">
@@ -169,7 +167,7 @@
                                 </li>
                             </ul>
 
-                            <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">Applications</h2>
+                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Applications</h2>
                             <ul style="padding-left:7px">
                                 <li class="question">When are applications closing?</li>
                                 <li class="answer">
@@ -224,7 +222,7 @@
                                 </li>
                             </ul>
 
-                            <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">Hacking</h2>
+                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Hacking</h2>
                             <ul style="padding-left:7px">
                                 <li class="question">What if I don’t have a team or idea?</li>
                                 <li class="answer">
@@ -242,7 +240,7 @@
                                 </li>
                             </ul>
 
-                            <h2 style="margin-bottom:-10px; border-top: 2px solid rgba(0,0,0,0.3);">Logistics</h2>
+                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Logistics</h2>
                             <ul style="padding-left:7px">
                                 <li class="question">How will I get there from UM?</li>
                                 <li class="answer">
@@ -393,7 +391,7 @@
                 </div>
             </div>
             <div class="grid-item lightBlue " data-remove="0" data-expandable="0">
-                <div class="grid-item-image">
+                <div class="grid-item-image social-link">
                             <a href="https://twitter.com/mhacks" target="_blank"><img
                                     src="{{ static('assets/twitter-link.png') }}"
                                     alt="MHacks Twitter, https://twitter.com/mhacks"/></a>
@@ -488,7 +486,7 @@
                                 alt="Previous Sponsor Logo - U of M CFE"></a>
                     </div>
                     <div class="logo-row">
-                        <a target="_blank" href="http://www.campus2walmart.com"><img
+                        <a target="_blank" href="http://careers.walmart.com/"><img
                                 src="{{ static('assets/Walmart_Logo.png') }}" alt="Previous Sponsor Logo - Walmart"></a>
                         <a target="_blank" href="https://corporate.target.com/careers/career-areas/technology"><img
                                 src="{{ static('assets/target_logo.png') }}" alt="Previous Sponsor Logo - Target"></a>

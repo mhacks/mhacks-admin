@@ -560,6 +560,15 @@ p {
     overflow: hidden;
 }
 
+.social-link {
+    transition: background-color 0.2s;
+}
+
+.grid-item:hover .social-link {
+    background-color: #FFE641;
+    transition: background-color 0.2s;
+}
+
 .flavor-image {
     width: 100%;
     min-height: 100%;
