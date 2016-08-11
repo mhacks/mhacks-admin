@@ -60,7 +60,7 @@ def _get_absolute_url(request, relative_url):
     current_site = get_current_site(request)
     return "{0}://{1}{2}".format(
         request.scheme,
-        request.get_host(),
+        request.META['HTTP_HOST'],
         relative_url
     )
 
