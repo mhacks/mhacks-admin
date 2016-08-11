@@ -14,7 +14,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from jinja2 import Environment
 
 from config.settings import EMAIL_HOST_USER
-from config.settings import MAILCHIMP_API_KEY
+from config.settings import MAILCHIMP_API_KEY, MANDRILL_API_KEY
 
 
 # Sends mail through mandrill client.
@@ -23,7 +23,7 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
         email_vars = dict()
 
     try:
-        MANDRILL_CLIENT = mandrill.Mandrill(MAILCHIMP_API_KEY)
+        MANDRILL_CLIENT = mandrill.Mandrill(MANDRILL_API_KEY)
         message = {
             'subject': subject,
             'from_email': 'hackathon@umich.edu',

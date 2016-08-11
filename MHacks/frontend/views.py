@@ -126,11 +126,13 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = get_user_model().objects.create_user(email=form.cleaned_data['email'],
-                                                        password=form.cleaned_data['password1'],
-                                                        first_name=form.cleaned_data['first_name'],
-                                                        last_name=form.cleaned_data['last_name'],
-                                                        request=request)
+            user = get_user_model().objects.create_user(
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password1'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                request=request
+            )
             user.save()
             user_pk = urlsafe_base64_encode(force_bytes(user.pk))
             form = None
