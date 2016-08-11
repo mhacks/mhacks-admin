@@ -2,6 +2,7 @@ import requests
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
@@ -14,7 +15,7 @@ from rest_framework.authtoken.models import Token
 from MHacks.decorator import anonymous_required
 from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
 from MHacks.models import Application
-from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token
+from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, send_application_confirmation_email
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
 
 
@@ -41,24 +42,27 @@ def index(request):
 @permission_required('MHacks.add_application')
 @permission_required('MHacks.change_application')
 def application(request):
-    if request.method == 'GET':
-        # find the user's application if it exists
-        try:
-            app = Application.objects.get(user=request.user)
-        except Application.DoesNotExist:
-            app = None
+    # find the user's application if it exists
+    try:
+        app = Application.objects.get(user=request.user)
+    except Application.DoesNotExist:
+        app = None
 
+    if request.method == 'GET':
         if app and app.submitted:
             return redirect(reverse('mhacks-dashboard'))
 
-        form = ApplicationForm(initial=app)
+        form = ApplicationForm(instance=app)
     elif request.method == 'POST':
-        form = ApplicationForm(data=request.POST, files=request.FILES)
+        form = ApplicationForm(data=request.POST, files=request.FILES, instance=app)
         if form.is_valid():
+            # save application
             app = form.save(commit=False)
             app.submitted = True
             app.user = request.user
             app.save()
+
+            send_application_confirmation_email(request.user)  # send conf email
             return redirect(reverse('mhacks-dashboard'))
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
