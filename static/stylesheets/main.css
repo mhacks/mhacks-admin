@@ -1,3 +1,5 @@
+/* --- Elements --- */
+
 * {
     box-sizing: border-box;
 }
@@ -51,6 +53,8 @@ p {
     margin: 15px auto 25px;
     width: 92%;
 }
+
+/* --- Utility Classes --- */
 
 .turquoise {
     background: rgba(0, 169, 194, 1);
@@ -112,8 +116,29 @@ p {
     align-items: center;
 }
 
+.visibilityVisible {
+    visibility: visible !important;
+    transition: visibility 0.4s;
+}
+
+.visibilityHidden {
+    visibility: hidden !important;
+    transition: visibility 0.4s;
+}
+
+/* --- Background --- */
+
+#bgCanvas {
+    z-index: -9999;
+    position: absolute;
+    top: 120px;
+    float: left;
+}
+
+/* --- Header and Header Content --- */
+
 .header {
-    height: 120px; /*205*/
+    height: 120px;
     box-shadow: 0px -4px 16px 0px #000000;
     text-align: center;
     padding: 0;
@@ -189,16 +214,6 @@ p {
     margin: 0 auto;
 }
 
-.visibilityVisible {
-    visibility: visible !important;
-    transition: visibility 0.4s;
-}
-
-.visibilityHidden {
-    visibility: hidden !important;
-    transition: visibility 0.4s;
-}
-
 #headerButtons {
     padding-right: 50px;
     text-align: center;
@@ -257,24 +272,12 @@ p {
     color: #FFE641;
 }
 
-#bgCanvas {
-    z-index: -9999;
-    position: absolute;
-    top: 120px;
-    float: left;
-}
-
-/*.header-condensed #bgCanvas {
-    top: 60px !important;
-    transition: top 0.4s;
-}*/
+/* --- Sponsorship Section --- */
 
 .sponsors {
-    /*text-align: center;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*align-items: center;*/
     background-color: #e6f3f7;
     color: rgba(37, 37, 37, 0.63);
     padding: 40px 5% 0;
@@ -342,7 +345,7 @@ p {
     max-height: 120px;
 }
 
-/* ---- grid ---- */
+/* ---- Grid ---- */
 
 .grid {
     width: 100%;
@@ -356,18 +359,7 @@ p {
     clear: both;
 }
 
-/* ---- grid-item ---- */
-
-.title-text {
-    font-family: 'Ubuntu';
-    font-size: 14pt;
-    text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.4px;
-    font-weight: 400;
-    padding-top: 20px;
-    padding-left: 7px;
-
-}
+/* ---- Grid Item ---- */
 
 .grid-item, .grid-item-content {
     width: 160px;
@@ -377,8 +369,6 @@ p {
 .grid-item-content {
     width: 160px;
     height: 120px;
-    /*padding-left: 20px;
-    padding-top: 0px;*/
     padding: 20px;
     visibility: visible;
     transition: all 0.2s;
@@ -388,13 +378,6 @@ p {
 .grid-item[data-expandable='1'] {
     cursor: pointer;
 }
-
-/*.grid-item[data-expandable='1'] .grid-item-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-}*/
 
 .grid-item[data-expandable='1'] .expand-icon:before {
     font-family: FontAwesome;
@@ -407,28 +390,11 @@ p {
     margin: 10px;
 }
 
-/*.grid-item[data-expandable='1'] .grid-item-content h1 {
-    padding: 0;
-    font-size: 22pt;
-    text-align:center;
-    margin: 0 15px;
-}*/
-
 .width2.grid-item, .width2 .grid-item-content {
     width: 320px;
 }
 
-.width3.grid-item, .width3 .grid-item-content {
-    width: 480px;
-}
-
-.height2.grid-item, .height2 .grid-item-content {
-    height: 240px;
-}
-
-.height3.grid-item, .height3 .grid-item-content {
-    height: 360px;
-}
+/* --- Expanded Grid Item --- */
 
 .grid-item-expand {
     width: 480px;
@@ -447,18 +413,7 @@ p {
     height: 480px !important;
 }
 
-.grid-item-expand .grid-item-content {
-    width: 480px;
-    height: 360px;
-    /*padding-left: 20px;
-    padding-top: 0px;*/
-    background: #e6f3f7;
-    color: rgba(37, 37, 37, 0.63);
-    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
-    overflow-x: hidden;
-    overflow-y: auto;
-    transition: all 0.2s;
-}
+/* --- Grid Item Content --- */
 
 .basic-info h1 {
     /* Style as h2 */
@@ -473,6 +428,33 @@ p {
     transition: 0.2s;
 }
 
+.basic-info {
+    visibility: visible;
+    transition: all 0.2s;
+}
+
+.extra-info {
+    display: none;
+    visibility: hidden;
+    transition: all 0.2s;
+}
+
+.grid-item-expand h2 {
+    color: #0093B1;
+    padding: 15px 0 0 0;
+}
+
+.grid-item-expand .grid-item-content {
+    width: 480px;
+    height: 360px;
+    background: #e6f3f7;
+    color: rgba(37, 37, 37, 0.63);
+    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: all 0.2s;
+}
+
 .grid-item-expand .basic-info h1 {
     /* Back to h1 styling */
     font-family: 'Ubuntu';
@@ -484,14 +466,9 @@ p {
     transition: all 0.2s;
 }
 
-.grid-item-expand h2 {
-    color: #0093B1;
-    padding: 15px 0 0 0;
-}
-
 .grid-item-expand.expand-small .grid-item-content {
-    width: 480px;/* !important;*/
-    height: 360px;/* !important;*/
+    width: 480px;
+    height: 360px;
 }
 
 .grid-item-expand.expand-medium .grid-item-content {
@@ -511,26 +488,11 @@ p {
     margin: 10px 20px;
 }
 
-.stamp {
-
-}
-
-.apply-btn {
-    float: right;
-}
-
-.faq {
-    height: 2000px;
-}
-
-.extra-info {
-    display: none;
-    visibility: hidden;
-    transition: all 0.2s;
-}
-
-.basic-info {
-    visibility: visible;
+.grid-item[data-expandable='1']:hover .grid-item-content {
+    background: #FFE641;
+    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
+    color: rgba(37, 37, 37, 0.63);
+    cursor: pointer;
     transition: all 0.2s;
 }
 
@@ -538,14 +500,6 @@ p {
     height: auto;
     visibility: visible;
     display: initial;
-    transition: all 0.2s;
-}
-
-.grid-item[data-expandable='1']:hover .grid-item-content {
-    background: #FFE641;
-    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
-    color: rgba(37, 37, 37, 0.63);
-    cursor: pointer;
     transition: all 0.2s;
 }
 
@@ -581,20 +535,11 @@ p {
     opacity: 0.6;
 }
 
+/* --- FAQ Tile Content --- */
+
 .faq-container {
     width: 92%;
     margin: 0 auto;
-}
-
-.contact-links {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-}
-
-.contact-links img {
-    height: 40px;
 }
 
 li.question {
@@ -621,10 +566,12 @@ li.answer {
     align-items: center;
 }
 
+/* --- @media Queries --- */
+
 @media only screen and (min-width: 1300px) {
     .grid-item-expand {
-        width: 1120px /*!important*/;
-        height: 600px /*!important*/;
+        width: 1120px;
+        height: 600px;
     }
 
     .grid-item-expand .grid-item-content {
@@ -706,14 +653,6 @@ li.answer {
         max-width: 100%;
     }
 
-    /*.grid-item-expand.expand-small .grid-item-content, .grid-item-expand.expand-medium .grid-item-content {
-        max-width: 100%;
-    }*/
-
-    /*#headerButtons {
-        flex-direction:column;
-    }*/
-
     #headerButtons {
         display:none;
     }
@@ -765,6 +704,8 @@ li.answer {
         font-size: 8pt;
     }
 }
+
+/* --- Application Stylings --- */
 
 .logo{
     margin: 0px auto;
