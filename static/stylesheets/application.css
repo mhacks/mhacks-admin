@@ -1,3 +1,10 @@
+p {
+    font-family: 'Source Sans Pro';
+    font-size: 12pt;
+    font-weight: 200;
+    width: 100%;
+}
+
 .title-apply{
 	color: #1CA5AA;
 	margin-top: 10px;
@@ -9,7 +16,6 @@
 	font-size: 12pt;
     opacity: 0.7;
 }
-
 
 .application-title{
 	font-size: 16pt;

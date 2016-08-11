@@ -2,24 +2,32 @@
 
 {% block headers %}
     <link rel="stylesheet" media="all" href="{{ static('stylesheets/form.css') }}">
+
 {% endblock %}
 
 {% block content %}
-    <div class="header header-form turquoise">
-        <div class ="logo">
-            <img style="height:120px" src="{{ static('assets/logo.png') }}">
-        </div>
-        <form class="four columns offset-by-four" method="POST" action="{{ url_for('mhacks-logout') }}">
-            {{ csrf_input }}
-            <button type="submit">Logout</button>
-        </form>
-        <form class="four columns offset-by-four" method="GET" action="{{ url_for('mhacks-apply') }}">
-            {{ csrf_input }}
-            <button type="submit">Apply</button>
-        </form>
+    <div class="header turquoise header-form">
+               <div id="eventInfo">
+                   <h2>October 7-9</h2>
+                   <p>Detroit Masonic Temple</p>
+               </div>
+               <div id="logo">
+                   <img id="logoM" src="{{ static('assets/logo-m.png') }}" alt="MHacks 8 Logo - M">
+                   <img id="logoText" src="{{ static('assets/logo-text.png') }}" alt="MHacks 8 Logo - Hacks 8">
+               </div>
+               <div id="headerButtons">
+                   <a href="{{ url_for('mhacks-logout') }}">Logout</a>
+                   <a href="{{ url_for('mhacks-apply') }}">Apply</a>
+               </div>
+               <div id="headerDropdown">
+                 
+               </div>
     </div>
 
-{#    <div class="container container-form body-form">#}
+    <div class="container container-form">
+      <div class="col-12 text-center title-form">
+        <h3 class="first head"><span>Dashboard</span></h3>
+      </div>
         {% if request.user|belongs_to(groups.APP_READER) %}
             <div style="text-align:center; padding-bottom:0;" class="section container">
                 <h3>Looks like you're someone special ;)</h3>
@@ -35,9 +43,9 @@
         {% endif %}
         {% if request.user|belongs_to(groups.HACKER) %}
             {% if request.user.application is defined and request.user.application.submitted %}
-                <h3>Thank you for submitting your application!</h3>
+            <h3 style="text-align: center;">Thank you for submitting your application!</h3>
             {% else %}
             {% endif %}
         {% endif %}
-{#    </div>#}
+    </div>
 {% endblock %}

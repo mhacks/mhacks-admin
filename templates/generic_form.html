@@ -96,14 +96,15 @@
                         <div class="submit-row">
                             <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
                         </div>
+                        <div class="text-center row three">
+                        {% block form_footer %}
+                        {% endblock %}
+                    </div>
                     </div>
 
             </fieldset>
         </form>
-        <div class="container horizontal-center">
-            {% block form_footer %}
-            {% endblock %}
-        </div>
+
     {% else %}
         <div class="header">
             <div class="container">

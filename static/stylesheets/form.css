@@ -18,8 +18,15 @@ ul {
     list-style-type: none;
 }
 
+p {
+    font-family: 'Source Sans Pro';
+    font-size: 12pt;
+    font-weight: 200;
+    width: 100%;
+}
+
 .header-form{
-    height: 120px; 
+    position: static;
 }
 
 .title-form {
@@ -35,22 +42,26 @@ ul {
 
 .container-form {
     width: 66%;
-    margin-top: 210px;
+    margin-top: 40px;
     -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     -moz-box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     margin-left: auto;
     margin-right: auto;
     border: 1px solid  rgba(0,0,0,0.33);
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
 .logo{
-    margin: 0px auto;
     display: block;
+    width: 70%;
 }
 
 /* INPUTS */
+
+html input{
+    border-bottom-color: #a0a0a0;
+}
 
 html input[type="number"]{
     box-sizing: border-box;
@@ -177,4 +188,8 @@ html button {
 
 .field-form input {
     font-size: 15px;
+}
+
+.header-buttons{
+    width: 30%;
 }
