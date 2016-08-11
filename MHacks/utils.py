@@ -14,7 +14,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from jinja2 import Environment
 
 from config.settings import EMAIL_HOST_USER
-from config.settings import MAILCHIMP_API_KEY, MANDRILL_API_KEY
+from config.settings import MANDRILL_API_KEY
 
 
 # Sends mail through mandrill client.
