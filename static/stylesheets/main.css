@@ -8,7 +8,6 @@ body {
     overflow-y: auto;
     font-family: 'Source Sans Pro';
     font-size: 12pt;
-    display: flex;
     color: rgba(255, 255, 255, 0.8);
     background-color: #0c2949;
 }
@@ -775,12 +774,11 @@ li.answer {
 .container_apply {
     width: 50%;
     margin-top: 50px;
-    height: 1000px;
--webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
--moz-box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
- box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
- margin-left: auto;
-margin-right: auto;
+    -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin-left: auto;
+    margin-right: auto;
     border: 1px solid  rgba(0,0,0,0.33);
 }
 
@@ -816,6 +814,7 @@ html input{
     -webkit-transition: .4s;
     transition: .4s;
     padding: 0px;
+    outline: none;
 }
 
 html input[type="text"]:hover,
@@ -893,6 +892,7 @@ html button {
 .row.none{
     margin-top: 0px;
 }
+
 .drop-down-button{
    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
      margin-left: auto;
@@ -906,3 +906,10 @@ html button {
     width: 100%;
 }
 
+html fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow-x:hidden;
+    height: 100vh;
+}

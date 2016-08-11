@@ -1,22 +1,29 @@
-from config.settings import EMAIL_HOST_USER
-from django.template import loader
-from django.core.mail import send_mail
-from jinja2 import Environment
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text
-from django.contrib.auth import get_user_model
-from config.settings import MANDRILL_API_KEY
 import logging
+
 import mandrill
+from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.template import loader
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from jinja2 import Environment
+
+from config.settings import EMAIL_HOST_USER
+from config.settings import MAILCHIMP_API_KEY
+
 
 # Sends mail through mandrill client.
-def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
+def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
+    if not email_vars:
+        email_vars = dict()
+
     try:
-        MANDRILL_CLIENT = mandrill.Mandrill(MANDRILL_API_KEY)
+        MANDRILL_CLIENT = mandrill.Mandrill(MAILCHIMP_API_KEY)
         message = {
             'subject': subject,
             'from_email': 'hackathon@umich.edu',
@@ -24,15 +31,16 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
             'to': [{'email': email_to}],
             'global_merge_vars': []
         }
-        for k, v in email_vars.iteritems():
+        for k, v in email_vars.items():
             message['global_merge_vars'].append(
                     {'name': k, 'content': v}
             )
         return MANDRILL_CLIENT.messages.send_template(template_name, [], message)
-    except mandrill.Error, e:
+    except mandrill.Error as e:
         logger = logging.getLogger(__name__)
         logger.error('A mandrill error occurred: %s - %s' % (e.__class__, e))
         raise
+
 
 def send_email(to_email, email_template_name, html_email_template_name, context):
 
@@ -46,6 +54,7 @@ def send_email(to_email, email_template_name, html_email_template_name, context)
     send_mail(subject=subject, message=body, from_email=EMAIL_HOST_USER, recipient_list=[to_email],
               html_message=html_email)
 
+
 # Turns a relative URL into an absolute URL.
 def _get_absolute_url(request, relative_url):
     current_site = get_current_site(request)
@@ -55,12 +64,14 @@ def _get_absolute_url(request, relative_url):
         relative_url
     )
 
+
 def send_application_confirmation_email(user, request):
     send_mandrill_mail(
         'application_confirmation',
         'Your MHacks Application Is Submitted',
         user.email
     )
+
 
 def send_verification_email(user, request):
     token = default_token_generator.make_token(user)
@@ -122,8 +133,6 @@ def validate_signed_token(uid, token, require_token=True):
 
 
 def user_belongs_to_group(user, group_name):
-    from globals import groups
-    assert group_name in groups.ALL
     return user.groups.filter(name=group_name).exists()
 
 
@@ -141,3 +150,43 @@ def environment(**options):
     env.filters['slugify'] = slugify
     env.filters['belongs_to'] = user_belongs_to_group
     return env
+
+
+def validate_url(data, query):
+    """
+    Checks if the given url contains the specified query. Used for custom url validation in the ModelForms
+    :param data: full url
+    :param query: string to search within the url
+    :return:
+    """
+    if query not in data:
+        raise forms.ValidationError('Please enter a valid {} url'.format(query))
+
+
+class ArrayFieldSelectMultiple(forms.SelectMultiple):
+    """This is a Form Widget for use with a Postgres ArrayField. It implements
+    a multi-select interface that can be given a set of `choices`.
+
+    You can provide a `delimiter` keyword argument to specify the delimeter used.
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        # Accept a `delimiter` argument, and grab it (defaulting to a comma)
+        self.delimiter = kwargs.pop("delimiter", ",")
+        super(ArrayFieldSelectMultiple, self).__init__(*args, **kwargs)
+
+    def render_options(self, choices, value):
+        # value *should* be a list, but it might be a delimited string.
+        if isinstance(value, str):  # python 2 users may need to use basestring instead of str
+            value = value.split(self.delimiter)
+        return super(ArrayFieldSelectMultiple, self).render_options(choices, value)
+
+    def value_from_datadict(self, data, files, name):
+        from django.utils.datastructures import MultiValueDict
+        if isinstance(data, MultiValueDict):
+            # Normally, we'd want a list here, which is what we get from the
+            # SelectMultiple superclass, but the SimpleArrayField expects to
+            # get a delimited string, so we're doing a little extra work.
+            return self.delimiter.join(data.getlist(name))
+        return data.get(name, None)

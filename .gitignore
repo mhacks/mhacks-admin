@@ -3,4 +3,4 @@
 *.pyc
 venv/*
 .idea/*
-
+production_settings.py

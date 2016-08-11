@@ -3,6 +3,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 
+
 # Extends auth token serializer to accommodate push notifs
 class AuthSerializer(AuthTokenSerializer):
     token = serializers.CharField()

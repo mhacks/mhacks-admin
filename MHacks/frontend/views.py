@@ -1,20 +1,21 @@
 import requests
+from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.core.urlresolvers import reverse
 from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.core.urlresolvers import reverse
-from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
-from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
-from MHacks.forms import RegisterForm, LoginForm
 from MHacks.decorator import anonymous_required
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
+from MHacks.models import Application
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token
+from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
 
 
 def blackout_page(request):
@@ -36,21 +37,44 @@ def index(request):
     return render(request, 'index.html')
 
 
-#@login_required()
-def apply(request):
+@login_required()
+@permission_required('MHacks.add_application')
+@permission_required('MHacks.change_application')
+def application(request):
     if request.method == 'GET':
-        return render(request, 'apply.html' , {})
-        pass  # TODO: create the object and save it to the db
+        # find the user's application if it exists
+        try:
+            app = Application.objects.get(user=request.user)
+        except Application.DoesNotExist:
+            app = None
+
+        if app and app.submitted:
+            return redirect(reverse('mhacks-dashboard'))
+
+        form = ApplicationForm(initial=app)
+    elif request.method == 'POST':
+        form = ApplicationForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            app = form.save(commit=False)
+            app.submitted = True
+            app.user = request.user
+            app.save()
+            return redirect(reverse('mhacks-dashboard'))
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
-#I just copied the code from apply, not sure if the mentorship form needs anything different -Nevin
+    context = {'form': form}
+    return render(request, 'application.html', context=context)
+
+
+# I just copied the code from apply, not sure if the mentorship form needs anything different -Nevin
 def applyMentor(request):
     if request.method == 'GET':
         return render(request, 'applyMentor.html', {})
         pass
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
 
 @anonymous_required
 def login(request):

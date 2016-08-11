@@ -7,6 +7,5 @@ class GroupEnum:
     SPONSOR = 'sponsor'
     APP_READER = 'application_reader'
     STATS = 'stats_team'
-    ALL = (HACKER, SPONSOR, APP_READER, STATS)
 
 groups = GroupEnum()
