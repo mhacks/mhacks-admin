@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.admin.widgets import AdminFileWidget
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from MHacks.utils import ArrayFieldSelectMultiple
+from MHacks.widgets import ArrayFieldSelectMultiple
 
 from models import MHacksUser, Application
 from utils import validate_url
@@ -104,7 +105,7 @@ class ApplicationForm(forms.ModelForm):
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'resume': forms.FileInput(attrs={'class': 'input-md form-control'})
+            'resume': AdminFileWidget(attrs={'class': 'input-md form-control'})
         }
 
     # custom validator for urls

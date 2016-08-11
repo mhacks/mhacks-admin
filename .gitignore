@@ -4,3 +4,4 @@
 venv/*
 .idea/*
 production_settings.py
+resumes
