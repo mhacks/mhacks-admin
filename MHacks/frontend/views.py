@@ -2,7 +2,6 @@ import requests
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)

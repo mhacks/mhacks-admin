@@ -6,6 +6,8 @@ from django.db import migrations
 
 
 def create_groups(apps, schema_editor):
+    # create_permissions(apps.get_app_config('MHacks'))
+
     group_model = apps.get_model('auth', model_name='group')
     permission_model = apps.get_model('auth', model_name='permission')
 
@@ -17,12 +19,13 @@ def create_groups(apps, schema_editor):
 
     def add_permissions(group_name, permission_list):
         group = group_model.objects.get(name=group_name)
-        permissions = map(lambda p: permission_model.objects.get(code=p), permission_list)
-        group.permissions.add(permissions)
+        permissions = map(lambda p: permission_model.objects.get(codename=p), permission_list)
+        for x in permissions:
+            group.permissions.add(x)
 
     add_permissions(groups.HACKER, ['add_pushtoken', 'change_pushtoken', 'add_application', 'change_application'])
     add_permissions(groups.SPONSOR, ['add_event', 'add_announcement'])
-    add_permissions(groups.APP_READER, ['add_mhacksuser', 'change_mhacksuser', 'delete_mhacksuser', 'add_application', 'change_application', 'delete_application'])
+    add_permissions(groups.APP_READER, ['add_application', 'change_application', 'delete_application'])
     add_permissions(groups.STATS, [])
 
 
