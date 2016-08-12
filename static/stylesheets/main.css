@@ -175,6 +175,11 @@ p {
     transition: all 0.2s;
 }
 
+.header p {
+    margin: 0;
+    padding: 0;
+}
+
 .header-condensed {
     height: 60px !important;
     transition: height 0.4s;
@@ -218,7 +223,8 @@ p {
     text-align: center;
     width: 300px;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .header-condensed #headerButtons, .header-condensed #headerDropdown {
@@ -232,10 +238,6 @@ p {
     width: 300px;
     padding-right: 50px;
     text-align: right;
-}
-
-#headerDropdown:hover {
-    color: rgba(37, 37, 37, 0.63);
 }
 
 #dropdownContent {
@@ -255,6 +257,10 @@ p {
     border-left: 1px solid rgba(20, 20, 20, 0.1);
     border-right: 1px solid rgba(20, 20, 20, 0.1);
     border-bottom: 1px solid rgba(20, 20, 20, 0.1);
+}
+
+#dropdownContent a {
+    margin: 2px 0;
 }
 
 .header-condensed #dropdownContent {
