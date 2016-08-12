@@ -152,7 +152,8 @@ class Application(Any):
 
     # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
-    school = models.CharField(max_length=255, default='', choices=zip(COLLEGES, COLLEGES))
+    # school = models.CharField(max_length=255, default='', choices=zip(COLLEGES, COLLEGES))
+    school = models.CharField(max_length=255, default='')
     is_high_school = models.BooleanField()
     major = models.CharField(max_length=255, default='', choices=zip(MAJORS, MAJORS))
     grad_date = models.DateField()

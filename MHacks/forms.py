@@ -95,7 +95,7 @@ class ApplicationForm(forms.ModelForm):
             "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
             'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
             'birthday': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
-            'school': forms.Select(attrs={'class': 'select_style'}),
+            'school': forms.TextInput(attrs={'placeholder': 'University of ...', 'class': 'form-control input-md'}),
             'major': forms.Select(attrs={'class': 'select_style'}),
             'gender': forms.Select(attrs={'class': 'select_style'}),
             'race': forms.Select(attrs={'class': 'select_style'}),
