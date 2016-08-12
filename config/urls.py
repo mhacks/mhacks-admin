@@ -22,6 +22,6 @@ from MHacks.v1.urls import urlpatterns as api_urls
 
 urlpatterns = [
     url(r'^admin/', include(site.urls)),
-    url(r'^v1/', include(api_urls)),
+    # url(r'^v1/', include(api_urls)),
     url(r'', include(frontend_urls)),
 ]

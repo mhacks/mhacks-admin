@@ -30,9 +30,8 @@ INSTALLED_APPS = [
     'rest_framework_docs',
     'MHacks',
     'push_notifications',
-    'django_extensions'
+    'django_extensions',
     'crispy_forms',
-    'push_notifications'
 ]
 
 MIDDLEWARE_CLASSES = [

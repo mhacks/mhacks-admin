@@ -1,12 +1,9 @@
-import requests
-from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
-                         HttpResponseForbidden, JsonResponse)
-from django.shortcuts import render, redirect
+import mailchimp
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.core.urlresolvers import reverse
-from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
+from django.http import (HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
 from django.shortcuts import render, redirect
 from django.utils.encoding import force_bytes
@@ -15,13 +12,10 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
 from MHacks.decorator import anonymous_required
-from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token
-from config.settings import MAILCHIMP_API_KEY
-import mailchimp
 from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
 from MHacks.models import Application
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, send_application_confirmation_email
-from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
+from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
 
 MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
 
@@ -47,7 +41,7 @@ def blackout(request):
 
 
 def index(request):
-    return render(request, 'blackout.html')
+    return render(request, 'index.html')
 
 
 @login_required()
