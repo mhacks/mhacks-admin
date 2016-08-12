@@ -1,10 +1,12 @@
 from __future__ import unicode_literals
 
-from django.db import models
-from config.settings import AUTH_USER_MODEL
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, User
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+
+from globals import GroupEnum
+from config.settings import AUTH_USER_MODEL
 from managers import MHacksQuerySet
 
 
@@ -28,7 +30,7 @@ class MHacksUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         from django.contrib.auth.models import Group
-        user.groups.add(Group.objects.get(name='hacker'))
+        user.groups.add(Group.objects.get(name=GroupEnum.HACKER))
         user.save(using=self._db)
         from utils import send_verification_email
         if request:
@@ -59,6 +61,7 @@ class MHacksUser(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         verbose_name = 'User'
+        default_permissions = ()
 
     @property
     def is_active(self):
@@ -145,56 +148,49 @@ class PushToken(models.Model):
 
 
 class Application(Any):
-    # Constants
-    GENDERS = (('m', 'Male'), ('f', 'Female'), ('non-binary', 'Non Binary'), ('none', 'Prefer not to answer'))
-    RACES = (('white', 'White'),
-             ('black', 'Black'),
-             ('native', 'American Indian or Alaskan Native'),
-             ('asian', 'Asian or Pacific Islander'),
-             ('hispanic', 'Hispanic'),
-             ('none', 'Prefer not to answer'))
-    TECH_OPTIONS = (('ios', 'iOS'),
-                    ('android', 'Android'),
-                    ('web_dev', 'Web Dev'),
-                    ('vr', 'Virtual/Augmented Reality'),
-                    ('game_dev', 'Game Development'),
-                    ('hardware', 'Hardware'))
-    # Main information
+    from application_lists import GENDERS, RACES, TECH_OPTIONS, COLLEGES, MAJORS, STATES
+
+    # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
+    # school = models.CharField(max_length=255, default='', choices=zip(COLLEGES, COLLEGES))
+    school = models.CharField(max_length=255, default='')
     is_high_school = models.BooleanField()
-    school = models.CharField(max_length=255)
-    major = models.CharField(max_length=255, default='')
-    grad_year = models.DateField()
+    major = models.CharField(max_length=255, default='', choices=zip(MAJORS, MAJORS))
+    grad_date = models.DateField()
     birthday = models.DateField()
 
     # Demographic
-    gender = models.CharField(choices=GENDERS, max_length=16)
-    race = models.CharField(max_length=16, choices=RACES)
+    gender = models.CharField(max_length=16, choices=GENDERS, default='none')
+    race = models.CharField(max_length=16, choices=RACES, default='none')
 
     # External Links
-    github = models.URLField()  # TODO: Add validator for github hostname
-    devpost = models.URLField()  # TODO: Add validator for devpost hostname
-    personal_page = models.URLField()
-    resume = models.FileField()
+    github = models.URLField()
+    devpost = models.URLField()
+    personal_website = models.URLField()
+    resume = models.FileField(upload_to='resumes/', max_length=(10 * 1024 * 1024))  # 10 MB max file size
+
+    # Experience
+    num_hackathons = models.IntegerField(default=0)
 
     # Interests
-    cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS))
+    cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True), size=len(TECH_OPTIONS))
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()
 
-    # Experience
-    num_hackathons = models.IntegerField(default=0)
-    hack_link = models.URLField()
-    hack_explanation = models.TextField()
+    # Logistics
+    needs_reimbursement = models.BooleanField(default=False)
+    can_pay = models.FloatField(default=0)
+    from_city = models.CharField(max_length=255, default='')
+    from_state = models.CharField(max_length=5, choices=zip(STATES, STATES), default='')
 
     # Miscellaneous
     mentoring = models.BooleanField(default=False)
     submitted = models.BooleanField(default=False)
 
     # Private administrative use
-    score = models.FloatField()
-    reimbursement = models.FloatField()
+    score = models.FloatField(default=0)
+    reimbursement = models.FloatField(default=0)
 
     def __unicode__(self):
         return self.user.get_full_name() + '\'s Application'

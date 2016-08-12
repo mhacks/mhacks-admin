@@ -3,22 +3,28 @@ from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAl
                          HttpResponseForbidden, JsonResponse)
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.core.urlresolvers import reverse
-from django.utils.http import urlsafe_base64_encode, is_safe_url
+from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
+                         HttpResponseForbidden)
+from django.shortcuts import render, redirect
 from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
-from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
-from MHacks.forms import RegisterForm, LoginForm
 from MHacks.decorator import anonymous_required
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token
 from config.settings import MAILCHIMP_API_KEY
 import mailchimp
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
+from MHacks.models import Application
+from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, send_application_confirmation_email
+from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
 
 MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
+
 
 def blackout(request):
     if request.method == 'POST':
@@ -42,6 +48,48 @@ def blackout(request):
 
 def index(request):
     return render(request, 'blackout.html')
+
+
+@login_required()
+@permission_required('MHacks.add_application')
+@permission_required('MHacks.change_application')
+def application(request):
+    # find the user's application if it exists
+    try:
+        app = Application.objects.get(user=request.user)
+    except Application.DoesNotExist:
+        app = None
+
+    if request.method == 'GET':
+        if app and app.submitted:
+            return redirect(reverse('mhacks-dashboard'))
+
+        form = ApplicationForm(instance=app)
+    elif request.method == 'POST':
+        form = ApplicationForm(data=request.POST, files=request.FILES, instance=app)
+        if form.is_valid():
+            # save application
+            app = form.save(commit=False)
+            app.submitted = True
+            app.user = request.user
+            app.save()
+
+            send_application_confirmation_email(request.user)  # send conf email
+            return redirect(reverse('mhacks-dashboard'))
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
+    context = {'form': form}
+    return render(request, 'application.html', context=context)
+
+
+# I just copied the code from apply, not sure if the mentorship form needs anything different -Nevin
+def applyMentor(request):
+    if request.method == 'GET':
+        return render(request, 'applyMentor.html', {})
+        pass
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
 
 @anonymous_required
@@ -94,11 +142,13 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = get_user_model().objects.create_user(email=form.cleaned_data['email'],
-                                                        password=form.cleaned_data['password1'],
-                                                        first_name=form.cleaned_data['first_name'],
-                                                        last_name=form.cleaned_data['last_name'],
-                                                        request=request)
+            user = get_user_model().objects.create_user(
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password1'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                request=request
+            )
             user.save()
             user_pk = urlsafe_base64_encode(force_bytes(user.pk))
             form = None

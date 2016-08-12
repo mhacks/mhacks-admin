@@ -1,36 +1,34 @@
 {% extends 'base.html' %}
 
 {% block headers %}
-    <link rel="stylesheet" media="all" href="{{ static('stylesheets/style.css') }}">
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/form.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div class="header">
-        <div class="container">
-            <a href="{{ url_for('mhacks-home') }}"><img src="{{ static('assets/logo_orange.png') }}" id="headerLogo" alt="MHacks: Refactor"/></a>
-            <form method="POST" action="{{ url_for('mhacks-logout') }}">
-                {{ csrf_input }}
-                <button type="submit">Logout</button>
-            </form>
+    {% include 'header.html' %}
+
+    <div class="container container-form">
+        <div class="col-12 text-center title-form">
+            <h3 class="first head"><span>Dashboard</span></h3>
         </div>
-    </div>
-    <h3 class="first container head"><span>Dashboard</span></h3>
-    {% if request.user|belongs_to(groups.APP_READER) %}
-        <div style="text-align:center; padding-bottom:0;" class="section container">
-            <h3>Looks like you're someone special ;)</h3>
-            <h3>Head here to read applications:</h3>
-            <a href=""><button type="button">Read Apps</button></a> {# TODO: Fill URL #}
-        </div>
-    {% endif %}
-    {% if request.user|belongs_to(groups.SPONSOR) %}
-        {# TODO: Show sponsor related information here #}
-    {% endif %}
-    {% if request.user|belongs_to(groups.STATS) %}
-        {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
-    {% endif %}
-    {% if request.user|belongs_to(groups.HACKER) %}
-        {% if request.user.application is defined and request.user.application.submitted %}
-        {% else %}
+        {% if request.user|belongs_to(groups.APP_READER) %}
+            <div style="text-align:center; padding-bottom:0;" class="section container">
+                <h3>Looks like you're someone special ;)</h3>
+                <h3>Head here to read applications:</h3>
+                <a href=""><button type="button">Read Apps</button></a> {# TODO: Fill URL #}
+            </div>
         {% endif %}
-    {% endif %}
+        {% if request.user|belongs_to(groups.SPONSOR) %}
+            {# TODO: Show sponsor related information here #}
+        {% endif %}
+        {% if request.user|belongs_to(groups.STATS) %}
+            {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
+        {% endif %}
+        {% if request.user|belongs_to(groups.HACKER) %}
+            {% if request.user.application is defined and request.user.application.submitted %}
+                <h3 style="text-align: center;">Thank you for submitting your application!</h3>
+            {% else %}
+            {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

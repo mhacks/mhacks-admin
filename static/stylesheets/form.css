@@ -1,0 +1,190 @@
+/*
+THIS FILE IS GOING TO BE USED ACROSS ALL FORMS ON MHACKS.
+PLEASE KEEP THIS AS GENERAL AS POSSIBLE. IF YOU WANT TO 
+ADD STYLING TO ONE FORM, PLEASE MAKE A NEW CSS FILE, AND ONLY
+INCLUDE THAT FILE ON YOUR SPECIFIC PAGE. THANK YOU.
+*/
+
+body {
+    font-family: 'Source Sans Pro';
+    background-color: #ffffff;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 12pt;
+}
+
+ul {
+    list-style-type: none;
+}
+
+p {
+    font-family: 'Source Sans Pro';
+    font-size: 12pt;
+    font-weight: 200;
+    width: 100%;
+}
+
+.header-form{
+    position: static;
+}
+
+.title-form h3 {
+    color: rgba(0, 169, 194, 1);
+    font-size: 35px;
+}
+
+.body-form {
+    margin-top: 30px;
+}
+
+.container-form {
+    width: 66%;
+    margin-top: 40px;
+    -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid  rgba(0,0,0,0.33);
+    padding-bottom: 30px;
+    color: #333;
+}
+
+.logo{
+    display: block;
+    width: 70%;
+}
+
+/* INPUTS */
+
+html input{
+    border-bottom-color: #a0a0a0;
+}
+
+html input[type="number"]{
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 18px;
+    padding-right: 8px;
+}
+
+html input[type="text"],
+html input[type="tel"],
+
+html input[type="number"],
+html input[type="url"],
+html input[type="email"],
+html input[type="password"],
+html input[type="school"],
+html input{
+    box-shadow: none;
+    opacity: 0.7;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    -webkit-transition: .4s;
+    transition: .4s;
+    padding: 0px;
+}
+
+html input[type="text"]:hover,
+html input[type="tel"]:hover,
+
+html input[type="number"]:hover,
+html input[type="url"]:hover,
+html input[type="email"]:hover,
+html input[type="password"]:hover,
+html input[type="school"]:hover,
+html input:hover {
+    border-color: #1865AE; /* UPDATE COLOR */
+}
+
+html input[type="text"]:active,
+html input[type="text"]:focus,
+html input[type="tel"]:active,
+html input[type="tel"]:focus,
+html input[type="number"]:active,
+html input[type="number"]:focus,
+html input[type="url"]:active,
+html input[type="url"]:focus,
+html input[type="email"]:active,
+html input[type="email"]:focus,
+html input[type="password"]:active,
+html input[type="password"]:focus,
+html input[type="school"]:active,
+html input[type="school"]:focus,
+html input:active,
+html input:focus {
+    box-shadow:none !important;
+    border-color: #1CA5AA; /* UPDATE COLOR */
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    opacity: 1;
+
+}
+
+html input[type="radio"],
+html button {
+    background: rgba(0, 169, 194, 1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.23), 0 3px 6px rgba(0,0,0,0.15);
+    border-radius: 5px;
+    -webkit-transition: .4s;
+    transition: .4s;
+    font-size:  14px;
+    color: white;
+    border: 0px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Rows */
+
+.row {
+    margin-top: 12px;
+}
+
+.row.two {
+    margin-top: 32px;
+}
+
+.row.three {
+    margin-top: 48px;
+}
+
+.row.four {
+    margin-top: 64px;
+}
+
+.row.five {
+    margin-top: 80px;
+}
+
+.row.none{
+    margin-top: 0px;
+}
+
+.submit-row {
+    margin-top: 35px;
+    text-align: center;
+}
+
+.drop-down-button{
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid  rgba(0,0,0,0.33);
+    border-radius: 0px;
+    background-color: #fff;
+}
+
+.label-apply {
+    font-weight: 200;
+    font-size: 15px;
+    margin-right: 7px;
+}
+
+.field-form input {
+    font-size: 15px;
+}

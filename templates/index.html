@@ -1,1048 +1,541 @@
 {% extends 'base.html' %}
 
 {% block headers %}
-    <link rel="stylesheet" media="all" href="{{ static('stylesheets/style.css') }}">
-    <link rel="stylesheet" media="all" href="{{ static('stylesheets/about_style.css') }}">
-    <link rel="stylesheet" media="all" href="{{ static('stylesheets/symbolic.css') }}">
-    <script>
-        $(document).ready(function() {
-
-            var subtext = $( ".subtext-container" );
-            $( ".radio-button" ).click( switchIt );
-            $( ".checkbox" ).click( checkIt );
-            $( ".question" ).click( pullDrawer );
-            subtext.hover( displaySubtext );
-
-            // set up haikus
-            $(".haiku").hide();
-            var showHaikus = true;
-            $("#haiku-switch").click(function() {
-                if(showHaikus) {
-                    $(".faq .normal.text").hide();
-                    $(".faq .haiku.text").show();
-                }
-                else {
-                    $(".faq .normal.text").show();
-                    $(".faq .haiku.text").hide();
-                }
-                showHaikus = !showHaikus;
-            });
-
-            $("#sponsorScroll, #interest-sponsor").click(function() {
-                $('html, body').animate({
-                    scrollTop: $("#sponsorSection").offset().top}, 'slow');
-                return false;
-            });
-
-            $( window ).resize( function (){
-                subtext.each(setupSubtext);
-            });
-            subtext.each(setupSubtext);
-
-            setInterval(updateMHacksIs, 2000);
-
-            setTimeout(logoAnimation, 1000);
-
-            var scheduleOffset = $("#scheduleSection").offset().top - $(window).height()/2;
-            var faqOffset = $("#faqSection").offset().top - $(window).height()/2;
-            var sponsorOffset = $("#sponsorSection").offset().top - $(window).height()/2;
-
-            var $w = $(window).scroll(function(){
-                var faq = $(".faq");
-                if($w.scrollTop() < scheduleOffset){
-                    $(".about").find(".title").addClass("fancy");
-                    $(".schedule").find(".title").removeClass("fancy");
-                    faq.find(".title").removeClass("fancy");
-                    faq.find(".onoffswitch").removeClass("fancy");
-                    $(".sponsors").find(".title").removeClass("fancy");
-                }
-                else if($w.scrollTop() >= scheduleOffset && $w.scrollTop() < faqOffset){
-                    $(".about").find(".title").removeClass("fancy");
-                    $(".schedule").find(".title").addClass("fancy");
-                    faq.find(".title").removeClass("fancy");
-                    faq.find(".onoffswitch").removeClass("fancy");
-                    $(".sponsors").find(".title").removeClass("fancy");
-                }
-                else if($w.scrollTop() >= faqOffset && $w.scrollTop() < sponsorOffset) {
-                    $(".about").find(".title").removeClass("fancy");
-                    $(".schedule").find(".title").removeClass("fancy");
-                    faq.find(".title").addClass("fancy");
-                    faq.find(".onoffswitch").addClass("fancy");
-                    $(".sponsors").find(".title").removeClass("fancy");
-                } else {
-                    $(".about").find(".title").removeClass("fancy");
-                    $(".schedule").find(".title").removeClass("fancy");
-                    faq.find(".title").removeClass("fancy");
-                    faq.find(".onoffswitch").removeClass("fancy");
-                    $(".sponsors").find(".title").addClass("fancy");
-                }
-            });
-        });
-
-
-        function logoAnimation (){
-            var duration = 1800;
-
-            var timeout = 200;
-
-            colorMe( ".loop", "#333", "stroke", timeout );
-            animateLoop( "#left-under", "#left-over", duration, timeout);
-            animateLoop( "#center-over", "#center-under", duration, timeout);
-            animateLoop( "#right-under", "#right-over", duration, timeout);
-
-            var animationTime = 1200;
-            timeout += duration;
-
-            colorMe( "#mHacks-standard-logo", "#FFF", "fill", timeout);
-            timeout += animationTime;
-            colorMe( "#mHacks-standard-logo", 0, "opacity", timeout);
-            colorMe( ".loop", "#FEC111 ", "stroke", timeout);
-            colorMe( "#refactor", "1", "opacity", timeout);
-            colorMe( "#mhacks-text", "1", "opacity", timeout);
-        }
-
-        function colorMe (id, color, style, timeout){
-            setTimeout(function (){
-                $( id ).css(style, color)
-            }, timeout);
-        }
-
-
-        function animateLoop (lineIdA, lineIdB, animationDuration, timeout){
-
-            var lineA = $( lineIdA )[0];
-            var lineB = $( lineIdB )[0];
-
-            var lengthA = lineA.getTotalLength();
-            var lengthB = lineB.getTotalLength();
-            var rate = (lengthA + lengthB) / animationDuration;
-
-
-            timeout = animateLine( lineIdA, rate, timeout );
-            animateLine( lineIdB, rate, timeout );
-        }
-
-        //returns time elapsed
-        function animateLine (lineId, rate, timeout){
-
-            var line = $( lineId )[0];
-            var lineLength = line.getTotalLength();
-            var animationDuration =  lineLength / rate;
-            var animation = "dash " + animationDuration / 1000 + "s linear forwards";
-
-            $( line ).css( "stroke-dasharray", lineLength );
-            $( line ).css( "stroke-dashoffset", lineLength );
-
-            setTimeout(function () {
-                $( line ).css( "stroke-linecap", "round" );
-                $( line ).css( "animation", animation );
-            }, timeout);
-
-
-            return animationDuration + timeout; //duration in milliseconds
-        }
-
-        function checkIt (){
-            var child = $( this ).children( "input" );
-            if( !child.prop("checked") ){
-                child.prop("checked", true);
-                $( this ).addClass( "active" );
-            }
-            else {
-                child.prop("checked", false);
-                $( this ).removeClass( "active" );
-            }
-        }
-
-        function switchIt (){
-            $( this ).children( "input" ).prop("checked", true);
-            $( this ).children( "input" ).change();
-
-            $( this ).siblings( "label" ).removeClass( "active" );
-            $( this).addClass( "active" );
-        }
-
-        function pullDrawer (){
-            var symbol = $( this ).find( ".symbol" );
-            if ( $( this ).hasClass( "open" )){
-                $( this ).removeClass( "open" );
-                $( symbol ).addClass( "plus" );
-                $( symbol ).removeClass( "minus" );
-            }
-            else {
-                $( this ).addClass( "open" );
-                $( symbol ).removeClass( "plus" );
-                $( symbol ).addClass( "minus" );
-            }
-        }
-
-        function displaySubtext () {
-            if( !$( this ).hasClass( "display" ) ){
-                var container = this;
-                $( container ).addClass( "display" );
-                var subtext = $( container ).children()[1];
-                $( container ).addClass( "display" );
-
-                var start = parseInt( $( subtext ).css( "left" ) );
-                var end = -$( subtext ).outerWidth();
-
-                var transition = $( subtext ).css( "transition" );
-
-                $( subtext ).css("left", end );
-
-                window.setTimeout(function (){
-                    $( subtext ).css( "transition", "0s");
-                    $( subtext ).css( "left", start);
-                    //requires a slight delay to remove transition;
-                    window.setTimeout( function () { $( subtext ).css( "transition", transition ); }, 100);
-                    $( container ).removeClass( "display" );
-
-                }, 2000);
-            }
-
-        }
-
-        function setupSubtext () {
-            var child = $( this ).children()[1];
-            $( child ).css( "left", $( this ).width() + 10 );
-        }
-
-        var mhacksIsIndex = 0;
-        function updateMHacksIs() {
-            var mHacksIs =  [
-                'organized chaos.',
-                'caffeine.',
-                //'compile errors & facepalms.',
-                'enthusiastic collaboration.',
-                'breaking & rebuilding.',
-                'killer tech talks.',
-                'meeting your new BFFs.',
-                //'falling in love with duct tape.',
-                'cutting-edge tech.',
-                '4 am breakthroughs.',
-                'impromptu dance parties.',
-                'swag city.',
-                'terrible memes.',
-                '&#x1F525;',
-                'feeding your brain.',
-                'feeding your stomach.',
-                'feeding your imagination.',
-                'git commits.',
-                'searching for a nap spot.',
-                'stupid puns.',
-                'counting down to expo.',
-                'rolling with the punches.',
-                'agreeing to disagree.',
-                'making awesome shit.'
-            ];
-            $("#mhacks-is").html(mHacksIs[mhacksIsIndex]);
-            mhacksIsIndex == mHacksIs.length-1 ? mhacksIsIndex = 0 : mhacksIsIndex++;
-        }
-    </script>
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/index.css') }}">
 {% endblock %}
 
 {% block content %}
-    <section class="header">
-        <div class="content">
-            <h1 id="mhacks-text" style="opacity: 0; transition: 1.2s; margin-top: 24px;">MHacks</h1>
-            <h2 id="refactor" style="transition: 1.2s; opacity: 0; letter-spacing: 16px; margin-left: -3px; margin-top: -4px;">&nbsp;REFACTOR</h2>
-            <div class="description">
-                <h3>North Campus, University of Michigan</h3>
-                <h3>February 19-21</h3>
+    <canvas id="bgCanvas"></canvas>
+    <div id="container">
+        <div class="header turquoise">
+            <div id="eventInfo">
+                <h2>October 7-9</h2>
+                <p>Detroit Masonic Temple</p>
+            </div>
+            <div id="logo">
+                <img id="logoM" src="{{ static('assets/logo-m.png') }}" alt="MHacks 8 Logo - M">
+                <img id="logoText" src="{{ static('assets/logo-text.png') }}" alt="MHacks 8 Logo - Hacks 8">
+            </div>
+            <div id="headerButtons">
+                <a href="mailto:hackathon@umich.edu">Email</a>
+                <p>Applications coming soon!</p>
+            </div>
+            <div id="headerDropdown">
+                <i id="dropdownTrigger" class="fa fa-bars fa-2x" aria-hidden="false"></i>
+                <div id="dropdownContent" class="turquoise">
+                    <a href="mailto:hackathon@umich.edu">Email</a>
+                    <p>Applications coming soon!</p>
+                </div>
             </div>
         </div>
-        <div class="background">
-            <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                 width="392px" height="308px" viewBox="-8 -8 392 308" style="enable-background:new -8 -8 392 308;" xml:space="preserve">
-                <g id="under">
-                    <path id="right-under" class="loop" d="M208.435,128.502l85.979-118.16c0.491-0.675,0.935-1.18,1.307-1.551
-                        c0.213,0.481,0.442,1.115,0.654,1.923L367.256,281.2c0.318,1.215,0.402,2.109,0.397,2.696c-0.551-0.063-1.412-0.247-2.619-0.732"></path>
-                    <path id="center-under" class="loop" d="M262.932,128.748c4.185,5.784,4.185,15.933,0,21.718l-70.569,97.538
-                        c-1.461,2.019-3.153,3.131-4.768,3.131s-3.307-1.112-4.767-3.13l-70.569-97.539c-4.185-5.785-4.185-15.933,0-21.718"></path>
-                    <path id="left-under" class="loop" d="M167.221,128.502L81.242,10.343c-0.491-0.675-0.935-1.181-1.308-1.551
-                        c-0.212,0.481-0.442,1.115-0.654,1.923L8.4,281.2c-0.318,1.215-0.403,2.109-0.398,2.696c0.551-0.063,1.412-0.246,2.62-0.732"></path>
-                </g>
-                <path id="mHacks-standard-logo" d="M295.5,249.594l-4.391-1.425c-23.31-7.558-47.308-12.563-71.332-14.88l-3.035-0.295v-55.84
-                    c-6.722,6.799-12.771,13.524-19.094,20.559c-2.441,2.712-4.965,5.52-7.512,8.312l-2.479,2.716l-2.478-2.716
-                    c-2.889-3.162-5.703-6.337-8.425-9.405c-5.954-6.711-11.648-13.134-18.184-19.619v55.994l-3.034,0.295
-                    c-23.933,2.309-47.12,7.175-70.884,14.88l-4.392,1.425V32.178l4.392,1.424c23.338,7.566,47.474,12.573,71.738,14.88l1.701,0.163
-                    l0.87,1.471c9.89,16.735,19.785,32.49,29.124,47.14c10.848-17.05,20.123-32.135,28.992-47.14l0.869-1.471l1.702-0.163
-                    c24.002-2.283,48.044-7.289,71.459-14.88l4.391-1.424V249.594z M284.566,47.061c-8.868,2.591-17.813,4.832-26.671,6.677
-                    c-10.974,2.289-22.186,4.05-33.359,5.243c-9.126,15.348-18.714,30.849-30.062,48.597l-6.385,9.991l-6.387-9.991
-                    c-9.58-14.986-19.847-31.217-30.195-48.595c-20.325-2.167-40.573-6.172-60.309-11.925v187.649c8.84-2.589,17.728-4.829,26.492-6.672
-                    c9.866-2.075,19.923-3.72,29.946-4.897V151.81l12.726,11.762c9.43,8.717,17.119,17.385,24.575,25.792
-                    c0.903,1.018,1.817,2.048,2.739,3.085c0.396-0.441,1.841-2.049,1.841-2.049c7.829-8.707,15.924-17.71,25.339-26.736l12.824-12.291
-                    v71.762c19.106,2.236,38.196,6.122,56.888,11.578V47.061z"></path>
-                <g id="over">
-                    <path id="center-over" class="loop" d="M112.258,128.748l70.569-97.539c1.46-2.018,3.153-3.129,4.768-3.129s3.308,1.111,4.768,3.129
-                        l70.569,97.539"></path>
-                    <path id="left-over" class="loop" d="M10.622,283.164l72.167-29.032c8.472-3.408,20.083-12.582,25.354-20.033l59.231-83.728
-                        c4.139-5.85,4.067-16.069-0.154-21.869"></path>
-                    <path id="right-over" class="loop" d="M365.034,283.164l-72.168-29.032c-8.472-3.408-20.083-12.582-25.354-20.033l-59.231-83.728
-                        c-4.139-5.851-4.067-16.07,0.153-21.869"></path>
-                </g>
-            </svg>
-        </div>
-    </section>
+        <div class="grid">
+            <div class="grid-item darkBlue " data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
 
-    <section class="actionable">
-        <a href="{{ url_for('mhacks-live') }}"><button style="margin-right:0;">Live</button></a>
-    </section>
-
-    <section class="about" id="aboutSection">
-        <div class="container">
-            <h3 class="title"> About </h3>
-        </div>
-        <div class="mHacks-is container">
-            <div class="background-image">
-                <div class="ten columns offset-by-one description">
-                    <h3>
-                        MHacks: Refactor <br> is
-                        <span>36</span>
-                        hours of...
-                    </h3>
                 </div>
             </div>
-            <div class="ten columns offset-by-one phrase">
-                <h3 id="mhacks-is">
-                    hacking.
-                </h3>
-            </div>
-        </div>
-
-        <div class="dream container pad card">
-            <p class="ten columns offset-by-one">
-                We know you have
-                <span class="subtext-container">
-                    <span>dreams.</span>
-                    <span>memes.</span>
-                </span>
-                We do, too. At MHacks, we work to break down whatever’s keeping you from making those dreams a reality. Whether it’s knowledge or access to materials or the industry itself—whatever that barrier is, consider it a little more manageable at MHacks: Refactor. When there’s nothing holding you back, you’ll be amazed at what you can do.
-                Bring your boldest, most outlandish dreams.
-                It’s time to hack.
-            </p>
-        </div>
-
-        <div class="new-stuff container pad">
-            <div class="four columns chest chest-hover unselectable">
-                <h4> Hackers </h4>
-                <h5 class="hackers"> 500-700 </h5>
-                <div class="add-text">
-                    <p>because fewer people means bigger things can happen</p>
+            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-11.png') }}" alt="Hardware">
                 </div>
             </div>
-            <div class="four columns chest chest-hover unselectable">
-                <h4> Hacker-Mentor Ratio </h4>
-                <h5> 4:1 </h5>
-                <div class="add-text">
-                    <p>because what we can do together > what we can do alone</p>
+            <div class="grid-item lightTurquoise  " data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+
                 </div>
             </div>
-            <div class="four columns chest chest-hover unselectable">
-                <h4> Gender Balance </h4>
-                <h5> 50/50 </h5>
-                <div class="add-text">
-                    <p>because it’s about time for a little change in the tech world</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="schedule" id="scheduleSection">
-        <div class="container">
-            <h3 class="title"> Schedule </h3>
-        </div>
-
-        <div class="new-stuff container pad">
-            <div class="four columns chest chest-hover unselectable flush">
-                <h4> Friday </h4>
-            </div>
-            <div class="card columns schedule-day">
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            5:30 pm - 6:45 pm
-                        </p>
+            <div class="grid-item expand-small blue  " data-remove="0" data-expandable="1">
+                <div class="expand-icon"></div>
+                <!--i class="fa fa-plus-circle fa-pull-right" aria-hidden="false"></i-->
+                <div class="grid-item-content">
+                    <div class="basic-info">
+                        <h1>What is MHacks?</h1>
                     </div>
-                    <div class="schedule-detail">
+                    <div class="extra-info">
                         <p>
-                            Shuttles from DTW to MHacks
+                            MHacks is a 36-hour hackathon hosted by University of Michigan students.
                         </p>
-                    </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="schedule-time">
                         <p>
-                            6:00 pm - 8:00 pm
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Hacker Registration
-                        </p>
-                    </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            6:30 pm - 8:30 pm
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Dinner
-                        </p>
-                    </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            7:00 pm - 10:00 pm
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Sponsor Expo
-                        </p>
-                    </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            9:15 pm
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Opening Ceremony
+                            2,000 hackers will gather from around the world, and we’ll provide you with everything you
+                            need to be as curious, productive, and passionate as you can be. Whether it’s your first
+                            time hacking or your eighth, MHacks is a weekend experience you won’t want to miss.
                         </p>
                     </div>
                 </div>
             </div>
-
-            <div class="four columns chest chest-hover unselectable flush">
-                <h4> Saturday </h4>
-            </div>
-            <div class="card columns schedule-day">
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            midnight
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Hacking Begins!
-                        </p>
-                    </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            during hacking
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Tons of fun events, mini activities, food, meetups, panels, tech talks, and mentorship
-                        </p>
-                    </div>
+            <div class="grid-item width2" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="flavor-image" src="{{ static('assets/main-page-1.png') }}" alt="Headset Technology">
                 </div>
             </div>
-
-            <div class="four columns chest chest-hover unselectable flush">
-                <h4> Sunday </h4>
-            </div>
-            <div class="card columns schedule-day">
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            noon
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Hacking Ends
-                        </p>
-                    </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            1:00 pm - 2:30 pm
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Hacker Expo
-                        </p>
-                    </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            3:30 pm - 5:00 pm
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Closing Ceremony
-                        </p>
-                    </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="schedule-time">
-                        <p>
-                            5:00 pm - 7:00 pm
-                        </p>
-                    </div>
-                    <div class="schedule-detail">
-                        <p>
-                            Buses Leave
-                        </p>
-                    </div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
                 </div>
             </div>
-
-        </div>
-    </section>
-
-    <section class="faq"  id="faqSection">
-        <div class="container ">
-            <h3 class="title" style="padding-left: 100px;"> FAQs </h3>
-            <div class="onoffswitch">
-                <p>#Haiku</p>
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
-                <label id="haiku-switch" class="onoffswitch-label" for="myonoffswitch">
-                    <span class="onoffswitch-inner"></span>
-                    <span class="onoffswitch-switch"></span>
-                </label>
+            <div class="grid-item lightBlue " data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
             </div>
-            <div class="row">
-                <div class="four columns faq-header general">
-                    <h3>General</h3>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-06.png') }}" alt="Video Games">
                 </div>
-                <div class="eight columns">
-                    <div class="question chest">
-                        <h4>
-                            What is MHacks?
-                            <span class="symbol plus" ></span>
-                        </h4>
-
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p >MHacks is a semiannual hackathon held at the University of Michigan. </p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > thirty-six hours<br>
-                                    to build what your heart desires<br>
-                                    what isn't MHacks?​ </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="question chest">
-                        <h4>
-                            What happens at a hackathon?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p >Participants (“hackers”) spend 36 hours working in teams of 1-4 people to build or code something they’re excited about. There are workshops, mentors, and piles of food to guide you along the way. You bring your ideas, and we give you everything you need to make them come to life.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p >
-                                    you build, play and learn<br>
-                                    and sleep if you are lucky<br>
-                                    there’s tons of snacks, too
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="question chest">
-                        <h4>
-                            What do people normally make?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>You’re free to go where your heart takes you. Most hacks involve making web or phone apps, or working with hardware. Check out the hacks of MHacks 6 on <a target="_blank" onclick="event.stopImmediatePropagation()" href="http://mhacks6.devpost.com/submissions">Devpost</a>.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p>
-                                    people mostly make<br>
-                                    whatever the heck they want<br>
-                                    go check out <a target="_blank" onclick="event.stopImmediatePropagation()" href="http://mhacks6.devpost.com/submissions">devpost</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            Do I have to know how to code to attend?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p >Nope! We’ll have lots of resources to help beginners get started, like workshops and a sweet new mentorship system.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > we’ll provide mentors<br>
-                                    and lots of helpful workshops<br>
-                                    so don’t sweat it, friend  </p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            How is MHacks run?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p >MHacks is a student organization run by a group of dedicated and passionate people, most of whom are students at UofM.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p >the MHacks runs from<br>
-                                    a sleep-deprived student group<br>
-                                    better go catch it </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            I didn’t find my question here &#x1F622;
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>If you’ve got something else on your mind, fire it off to <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>!</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > you can email us<br>
-                                    we'll probably answer you<br>
-                                    <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a></p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div><!-- .eight.columns -->
-            </div><!-- row -->
-            <div class="row">
-                <div class="four columns faq-header apply">
-                    <h3>Application</h3>
+            </div>
+            <div class="grid-item turquoise" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
                 </div>
-                <div class="eight columns">
-                    <div class="question chest">
-                        <h4>
-                            When are applications closing?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>Applications close January 25! If you haven’t submitted by then, we’ll review whatever’s there.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p >they are open now!<br>
-                                    so you better get on that<br>
-                                    closed Jan. 25th</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            How and when will I hear back?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>We’ll be releasing decisions weekly &mdash; if you’ve submitted your application by a Friday, you’ll be getting an email back by the next Friday!</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > apply right now, then<br>
-                                    refresh inbox on Fridays<br>
-                                    rolling decisions</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            Who can apply?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>If you’re enrolled in a high school, college, or university, or if you left school during the current school year, you’re good to go! (Minors are welcome to apply, but will need to fill out a couple extra forms in order to attend.)</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > you must be enrolled<br>
-                                    during this current school year<br>
-                                    minors are welcome</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            Can we apply as a team?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>Not quite &mdash; you and your intended teammates should all submit individual applications. But if you get an invitation and some of your teammates don’t, shoot us an email at <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a> and we’ll try to sort things out.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > you apply alone<br>
-                                    but can attend together<br>
-                                    hacking’s fun with friends</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            Do I have to register?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>Yep! We can’t take walk-ins this time, so please be sure to register on time.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > yes, please register<br>
-                                    you know, it’s rude to arrive<br>
-                                    without calling first
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            What if I’m a Michigan student?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>You might’ve heard that in the past we accepted all UM applications, including walk-ins. This won’t be true for MHacks: Refactor as a result of the smaller size, so apply early!</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > congratulations<br>
-                                    you won’t have to travel far<br>
-                                    but still must apply</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            What are you looking for in an application?
-                            <span class="symbol plus" ></span>
-                        </h4>
-
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>Above anything else—passion. Tell us what you care about, what excites you. We want to know what’ll drive you to start and continue hacking, whether it’s your first time or your fifteenth. If there’s something about you that stands out from the “typical” hacker, we’d love to hear about that, too!</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > we would like to know<br>
-                                    what you’re passionate about<br>
-                                    and what you have built</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- .eight.columns -->
-            </div><!-- row -->
-            <div class="row">
-                <div class="four columns faq-header hacking">
-                    <h3>Hacking</h3>
+            </div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-07.png') }}" alt="Virtual Reality Headset">
                 </div>
-                <div class="eight columns">
-                    <div class="question chest">
-                        <h4>
-                            What if I don’t have a team or idea?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>Not to worry! Some of our best hacks have come from people who arrived not knowing what to do or whom to do it with, or who met their teammates on the way to the event. We have some great activities planned before and during the event to help you meet some teammates.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > don’t fear—there is time<br>
-                                    to meet others and brainstorm <br>
-                                    before hacking starts</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            What about hardware?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>There’ll be tons of cool hardware for you to hack on! We’ll put out a list closer to the event so you can see what’s available. You can also feel free to bring your own from home, or email us with any suggestions!</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > hardware will be there<br>
-                                    for you to experiment<br>
-                                    (please don’t break it though)
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            How big can my team be?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>Maximum team size is four.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > four is a magic number<br>
-                                    well, actually three is<br>
-                                    but four is the limit</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- .eight.columns -->
-            </div><!-- row -->
-            <div class="row">
-                <div class="four columns">
-                    <div class="faq-header logistics">
-                        <h3>Logistics</h3>
-                    </div>
-                    <div id="credit_photos"> Photos: Joseph Xu, Michigan Engineering Communications & Marketing</div>
+            </div>
+            <div class="grid-item lightBlue " data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
                 </div>
-                <div class="eight columns">
-                    <div class="question chest">
-                        <h4>
-                            How much does it cost to attend?
-                            <span class="symbol plus"></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>Nothing! MHacks is free for all hackers.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > entirely free<br>
-                                    we’ll feed you delicacies<br>
-                                    and clothe you in swag
-                                </p>
-                            </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="0" data-expandable="0">
+                <div class="grid-item-image clickable-icon">
+                    <a href="https://www.facebook.com/MHacksHackathon/" target="_blank"><img
+                        src="{{ static('assets/fb-link.png') }}"
+                        alt="MHacks Facebook, https://www.facebook.com/MHacksHackathon"/></a>
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item width2" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="flavor-image" src="{{ static('assets/main-page-2.png') }}" alt="LED Strip Device">
+                </div>
+            </div>
+            <div class="grid-item lightBlue" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise " data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item turquoise" data-remove="0" data-expandable="1">
+                <div class="expand-icon"></div>
+                <div class="grid-item-content">
+                    <div class="basic-info">
+                        <h1>FAQ</h1>
+                    </div>
+                    <div class="extra-info">
+                        <div class="faq-container">
+                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">General</h2>
+                            <ul style="padding-left:7px">
+                                <li class="question">What happens at a hackathon?</li>
+                                <li class="answer">
+                                    Participants (“hackers”) spend 36 hours working in teams of 1 - 4 people to build or
+                                    code projects (“hacks”) they’re excited about. There are workshops, mentors, food,
+                                    swag,
+                                    and buckets of coffee to guide you along the way. You bring your ideas, and we give
+                                    you
+                                    everything you need to make them come to life.
+                                </li>
+                                <li class="question">What do people normally make?</li>
+                                <li class="answer">
+                                    Common areas of focus include iOS or Android apps, web apps, and hardware hacks.
+                                    Check
+                                    out the hacks from MHacks Refactor on <a
+                                        href="http://mhacksrefactor.devpost.com/submissions" target="_blank">Devpost</a>.
+                                </li>
+                                <li class="question">Do I have to know how to code to attend?</li>
+                                <li class="answer">
+                                    Nope! We’ll have lots of resources—including workshops and a sweet, new mentorship
+                                    system—to help beginners get started.
+                                </li>
+                                <li class="question">Who runs MHacks?</li>
+                                <li class="answer">
+                                    MHacks is run by a group of dedicated and passionate young people, most of whom are
+                                    students at the University of Michigan.
+                                </li>
+                                <li class="question">I didn’t find my question here...</li>
+                                <li class="answer">
+                                    If you’ve got something else on your mind, fire it off to <a
+                                        href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>!
+                                </li>
+                            </ul>
+
+                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Applications</h2>
+                            <ul style="padding-left:7px">
+                                <li class="question">When are applications closing?</li>
+                                <li class="answer">
+                                    Applications are rolling until a week or so before the event. Space fills up quick,
+                                    so
+                                    apply early!
+                                </li>
+                                <li class="question">How and when will I hear back?</li>
+                                <li class="answer">
+                                    We’ll be releasing decisions weekly starting in August. If you’ve submitted your
+                                    application by a Friday, you’ll be getting an email back by the next Friday!
+                                </li>
+                                <li class="question">Who can apply?</li>
+                                <li class="answer">
+                                    If you’re enrolled in a high school, college, or university, or if you left school
+                                    during the current school year, you’re good to go! (Minors are welcome to apply, but
+                                    will need to fill out a couple extra forms in order to attend.)
+                                </li>
+                                <li class="question">Can we apply as a team?</li>
+                                <li class="answer">
+                                    You and your intended teammates should all apply individually. But if you get an
+                                    invitation and some of your teammates don’t, shoot us an email at <a
+                                        href="mailto:hackathon@umich.edu">hackathon@umich.edu</a> and
+                                    we’ll
+                                    try to sort
+                                    things out.
+                                </li>
+                                <li class="question">Do I have to register?</li>
+                                <li class="answer">
+                                    Anyone attending MHacks 8 must register! You’ll receive a link to register when you
+                                    receive your invitation.
+                                </li>
+                                <li class="question">What if I’m a Michigan student?</li>
+                                <li class="answer">
+                                    All Michigan students are welcome to attend MHacks, but we still need you to apply &
+                                    register beforehand. When you apply with your umich.edu email address, you’ll
+                                    receive an
+                                    invitation within the next week or so.
+                                </li>
+                                <li class="question">What are you looking for in an application?</li>
+                                <li class="answer">
+                                    Above anything else—passion. Tell us what you care about, what excites you. We want
+                                    to
+                                    know what’ll drive you to start and continue hacking. If there’s something about
+                                    MHacks
+                                    in particular that you’re excited about, we’d love to hear about that too!
+                                </li>
+                                <li class="question">Are you allowing walk-ins?</li>
+                                <li class="answer">
+                                    You’ll be able to register day-of only if there’s space. To ensure that you’ll be
+                                    allowed in before arriving at the venue, please apply and register ahead of time.
+                                </li>
+                            </ul>
+
+                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Hacking</h2>
+                            <ul style="padding-left:7px">
+                                <li class="question">What if I don’t have a team or idea?</li>
+                                <li class="answer">
+                                    Not to worry, most people don’t! We have some great activities planned before and
+                                    during
+                                    the event to help you meet teammates and start thinking through your ideas.
+                                </li>
+                                <li class="question">What kind of hardware will there be?</li>
+                                <li class="answer">
+                                    There’ll be tons of cool hardware for you to hack on! We’ll put out a list closer to
+                                    the
+                                    event so you can see what’s available. You can also feel free to bring your own from
+                                    home or <a href="mailto:hackathon@umich.edu">email us</a> with any
+                                    suggestions!
+                                </li>
+                            </ul>
+
+                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Logistics</h2>
+                            <ul style="padding-left:7px">
+                                <li class="question">How will I get there from UM?</li>
+                                <li class="answer">
+                                    We’ll have buses to bring you to Masonic! More information on the bus schedule will
+                                    be
+                                    released closer to the event. The <a href="http://www.ridemdcc.umich.edu/"
+                                                                         target="_blank">Detroit
+                                    Connector</a> also runs between campus and Detroit in case you need to get back to
+                                    Ann
+                                    Arbor for some reason.
+                                </li>
+                                <li class="question">How will I get there from other schools?</li>
+                                <li class="answer">
+                                    After you’ve applied and received word that you're coming to MHacks, we'll share
+                                    information about buses and travel reimbursements. More than likely, we'll be
+                                    sending a
+                                    bus to a school near you. If you’re flying in, we’ll have shuttles from DTW as well.
+                                    All
+                                    bus schedules will be released closer to the event.
+                                </li>
+                                <li class="question">What if I'm an International Student?</li>
+                                <li class="answer">
+                                    If you go to school in Canada, we may be sending a bus to your university or one
+                                    near
+                                    you. If you are traveling from another country, the first step is to make sure you
+                                    have
+                                    a valid travel Visa. Please refer to <a href="https://www.visahq.com/"
+                                                                            target="_blank">this</a>
+                                    website
+                                    to make sure you meet the requirements and get started on the process if you haven’t
+                                    already. If you need anything from the organizers, such as a letter of invitation,
+                                    please contact us as soon as possible at <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>.
+                                </li>
+                                <li class="question">Will you be offering travel reimbursements?</li>
+                                <li class="answer">
+                                    We can’t guarantee reimbursements for everyone, but we don’t want money to keep you
+                                    from
+                                    experiencing MHacks. You’ll get a reimbursement amount along with your invitation.
+                                    Let
+                                    us know if you still need help making your way to Detroit and we’ll see what we can
+                                    do.
+                                </li>
+                                <li class="question">Will there be parking available?</li>
+                                <li class="answer">
+                                    We’ll have a limited number of free parking spaces available at Masonic. If you’re
+                                    planning on driving, make sure to indicate that on the registration form!
+                                </li>
+                                <li class="question">What should I bring?</li>
+                                <li class="answer">
+                                    You should bring anything you’d need for a sleepover: laptop, charger, deodorant
+                                    (!),
+                                    change of clothes, sleeping bag. You won’t need food or drinks; we’ve got you
+                                    covered
+                                    there.
+                                </li>
+                                <li class="question">What shouldn't I bring?</li>
+                                <li class="answer">
+                                    Weapons of any kind, drugs, or alcohol. If you’re not sure whether something will be
+                                    okay, please ask ahead of time!
+                                </li>
+                                <li class="question">Can I sleep?</li>
+                                <li class="answer">
+                                    Yep! We’ll have a sleeping area but no cots, so bring a sleeping bag and a pillow if
+                                    you’ll need them.
+                                </li>
+                                <li class="question">Can I shower?</li>
+                                <li class="answer">
+                                    There won't be showers available at the venue.
+                                </li>
+                                <li class="question">Help! I don’t want to hack, I want to ________!</li>
+                                <li class="answer">
+                                    If you’re contemplating judging, volunteering, or mentoring, shoot us an email at <a
+                                        href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>. If
+                                    your
+                                    company is
+                                    interested in becoming a sponsor, check out the sponsorship tile.
+                                </li>
+                            </ul>
                         </div>
                     </div>
-
-                    <div class="question chest">
-                        <h4>
-                            How will I get there?
-                            <span class="symbol plus" ></span>
-                        </h4>
-
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>By ✈, 🚄, or 🚗! People come to MHacks in all sorts of ways. If you need help figuring out a way that works for you, feel free to email us for suggestions. We’ll also be sending 🚌es to the schools with the most hackers, so encourage your friends to apply!</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > depends where you are <br>
-                                    we don’t recommend walking<br>
-                                    there will be buses</p>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise  " data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-08.png') }}" alt="Smartphone">
+                </div>
+            </div>
+            <div class="grid-item width2" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="flavor-image" src="{{ static('assets/main-page-3.png') }}" alt="Mentor Helping Students">
+                </div>
+            </div>
+            <div class="grid-item blue " data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item expand-medium darkBlue  " data-remove="0" data-expandable="1">
+                <div class="expand-icon"></div>
+                <div class="grid-item-content">
+                    <div class="basic-info">
+                        <h1>What's new with MHacks 8?</h1>
                     </div>
-
-                    <div class="question chest">
-                        <h4>
-                            Will you be offering travel reimbursements?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>We can’t guarantee reimbursements for everyone, but we don’t want money to keep you from building great things. You’ll get a reimbursement amount along with your invitation, and do let us know if you still need help making your way to Ann Arbor and we’ll see what we can do.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > we’ll try our best, yo<br>
-                                    to allow everyone<br>
-                                    to do the hack thing</p>
-                            </div>
-                        </div>
+                    <div class="extra-info">
+                        <p>
+                            This year, we’re returning to <b>Detroit</b> for the first time since MHacks III. <a
+                                href="http://www.themasonic.com/" target="_blank">The Masonic Temple</a> in Detroit is
+                            the largest in
+                            the world and is located in the heart of the Motor City. Built in 1922, this historic
+                            building is the perfect setting for a weekend in a city thriving with renewed
+                            entrepreneurial spirit. We hope you use this energy and atmosphere to drive your hacks.
+                        </p>
+                        <p>
+                            A change of venue gives us a chance to increase our attendance to 2,000 hackers, which
+                            allows us to grow the MHacks community. In doing so, we’re able to provide the support our
+                            hackers need to discover hacking and develop their skills alongside teammates, mentors,
+                            competitors, and friends.
+                        </p>
+                        <p>
+                            This Fall, we’re also going to focus on wellness. Sometimes, hackathons have been notorious
+                            for unhealthy food, sleep deprivation, and uncomfortable hacking spaces. And we don’t think
+                            it should take two weeks to recover from one. We will have healthier food options, sleeping
+                            spaces, and more health life hacks to keep you feeling your best during the weekend, and
+                            after.
+                        </p>
                     </div>
-
-                    <div class="question chest">
-                        <h4>
-                            What should I bring?
-                            <span class="symbol plus" ></span>
-                        </h4>
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>We’ll send you a comprehensive list once it’s closer to showtime, but it’ll be basically what you’d need for any sleepover: laptop, charger, deodorant (!), change of clothes. You won’t need food or drinks; we’ve got you covered there.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > your laptop for sure<br>
-                                    we’ll send you a list later<br>
-                                    deodorant please</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question chest">
-                        <h4>
-                            Help! I don’t want to hack, I want to ________!
-                            <span class="symbol plus" ></span>
-                        </h4>
-
-                        <div class="drawer">
-                            <div class = "normal text">
-                                <p>If you’re contemplating judging, volunteering, or mentoring, shoot us an email at <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>. If your company is interested in becoming a sponsor, please go to the <a id="interest-sponsor" href="#">sponsorship section</a>.</p>
-                            </div>
-                            <div class = "haiku text">
-                                <p > send us an email!<br>
-                                    unless you want to sponsor<br>
-                                    for that, just scroll down</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- .eight.columns -->
-            </div><!-- row -->
-        </div>
-
-        <br><br><br>
-
-    </section>
-
-    <section class="sponsors" id="sponsorSection">
-        <div class="container ">
-            <h3 class="title"> Sponsors </h3>
-        </div>
-
-        <div id="sponsors-info" class="container" style="margin-bottom:30px;">
-            <h3>Partnerships with companies, nonprofits, and startups are the reason MHacks can throw such great hackathons.</h3>
-
-            <h4 id="walmart-quote"><i>“The caliber and number of students that MHacks attracts is like no other hackathon” </i><br>–Walmart</h4>
-
-            <br>
-            <div class = "row">
-                <a href="mailto:sponsor-mhacks@umich.edu"><button id="sponsor_button" class="four columns offset-by-four " style="margin-bottom:50px;">Sponsor</button></a>
+                </div>
+            </div>
+            <div class="grid-item turquoise " data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-10.png') }}" alt="Computer">
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue " data-remove="0" data-expandable="0">
+                <div class="grid-item-image clickable-icon">
+                            <a href="https://twitter.com/mhacks" target="_blank"><img
+                                    src="{{ static('assets/twitter-link.png') }}"
+                                    alt="MHacks Twitter, https://twitter.com/mhacks"/></a>
+                </div>
+            </div>
+            <div class="grid-item turquoise" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item width2" data-remove="0" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="flavor-image" src="{{ static('assets/main-page-4.png') }}" alt="Students Collaborating">
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item lightBlue" data-remove="0" data-expandable="0">
+                <div class="grid-item-image clickable-icon">
+                    <h3>In Partnership With</h3>
+                    <a href="https://mlh.io/" target="_blank"><img id="mlh-logo" src="{{ static('assets/mlh.png') }}" alt="Major League Hacking" ></a>
+                </div>
+            </div>
+            <div class="grid-item lightTurquoise" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
+                <div class="grid-item-image">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-09.png') }}" alt="Android Robot">
+                </div>
+            </div>
+            <div class="grid-item darkBlue" data-remove="2" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
+            </div>
+            <div class="grid-item blue" data-remove="1" data-expandable="0">
+                <div class="grid-item-content">
+                </div>
             </div>
         </div>
-    </section>
-    <section class="sponsors" >
 
-        <div class =  "container" id ="sponsorImages">
-            <div class = "sponsor-images"  >
-                <br>
-                <h1 style="text-align:center; margin-bottom:0;  font-size:38px;">Presented By</h1>
-                <br>
-                <div class="premium">
-                    <div><a target="_blank" href="http://cfe.umich.edu/"><img src="{{ static('assets/favicon.png') }}"></a></div>
-
+        <div class="sponsors">
+            <div class="flex-row">
+                <div class="col-2-bigL">
+                    <h1>Sponsorship</h1>
+                    <p>MHacks is the gateway between you and the top tech talent in the world. Whether you come to network,
+                        promote brand awareness, or get feedback on a product or API, we’ll provide the tools you need to make
+                        the most out of your experience.</p>
+                    <p>Interested in sponsoring? Want more information? Shoot us an email at
+                       <a href="mailto:sponsor-mhacks@umich.edu">sponsor-mhacks@umich.edu</a>
+                       <br/><br/>We have an awesome lineup of sponsors for you.<br/>Check back soon for company logos.
+                    </p>
                 </div>
-
-                <h1 style="text-align:center; margin-bottom:0;  font-size:38px;">Sponsored By</h1>
-                <div class="large">
-                    <div><a target="_blank" href="https://www.linode.com/"><img src="{{ static('assets/favicon.png') }}"></a></div>
-
-
-
-                    <div><a target="_blank" href="https://www.blackrock.com"><img  style="width:85%" src="{{ static('assets/favicon.png') }}"></a></div>
-
-                    <div><a target="_blank" href="https://jobs.disneycareers.com/category/technology-information-technology-jobs/391/1945/1"><img style="width:85%;" id="disney" src="{{ static('assets/favicon.png') }}"></a></div>
-
-                    <div><a target="_blank" href="http://www.developers.arcgis.com"><img  style="width:76%" src="{{ static('assets/favicon.png') }}"></a></div>
-
-                    <div><a target="_blank" href="https://corporate.target.com/careers/career-areas/technology"><img style="width:60%" src="{{ static('assets/favicon.png') }}"></a></div>
-
-
-                    <div><a target="_blank" href="https://www.usa.visa.com/"><img src="{{ static('assets/favicon.png') }}"></a></div>
+                <div class="col-2-smallR" style="text-align: center">
+                    <img class="sponsors-image" src="{{ static('assets/sponsorIllustration-13.png') }}" alt="Sponsorship">
                 </div>
-                <div class="medium">
-                    <div><a target="_blank" href="http://www.accel.com/"><img style="width:45%" src="{{ static('assets/favicon.png') }}"></a>                        </div>
+            </div>
 
 
-                    <div><a target="_blank" href="http://www.bloomberg.com/careers/technology/rd/"><img style="width:76%" src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-
-                    <div><a target="_blank" href="https://www.concur.com/en-us/careers"><img src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href="http://its.umich.edu"><img style="width:46%"  src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href="http://www.intel.com/content/www/us/en/homepage.html/"><img style="width:40%" src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-
-                    <div><a target="_blank" href="http://workatmeridian.com"><img src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-
-                    <div><a target="_blank" href="https://www.firebase.com/"><img src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href="http://www.capitalone.io/"><img src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-
-
+            <div class="col-1 flex-row">
+                <div class="col-2 sponsors-tile">
+                    <p class="quote">This was one of the most well organized student-run hackathons that we’ve ever sponsored.</p>
+                    <p class="source">Google</p>
                 </div>
-                <div class="small" style="padding-bottom:80px;">
-                    <div><a target="_blank" href="https://mhacks.nc.me"><img style="width:44%;" src="{{ static('assets/favicon.png') }}"></a>
+                <div class="col-2 sponsors-tile">
+                    <p class="quote">The caliber and number of students that MHacks attracts is like no other hacking event.</p>
+                    <p class="source">Walmart</p>
+                </div>
+                <div style="width: 100%" class="sponsors-tile">
+                    <p class="quote">MHacks has been a staple event in Concur’s University Tour over the past two years.
+                    The MHacks atmosphere fosters creativity and innovation from developers and entrepreneurs alike.
+                    When it comes to collegiate hackathons, MHacks is the place to be!</p>
+                    <p class="source">Concur</p>
+                </div>
+            </div>
+
+
+            <h1 style="margin-top:25px;">Past Sponsors</h1>
+            <div class="col-1 center-col" style="margin-top: 25px;">
+                <div class="logo-container sponsors-tile">
+                    <div class="logo-row">
+                        <a target="_blank" href="http://www.cfe.umich.edu"><img
+                                src="{{ static('assets/cfe_logo.png') }}"
+                                alt="Previous Sponsor Logo - U of M CFE"></a>
                     </div>
-                    <div><a target="_blank" href="https://www.mongodb.com/"><img src="{{ static('assets/favicon.png') }}"></a>
+                    <div class="logo-row">
+                        <a target="_blank" href="http://careers.walmart.com/"><img
+                                src="{{ static('assets/Walmart_Logo.png') }}" alt="Previous Sponsor Logo - Walmart"></a>
+                        <a target="_blank" href="https://corporate.target.com/careers/career-areas/technology"><img
+                                src="{{ static('assets/target_logo.png') }}" alt="Previous Sponsor Logo - Target"></a>
+                        <a target="_blank" href="https://www.google.com/about/careers"><img
+                                src="{{ static('assets/Google_logo.png') }}" alt="Previous Sponsor Logo - Google"></a>
                     </div>
-                    <div><a target="_blank" href="http://www.1517fund.com/"><img style="width:54%;" src="{{ static('assets/favicon.png') }}"></a>
+                    <div class="logo-row">
+                        <a target="_blank"
+                           href="https://jobs.disneycareers.com/category/technology-information-technology-jobs/391/1945/1"><img
+                                src="{{ static('assets/Disney_Logo.png') }}" alt="Previous Sponsor Logo - Disney"></a>
+                        <a target="_blank" href="http://www.developers.arcgis.com"><img
+                                src="{{ static('assets/Esri_logo.png') }}" alt="Previous Sponsor Logo - Esri"></a>
+                        <a target="_blank" href="http://www.facebook.com/university"><img
+                                src="{{ static('assets/Facebook_logo.png') }}"
+                                alt="Previous Sponsor Logo - Facebook"></a>
                     </div>
-                    <div><a target="_blank" href="http://www.joinapt.com"><img  style="width:54%;" src="{{ static('assets/favicon.png') }}"></a>
+                    <div class="logo-row">
+                        <a target="_blank" href="http://www.firebase.com"><img
+                                src="{{ static('assets/Firebase_logo.png') }}"
+                                alt="Previous Sponsor Logo - Firebase"></a>
+                        <a target="_blank" href="http://www.intel.com/content/www/us/en/homepage.html"><img
+                                src="{{ static('assets/intel_logo.png') }}" alt="Previous Sponsor Logo - Intel"></a>
+                        <a target="_blank" href="http://www.microsoft.com"><img
+                                src="{{ static('assets/Microsoft_logo.png') }}" alt="Previous Sponsor Logo - Microsoft"></a>
                     </div>
-                    <div><a target="_blank" href="https://x.ai/"><img  style="width:30%;" src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href="https://www.twilio.com/"><img  style="width:58%;" src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href="https://www.hellosign.com/api/"><img  style="width:80%;" src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href="http://www.venturestorm.com/"><img  style="width:58%;" src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href="http://www.plex.com/"><img  style="width:54%;" src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href=" https://www.makeschool.com/apply?utm_campaign=MHacks%20S2016&utm_medium=Make%20School%20logo&utm_source=MHacks%20Website&utm_term=inbound"><img  style="width:46%;" src="{{ static('assets/favicon.png') }}"></a>
-                    </div>
-                    <div><a target="_blank" href="http://www.xyience.com/"><img style="width:46%;" src="{{ static('assets/favicon.png') }}"></a>
+                    <div class="logo-row">
+                        <a target="_blank" href="https://www.mongodb.com"><img
+                                src="{{ static('assets/MongoDB_Logo.png') }}"
+                                alt="Previous Sponsor Logo - MongoDB"></a>
+                        <a target="_blank" href="http://www.twilio.com"><img
+                                src="{{ static('assets/twilio_logo.png') }}"
+                                alt="Previous Sponsor Logo - Twilio"></a>
+                        <a target="_blank" href="https://www.usa.visa.com"><img
+                                src="{{ static('assets/Visa_logo.png') }}"
+                                alt="Previous Sponsor Logo - Visa"></a>
                     </div>
                 </div>
             </div>
         </div>
 
-    </section>
-
-    <footer id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="twelve columns">
-                    <div>
-                        <p>
-                            Find us on:<br>
-                            <a target="_blank" href="https://www.facebook.com/MHacksHackathon/">Facebook</a><br>
-                            <a target="_blank" href="https://twitter.com/mhacks">Twitter</a><br>
-                            <a href="mailto:hackathon@umich.edu">Email</a>
-                        </p>
-                    </div>
-                    <div>
-                        <div style="float:right">
-                            <a href="https://mlh.io/seasons/s2016/events?utm_source=s2016&utm_medium=TrustBadge&utm_campaign=s2016" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/s2016.png" alt="MLH Official - Spring 2016" id="mlh-trust-badge" ></a>
-                        </div>
-                        <div>
-                            <a target="_blank" href="http://michiganhackers.org/"><img src="{{ static('assets/favicon.png') }}"  id="mh-logo"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="footer-bar">
+            &copy; MHacks 2016
         </div>
-    </footer>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+            type="application/javascript"></script>
+    <script src="http://mfzy.co/packery.pkgd.js" type="application/javascript"></script>
+
+    <script src="{{ static('javascript/main.js') }}" type="application/javascript"></script>
 {% endblock %}

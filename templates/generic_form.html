@@ -1,45 +1,106 @@
 {% extends 'base.html' %}
 
 {% block headers %}
-    <link rel="stylesheet" media="all" href="{{ static('stylesheets/style.css') }}">
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/form.css') }}">
+    {% block form_headers %}
+    {% endblock %}
 {% endblock %}
+
 {% block content %}
     {% if form %}
-        <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}">
+        <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}" {% block form_enctype %}{% endblock %}>
             {{ csrf_input }}
             <fieldset>
-                <div class="header">
-                    <div class="container">
-                        <a href="{{ url_for('mhacks-home') }}"><img src="{{ static('assets/logo_orange.png') }}" id="headerLogo" alt="MHacks: Refactor"/></a>
+                {% include 'header.html' %}
+                <div class="container container-form">
+                    <div class="col-12 text-center title-form">
+                        <h3 class="first head"><span>{% block form_title %}{% endblock %}</span></h3>
                     </div>
-                </div>
-
-                <h3 class="first container head"><span>{% block form_title %}{% endblock %}</span></h3>
-                <div class="section container">
-                    {% block non_field_errors %}
-                        {% for error in form.non_field_errors() %}
-                            <p class="alert alert-danger">{{ error }}</p>
-                        {% endfor %}
-                    {% endblock %}
-                    {% for field in form %}
-                        <div class="row flexLine">
-                            <h4 class="input_word" {% if field.field.longest %}id="longest"{% endif %}>{{ field.label }}</h4>
-                            {{ field.as_widget(attrs={'class': 'form-control input-md'}) }}
-                            {% for error in form.errors[field.name] %}
+                    <div class="section body-form">
+                        {% block non_field_errors %}
+                            {% for error in form.non_field_errors() %}
                                 <p class="alert alert-danger">{{ error }}</p>
                             {% endfor %}
+                        {% endblock %}
+                        <div class="row">
+                            {% for field in form %}
+
+
+                                <div class="field-form col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center addMargin ">
+                                    <label class="label-apply">
+                                        {{ field.label }}
+                                    </label>
+                                    {{ field.as_widget() }}
+                                    {% for error in form.errors[field.name] %}
+                                        <p class="alert alert-danger">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+
+                                {% if field.field.end_row %}
+                                    </div>
+                                    <div class="row">
+                                {% endif %}
+
+                            {% if field.field.demographic %}
+                                </div>
+                                <div class="row three">
+                                    <div class="col-lg-12 text-center title-apply">
+                                        <div class="application-title ">Demographic Info</div>
+                                    </div>
+                                </div>
+                                <div class="row none">
+                                    <div class="col-lg-12 text-center">
+                                        <div class="application-subtitle">Not Required</div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                            {% endif %}
+
+                            {% if field.field.previous %}
+                                </div>
+                                <div class="row three">
+                                    <div class="col-lg-12 text-center title-apply">
+                                        <div class="application-title ">Previous Experience</div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+
+                            {% endif %}
+                            {% if field.field.interests %}
+                                </div>
+                                <div class="row three">
+                                    <div class="col-lg-12 text-center title-apply">
+                                        <div class="application-title ">Interests</div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+
+                            {% endif %}
+                            {% if field.field.short %}
+                                </div>
+                                <div class="row three">
+                                    <div class="col-lg-12 text-center title-apply ">
+                                        <div class="application-title ">Short Answer</div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+
+                            {% endif %}
+
+                            {% endfor %}
+                            </div>
+                        <div class="submit-row">
+                            <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
                         </div>
-                    {% endfor %}
-                </div>
-                <div class="final container">
-                    <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
-                </div>
+                        <div class="text-center row three">
+                        {% block form_footer %}
+                        {% endblock %}
+                    </div>
+                    </div>
+
             </fieldset>
         </form>
-        <div class="container horizontal-center">
-            {% block form_footer %}
-            {% endblock %}
-        </div>
+
     {% else %}
         <div class="header">
             <div class="container">

@@ -7,11 +7,15 @@
 {% block non_field_errors %}
     {% for error in form.non_field_errors().as_data() %}
         {% for message in error %}
-            <p class="alert alert-danger">{{ message }}{% if error.code == 'unverified' %} <a href="{{ url_for('mhacks-verification-email', args={'user_pk': error.params}) }}">Click to resend</a>.{% endif %}</p>
+            <p class="alert alert-danger">{{ message }}
+                {% if error.code == 'unverified' %}
+                    <a href="{{ url_for('mhacks-verification-email', kwargs={'user_pk': error.user_pk}) }}">Click to resend</a>.
+                {% endif %}
+            </p>
         {% endfor %}
     {% endfor %}
 {% endblock %}
-{% block submit_title %}Login{% endblock %}
+{% block submit_title %}LOGIN{% endblock %}
 {% block form_footer %}
     <p> Don't have an account? <br> Click <a href="{{ url_for('mhacks-register') }}">here</a> to create one!</p>
     <p><a href="{{ url_for('mhacks-reset_password') }}">Forgot password?</a></p>

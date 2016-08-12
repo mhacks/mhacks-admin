@@ -1,20 +1,26 @@
-from config.settings import EMAIL_HOST_USER
-from django.template import loader
-from django.core.mail import send_mail
-from jinja2 import Environment
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text
-from django.contrib.auth import get_user_model
-from config.settings import MANDRILL_API_KEY
 import logging
+
 import mandrill
+from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.template import loader
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from jinja2 import Environment
+
+from config.settings import EMAIL_HOST_USER
+from config.settings import MANDRILL_API_KEY
+
 
 # Sends mail through mandrill client.
-def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
+def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
+    if not email_vars:
+        email_vars = dict()
+
     try:
         MANDRILL_CLIENT = mandrill.Mandrill(MANDRILL_API_KEY)
         message = {
@@ -24,15 +30,16 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars={}):
             'to': [{'email': email_to}],
             'global_merge_vars': []
         }
-        for k, v in email_vars.iteritems():
+        for k, v in email_vars.items():
             message['global_merge_vars'].append(
                     {'name': k, 'content': v}
             )
         return MANDRILL_CLIENT.messages.send_template(template_name, [], message)
-    except mandrill.Error, e:
+    except mandrill.Error as e:
         logger = logging.getLogger(__name__)
         logger.error('A mandrill error occurred: %s - %s' % (e.__class__, e))
         raise
+
 
 def send_email(to_email, email_template_name, html_email_template_name, context):
 
@@ -46,21 +53,24 @@ def send_email(to_email, email_template_name, html_email_template_name, context)
     send_mail(subject=subject, message=body, from_email=EMAIL_HOST_USER, recipient_list=[to_email],
               html_message=html_email)
 
+
 # Turns a relative URL into an absolute URL.
 def _get_absolute_url(request, relative_url):
-    current_site = get_current_site(request)
     return "{0}://{1}{2}".format(
         request.scheme,
-        current_site.domain,
+        request.get_host(),
         relative_url
     )
 
-def send_application_confirmation_email(user, request):
+
+def send_application_confirmation_email(user):
     send_mandrill_mail(
-        'application_confirmation',
+        'application_submission',
         'Your MHacks Application Is Submitted',
-        user.email
+        email_to=user.email,
+        email_vars={'FIRST_NAME': user.first_name}
     )
+
 
 def send_verification_email(user, request):
     token = default_token_generator.make_token(user)
@@ -122,8 +132,6 @@ def validate_signed_token(uid, token, require_token=True):
 
 
 def user_belongs_to_group(user, group_name):
-    from globals import groups
-    assert group_name in groups.ALL
     return user.groups.filter(name=group_name).exists()
 
 
@@ -141,3 +149,14 @@ def environment(**options):
     env.filters['slugify'] = slugify
     env.filters['belongs_to'] = user_belongs_to_group
     return env
+
+
+def validate_url(data, query):
+    """
+    Checks if the given url contains the specified query. Used for custom url validation in the ModelForms
+    :param data: full url
+    :param query: string to search within the url
+    :return:
+    """
+    if query not in data:
+        raise forms.ValidationError('Please enter a valid {} url'.format(query))

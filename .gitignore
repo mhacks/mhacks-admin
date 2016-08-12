@@ -3,5 +3,6 @@
 *.pyc
 venv/*
 .idea/*
-
 config/production_settings.py
+production_settings.py
+resumes

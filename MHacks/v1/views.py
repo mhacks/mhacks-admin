@@ -1,9 +1,11 @@
+from datetime import datetime
+
+from django.contrib.staticfiles.templatetags.staticfiles import static
+from pytz import utc, timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.contrib.staticfiles.templatetags.staticfiles import static
+
 from serializers import now_as_utc_epoch, parse_date_last_updated, to_utc_epoch
-from datetime import datetime
-from pytz import utc, timezone
 
 
 @api_view(http_method_names=['GET'])

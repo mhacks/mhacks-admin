@@ -17,5 +17,5 @@ urlpatterns = [
     url(r'^events$', Events.as_view()),
     url(r'^countdown$', get_countdown),
     url(r'^map$', get_map),
-    url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs'),
+    url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs')
 ]

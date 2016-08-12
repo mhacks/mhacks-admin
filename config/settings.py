@@ -31,8 +31,9 @@ INSTALLED_APPS = [
     'MHacks',
     'push_notifications',
     'django_extensions'
+    'crispy_forms',
+    'push_notifications'
 ]
-
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
