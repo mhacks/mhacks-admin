@@ -35,21 +35,17 @@ h2 {
 }
 
 h3 {
-    font-family: 'Ubuntu';
     font-size: 11pt;
     text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.4px;
-    font-weight: bolder;
     color: white;
     padding: 0;
-    margin: 0 0 3px 0;
 }
 
 p {
     font-family: 'Source Sans Pro';
     font-size: 12pt;
     font-weight: 200;
-    margin: 15px auto 25px;
     width: 92%;
 }
 
@@ -168,6 +164,30 @@ p {
 }
 
 .header a:hover {
+    background-color: #FFE641;
+    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
+    color: rgba(37, 37, 37, 0.63);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.header button {
+    background-color: rgba(255,255,255,0.45);
+    box-shadow: 0px 2px 5px 0px #727272;
+
+    padding: 5px 10px;
+    width: 90px;
+    margin: 2px 0 2px 10px;
+
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+
+    transition: all 0.2s;
+}
+
+.header button:hover {
     background-color: #FFE641;
     box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
     color: rgba(37, 37, 37, 0.63);

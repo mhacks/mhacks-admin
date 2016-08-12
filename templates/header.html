@@ -1,0 +1,30 @@
+<div class="header turquoise header-form">
+    <div id="eventInfo">
+        <h2>October 7-9</h2>
+        <p>Detroit Masonic Temple</p>
+    </div>
+    <div id="logo">
+        <img id="logoM" src="{{ static('assets/logo-m.png') }}" alt="MHacks 8 Logo - M">
+        <img id="logoText" src="{{ static('assets/logo-text.png') }}" alt="MHacks 8 Logo - Hacks 8">
+    </div>
+    <div id="headerButtons">
+        <form method="GET" action="{{ url_for('mhacks-apply') }}">
+            {{ csrf_input }}
+            <button type="submit">Apply</button>
+        </form>
+
+        {% if request.user.is_authenticated() %}
+            <form method="POST" action="{{ url_for('mhacks-logout') }}">
+                {{ csrf_input }}
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+            <form method="GET" action="{{ url_for('mhacks-login') }}">
+                {{ csrf_input }}
+                <button type="submit">Login</button>
+            </form>
+        {% endif %}
+    </div>
+    <div id="headerDropdown">
+    </div>
+</div>

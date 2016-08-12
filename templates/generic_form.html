@@ -11,11 +11,7 @@
         <form class="form-horizontal" method="POST" autocomplete="on" action="{% block form_action %}{% endblock %}" {% block form_enctype %}{% endblock %}>
             {{ csrf_input }}
             <fieldset>
-                <div class="header header-form turquoise">
-                    <div class ="logo">
-                        <img style="height:120px" src="{{ static('assets/logo.png') }}">
-                    </div>
-                </div>
+                {% include 'header.html' %}
                 <div class="container container-form">
                     <div class="col-12 text-center title-form">
                         <h3 class="first head"><span>{% block form_title %}{% endblock %}</span></h3>
