@@ -39,7 +39,10 @@ class RegisterForm(UserCreationForm):
 
 class ApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+
         super(ApplicationForm, self).__init__(*args, **kwargs)
+
         self.fields['school'].cols = 10
         self.fields['is_high_school'].cols = 2
         self.fields['is_high_school'].end_row = True
@@ -67,10 +70,18 @@ class ApplicationForm(forms.ModelForm):
 
         self.fields['cortex'].short = True
 
+        # if the user is from UMich, exclude the reimbursement/travel fields
+        if self.user and 'umich.edu' in self.user.email:
+            for key in ['needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
+                del self.fields[key]
+
     class Meta:
         from application_lists import TECH_OPTIONS
         model = Application
-        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these
+
+        # use all fields except for these
+        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']
+
         labels = {
             'school': 'School or University',
             "grad_date": 'Expected graduation date',
