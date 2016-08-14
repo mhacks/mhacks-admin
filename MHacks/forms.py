@@ -74,9 +74,9 @@ class ApplicationForm(forms.ModelForm):
         self.fields['devpost'].required = False
         self.fields['personal_website'].required = False
 
-        # if the user is from UMich, exclude the reimbursement/travel fields
+        # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
-            for key in ['needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
+            for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
                 del self.fields[key]
 
     class Meta:
@@ -91,9 +91,9 @@ class ApplicationForm(forms.ModelForm):
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
             'is_high_school': 'Are you in high school?',
-            'github':'',
-            'devpost':'',
-            'personal_website':'',
+            'github': '',
+            'devpost': '',
+            'personal_website': '',
             'cortex': '',
             'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
             'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
@@ -114,7 +114,7 @@ class ApplicationForm(forms.ModelForm):
             'major': forms.Select(attrs={'class': 'select_style'}),
             'gender': forms.Select(attrs={'class': 'select_style'}),
             'race': forms.Select(attrs={'class': 'select_style'}),
-            'github': forms.TextInput(attrs={'placeholder': 'Github', 'class': 'form-control input-md'}),
+            'github': forms.TextInput(attrs={'placeholder': 'GitHub', 'class': 'form-control input-md'}),
             'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
             'personal_website': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
