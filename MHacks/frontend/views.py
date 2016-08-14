@@ -58,9 +58,9 @@ def application(request):
         if app and app.submitted:
             return redirect(reverse('mhacks-dashboard'))
 
-        form = ApplicationForm(instance=app)
+        form = ApplicationForm(instance=app, user=request.user)
     elif request.method == 'POST':
-        form = ApplicationForm(data=request.POST, files=request.FILES, instance=app)
+        form = ApplicationForm(data=request.POST, files=request.FILES, instance=app, user=request.user)
         if form.is_valid():
             # save application
             app = form.save(commit=False)

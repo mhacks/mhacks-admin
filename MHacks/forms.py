@@ -39,7 +39,10 @@ class RegisterForm(UserCreationForm):
 
 class ApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+
         super(ApplicationForm, self).__init__(*args, **kwargs)
+
         self.fields['school'].cols = 10
         self.fields['is_high_school'].cols = 2
         self.fields['is_high_school'].end_row = True
@@ -67,10 +70,22 @@ class ApplicationForm(forms.ModelForm):
 
         self.fields['cortex'].short = True
 
+        self.fields['github'].required = False
+        self.fields['devpost'].required = False
+        self.fields['personal_website'].required = False
+
+        # if the user is from UMich, exclude the reimbursement/travel fields
+        if self.user and 'umich.edu' in self.user.email:
+            for key in ['needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
+                del self.fields[key]
+
     class Meta:
         from application_lists import TECH_OPTIONS
         model = Application
-        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these
+
+        # use all fields except for these
+        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']
+
         labels = {
             'school': 'School or University',
             "grad_date": 'Expected graduation date',
@@ -80,8 +95,8 @@ class ApplicationForm(forms.ModelForm):
             'devpost':'',
             'personal_website':'',
             'cortex': '',
-            'passionate': 'What\'s something that you made that you\'re proud of? It doesn\'t have to be a hack. (150 words max)',
-            'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
+            'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
+            'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
             'can_pay': 'How much of the travel costs can you pay?',
