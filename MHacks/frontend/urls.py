@@ -5,7 +5,7 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^$', index, name='mhacks-home'),
-    url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home'),  # Redirect everything to root page
+    # url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home'),  # Redirect everything to root page
 
     # Authentication
     url(r'^register/$', register, name='mhacks-register'),
