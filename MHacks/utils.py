@@ -158,5 +158,5 @@ def validate_url(data, query):
     :param query: string to search within the url
     :return:
     """
-    if query not in data:
+    if data and query not in data:
         raise forms.ValidationError('Please enter a valid {} url'.format(query))

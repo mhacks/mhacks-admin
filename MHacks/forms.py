@@ -70,6 +70,10 @@ class ApplicationForm(forms.ModelForm):
 
         self.fields['cortex'].short = True
 
+        self.fields['github'].required = False
+        self.fields['devpost'].required = False
+        self.fields['personal_website'].required = False
+
         # if the user is from UMich, exclude the reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
             for key in ['needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
