@@ -184,7 +184,7 @@ def reset_password(request):
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
     if form:
         form.fields['email'].longest = True
-    return render(request, 'password_reset.html', {'form': form, 'type': reset_type})
+    return render(request, 'password_reset.html', context={'form': form, 'type': reset_type})
 
 
 @anonymous_required
