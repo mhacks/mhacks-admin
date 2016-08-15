@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-GENDER_PRONOUNS = (('hhh', 'He/Him/His'),
+GENDER_PRONOUNS = [('other', 'Other'),
+                   ('hhh', 'He/Him/His'),
                    ('shh', 'She/Her/Hers'),
-                   ('ttt', 'They/Them/Theirs'),
-                   ('other', 'Other'))
-RACES = (('none', 'Prefer not to answer'),
+                   ('ttt', 'They/Them/Theirs')]
+RACES = [('other', 'Other'),
+         ('none', 'Prefer not to answer'),
          ('white', 'White'),
          ('black', 'Black'),
          ('native', 'American Indian or Alaskan Native'),
          ('asian', 'Asian or Pacific Islander'),
-         ('hispanic', 'Hispanic'))
+         ('hispanic', 'Hispanic')]
 TECH_OPTIONS = (('ios', 'iOS'),
                 ('android', 'Android'),
                 ('web_dev', 'Web Dev'),
