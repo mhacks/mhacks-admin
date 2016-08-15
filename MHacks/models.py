@@ -148,7 +148,7 @@ class PushToken(models.Model):
 
 
 class Application(Any):
-    from application_lists import GENDERS, RACES, TECH_OPTIONS, COLLEGES, MAJORS, STATES
+    from application_lists import GENDER_PRONOUNS, RACES, TECH_OPTIONS, COLLEGES, MAJORS, STATES
 
     # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
@@ -160,7 +160,7 @@ class Application(Any):
     birthday = models.DateField()
 
     # Demographic
-    gender = models.CharField(max_length=16, choices=GENDERS, default='none')
+    gender = models.CharField(max_length=16, choices=GENDER_PRONOUNS, default='none')
     race = models.CharField(max_length=16, choices=RACES, default='none')
 
     # External Links
@@ -180,7 +180,7 @@ class Application(Any):
 
     # Logistics
     needs_reimbursement = models.BooleanField(default=False)
-    can_pay = models.FloatField(default=0)
+    can_pay = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
     from_city = models.CharField(max_length=255, default='')
     from_state = models.CharField(max_length=5, choices=zip(STATES, STATES), default='')
 

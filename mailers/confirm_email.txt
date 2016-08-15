@@ -1,9 +1,0 @@
-Thanks for registering an account with MHacks!
-
-First you just need to confirm your account by clicking here.
-
-We hope to see you at MHacks: Refactor!
-
-First you just need to confirm your account by visiting this URL: {{ protocol }}://{{ domain }}{{ url_for('mhacks-validate', kwargs={'uid':uid, 'token': token}) }}
-
-We hope to see you at MHacks: Refactor!

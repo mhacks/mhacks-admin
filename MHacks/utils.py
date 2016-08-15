@@ -32,7 +32,7 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
         }
         for k, v in email_vars.items():
             message['global_merge_vars'].append(
-                    {'name': k, 'content': v}
+                {'name': k, 'content': v}
             )
         return MANDRILL_CLIENT.messages.send_template(template_name, [], message)
     except mandrill.Error as e:
@@ -97,14 +97,13 @@ def send_password_reset_email(user, request):
         'mhacks-update_password',
         kwargs={'uid':uid, 'token': token}
     )
-    email_vars = {
-        'update_password_url': _get_absolute_url(request, update_password_url)
-    }
     send_mandrill_mail(
-        'password_reset_instructions',
+        'change_password',
         'Reset Your MHacks Password',
         user.email,
-        email_vars
+        email_vars={
+            'update_password_url': _get_absolute_url(request, update_password_url)
+        }
     )
 
 
@@ -142,8 +141,8 @@ def environment(**options):
     """
     env = Environment(**options)
     env.globals.update({
-       'static': staticfiles_storage.url,
-       'url_for': reverse,
+        'static': staticfiles_storage.url,
+        'url_for': reverse,
     })
     from django.utils.text import slugify
     env.filters['slugify'] = slugify
