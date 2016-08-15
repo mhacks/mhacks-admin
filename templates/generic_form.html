@@ -88,11 +88,13 @@
                         {% endfor %}
                         </div>
                     <div class="submit-row">
-                        <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
+                        {% block submit_row %}
+                            <button value="submit" data-toggle="tooltip" name="_submit" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
+                        {% endblock %}
                     </div>
                     <div class="text-center row three">
-                    {% block form_footer %}
-                    {% endblock %}
+                        {% block form_footer %}
+                        {% endblock %}
                     </div>
                 </div>
             </fieldset>

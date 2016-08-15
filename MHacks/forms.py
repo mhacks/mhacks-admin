@@ -38,14 +38,6 @@ class RegisterForm(UserCreationForm):
 
 
 class ApplicationForm(forms.ModelForm):
-    gender_other = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'placeholder': 'Other/Other/Other'}))
-    gender_other.label = ''
-    gender_other.required = False
-
-    race_other = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'placeholder': 'Enter your race'}))
-    race_other.label = ''
-    race_other.required = False
-
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
 
@@ -81,6 +73,7 @@ class ApplicationForm(forms.ModelForm):
         self.fields['github'].required = False
         self.fields['devpost'].required = False
         self.fields['personal_website'].required = False
+        self.fields['other_info'].required = False
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
@@ -102,7 +95,7 @@ class ApplicationForm(forms.ModelForm):
             'github': '',
             'devpost': '',
             'personal_website': '',
-            'cortex': '',
+            'cortex': 'CTRL + click to multi-select!',
             'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
             'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
@@ -116,20 +109,21 @@ class ApplicationForm(forms.ModelForm):
         }
 
         widgets = {
-            "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
+            "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md'}),
             'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
-            'birthday': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
-            'school': forms.TextInput(attrs={'placeholder': 'University of ...', 'class': 'form-control input-md'}),
-            'major': forms.Select(attrs={'class': 'select_style'}),
-            'gender': forms.Select(attrs={'class': 'select_style'}),
-            'race': forms.Select(attrs={'class': 'select_style'}),
+            'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md'}),
+            'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md', 'id': 'school-autocomplete'}),
+            'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'id': 'major-autocomplete'}),
+            'gender': forms.TextInput(attrs={'placeholder': 'Pro/Pro/Pro', 'id': 'gender-autocomplete'}),
+            'race': forms.TextInput(attrs={'placeholder': 'Wookie', 'id': 'race-autocomplete'}),
             'github': forms.TextInput(attrs={'placeholder': 'GitHub', 'class': 'form-control input-md'}),
             'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
             'personal_website': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'resume': AdminFileWidget(attrs={'class': 'input-md form-control'})
+            'resume': AdminFileWidget(attrs={'class': 'input-md form-control'}),
+            'from_state': forms.TextInput(attrs={'placeholder': 'State', 'id': 'state-autocomplete'})
         }
 
     # custom validator for urls
@@ -142,33 +136,3 @@ class ApplicationForm(forms.ModelForm):
         data = self.cleaned_data['devpost']
         validate_url(data, 'devpost.com')
         return data
-
-    def clean_gender_other(self):
-        from application_lists import GENDER_PRONOUNS
-
-        gender_other = self.cleaned_data['gender_other']
-        gender = self.cleaned_data['gender']
-
-        if gender == 'other':
-            if gender_other and gender_other.count('/') == 2:
-                GENDER_PRONOUNS.append((gender_other, gender_other))
-                self.cleaned_data['gender'] = gender_other
-            else:
-                raise forms.ValidationError('Please enter your gender pronouns (e.g. She/Her/Hers).')
-
-        return gender_other
-
-    def clean_race_other(self):
-        from application_lists import RACES
-
-        race_other = self.cleaned_data['race_other']
-        race = self.cleaned_data['race']
-
-        if race == 'other':
-            if race_other:
-                RACES.append((race_other, race_other))
-                self.cleaned_data['race'] = race_other
-            else:
-                raise forms.ValidationError('Please enter your race.')
-
-        return race_other

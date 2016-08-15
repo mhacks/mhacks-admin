@@ -1,5 +1,5 @@
 p {
-    font-family: 'Source Sans Pro';
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
     font-weight: 200;
     width: 100%;
@@ -51,7 +51,7 @@ p {
 .select_style select
 {
     -webkit-appearance: none;
-    appearance:none;
+    appearance: none;
     width:120%;
     background:none;
     background:transparent;

@@ -43,8 +43,10 @@ def blackout(request):
 def index(request):
     return render(request, 'index.html')
 
+
 def thanks_registering(request):
     return render(request, 'thanks_registering.html')
+
 
 @login_required()
 @permission_required('MHacks.add_application')
@@ -57,20 +59,25 @@ def application(request):
         app = None
 
     if request.method == 'GET':
-        if app and app.submitted:
-            return redirect(reverse('mhacks-dashboard'))
-
         form = ApplicationForm(instance=app, user=request.user)
     elif request.method == 'POST':
         form = ApplicationForm(data=request.POST, files=request.FILES, instance=app, user=request.user)
         if form.is_valid():
             # save application
             app = form.save(commit=False)
-            app.submitted = True
+
+            # only mark as submitted if user clicks submit
+            if '_submit' in request.POST:
+                app.submitted = True
+
+            # save the app regardless
             app.user = request.user
             app.save()
 
-            send_application_confirmation_email(request.user)  # send conf email
+            # only email if user clicks submit
+            if '_submit' in request.POST:
+                send_application_confirmation_email(request.user)
+
             return redirect(reverse('mhacks-dashboard'))
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])

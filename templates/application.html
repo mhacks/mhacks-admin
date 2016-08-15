@@ -1,7 +1,39 @@
 {% extends 'generic_form.html' %}
 
 {% block form_headers %}
-<link rel="stylesheet" media="all" href="{{ static('stylesheets/application.css') }}">
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/application.css') }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="{{ static('javascript/autocomplete_lists.js') }}"></script>
+    <script>
+        $( function() {
+            $( "#school-autocomplete" ).autocomplete({
+                source: COLLEGES
+            });
+
+            $( "#major-autocomplete" ).autocomplete({
+                source: MAJORS
+            });
+
+            $( "#gender-autocomplete" ).autocomplete({
+                source: GENDER_PRONOUNS
+            });
+
+            $( "#race-autocomplete" ).autocomplete({
+                source: RACES
+            });
+
+            $( "#state-autocomplete" ).autocomplete({
+                source: STATES
+            });
+        } );
+    </script>
+{% endblock %}
+
+{% block submit_row %}
+    <button value="save" data-toggle="tooltip" name="_save" id="save" class="four columns offset-by-four">{% block save_title %}Save{% endblock %}</button>
+    {{ super() }}
 {% endblock %}
 
 {% block form_enctype %}enctype="multipart/form-data"{% endblock %}
