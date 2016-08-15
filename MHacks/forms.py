@@ -103,7 +103,8 @@ class ApplicationForm(forms.ModelForm):
             'mentoring': 'Are you interested in mentoring other hackers?',
             'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
             'from_city': 'Which city will you be traveling from?',
-            'from_state': 'Which state will you be traveling from?'
+            'from_state': 'Which state will you be traveling from?',
+            'gender': 'Preferred gender pronouns'
         }
 
         widgets = {

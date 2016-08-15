@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-GENDERS = (('none', 'Prefer not to answer'),
-           ('m', 'Male'),
-           ('f', 'Female'),
-           ('non-binary', 'Non Binary'))
+GENDER_PRONOUNS = (('hhh', 'He/Him/His'),
+                   ('shh', 'She/Her/Hers'),
+                   ('ttt', 'They/Them/Theirs'),
+                   ('other', 'Other'))
 RACES = (('none', 'Prefer not to answer'),
          ('white', 'White'),
          ('black', 'Black'),
