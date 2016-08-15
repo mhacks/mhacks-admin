@@ -24,6 +24,16 @@
                         {% for field in form %}
 
 
+                        {% if field.field.general %}
+                          </div>
+                            <div class="row none" >
+                                 <div class="col-lg-12 text-center title-apply">
+                                    <div class="application-title ">General Information</div>
+                                    </div>
+                            </div>
+                            <div class="row ">
+                        {% endif %}
+
                             <div class="field-form col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center addMargin ">
                                 <label class="label-apply">
                                     {{ field.label }}
@@ -38,6 +48,8 @@
                                 </div>
                                 <div class="row">
                             {% endif %}
+
+
 
                         {% if field.field.demographic %}
                             </div>

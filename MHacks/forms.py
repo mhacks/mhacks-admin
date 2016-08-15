@@ -47,6 +47,7 @@ class ApplicationForm(forms.ModelForm):
         self.fields['is_high_school'].cols = 12
         self.fields['is_international'].cols = 12
         self.fields['is_international'].end_row = True
+        self.fields['is_international'].general = True
 
         self.fields['is_high_school'].end_row = True
         self.fields['birthday'].end_row = True
