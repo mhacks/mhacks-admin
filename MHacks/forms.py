@@ -75,6 +75,9 @@ class ApplicationForm(forms.ModelForm):
         self.fields['personal_website'].required = False
         self.fields['other_info'].required = False
 
+        self.fields['other_info'].travel = True
+
+
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
             for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
