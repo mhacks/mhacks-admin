@@ -17,7 +17,7 @@
                 <div class="section body-form">
                     {% block non_field_errors %}
                         {% for error in form.non_field_errors() %}
-                            <p class="alert alert-danger">{{ error }}</p>
+                            <p class="center alert alert-danger">{{ error }}</p>
                         {% endfor %}
                     {% endblock %}
                     <div class="row">
@@ -30,7 +30,7 @@
                                 </label>
                                 {{ field.as_widget() }}
                                 {% for error in form.errors[field.name] %}
-                                    <p class="alert alert-danger">{{ error }}</p>
+                                    <p class="center alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             </div>
 
