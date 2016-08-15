@@ -46,6 +46,8 @@ class ApplicationForm(forms.ModelForm):
         self.fields['school'].cols = 12
         self.fields['is_high_school'].cols = 12
         self.fields['is_high_school'].end_row = 12
+        self.fields['is_international'].cols = 12
+        self.fields['is_international'].end_row = 12
         self.fields['is_high_school'].general = True
 
         self.fields['is_high_school'].end_row = True
@@ -82,7 +84,7 @@ class ApplicationForm(forms.ModelForm):
 
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
-        if self.user and 'umich.edu1' in self.user.email:
+        if self.user and 'umich.edu' in self.user.email:
             for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
                 del self.fields[key]
                 self.fields['cortex'].short = False
@@ -100,6 +102,7 @@ class ApplicationForm(forms.ModelForm):
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
             'is_high_school': 'Are you in high school?',
+            'is_international': 'Are you an international student?',
             'github': '',
             'devpost': '',
             'personal_website': '',
