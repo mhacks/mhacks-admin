@@ -80,7 +80,8 @@ def send_verification_email(user, request):
         kwargs={'uid':uid, 'token': token}
     )
     email_vars = {
-        'confirmation_url': _get_absolute_url(request, relative_confirmation_url)
+        'confirmation_url': _get_absolute_url(request, relative_confirmation_url),
+        'FIRST_NAME': user.first_name
     }
     send_mandrill_mail(
         'confirmation_instructions',
