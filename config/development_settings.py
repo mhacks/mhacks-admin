@@ -16,6 +16,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'HOST': 'localhost',
+        'USER': 'nevin',
+        'PASSWORD': 'nevin',
         'NAME': 'mhacks',
         'CONN_MAX_AGE': None,  # Unlimited
         'USE_TZ': True,

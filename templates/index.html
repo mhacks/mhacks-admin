@@ -18,33 +18,25 @@
             </div>
             <div id="headerButtons">
                 <a href="mailto:hackathon@umich.edu">Email</a>
-                <p>Applications coming soon!</p>
+                <a href="{{ url_for('mhacks-applyMentor') }}">Mentor</a>
+                <a href="{{ url_for('mhacks-apply') }}">Apply</a>
             </div>
             <div id="headerDropdown">
                 <i id="dropdownTrigger" class="fa fa-bars fa-2x" aria-hidden="false"></i>
                 <div id="dropdownContent" class="turquoise">
                     <a href="mailto:hackathon@umich.edu">Email</a>
-                    <p>Applications coming soon!</p>
+                    <a href="{{ url_for('mhacks-applyMentor') }}">Mentor</a>
+                    <a href="{{ url_for('mhacks-apply') }}">Apply</a>
                 </div>
             </div>
         </div>
         <div class="grid">
-            <div class="grid-item darkBlue " data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-
-                </div>
-            </div>
             <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-image">
+                <div class="grid-item-icon">
                     <img class="tile-image" src="{{ static('assets/categoryLogos-11.png') }}" alt="Hardware">
                 </div>
             </div>
-            <div class="grid-item lightTurquoise  " data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-
-                </div>
-            </div>
-            <div class="grid-item expand-small blue  " data-remove="0" data-expandable="1">
+            <div class="grid-item expand-small blue tile-shadow" data-remove="0" data-expandable="1">
                 <div class="expand-icon"></div>
                 <!--i class="fa fa-plus-circle fa-pull-right" aria-hidden="false"></i-->
                 <div class="grid-item-content">
@@ -68,278 +60,42 @@
                     <img class="flavor-image" src="{{ static('assets/main-page-1.png') }}" alt="Headset Technology">
                 </div>
             </div>
-            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item lightBlue " data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
             <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-image">
+                <div class="grid-item-icon">
                     <img class="tile-image" src="{{ static('assets/categoryLogos-06.png') }}" alt="Video Games">
                 </div>
             </div>
-            <div class="grid-item turquoise" data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
             <div class="grid-item blue" data-remove="1" data-expandable="0">
-                <div class="grid-item-image">
-                    <img class="tile-image" src="{{ static('assets/categoryLogos-07.png') }}" alt="Virtual Reality Headset">
+                <div class="grid-item-icon">
+                    <img class="tile-image" src="{{ static('assets/categoryLogos-07.png') }}"
+                         alt="Virtual Reality Headset">
                 </div>
             </div>
-            <div class="grid-item lightBlue " data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item darkBlue" data-remove="0" data-expandable="0">
-                <div class="grid-item-image clickable-icon">
-                    <a href="https://www.facebook.com/MHacksHackathon/" target="_blank"><img
-                        src="{{ static('assets/fb-link.png') }}"
-                        alt="MHacks Facebook, https://www.facebook.com/MHacksHackathon"/></a>
-                </div>
-            </div>
-            <div class="grid-item blue" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
+            <div class="grid-item darkBlue tile-shadow" data-remove="0" data-expandable="0">
+                <a href="https://www.facebook.com/MHacksHackathon/" target="_blank">
+                    <div class="grid-item-icon clickable-icon">
+                        <img src="{{ static('assets/fb-link.png') }}"
+                             alt="MHacks Facebook, https://www.facebook.com/MHacksHackathon"/>
+                    </div>
+                </a>
             </div>
             <div class="grid-item width2" data-remove="0" data-expandable="0">
                 <div class="grid-item-image">
                     <img class="flavor-image" src="{{ static('assets/main-page-2.png') }}" alt="LED Strip Device">
                 </div>
             </div>
-            <div class="grid-item lightBlue" data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item lightTurquoise " data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item turquoise" data-remove="0" data-expandable="1">
-                <div class="expand-icon"></div>
-                <div class="grid-item-content">
-                    <div class="basic-info">
-                        <h1>FAQ</h1>
-                    </div>
-                    <div class="extra-info">
-                        <div class="faq-container">
-                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">General</h2>
-                            <ul style="padding-left:7px">
-                                <li class="question">What happens at a hackathon?</li>
-                                <li class="answer">
-                                    Participants (“hackers”) spend 36 hours working in teams of 1 - 4 people to build or
-                                    code projects (“hacks”) they’re excited about. There are workshops, mentors, food,
-                                    swag,
-                                    and buckets of coffee to guide you along the way. You bring your ideas, and we give
-                                    you
-                                    everything you need to make them come to life.
-                                </li>
-                                <li class="question">What do people normally make?</li>
-                                <li class="answer">
-                                    Common areas of focus include iOS or Android apps, web apps, and hardware hacks.
-                                    Check
-                                    out the hacks from MHacks Refactor on <a
-                                        href="http://mhacksrefactor.devpost.com/submissions" target="_blank">Devpost</a>.
-                                </li>
-                                <li class="question">Do I have to know how to code to attend?</li>
-                                <li class="answer">
-                                    Nope! We’ll have lots of resources—including workshops and a sweet, new mentorship
-                                    system—to help beginners get started.
-                                </li>
-                                <li class="question">Who runs MHacks?</li>
-                                <li class="answer">
-                                    MHacks is run by a group of dedicated and passionate young people, most of whom are
-                                    students at the University of Michigan.
-                                </li>
-                                <li class="question">I didn’t find my question here...</li>
-                                <li class="answer">
-                                    If you’ve got something else on your mind, fire it off to <a
-                                        href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>!
-                                </li>
-                            </ul>
-
-                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Applications</h2>
-                            <ul style="padding-left:7px">
-                                <li class="question">When are applications closing?</li>
-                                <li class="answer">
-                                    Applications are rolling until a week or so before the event. Space fills up quick,
-                                    so
-                                    apply early!
-                                </li>
-                                <li class="question">How and when will I hear back?</li>
-                                <li class="answer">
-                                    We’ll be releasing decisions weekly starting in August. If you’ve submitted your
-                                    application by a Friday, you’ll be getting an email back by the next Friday!
-                                </li>
-                                <li class="question">Who can apply?</li>
-                                <li class="answer">
-                                    If you’re enrolled in a high school, college, or university, or if you left school
-                                    during the current school year, you’re good to go! (Minors are welcome to apply, but
-                                    will need to fill out a couple extra forms in order to attend.)
-                                </li>
-                                <li class="question">Can we apply as a team?</li>
-                                <li class="answer">
-                                    You and your intended teammates should all apply individually. But if you get an
-                                    invitation and some of your teammates don’t, shoot us an email at <a
-                                        href="mailto:hackathon@umich.edu">hackathon@umich.edu</a> and
-                                    we’ll
-                                    try to sort
-                                    things out.
-                                </li>
-                                <li class="question">Do I have to register?</li>
-                                <li class="answer">
-                                    Anyone attending MHacks 8 must register! You’ll receive a link to register when you
-                                    receive your invitation.
-                                </li>
-                                <li class="question">What if I’m a Michigan student?</li>
-                                <li class="answer">
-                                    All Michigan students are welcome to attend MHacks, but we still need you to apply &
-                                    register beforehand. When you apply with your umich.edu email address, you’ll
-                                    receive an
-                                    invitation within the next week or so.
-                                </li>
-                                <li class="question">What are you looking for in an application?</li>
-                                <li class="answer">
-                                    Above anything else—passion. Tell us what you care about, what excites you. We want
-                                    to
-                                    know what’ll drive you to start and continue hacking. If there’s something about
-                                    MHacks
-                                    in particular that you’re excited about, we’d love to hear about that too!
-                                </li>
-                                <li class="question">Are you allowing walk-ins?</li>
-                                <li class="answer">
-                                    You’ll be able to register day-of only if there’s space. To ensure that you’ll be
-                                    allowed in before arriving at the venue, please apply and register ahead of time.
-                                </li>
-                            </ul>
-
-                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Hacking</h2>
-                            <ul style="padding-left:7px">
-                                <li class="question">What if I don’t have a team or idea?</li>
-                                <li class="answer">
-                                    Not to worry, most people don’t! We have some great activities planned before and
-                                    during
-                                    the event to help you meet teammates and start thinking through your ideas.
-                                </li>
-                                <li class="question">What kind of hardware will there be?</li>
-                                <li class="answer">
-                                    There’ll be tons of cool hardware for you to hack on! We’ll put out a list closer to
-                                    the
-                                    event so you can see what’s available. You can also feel free to bring your own from
-                                    home or <a href="mailto:hackathon@umich.edu">email us</a> with any
-                                    suggestions!
-                                </li>
-                            </ul>
-
-                            <h2 style="border-top: 2px solid rgba(0,0,0,0.3);">Logistics</h2>
-                            <ul style="padding-left:7px">
-                                <li class="question">How will I get there from UM?</li>
-                                <li class="answer">
-                                    We’ll have buses to bring you to Masonic! More information on the bus schedule will
-                                    be
-                                    released closer to the event. The <a href="http://www.ridemdcc.umich.edu/"
-                                                                         target="_blank">Detroit
-                                    Connector</a> also runs between campus and Detroit in case you need to get back to
-                                    Ann
-                                    Arbor for some reason.
-                                </li>
-                                <li class="question">How will I get there from other schools?</li>
-                                <li class="answer">
-                                    After you’ve applied and received word that you're coming to MHacks, we'll share
-                                    information about buses and travel reimbursements. More than likely, we'll be
-                                    sending a
-                                    bus to a school near you. If you’re flying in, we’ll have shuttles from DTW as well.
-                                    All
-                                    bus schedules will be released closer to the event.
-                                </li>
-                                <li class="question">What if I'm an International Student?</li>
-                                <li class="answer">
-                                    If you go to school in Canada, we may be sending a bus to your university or one
-                                    near
-                                    you. If you are traveling from another country, the first step is to make sure you
-                                    have
-                                    a valid travel Visa. Please refer to <a href="https://www.visahq.com/"
-                                                                            target="_blank">this</a>
-                                    website
-                                    to make sure you meet the requirements and get started on the process if you haven’t
-                                    already. If you need anything from the organizers, such as a letter of invitation,
-                                    please contact us as soon as possible at <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>.
-                                </li>
-                                <li class="question">Will you be offering travel reimbursements?</li>
-                                <li class="answer">
-                                    We can’t guarantee reimbursements for everyone, but we don’t want money to keep you
-                                    from
-                                    experiencing MHacks. You’ll get a reimbursement amount along with your invitation.
-                                    Let
-                                    us know if you still need help making your way to Detroit and we’ll see what we can
-                                    do.
-                                </li>
-                                <li class="question">Will there be parking available?</li>
-                                <li class="answer">
-                                    We’ll have a limited number of free parking spaces available at Masonic. If you’re
-                                    planning on driving, make sure to indicate that on the registration form!
-                                </li>
-                                <li class="question">What should I bring?</li>
-                                <li class="answer">
-                                    You should bring anything you’d need for a sleepover: laptop, charger, deodorant
-                                    (!),
-                                    change of clothes, sleeping bag. You won’t need food or drinks; we’ve got you
-                                    covered
-                                    there.
-                                </li>
-                                <li class="question">What shouldn't I bring?</li>
-                                <li class="answer">
-                                    Weapons of any kind, drugs, or alcohol. If you’re not sure whether something will be
-                                    okay, please ask ahead of time!
-                                </li>
-                                <li class="question">Can I sleep?</li>
-                                <li class="answer">
-                                    Yep! We’ll have a sleeping area but no cots, so bring a sleeping bag and a pillow if
-                                    you’ll need them.
-                                </li>
-                                <li class="question">Can I shower?</li>
-                                <li class="answer">
-                                    There won't be showers available at the venue.
-                                </li>
-                                <li class="question">Help! I don’t want to hack, I want to ________!</li>
-                                <li class="answer">
-                                    If you’re contemplating judging, volunteering, or mentoring, shoot us an email at <a
-                                        href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>. If
-                                    your
-                                    company is
-                                    interested in becoming a sponsor, check out the sponsorship tile.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-item lightTurquoise  " data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
             <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-image">
+                <div class="grid-item-icon">
                     <img class="tile-image" src="{{ static('assets/categoryLogos-08.png') }}" alt="Smartphone">
                 </div>
             </div>
             <div class="grid-item width2" data-remove="0" data-expandable="0">
                 <div class="grid-item-image">
-                    <img class="flavor-image" src="{{ static('assets/main-page-3.png') }}" alt="Mentor Helping Students">
+                    <img class="flavor-image" src="{{ static('assets/main-page-3.png') }}"
+                         alt="Mentor Helping Students">
                 </div>
             </div>
-            <div class="grid-item blue " data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item expand-medium darkBlue  " data-remove="0" data-expandable="1">
+            <div class="grid-item expand-medium darkBlue tile-shadow" data-remove="0" data-expandable="1">
                 <div class="expand-icon"></div>
                 <div class="grid-item-content">
                     <div class="basic-info">
@@ -370,115 +126,369 @@
                     </div>
                 </div>
             </div>
-            <div class="grid-item turquoise " data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
             <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
-                <div class="grid-item-image">
+                <div class="grid-item-icon">
                     <img class="tile-image" src="{{ static('assets/categoryLogos-10.png') }}" alt="Computer">
                 </div>
             </div>
-            <div class="grid-item blue" data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item lightBlue " data-remove="0" data-expandable="0">
-                <div class="grid-item-image clickable-icon">
-                            <a href="https://twitter.com/mhacks" target="_blank"><img
-                                    src="{{ static('assets/twitter-link.png') }}"
-                                    alt="MHacks Twitter, https://twitter.com/mhacks"/></a>
-                </div>
-            </div>
-            <div class="grid-item turquoise" data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
+            <div class="grid-item lightBlue tile-shadow" data-remove="0" data-expandable="0">
+                <a href="https://twitter.com/mhacks" target="_blank">
+                    <div class="grid-item-icon clickable-icon">
+                        <img src="{{ static('assets/twitter-link.png') }}"
+                             alt="MHacks Twitter, https://twitter.com/mhacks"/>
+                    </div>
+                </a>
             </div>
             <div class="grid-item width2" data-remove="0" data-expandable="0">
                 <div class="grid-item-image">
                     <img class="flavor-image" src="{{ static('assets/main-page-4.png') }}" alt="Students Collaborating">
                 </div>
             </div>
-            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item blue" data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item lightBlue" data-remove="0" data-expandable="0">
-                <div class="grid-item-image clickable-icon">
-                    <h3>In Partnership With</h3>
-                    <a href="https://mlh.io/" target="_blank"><img id="mlh-logo" src="{{ static('assets/mlh.png') }}" alt="Major League Hacking" ></a>
-                </div>
-            </div>
-            <div class="grid-item lightTurquoise" data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
             <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-image">
+                <div class="grid-item-icon">
                     <img class="tile-image" src="{{ static('assets/categoryLogos-09.png') }}" alt="Android Robot">
-                </div>
-            </div>
-            <div class="grid-item darkBlue" data-remove="2" data-expandable="0">
-                <div class="grid-item-content">
-                </div>
-            </div>
-            <div class="grid-item blue" data-remove="1" data-expandable="0">
-                <div class="grid-item-content">
                 </div>
             </div>
         </div>
 
-        <div class="sponsors">
+        <div class="more-info">
+
+            <h1 class="grey-text" style="margin-top:25px;">Frequently Asked Questions</h1>
+            <div class="col-1 center-col" style="margin-top: 25px;">
+                <div class="big-tile">
+
+                    <h4>General</h4>
+                    <div class="faq-row">
+                        <div class="faq-item">
+                            <div class="question" data-qid="1">
+                                What happens at a hackathon?
+                            </div>
+                            <div class="answer" data-qid="1">
+                                Participants (“hackers”) spend 36 hours working in teams of 1 - 4 people to build or
+                                code projects (“hacks”) they’re excited about. There are workshops, mentors, food, swag,
+                                and buckets of coffee to guide you along the way. You bring your ideas, and we give you
+                                everything you need to make them come to life.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="2">
+                                What do people normally make?
+                            </div>
+                            <div class="answer" data-qid="2">
+                                Common areas of focus include iOS or Android apps, web apps, and hardware hacks.
+                                Check
+                                out the hacks from MHacks Refactor on <a
+                                    href="http://mhacksrefactor.devpost.com/submissions" target="_blank">[ Devpost ]</a>.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="3">
+                                Do I have to know how to code to attend?
+                            </div>
+                            <div class="answer" data-qid="3">
+                                Nope! We’ll have lots of resources—including workshops and a sweet, new mentorship
+                                system—to help beginners get started.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="4">
+                                Who runs MHacks?
+                            </div>
+                            <div class="answer" data-qid="4">
+                                MHacks is run by a group of dedicated and passionate young people, most of whom are
+                                students at the University of Michigan.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="5">
+                                I didn't find my question here...
+                            </div>
+                            <div class="answer" data-qid="5">
+                                If you’ve got something else on your mind, fire it off to <a
+                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>!
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Application</h4>
+                    <div class="faq-row">
+                        <div class="faq-item">
+                            <div class="question" data-qid="6">
+                                When are applications closing?
+                            </div>
+                            <div class="answer" data-qid="6">
+                                Applications are rolling until a week or so before the event. Space fills up quick,
+                                so
+                                apply early!
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="7">
+                                How and when will I hear back?
+                            </div>
+                            <div class="answer" data-qid="7">
+                                We’ll be releasing decisions weekly starting in August. If you’ve submitted your
+                                application by a Friday, you’ll be getting an email back by the next Friday!
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="8">
+                                Who can apply?
+                            </div>
+                            <div class="answer" data-qid="8">
+                                If you’re enrolled in a high school, college, or university, or if you left school
+                                during the current school year, you’re good to go! (Minors are welcome to apply, but
+                                will need to fill out a couple extra forms in order to attend.)
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="9">
+                                Can we apply as a team?
+                            </div>
+                            <div class="answer" data-qid="9">
+                                You and your intended teammates should all apply individually. But if you get an
+                                invitation and some of your teammates don’t, shoot us an email at <a
+                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a> and
+                                we’ll
+                                try to sort
+                                things out.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="10">
+                                Do I have to register?
+                            </div>
+                            <div class="answer" data-qid="10">
+                                Anyone attending MHacks 8 must register! You’ll receive a link to register when you
+                                receive your invitation.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="11">
+                                What if I’m a Michigan student?
+                            </div>
+                            <div class="answer" data-qid="11">
+                                All Michigan students are welcome to attend MHacks, but we still need you to apply &
+                                register beforehand. When you apply with your umich.edu email address, you’ll
+                                receive an
+                                invitation within the next week or so.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="12">
+                                What are you looking for in an application?
+                            </div>
+                            <div class="answer" data-qid="12">
+                                Above anything else—passion. Tell us what you care about, what excites you. We want
+                                to
+                                know what’ll drive you to start and continue hacking. If there’s something about
+                                MHacks
+                                in particular that you’re excited about, we’d love to hear about that too!
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="13">
+                                Are you allowing walk-ins?
+                            </div>
+                            <div class="answer" data-qid="13">
+                                You’ll be able to register day-of only if there’s space. To ensure that you’ll be
+                                allowed in before arriving at the venue, please apply and register ahead of time.
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Hacking</h4>
+                    <div class="faq-row">
+                        <div class="faq-item">
+                            <div class="question" data-qid="14">
+                                What if I don’t have a team or idea?
+                            </div>
+                            <div class="answer" data-qid="14">
+                                Not to worry, most people don’t! We have some great activities planned before and
+                                during
+                                the event to help you meet teammates and start thinking through your ideas.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="15">
+                                What kind of hardware will there be?
+                            </div>
+                            <div class="answer" data-qid="15">
+                                There’ll be tons of cool hardware for you to hack on! We’ll put out a list closer to
+                                the
+                                event so you can see what’s available. You can also feel free to bring your own from
+                                home or <a href="mailto:hackathon@umich.edu">email us</a> with any
+                                suggestions!
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Logistics</h4>
+                    <div class="faq-row">
+                        <div class="faq-item">
+                            <div class="question" data-qid="16">
+                                How will I get there from UM?
+                            </div>
+                            <div class="answer" data-qid="16">
+                                We’ll have buses to bring you to Masonic! More information on the bus schedule will
+                                be
+                                released closer to the event. The <a href="http://www.ridemdcc.umich.edu/"
+                                                                     target="_blank">Detroit
+                                Connector</a> also runs between campus and Detroit in case you need to get back to
+                                Ann
+                                Arbor for some reason.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="17">
+                                How will I get there from other schools?
+                            </div>
+                            <div class="answer" data-qid="17">
+                                After you’ve applied and received word that you're coming to MHacks, we'll share
+                                information about buses and travel reimbursements. More than likely, we'll be
+                                sending a
+                                bus to a school near you. If you’re flying in, we’ll have shuttles from DTW as well.
+                                All
+                                bus schedules will be released closer to the event.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="18">
+                                What if I'm an International Student?
+                            </div>
+                            <div class="answer" data-qid="18">
+                                If you go to school in Canada, we may be sending a bus to your university or one
+                                near
+                                you. If you are traveling from another country, the first step is to make sure you
+                                have
+                                a valid travel Visa. Please refer to <a href="https://www.visahq.com/"
+                                                                        target="_blank">this</a>
+                                website
+                                to make sure you meet the requirements and get started on the process if you haven’t
+                                already. If you need anything from the organizers, such as a letter of invitation,
+                                please contact us as soon as possible at <a href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="19">
+                                Will you be offering travel reimbursements?
+                            </div>
+                            <div class="answer" data-qid="19">
+                                We can’t guarantee reimbursements for everyone, but we don’t want money to keep you
+                                from
+                                experiencing MHacks. You’ll get a reimbursement amount along with your invitation.
+                                Let
+                                us know if you still need help making your way to Detroit and we’ll see what we can
+                                do.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="20">
+                                Will there be parking available?
+                            </div>
+                            <div class="answer" data-qid="20">
+                                We’ll have a limited number of free parking spaces available at Masonic. If you’re
+                                planning on driving, make sure to indicate that on the registration form!
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="21">
+                                What should I bring?
+                            </div>
+                            <div class="answer" data-qid="21">
+                                You should bring anything you’d need for a sleepover: laptop, charger, deodorant
+                                (!),
+                                change of clothes, sleeping bag. You won’t need food or drinks; we’ve got you
+                                covered
+                                there.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="22">
+                                What shouldn't I bring?
+                            </div>
+                            <div class="answer" data-qid="22">
+                                Weapons of any kind, drugs, or alcohol. If you’re not sure whether something will be
+                                okay, please ask ahead of time!
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="23">
+                                Can I sleep?
+                            </div>
+                            <div class="answer" data-qid="23">
+                                Yep! We’ll have a sleeping area but no cots, so bring a sleeping bag and a pillow if
+                                you’ll need them.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="24">
+                                Can I shower?
+                            </div>
+                            <div class="answer" data-qid="24">
+                                There won't be showers available at the venue.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="question" data-qid="25">
+                                Help! I don’t want to hack, I want to ________!
+                            </div>
+                            <div class="answer" data-qid="25">
+                                If you’re contemplating judging, volunteering, or mentoring, shoot us an email at <a
+                                    href="mailto:hackathon@umich.edu">hackathon@umich.edu</a>. If
+                                your
+                                company is
+                                interested in becoming a sponsor, check out the sponsorship section below.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h1 class="grey-text">Sponsorship</h1>
             <div class="flex-row">
                 <div class="col-2-bigL">
-                    <h1>Sponsorship</h1>
-                    <p>MHacks is the gateway between you and the top tech talent in the world. Whether you come to network,
-                        promote brand awareness, or get feedback on a product or API, we’ll provide the tools you need to make
+                    <p>MHacks is the gateway between you and the top tech talent in the world. Whether you come to
+                        network,
+                        promote brand awareness, or get feedback on a product or API, we’ll provide the tools you need
+                        to make
                         the most out of your experience.</p>
                     <p>Interested in sponsoring? Want more information? Shoot us an email at
-                       <a href="mailto:sponsor-mhacks@umich.edu">sponsor-mhacks@umich.edu</a>
-                       <br/><br/>We have an awesome lineup of sponsors for you.<br/>Check back soon for company logos.
+                        <a href="mailto:sponsor-mhacks@umich.edu">sponsor-mhacks@umich.edu</a>
+                        <br/><br/>We have an awesome lineup of sponsors for you.<br/>Check back soon for company logos.
                     </p>
                 </div>
                 <div class="col-2-smallR" style="text-align: center">
-                    <img class="sponsors-image" src="{{ static('assets/sponsorIllustration-13.png') }}" alt="Sponsorship">
+                    <img class="sponsors-image" src="{{ static('assets/sponsorIllustration-13.png') }}"
+                         alt="Sponsorship">
                 </div>
             </div>
 
 
             <div class="col-1 flex-row">
-                <div class="col-2 sponsors-tile">
-                    <p class="quote">This was one of the most well organized student-run hackathons that we’ve ever sponsored.</p>
+                <div class="col-2 big-tile">
+                    <p class="quote">This was one of the most well organized student-run hackathons that we’ve ever
+                        sponsored.</p>
                     <p class="source">Google</p>
                 </div>
-                <div class="col-2 sponsors-tile">
-                    <p class="quote">The caliber and number of students that MHacks attracts is like no other hacking event.</p>
+                <div class="col-2 big-tile">
+                    <p class="quote">The caliber and number of students that MHacks attracts is like no other hacking
+                        event.</p>
                     <p class="source">Walmart</p>
                 </div>
-                <div style="width: 100%" class="sponsors-tile">
+                <div style="width: 100%" class="big-tile">
                     <p class="quote">MHacks has been a staple event in Concur’s University Tour over the past two years.
-                    The MHacks atmosphere fosters creativity and innovation from developers and entrepreneurs alike.
-                    When it comes to collegiate hackathons, MHacks is the place to be!</p>
+                        The MHacks atmosphere fosters creativity and innovation from developers and entrepreneurs alike.
+                        When it comes to collegiate hackathons, MHacks is the place to be!</p>
                     <p class="source">Concur</p>
                 </div>
             </div>
 
 
-            <h1 style="margin-top:25px;">Past Sponsors</h1>
+            <h1 class="grey-text" style="margin-top:25px;">Past Sponsors</h1>
             <div class="col-1 center-col" style="margin-top: 25px;">
-                <div class="logo-container sponsors-tile">
+                <div class="logo-container big-tile">
                     <div class="logo-row">
                         <a target="_blank" href="http://www.cfe.umich.edu"><img
                                 src="{{ static('assets/cfe_logo.png') }}"
@@ -522,6 +532,15 @@
                                 src="{{ static('assets/Visa_logo.png') }}"
                                 alt="Previous Sponsor Logo - Visa"></a>
                     </div>
+                </div>
+            </div>
+
+            <div class="flex-row">
+                <div class="text-center">
+                    <h4>In Partnership With</h4>
+                    <a href="https://mlh.io/" target="_blank">
+                        <img id="mlh-logo" src="{{ static('assets/mlh.png') }}" alt="Major League Hacking">
+                    </a>
                 </div>
             </div>
         </div>

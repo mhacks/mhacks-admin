@@ -64,7 +64,7 @@ $packery.on('click', '.grid-item, .grid-item-expand', function(event){
 
     if(isExpanded){
         // was expanded, now shrinking
-        setTimeout(function(){$packery.packery('shiftLayout');}, 250);
+        setTimeout(function(){$packery.packery('layout');}, 250);
     } else {
         // is expanding
         setTimeout(function(){
@@ -140,7 +140,12 @@ $(window).scroll(function() {
             $logoM.css("height", "90%");
         }
     } else {
+        $header.css("height", 60);
         $header.addClass("header-condensed");
+        $eventInfo.css("padding-left", 25);
+        $headerButtons.css("padding-right", 25);
+        $menuDropdown.css("padding-right", 25);
+        $menuContent.css("top", 60);
         $logoText.css("opacity", 0);
         $logoText.addClass("visibilityHidden");
         $logoM.css("height", "90%");
@@ -151,6 +156,12 @@ $menuContent.css("display", "none");
 
 $menuTrigger.click(function(){
     $menuContent.slideToggle();
+});
+
+$(".faq-item .question").click(function(event){
+    var q = $(event.target);
+    q.toggleClass("open");
+    $(".faq-item .answer[data-qid='" + q.data("qid") + "']").slideToggle('medium');
 });
 
 function colorName(index){

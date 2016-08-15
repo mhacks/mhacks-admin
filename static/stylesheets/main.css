@@ -42,6 +42,16 @@ h3 {
     padding: 0;
 }
 
+h4 {
+    font-family: 'Ubuntu';
+    font-size: 12pt;
+    text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.4px;
+    color: rgba(37, 37, 37, 0.63);
+    padding: 0;
+    margin-top: 0;
+}
+
 p {
     font-family: 'Source Sans Pro';
     font-size: 12pt;
@@ -73,6 +83,10 @@ p {
 
 .yellow {
     background: #FFE641;
+}
+
+.grey-text {
+    color: rgba(37, 37, 37, 0.63);
 }
 
 #container {
@@ -111,6 +125,10 @@ p {
     align-items: center;
 }
 
+.text-center {
+    text-align: center;
+}
+
 .visibilityVisible {
     visibility: visible !important;
     transition: visibility 0.4s;
@@ -119,6 +137,10 @@ p {
 .visibilityHidden {
     visibility: hidden !important;
     transition: visibility 0.4s;
+}
+
+.noUnderline {
+    text-decoration: none !important;
 }
 
 /* --- Background --- */
@@ -297,21 +319,64 @@ p {
     color: #FFE641;
 }
 
-/* --- Sponsorship Section --- */
+/* --- Non-Tiled Section --- */
 
-.sponsors {
+.more-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: #e6f3f7;
     color: rgba(37, 37, 37, 0.63);
-    padding: 40px 5% 0;
+    padding: 40px 5% 70px;
 }
 
-.sponsors-tile {
+.faq-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.faq-item {
+    width: 30%;
+    margin: 10px 3% 10px 0;
+    transition: all 0.2s;
+}
+
+.faq-item .question {
+    font-family: 'Ubuntu';
+    color: rgba(0, 169, 194, 1);
+    font-size: 14pt;
+}
+
+.faq-item .question:hover {
+    cursor: pointer;
+    color: #FFE641;
+}
+
+.faq-item .question:before {
+    font-family: FontAwesome;
+    content: "\f055";
+    font-size: 12pt;
+    padding-right: 5px;
+}
+
+.faq-item .question.open:before {
+    content: "\f056";
+}
+
+.faq-item .answer {
+    display: none;
+    font-family: 'Ubuntu';
+    color: rgba(37, 37, 37, 0.63);
+    font-size: 12pt;
+    padding-left: calc(14pt + 5px);
+}
+
+.big-tile {
     background-color: white;
     box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.35);
-    padding: 20px;
+    padding: 30px;
     margin-bottom: 10px;
 
     align-self: stretch;
@@ -351,7 +416,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 70px;
+    margin-bottom: 40px;
     padding: 40px;
     text-align: center;
 }
@@ -394,6 +459,7 @@ p {
 .grid-item, .grid-item-content {
     width: 160px;
     height: 120px;
+    z-index: 1;
 }
 
 .grid-item-content {
@@ -424,12 +490,17 @@ p {
     width: 320px;
 }
 
+.tile-shadow {
+    /*box-shadow: 0 0 15px 2px rgba(50, 50, 50, 0.75);*/
+    z-index: 2;
+}
+
 /* --- Expanded Grid Item --- */
 
 .grid-item-expand {
     width: 480px;
     height: 360px;
-    z-index: 2;
+    z-index: 5;
     cursor: pointer;
 }
 
@@ -542,6 +613,13 @@ p {
     text-align: center;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+}
+
+.grid-item-icon {
+    text-align: center;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -559,7 +637,7 @@ p {
 }
 
 .flavor-image {
-    width: 100%;
+    max-width: 100%;
     min-height: 100%;
     background-color: white;
 }
@@ -572,8 +650,8 @@ p {
 }
 
 #mlh-logo {
-    max-width: 90%;
     max-height: 100px;
+    margin-top: 10px;
 }
 
 /* --- FAQ Tile Content --- */
@@ -642,6 +720,11 @@ li.answer {
     .grid-item-expand .grid-item-content {
         width: 640px;
         height: 480px;
+    }
+
+    .faq-item {
+        width: 45%;
+        margin-right: 4%;
     }
 }
 
@@ -731,8 +814,13 @@ li.answer {
         width: 100%;
     }
 
-    .sponsors .quotes {
+    .more-info .quotes {
         flex-direction: column;
+    }
+
+    .faq-item {
+        width: 95%;
+        margin-right: 0;
     }
 }
 
