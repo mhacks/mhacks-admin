@@ -1,0 +1,10 @@
+{% extends 'basic_page.html' %}
+
+{%block basic_page_title %}Thank You{% endblock %}
+{%block pagetitle %}Thank You!{% endblock %}
+
+{% block basic_page_content %}
+    <p class="center">
+        Thanks for registering! We just sent you an email to confirm your address. Once you click the link you'll be able to <a href="{{ url_for('mhacks-login') }}">login</a> and <a href="{{ url_for('mhacks-apply') }}">apply</a> 🙂
+    </p>
+{% endblock %}

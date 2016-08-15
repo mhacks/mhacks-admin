@@ -43,6 +43,8 @@ def blackout(request):
 def index(request):
     return render(request, 'index.html')
 
+def thanks_registering(request):
+    return render(request, 'thanks_registering.html')
 
 @login_required()
 @permission_required('MHacks.add_application')
@@ -146,6 +148,7 @@ def register(request):
             user.save()
             user_pk = urlsafe_base64_encode(force_bytes(user.pk))
             form = None
+            return redirect(reverse('mhacks-thanks-registering'))
     elif request.method == 'GET':
         form = RegisterForm()
     else:
