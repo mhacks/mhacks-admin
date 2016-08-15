@@ -38,6 +38,14 @@ class RegisterForm(UserCreationForm):
 
 
 class ApplicationForm(forms.ModelForm):
+    gender_other = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'placeholder': 'Other/Other/Other'}))
+    gender_other.label = ''
+    gender_other.required = False
+
+    race_other = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'placeholder': 'Enter your race'}))
+    race_other.label = ''
+    race_other.required = False
+
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
 
@@ -103,7 +111,8 @@ class ApplicationForm(forms.ModelForm):
             'mentoring': 'Are you interested in mentoring other hackers?',
             'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
             'from_city': 'Which city will you be traveling from?',
-            'from_state': 'Which state will you be traveling from?'
+            'from_state': 'Which state will you be traveling from?',
+            'gender': 'Preferred gender pronouns'
         }
 
         widgets = {
@@ -133,3 +142,33 @@ class ApplicationForm(forms.ModelForm):
         data = self.cleaned_data['devpost']
         validate_url(data, 'devpost.com')
         return data
+
+    def clean_gender_other(self):
+        from application_lists import GENDER_PRONOUNS
+
+        gender_other = self.cleaned_data['gender_other']
+        gender = self.cleaned_data['gender']
+
+        if gender == 'other':
+            if gender_other and gender_other.count('/') == 2:
+                GENDER_PRONOUNS.append((gender_other, gender_other))
+                self.cleaned_data['gender'] = gender_other
+            else:
+                raise forms.ValidationError('Please enter your gender pronouns (e.g. She/Her/Hers).')
+
+        return gender_other
+
+    def clean_race_other(self):
+        from application_lists import RACES
+
+        race_other = self.cleaned_data['race_other']
+        race = self.cleaned_data['race']
+
+        if race == 'other':
+            if race_other:
+                RACES.append((race_other, race_other))
+                self.cleaned_data['race'] = race_other
+            else:
+                raise forms.ValidationError('Please enter your race.')
+
+        return race_other
