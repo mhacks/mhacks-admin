@@ -45,9 +45,8 @@ class ApplicationForm(forms.ModelForm):
 
         self.fields['school'].cols = 12
         self.fields['is_high_school'].cols = 12
-        self.fields['is_international'].cols = 12
-        self.fields['is_international'].end_row = True
-        self.fields['is_international'].general = True
+        self.fields['is_high_school'].end_row = 12
+        self.fields['is_high_school'].general = True
 
         self.fields['is_high_school'].end_row = True
         self.fields['birthday'].end_row = True
@@ -83,9 +82,11 @@ class ApplicationForm(forms.ModelForm):
 
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
-        if self.user and 'umich.edu' in self.user.email:
+        if self.user and 'umich.edu1' in self.user.email:
             for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
                 del self.fields[key]
+                self.fields['cortex'].short = False
+
 
     class Meta:
         from application_lists import TECH_OPTIONS
@@ -98,7 +99,6 @@ class ApplicationForm(forms.ModelForm):
             'school': 'School or University',
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
-            'is_international': 'Are you an international student?',
             'is_high_school': 'Are you in high school?',
             'github': '',
             'devpost': '',
@@ -108,7 +108,7 @@ class ApplicationForm(forms.ModelForm):
             'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
-            'can_pay': 'How much of the travel costs can you pay?',
+            'can_pay': 'How much of the travel cost can you pay?',
             'mentoring': 'Are you interested in mentoring other hackers?',
             'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
             'from_city': 'Which city will you be traveling from?',
