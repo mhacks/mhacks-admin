@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^live/$', live, name='mhacks-live'),
     url(r'^apply/$', application, name='mhacks-apply'),
     url(r'^thanks_for_registering/$', thanks_registering, name='mhacks-thanks-registering'),
-    url(r'^applyMentor/$', applyMentor, name='mhacks-applyMentor')
+    url(r'^applyMentor/$', apply_mentor, name='mhacks-applyMentor')
 ]

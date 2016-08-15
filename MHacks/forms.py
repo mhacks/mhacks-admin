@@ -82,7 +82,6 @@ class ApplicationForm(forms.ModelForm):
 
         self.fields['other_info'].travel = True
 
-
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
             for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
@@ -101,21 +100,21 @@ class ApplicationForm(forms.ModelForm):
             'school': 'School or University',
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
-            'is_high_school': 'Are you in high school?',
-            'is_international': 'Are you an international student?',
+            'is_high_school': 'I am a high school student.',
+            'is_international': 'I am an international student.',
             'github': '',
             'devpost': '',
             'personal_website': '',
-            'cortex': 'CTRL (CMD for Mac) + click to multi-select!',
+            'cortex': 'CTRL/CMD + click to multi-select!',
             'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
             'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
             'can_pay': 'How much of the travel cost can you pay?',
-            'mentoring': 'Are you interested in mentoring other hackers?',
-            'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
+            'mentoring': 'I am interested in mentoring other hackers!',
+            'needs_reimbursement': 'I will be needing travel reimbursement to attend MHacks.',
             'from_city': 'Which city will you be traveling from?',
-            'from_state': 'Which state or country will you be traveling from?',
+            'from_state': 'Which state or country will you be traveling from? (Type your country if you are traveling internationally)',
             'gender': 'Preferred gender pronouns'
         }
 
@@ -126,7 +125,7 @@ class ApplicationForm(forms.ModelForm):
             'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md', 'id': 'school-autocomplete'}),
             'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'id': 'major-autocomplete'}),
             'gender': forms.TextInput(attrs={'placeholder': 'Pro/Pro/Pro', 'id': 'gender-autocomplete'}),
-            'race': forms.TextInput(attrs={'placeholder': 'Wookie', 'id': 'race-autocomplete'}),
+            'race': forms.TextInput(attrs={'placeholder': 'Hacker', 'id': 'race-autocomplete'}),
             'github': forms.TextInput(attrs={'placeholder': 'GitHub', 'class': 'form-control input-md'}),
             'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
             'personal_website': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
@@ -134,7 +133,7 @@ class ApplicationForm(forms.ModelForm):
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'resume': AdminFileWidget(attrs={'class': 'input-md form-control'}),
-            'from_state': forms.TextInput(attrs={'placeholder': 'State', 'id': 'state-autocomplete'})
+            'from_state': forms.TextInput(attrs={'placeholder': 'State or country', 'id': 'state-autocomplete'})
         }
 
     # custom validator for urls
@@ -146,4 +145,17 @@ class ApplicationForm(forms.ModelForm):
     def clean_devpost(self):
         data = self.cleaned_data['devpost']
         validate_url(data, 'devpost.com')
+        return data
+
+    def clean_major(self):
+        data = self.cleaned_data['major']
+        if not self.cleaned_data['is_high_school'] and not data:
+            raise forms.ValidationError('Please enter your major.')
+        return data
+
+    def clean_grad_date(self):
+        data = self.cleaned_data['grad_date']
+        if not self.cleaned_data['is_high_school'] and not data:
+            raise forms.ValidationError('Please enter your graduation date.')
+
         return data

@@ -62,21 +62,18 @@ def application(request):
         form = ApplicationForm(instance=app, user=request.user)
     elif request.method == 'POST':
         form = ApplicationForm(data=request.POST, files=request.FILES, instance=app, user=request.user)
+
         if form.is_valid():
             # save application
             app = form.save(commit=False)
+            app.user = request.user
 
-            # only mark as submitted if user clicks submit
             if '_submit' in request.POST:
                 app.submitted = True
+                send_application_confirmation_email(request.user)
 
             # save the app regardless
-            app.user = request.user
             app.save()
-
-            # only email if user clicks submit
-            if '_submit' in request.POST:
-                send_application_confirmation_email(request.user)
 
             return redirect(reverse('mhacks-dashboard'))
     else:
@@ -87,7 +84,7 @@ def application(request):
 
 
 # I just copied the code from apply, not sure if the mentorship form needs anything different -Nevin
-def applyMentor(request):
+def apply_mentor(request):
     if request.method == 'GET':
         return render(request, 'applyMentor.html', {})
         pass

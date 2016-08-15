@@ -155,13 +155,13 @@ class Application(Any):
     is_high_school = models.BooleanField(default=False)
     is_international = models.BooleanField(default=False)
     school = models.CharField(max_length=255, default='')
-    major = models.CharField(max_length=255, default='')
-    grad_date = models.DateField()
+    major = models.CharField(max_length=255, default='', blank=True)
+    grad_date = models.DateField(null=True, blank=True)
     birthday = models.DateField()
 
     # Demographic
     gender = models.CharField(max_length=32, default='')
-    race = models.CharField(max_length=32, default='')
+    race = models.CharField(max_length=64, default='')
 
     # External Links
     github = models.URLField()
@@ -183,7 +183,7 @@ class Application(Any):
     needs_reimbursement = models.BooleanField(default=False)
     can_pay = models.FloatField(default=0, validators=[MinValueValidator(limit_value=0.0)])
     from_city = models.CharField(max_length=255, default='')
-    from_state = models.CharField(max_length=2, default='')
+    from_state = models.CharField(max_length=64, default='')
 
     # Miscellaneous
     submitted = models.BooleanField(default=False)
