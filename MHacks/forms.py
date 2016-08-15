@@ -64,9 +64,9 @@ class ApplicationForm(forms.ModelForm):
         self.fields['resume'].cols = 6
         self.fields['resume'].end_row = True
 
-        self.fields['num_hackathons'].cols = 6
+        self.fields['num_hackathons'].cols = 12
         self.fields['num_hackathons'].end_row = True
-        self.fields['num_hackathons'].interests = True
+        self.fields['mentoring'].interests = True
 
         self.fields['cortex'].short = True
 
@@ -95,7 +95,7 @@ class ApplicationForm(forms.ModelForm):
             'github': '',
             'devpost': '',
             'personal_website': '',
-            'cortex': 'CTRL + click to multi-select!',
+            'cortex': 'CTRL (CMD for Mac) + click to multi-select!',
             'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
             'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
             'other_info': 'Anything else you want to tell us?',

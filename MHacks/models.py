@@ -170,6 +170,7 @@ class Application(Any):
 
     # Experience
     num_hackathons = models.IntegerField(default=0, validators=[MinValueValidator(limit_value=0, message='You went to negative hackathons? Weird...')])
+    mentoring = models.BooleanField(default=False)
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True), size=len(TECH_OPTIONS))
@@ -184,7 +185,6 @@ class Application(Any):
     from_state = models.CharField(max_length=2, default='')
 
     # Miscellaneous
-    mentoring = models.BooleanField(default=False)
     submitted = models.BooleanField(default=False)
 
     # Private administrative use
