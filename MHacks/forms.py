@@ -43,8 +43,11 @@ class ApplicationForm(forms.ModelForm):
 
         super(ApplicationForm, self).__init__(*args, **kwargs)
 
-        self.fields['school'].cols = 10
-        self.fields['is_high_school'].cols = 2
+        self.fields['school'].cols = 12
+        self.fields['is_high_school'].cols = 12
+        self.fields['is_international'].cols = 12
+        self.fields['is_international'].end_row = True
+
         self.fields['is_high_school'].end_row = True
         self.fields['birthday'].end_row = True
 
@@ -94,6 +97,7 @@ class ApplicationForm(forms.ModelForm):
             'school': 'School or University',
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
+            'is_international': 'Are you an international student?',
             'is_high_school': 'Are you in high school?',
             'github': '',
             'devpost': '',
@@ -112,7 +116,7 @@ class ApplicationForm(forms.ModelForm):
         }
 
         widgets = {
-            "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md'}),
+            "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md', 'id': 'graduation_date'}),
             'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
             'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md'}),
             'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md', 'id': 'school-autocomplete'}),

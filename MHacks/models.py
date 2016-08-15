@@ -152,8 +152,9 @@ class Application(Any):
 
     # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
+    is_international = models.BooleanField(default=False)
+    is_high_school = models.BooleanField(default=False)
     school = models.CharField(max_length=255, default='')
-    is_high_school = models.BooleanField()
     major = models.CharField(max_length=255, default='')
     grad_date = models.DateField()
     birthday = models.DateField()

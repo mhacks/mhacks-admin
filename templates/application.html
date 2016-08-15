@@ -28,6 +28,35 @@
                 source: STATES
             });
         } );
+		$(document).ready(function() {
+			$('input[type="checkbox"][id="id_is_high_school"]').change(function() {
+			     if(this.checked) {
+			     	$("#id_is_international").parent().hide();
+			     	$("#graduation_date").parent().hide();
+			     	$("#major-autocomplete").parent().hide();
+			 	 }
+			 	 else{			     	
+			 	 	$("#id_is_international").parent().show();
+			 	 	$("#graduation_date").parent().show();
+			     	$("#major-autocomplete").parent().show();
+			 	 }
+			 });
+
+			$('input[type="checkbox"][id="id_is_international"]').change(function() {
+			     if(this.checked) {
+			     	$("#id_is_high_school").parent().hide();
+			     	$("#graduation_date").parent().hide();
+			     	$("#major-autocomplete").parent().hide();
+			 	 }
+			 	 else{			   
+			 	    $("#id_is_high_school").parent().show();  	
+			 	 	$("#graduation_date").parent().show();
+			     	$("#major-autocomplete").parent().show();
+			 	 }
+			 });
+		});
+
+
     </script>
 {% endblock %}
 
