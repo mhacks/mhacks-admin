@@ -121,11 +121,11 @@ class ApplicationForm(forms.ModelForm):
         }
 
         widgets = {
-            "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md', 'id': 'graduation_date'}),
+            "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'id': 'graduation_date'}),
             'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
-            'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md'}),
+            'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'}),
             'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md', 'id': 'school-autocomplete'}),
-            'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'id': 'major-autocomplete'}),
+            'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'class': 'form-control input-md', 'id': 'major-autocomplete'}),
             'gender': forms.TextInput(attrs={'placeholder': 'Pro/Pro/Pro', 'id': 'gender-autocomplete'}),
             'race': forms.TextInput(attrs={'placeholder': 'Hacker', 'id': 'race-autocomplete'}),
             'github': forms.TextInput(attrs={'placeholder': 'GitHub', 'class': 'form-control input-md'}),
