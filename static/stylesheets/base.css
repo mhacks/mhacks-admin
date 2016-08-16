@@ -265,6 +265,14 @@ p {
     margin: 0 auto;
 }
 
+#logo a {
+    background-color: rgba(0,0,0,0);
+    box-shadow: 0 0 0 0 #000000;
+
+    padding: 0 0;
+    margin: 0 0 0 0;
+}
+
 #headerButtons {
     padding-right: 50px;
     text-align: center;
