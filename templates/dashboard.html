@@ -1,26 +1,43 @@
 {% extends 'basic_page.html' %}
 
-{% block basic_page_title %}Dashboard{% endblock %}
+{% block basic_page_headers %}
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/dashboard.css') }}">
+{% endblock %}
+
+{% block basic_page_title %}Hacker Dashboard{% endblock %}
 {% block pagetitle %}MHacks Dashboard{% endblock %}
 
 {% block basic_page_content %}
-    {% if request.user|belongs_to(groups.APP_READER) %}
+    {% if request.user and request.user.groups.filter(name='application_reader').exists() %}
         <div style="text-align:center; padding-bottom:0;" class="section container">
             <h3>Looks like you're someone special ;)</h3>
             <h3>Head here to read applications:</h3>
             <a href=""><button type="button">Read Apps</button></a> {# TODO: Fill URL #}
         </div>
     {% endif %}
-    {% if request.user|belongs_to(groups.SPONSOR) %}
+    {% if request.user and request.user.groups.filter(name='sponsor').exists() %}
         {# TODO: Show sponsor related information here #}
     {% endif %}
-    {% if request.user|belongs_to(groups.STATS) %}
+    {% if request.user and request.user.groups.filter(name='stats_team').exists() %}
         {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
     {% endif %}
-    {% if request.user|belongs_to(groups.HACKER) %}
-        {% if request.user.application is defined and request.user.application.submitted %}
-            <h3 style="text-align: center;">Thank you for submitting your application!</h3>
-        {% else %}
+    <br>
+    <div class="body-info" id="main-message">
+        {% if request.user and request.user.groups.filter(name='hacker').exists() %}
+            {% if request.user.application and request.user.application.submitted %}
+                <h2>Your application has been submitted. We look forward to reading it!</h2>
+            {% else %}
+                <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>
+            {% endif %}
         {% endif %}
-    {% endif %}
+    </div>
+    <br>
+    <div class="body-info" id="apply-instructions">
+        <h2>Here’s how it works:</h2>
+        <p>When you’re ready, hit the apply button and fill out an application. Our decisions are released on a weekly basis, so if you submit an application by Friday at 11:59pm, you will receive a decision on Monday.</p>
+        <p>If you submit an application after Friday at 11:59pm, your application will be read in the next cycle.</p>
+        <p>If you need to change your answers, don’t worry! Just make sure you submit your changes before Friday 11:59pm of that week.</p>
+        <p>Make sure you submit an application by September 9th in order to be considered for a travel reimbursement!</p>
+        <a href="{{ url_for('mhacks-apply') }}" <h1>Let’s do this.</h1></a>
+    </div>
 {% endblock %}
