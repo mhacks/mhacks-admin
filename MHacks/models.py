@@ -167,7 +167,7 @@ class Application(Any):
     github = models.URLField()
     devpost = models.URLField()
     personal_website = models.URLField()
-    resume = models.FileField(upload_to='resumes/', max_length=(10 * 1024 * 1024))  # 10 MB max file size
+    resume = models.FileField(max_length=(10 * 1024 * 1024))  # 10 MB max file size
 
     # Experience
     num_hackathons = models.IntegerField(default=0, validators=[MinValueValidator(limit_value=0, message='You went to negative hackathons? Weird...')])

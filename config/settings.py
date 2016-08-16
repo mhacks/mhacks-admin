@@ -143,3 +143,5 @@ STATICFILES_DIRS = [
 ]
 
 APPEND_SLASH = True
+
+MEDIA_ROOT = 'resumes/'
