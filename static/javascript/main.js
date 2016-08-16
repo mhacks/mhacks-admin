@@ -54,27 +54,26 @@ $packery.on('click', '.grid-item, .grid-item-expand', function(event){
 
         openItem.toggleClass('grid-item-expand');
         openItem.toggleClass('grid-item');
-        openItem.toggleClass('stamp');
     }
 
     var isExpanded = item.hasClass('grid-item-expand');
     item.toggleClass('grid-item-expand');
     item.toggleClass('grid-item');
-    item.toggleClass('stamp');
 
     if(isExpanded){
         // was expanded, now shrinking
-        setTimeout(function(){$packery.packery('layout');}, 250);
+        setTimeout(function(){
+            $packery.packery('layout');
+        }, 250);
     } else {
         // is expanding
-        setTimeout(function(){
-            $packery.packery('fit', event.currentTarget);
-            setTimeout(function(){
-                $('html, body').animate({
-                  scrollTop: item.offset().top - 120
-                }, 1000);
-            }, 250);
-        }, 250);
+        $packery.packery('fit', event.currentTarget);
+        $packery.packery('stamp', item);
+        $packery.packery('layout');
+        $packery.packery('unstamp', item);
+        $('html, body').animate({
+            scrollTop: item.offset().top - 120
+        }, 1000);
     }
 
     openElement = isExpanded ? null : event.currentTarget;
