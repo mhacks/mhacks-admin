@@ -79,6 +79,8 @@ class ApplicationForm(forms.ModelForm):
         self.fields['devpost'].required = False
         self.fields['personal_website'].required = False
         self.fields['other_info'].required = False
+        self.fields['gender'].required = False
+        self.fields['race'].required = False
 
         self.fields['other_info'].travel = True
 
