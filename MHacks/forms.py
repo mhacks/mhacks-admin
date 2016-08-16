@@ -1,10 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.admin.widgets import AdminFileWidget
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from MHacks.widgets import ArrayFieldSelectMultiple, MHacksAdminFileWidget
 
+from MHacks.widgets import ArrayFieldSelectMultiple, MHacksAdminFileWidget
 from models import MHacksUser, Application
 from utils import validate_url
 
@@ -117,7 +116,8 @@ class ApplicationForm(forms.ModelForm):
             'needs_reimbursement': 'I will be needing travel reimbursement to attend MHacks.',
             'from_city': 'Which city will you be traveling from?',
             'from_state': 'Which state or country will you be traveling from? (Type your country if you are traveling internationally)',
-            'gender': 'Preferred gender pronouns'
+            'gender': 'Preferred gender pronouns',
+            'resume': 'Resume (If you don\'t have a formal resume, you can upload a skills sheet, a bullet-pointed list, etc!)'
         }
 
         widgets = {
