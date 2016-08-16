@@ -26,5 +26,24 @@
         {% endif %}
     </div>
     <div id="headerDropdown">
+        <i id="dropdownTrigger" class="fa fa-bars fa-2x" aria-hidden="false"></i>
+        <div id="dropdownContent" class="turquoise">
+            <form method="GET" action="{{ url_for('mhacks-apply') }}">
+                {{ csrf_input }}
+                <button type="submit">Apply</button>
+            </form>
+
+            {% if request.user.is_authenticated() %}
+                <form method="POST" action="{{ url_for('mhacks-logout') }}">
+                    {{ csrf_input }}
+                    <button type="submit">Logout</button>
+                </form>
+            {% else %}
+                <form method="GET" action="{{ url_for('mhacks-login') }}">
+                    {{ csrf_input }}
+                    <button type="submit">Login</button>
+                </form>
+            {% endif %}
+        </div>
     </div>
 </div>

@@ -1,3 +1,8 @@
-/**
- * Created by root on 8/15/16.
- */
+var $menuTrigger = $('#dropdownTrigger');
+var $menuContent = $('#dropdownContent');
+
+$menuContent.css("display", "none");
+
+$menuTrigger.click(function(){
+    $menuContent.slideToggle();
+});
