@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.admin.widgets import AdminFileWidget
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from MHacks.widgets import ArrayFieldSelectMultiple
+from MHacks.widgets import ArrayFieldSelectMultiple, MHacksAdminFileWidget
 
 from models import MHacksUser, Application
 from utils import validate_url
@@ -134,7 +134,7 @@ class ApplicationForm(forms.ModelForm):
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'resume': AdminFileWidget(attrs={'class': 'input-md form-control'}),
+            'resume': MHacksAdminFileWidget(attrs={'class': 'input-md form-control'}),
             'from_state': forms.TextInput(attrs={'placeholder': 'State or country', 'id': 'state-autocomplete'})
         }
 
