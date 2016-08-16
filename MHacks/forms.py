@@ -39,9 +39,17 @@ class RegisterForm(UserCreationForm):
 
 class ApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+
         super(ApplicationForm, self).__init__(*args, **kwargs)
-        self.fields['school'].cols = 10
-        self.fields['is_high_school'].cols = 2
+
+        self.fields['school'].cols = 12
+        self.fields['is_high_school'].cols = 12
+        self.fields['is_high_school'].end_row = 12
+        self.fields['is_international'].cols = 12
+        self.fields['is_international'].end_row = 12
+        self.fields['is_high_school'].general = True
+
         self.fields['is_high_school'].end_row = True
         self.fields['birthday'].end_row = True
 
@@ -61,51 +69,71 @@ class ApplicationForm(forms.ModelForm):
         self.fields['resume'].cols = 6
         self.fields['resume'].end_row = True
 
-        self.fields['num_hackathons'].cols = 6
+        self.fields['num_hackathons'].cols = 12
         self.fields['num_hackathons'].end_row = True
-        self.fields['num_hackathons'].interests = True
+        self.fields['mentoring'].interests = True
 
         self.fields['cortex'].short = True
+
+        self.fields['github'].required = False
+        self.fields['devpost'].required = False
+        self.fields['personal_website'].required = False
+        self.fields['other_info'].required = False
+
+        self.fields['other_info'].travel = True
+
+        # if the user is from UMich, exclude the short answer and reimbursement/travel fields
+        if self.user and 'umich.edu' in self.user.email:
+            for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
+                del self.fields[key]
+                self.fields['cortex'].short = False
+
 
     class Meta:
         from application_lists import TECH_OPTIONS
         model = Application
-        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']  # use all fields except for these
+
+        # use all fields except for these
+        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']
+
         labels = {
             'school': 'School or University',
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
-            'is_high_school': 'Are you in high school?',
-            'github':'',
-            'devpost':'',
-            'personal_website':'',
-            'cortex': '',
-            'passionate': 'What\'s something that you made that you\'re proud of? It doesn\'t have to be a hack. (150 words max)',
-            'coolest_thing': 'What would you build if you had access to all the resources you needed? (150 words max)',
+            'is_high_school': 'I am a high school student.',
+            'is_international': 'I am an international student.',
+            'github': '',
+            'devpost': '',
+            'personal_website': '',
+            'cortex': 'CTRL/CMD + click to multi-select!',
+            'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
+            'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
             'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
-            'can_pay': 'How much of the travel costs can you pay?',
-            'mentoring': 'Are you interested in mentoring other hackers?',
-            'needs_reimbursement': 'Will you be needing travel reimbursement to attend MHacks?',
+            'can_pay': 'How much of the travel cost can you pay?',
+            'mentoring': 'I am interested in mentoring other hackers!',
+            'needs_reimbursement': 'I will be needing travel reimbursement to attend MHacks.',
             'from_city': 'Which city will you be traveling from?',
-            'from_state': 'Which state will you be traveling from?'
+            'from_state': 'Which state or country will you be traveling from? (Type your country if you are traveling internationally)',
+            'gender': 'Preferred gender pronouns'
         }
 
         widgets = {
-            "grad_date": forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
+            "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md', 'id': 'graduation_date'}),
             'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
-            'birthday': forms.TextInput(attrs={'placeholder': 'DD/MM/YYYY', 'class': 'form-control input-md'}),
-            'school': forms.TextInput(attrs={'placeholder': 'University of ...', 'class': 'form-control input-md'}),
-            'major': forms.Select(attrs={'class': 'select_style'}),
-            'gender': forms.Select(attrs={'class': 'select_style'}),
-            'race': forms.Select(attrs={'class': 'select_style'}),
-            'github': forms.TextInput(attrs={'placeholder': 'Github', 'class': 'form-control input-md'}),
+            'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'class': 'form-control input-md'}),
+            'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md', 'id': 'school-autocomplete'}),
+            'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'id': 'major-autocomplete'}),
+            'gender': forms.TextInput(attrs={'placeholder': 'Pro/Pro/Pro', 'id': 'gender-autocomplete'}),
+            'race': forms.TextInput(attrs={'placeholder': 'Hacker', 'id': 'race-autocomplete'}),
+            'github': forms.TextInput(attrs={'placeholder': 'GitHub', 'class': 'form-control input-md'}),
             'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
             'personal_website': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'resume': AdminFileWidget(attrs={'class': 'input-md form-control'})
+            'resume': AdminFileWidget(attrs={'class': 'input-md form-control'}),
+            'from_state': forms.TextInput(attrs={'placeholder': 'State or country', 'id': 'state-autocomplete'})
         }
 
     # custom validator for urls
@@ -117,4 +145,17 @@ class ApplicationForm(forms.ModelForm):
     def clean_devpost(self):
         data = self.cleaned_data['devpost']
         validate_url(data, 'devpost.com')
+        return data
+
+    def clean_major(self):
+        data = self.cleaned_data['major']
+        if not self.cleaned_data['is_high_school'] and not data:
+            raise forms.ValidationError('Please enter your major.')
+        return data
+
+    def clean_grad_date(self):
+        data = self.cleaned_data['grad_date']
+        if not self.cleaned_data['is_high_school'] and not data:
+            raise forms.ValidationError('Please enter your graduation date.')
+
         return data

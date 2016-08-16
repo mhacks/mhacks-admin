@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/form.css') }}">
+    {% block basic_page_headers %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <div class="container container-form">
+
+        <div class="col-12 text-center title-form">
+        <h3 class="first head">
+            <span>{% block basic_page_title %}{% endblock %}</span>
+        </h3>
+        </div>
+        {% block basic_page_content %}
+        {% endblock %}
+    </div>
+
+{% endblock %}

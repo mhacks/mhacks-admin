@@ -81,6 +81,7 @@ body {
     padding-left: 10px;
     background-color: #c7c7c7;
     -webkit-appearance: none;
+    border-radius: 0px;
 }
 
 #email input:focus {
@@ -128,4 +129,10 @@ input::-webkit-input-placeholder {
     color: #c7c7c7;
     opacity: 0.7;
     text-decoration: underline
+}
+
+#email form {
+    display: inherit;
+    width: 500px;
+    margin: auto;
 }

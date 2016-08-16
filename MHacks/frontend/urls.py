@@ -1,8 +1,12 @@
 from django.conf.urls import url
 from MHacks.frontend.views import *
+from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
+    url(r'^$', index, name='mhacks-home'),
+    # url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home'),  # Redirect everything to root page
+
     # Authentication
     url(r'^register/$', register, name='mhacks-register'),
     url(r'^validate/(?P<uid>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
@@ -18,7 +22,7 @@ urlpatterns = [
     # Content
     url(r'^dashboard/$', dashboard, name='mhacks-dashboard'),
     url(r'^live/$', live, name='mhacks-live'),
-    url(r'^$', index, name='mhacks-home'),  # Note: Currently not blackout page
     url(r'^apply/$', application, name='mhacks-apply'),
-    url(r'^applyMentor/$', applyMentor, name='mhacks-applyMentor')
+    url(r'^thanks_for_registering/$', thanks_registering, name='mhacks-thanks-registering'),
+    url(r'^applyMentor/$', apply_mentor, name='mhacks-applyMentor')
 ]

@@ -148,20 +148,20 @@ class PushToken(models.Model):
 
 
 class Application(Any):
-    from application_lists import GENDERS, RACES, TECH_OPTIONS, COLLEGES, MAJORS, STATES
+    from application_lists import TECH_OPTIONS
 
     # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
-    # school = models.CharField(max_length=255, default='', choices=zip(COLLEGES, COLLEGES))
+    is_high_school = models.BooleanField(default=False)
+    is_international = models.BooleanField(default=False)
     school = models.CharField(max_length=255, default='')
-    is_high_school = models.BooleanField()
-    major = models.CharField(max_length=255, default='', choices=zip(MAJORS, MAJORS))
-    grad_date = models.DateField()
+    major = models.CharField(max_length=255, default='', blank=True)
+    grad_date = models.DateField(null=True, blank=True)
     birthday = models.DateField()
 
     # Demographic
-    gender = models.CharField(max_length=16, choices=GENDERS, default='none')
-    race = models.CharField(max_length=16, choices=RACES, default='none')
+    gender = models.CharField(max_length=32, default='')
+    race = models.CharField(max_length=64, default='')
 
     # External Links
     github = models.URLField()
@@ -170,7 +170,8 @@ class Application(Any):
     resume = models.FileField(upload_to='resumes/', max_length=(10 * 1024 * 1024))  # 10 MB max file size
 
     # Experience
-    num_hackathons = models.IntegerField(default=0)
+    num_hackathons = models.IntegerField(default=0, validators=[MinValueValidator(limit_value=0, message='You went to negative hackathons? Weird...')])
+    mentoring = models.BooleanField(default=False)
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True), size=len(TECH_OPTIONS))
@@ -180,12 +181,11 @@ class Application(Any):
 
     # Logistics
     needs_reimbursement = models.BooleanField(default=False)
-    can_pay = models.FloatField(default=0)
+    can_pay = models.FloatField(default=0, validators=[MinValueValidator(limit_value=0.0)])
     from_city = models.CharField(max_length=255, default='')
-    from_state = models.CharField(max_length=5, choices=zip(STATES, STATES), default='')
+    from_state = models.CharField(max_length=64, default='')
 
     # Miscellaneous
-    mentoring = models.BooleanField(default=False)
     submitted = models.BooleanField(default=False)
 
     # Private administrative use

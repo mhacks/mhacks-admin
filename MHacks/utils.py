@@ -32,7 +32,7 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
         }
         for k, v in email_vars.items():
             message['global_merge_vars'].append(
-                    {'name': k, 'content': v}
+                {'name': k, 'content': v}
             )
         return MANDRILL_CLIENT.messages.send_template(template_name, [], message)
     except mandrill.Error as e:
@@ -80,7 +80,8 @@ def send_verification_email(user, request):
         kwargs={'uid':uid, 'token': token}
     )
     email_vars = {
-        'confirmation_url': _get_absolute_url(request, relative_confirmation_url)
+        'confirmation_url': _get_absolute_url(request, relative_confirmation_url),
+        'FIRST_NAME': user.first_name
     }
     send_mandrill_mail(
         'confirmation_instructions',
@@ -97,14 +98,13 @@ def send_password_reset_email(user, request):
         'mhacks-update_password',
         kwargs={'uid':uid, 'token': token}
     )
-    email_vars = {
-        'update_password_url': _get_absolute_url(request, update_password_url)
-    }
     send_mandrill_mail(
-        'password_reset_instructions',
+        'change_password',
         'Reset Your MHacks Password',
         user.email,
-        email_vars
+        email_vars={
+            'update_password_url': _get_absolute_url(request, update_password_url)
+        }
     )
 
 
@@ -142,8 +142,8 @@ def environment(**options):
     """
     env = Environment(**options)
     env.globals.update({
-       'static': staticfiles_storage.url,
-       'url_for': reverse,
+        'static': staticfiles_storage.url,
+        'url_for': reverse,
     })
     from django.utils.text import slugify
     env.filters['slugify'] = slugify
@@ -158,5 +158,5 @@ def validate_url(data, query):
     :param query: string to search within the url
     :return:
     """
-    if query not in data:
+    if data and query not in data:
         raise forms.ValidationError('Please enter a valid {} url'.format(query))

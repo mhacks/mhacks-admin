@@ -1,5 +1,5 @@
 p {
-    font-family: 'Source Sans Pro';
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
     font-weight: 200;
     width: 100%;
@@ -44,14 +44,15 @@ p {
     border-radius: 0px;
     background-color: #fff;
     max-width: 100%;
-    overflow: ellipsis;
-    min-width: 270px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .select_style select
 {
     -webkit-appearance: none;
-    appearance:none;
+    appearance: none;
     width:120%;
     background:none;
     background:transparent;
@@ -59,9 +60,9 @@ p {
     outline:1px black;
     cursor:pointer;
     padding:7px 10px;
-    max-width: 100%; 
     text-overflow: ellipsis;
-    min-width: 270px
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .addMargin{

@@ -2,33 +2,6 @@
 
 {% block headers %}
     <link rel="stylesheet" media="all" href='{{ static('stylesheets/blackout.css') }}'/>
-    <script>
-        var csrfToken = getCookie('csrftoken');
-        function submitAction() {
-            if(!$("#emailBox")[0].checkValidity()) {
-                alert("Please enter a valid email.");
-                return false;
-            }
-            var data = {
-                "email": $("#emailBox").val()
-            };
-            $.post(".", data, function(response) {
-                console.log(response);
-            }, "json");
-            $("#changeOnSubmission").html("Great! We'll keep you updated.");
-            $("#emailBox, #SubmitButton").hide(150);
-        }
-        $(function() {
-            $("#emailBox").keydown(function(e) {
-                if(e.which == 13) {
-                    submitAction();
-                }
-            });
-            $.ajaxSetup({
-                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRFToken', csrfToken)}
-            });
-        });
-    </script>
 {% endblock %}
 
 {% block content %}
@@ -36,10 +9,19 @@
         <div class="background-title">
             <h1>MHacks 8</h1>
             <h3>Fall 2016</h3>
+            {% if error is defined %}
+                <div style="width: 40%; margin: auto;" class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endif %}
+            {% if success is defined %}
+                <div style="width: 40%; margin: auto;" class="alert alert-success" role="alert">Thank you! We'll be in contact soon.</div>
+            {% endif %}
             <p id="changeOnSubmission">Sign up for updates:</p>
             <div id="email">
-                <input id="emailBox" name="email" type="email" placeholder="your@email.com" onfocus="this.placeholder= ''" onblur="this.placeholder = 'your@email.com'" required="">
-                <button id="SubmitButton" type="submit" class="btn" onclick="submitAction()">Submit</button>
+                <form method="post">
+                    {{ csrf_input }}
+                    <input id="emailBox" name="email" type="email" placeholder="your@email.com" onfocus="this.placeholder= ''" onblur="this.placeholders='your@email.com'" required="">
+                    <button id="SubmitButton" type="submit" class="btn">Submit</button>
+                </form>
             </div>
         </div>
     </div>

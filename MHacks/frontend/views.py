@@ -1,9 +1,9 @@
-import requests
+import mailchimp
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.core.urlresolvers import reverse
-from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed,
+from django.http import (HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
 from django.shortcuts import render, redirect
 from django.utils.encoding import force_bytes
@@ -15,18 +15,25 @@ from MHacks.decorator import anonymous_required
 from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
 from MHacks.models import Application
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, send_application_confirmation_email
-from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL, MAILCHIMP_INTEREST_LIST
+from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
+
+MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
 
 
-def blackout_page(request):
+def blackout(request):
     if request.method == 'POST':
-        # TODO: Test
         if 'email' not in request.POST:
             return HttpResponseBadRequest()
-        response = requests.post(MAILCHIMP_INTEREST_LIST,
-                                 json={'email_address': request.POST['email'], 'status': 'subscribed'},
-                                 headers={'Content-Type': 'application/json'}, auth=('user', MAILCHIMP_API_KEY))
-        return HttpResponse(status=response.status_code)
+        
+        email = request.POST.get("email")
+        list_id = "52259aef0d"
+        try:
+            MAILCHIMP_API.lists.subscribe(list_id, {'email': email}, double_optin=False)
+        except mailchimp.ListAlreadySubscribedError:
+            return render(request, 'blackout.html', {'error': 'Looks like you\'re already subscribed!'})
+        except:
+            return render(request, 'blackout.html', {'error': 'Looks like there\'s been an error registering you. Try again or email us at hackathon@umich.edu'})
+        return render(request, 'blackout.html', {'success': True})
     elif request.method == 'GET':
         return render(request, 'blackout.html', {})
     else:
@@ -35,6 +42,10 @@ def blackout_page(request):
 
 def index(request):
     return render(request, 'index.html')
+
+
+def thanks_registering(request):
+    return render(request, 'thanks_registering.html')
 
 
 @login_required()
@@ -48,20 +59,22 @@ def application(request):
         app = None
 
     if request.method == 'GET':
-        if app and app.submitted:
-            return redirect(reverse('mhacks-dashboard'))
-
-        form = ApplicationForm(instance=app)
+        form = ApplicationForm(instance=app, user=request.user)
     elif request.method == 'POST':
-        form = ApplicationForm(data=request.POST, files=request.FILES, instance=app)
+        form = ApplicationForm(data=request.POST, files=request.FILES, instance=app, user=request.user)
+
         if form.is_valid():
             # save application
             app = form.save(commit=False)
-            app.submitted = True
             app.user = request.user
+
+            if '_submit' in request.POST:
+                app.submitted = True
+                send_application_confirmation_email(request.user)
+
+            # save the app regardless
             app.save()
 
-            send_application_confirmation_email(request.user)  # send conf email
             return redirect(reverse('mhacks-dashboard'))
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
@@ -71,7 +84,7 @@ def application(request):
 
 
 # I just copied the code from apply, not sure if the mentorship form needs anything different -Nevin
-def applyMentor(request):
+def apply_mentor(request):
     if request.method == 'GET':
         return render(request, 'applyMentor.html', {})
         pass
@@ -139,6 +152,7 @@ def register(request):
             user.save()
             user_pk = urlsafe_base64_encode(force_bytes(user.pk))
             form = None
+            return redirect(reverse('mhacks-thanks-registering'))
     elif request.method == 'GET':
         form = RegisterForm()
     else:
@@ -174,7 +188,7 @@ def reset_password(request):
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
     if form:
         form.fields['email'].longest = True
-    return render(request, 'password_reset.html', {'form': form, 'type': reset_type})
+    return render(request, 'password_reset.html', context={'form': form, 'type': reset_type})
 
 
 @anonymous_required
