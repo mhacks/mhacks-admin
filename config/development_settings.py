@@ -40,8 +40,8 @@ EMAIL_HOST_USER = 'hackathon@umich.edu'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Remove this line from production
 EMAIL_HOST = 'localhost'
 
-MANDRILL_API_KEY = 'THIS IS A DUMMY API KEY'
-MAILCHIMP_API_KEY = 'THIS IS A DUMMY MAILCHIMP KEY'  # Use API KEY for MAILCHIMP on production
+MANDRILL_API_KEY = '00000000000000000000000000000000-us1'
+MAILCHIMP_API_KEY = '00000000000000000000000000000000-us1'  # Use API KEY for MAILCHIMP on production
 MAILCHIMP_INTEREST_LIST = 'https://us6.api.mailchimp.com/3.0/lists'  # Fill with actual list URL on production
 # ^ This is for the blackout interest link
 
