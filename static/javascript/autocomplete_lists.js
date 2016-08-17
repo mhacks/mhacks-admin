@@ -7781,6 +7781,19 @@ var COLLEGES = [
     'Yukon Beauty College Inc',
     'Z Hair Academy',
     'Zane State College',
+    'University of Toronto',
+    'McGill University',
+    'University of Western Ontario',
+    'University of British Columbia',
+    'Queen\'s University',
+    'Simon Fraser University',
+    'University of Waterloo',
+    'University of Alberta',
+    'McMaster University',
+    'Universite de Montreal (University of Montreal)',
+    'University of Ottawa',
+    'University of Victoria',
+    'University of Calgary'
 ];
 
 var MAJORS = [
