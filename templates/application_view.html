@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
 {% block headers %}
-    <script src="{{ static('javascript/packery.pkgd.min.js') }}" type="application/javascript"></script>
-    <script src="{{ static('javascript/main.js') }}" type="application/javascript"></script>
     <link rel="stylesheet" media="all" href="{{ static('stylesheets/application_view.css') }}">
     {% block form_headers %}
     {% endblock %}
@@ -14,12 +12,13 @@
         {% if results %}
         <h2>There are {{ results | length }} Matches found. Click <a href="{{url_for('mhacks-applicationSearch')}}">here</a> to run another search</h2>
         <table style="color:black;overflow-x:scroll;width:2000px;  " cellpadding="10">
-            <thead >
+            <thead>
                 <tr>
                     <th>score</th>
                     <th>name</th>
                     <th>email</th>
                     <th>has submitted?</th>
+                    <th>last updated</th>
                     <th>is international?</th>
                     <th>school</th>
                     <th>major</th>
@@ -62,6 +61,7 @@
                         <td>{{result.user.email}}</td>
 
                         <td>{{result.submitted}}</td>
+                        <td>{{result.last_updated.strftime('%Y-%m-%d %H:%M')}}</td>
                         <td>{{result.is_international}}</td>
                         <td>{{result.school}}</td>
                         <td>{{result.major}}</td>
