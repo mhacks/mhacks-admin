@@ -161,3 +161,18 @@ class ApplicationForm(forms.ModelForm):
             raise forms.ValidationError('Please enter your graduation date.')
 
         return data
+
+class ApplicationSearchForm(forms.Form):
+    #user related
+    first_name = forms.CharField(label='first name starts with', max_length=255)
+    last_name = forms.CharField(label='last Name starts with', max_length=255)
+    email = forms.CharField(label='Email', max_length=255)
+
+    #application
+    school = forms.CharField(label='school name', max_length=255)
+    major = forms.CharField(label='major', max_length=255)
+    gender = forms.CharField(label='gender', max_length=255)
+    is_minor = forms.BooleanField(label='are the applicants minor?')
+
+    limit = forms.CharField(label='limit', max_length=255)
+

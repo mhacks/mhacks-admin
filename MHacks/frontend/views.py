@@ -11,11 +11,12 @@ from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
-from MHacks.decorator import anonymous_required
-from MHacks.forms import RegisterForm, LoginForm, ApplicationForm
+from MHacks.decorator import anonymous_required, application_reader_required
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm
 from MHacks.models import Application
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, send_application_confirmation_email
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
+import datetime
 
 MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
 
@@ -228,6 +229,45 @@ def dashboard(request):
         return render(request, 'dashboard.html', {'groups': groups})
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
+@login_required
+@application_reader_required
+def application_search(request):
+    if request.method == 'GET':
+        form = ApplicationSearchForm()
+        context = {'form': form}
+        return render(request, 'application_search.html', context=context)
+    elif request.method == 'POST':
+        print(request.POST)
+        date = datetime.date(1998,10,07)
+        applications = Application.objects.all()
+        if request.POST.get('first_name'):
+            applications = applications.filter(user__first_name__istartswith=request.POST['first_name'])
+        if request.POST.get('last_name'):
+            applications = applications.filter(user__last_name__istartswith=request.POST['last_name'])
+        if request.POST.get('email'):
+            applications = applications.filter(user__email=request.POST['email'])
+        if request.POST.get('school'):
+            applications = applications.filter(school__icontains=request.POST['school'])
+        if request.POST.get('major'):
+            applications = applications.filter(major__icontains=request.POST['major'])
+        if request.POST.get('gender'):
+            applications = applications.filter(gender__icontains=request.POST['gender'])
+        if request.POST.get('is_minor'):
+            applications = applications.filter(birthday__lt=date)
+        if request.POST.get('limit'):
+            print("HERE!")
+            applications = applications if (int(request.POST['limit']) > len(applications)) else applications[:int(request.POST['limit'])]
+
+        context = {'results': applications}
+        return render(request, 'application_view.html', context=context)
+
+@login_required
+@application_reader_required
+def send_score(request):
+    print(request)
+    print(request.POST)
+    if request.POST.get('id') and request.POST.get('score'):
+        Application.objects.filter(id=request.POST['id']).update(score=request.POST['score'])
 
 def live(request):
     return HttpResponseNotAllowed(permitted_methods=[])

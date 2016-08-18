@@ -71,6 +71,15 @@ class MHacksUser(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.is_superuser
 
+    @property
+    def is_sponsor(self):
+        return self.groups.filter(name='sponsor').exists()
+
+    @property
+    def is_application_reader(self):
+        return self.groups.filter(name='application_reader').exists()
+
+
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.

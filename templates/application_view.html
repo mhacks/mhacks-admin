@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <script src="{{ static('javascript/packery.pkgd.min.js') }}" type="application/javascript"></script>
+    <script src="{{ static('javascript/main.js') }}" type="application/javascript"></script>
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/application_view.css') }}">
+    {% block form_headers %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+
+        {% include 'header.html' %}
+        {% if results %}
+        <h2>There are {{ results | length }} Matches found. Click <a href="{{url_for('mhacks-applicationSearch')}}">here</a> to run another search</h2>
+        <table style="color:black;overflow-x:scroll;width:2000px;  " cellpadding="10">
+            <thead >
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>email</th>
+                    <th>has submitted?</th>
+                    <th>is international?</th>
+                    <th>school</th>
+                    <th>major</th>
+                    <th>graduation date</th>
+                    <th>birthday</th>
+                    <th>gender</th>
+                    <th>race</th>
+                    <th>github</th>
+                    <th>devpost</th>
+                    <th>personal website</th>
+                    <th>resume</th>
+                    <th>number of hackathons</th>
+                    <th>cortexes</th>
+                    <th>passionate about</th>
+                    <th>coolest thing built</th>
+                    <th>other information</th>
+                    <th>need reinbursement?</th>
+                    <th>can pay?</th>
+                    <th>from city</th>
+                    <th>from state</th>
+                    <th>reimbursement</th>
+                    <th>want to mentor?</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>
+                            <form method="POST" action="{{ url_for('mhacks-sendscore')}}" target="_blank">
+                                {{ csrf_input }}
+                                <input type="text" name="id" value="{{result.id}}" disabled>
+                                score: <input type="text" name="score" value="{{result.score}}">
+                                <input type="submit" value="update">
+                            </form>
+
+                        </td>
+
+                        <td>{{result.user.first_name}} {{result.user.last_name}}</td>
+                        <td>{{result.user.email}}</td>
+
+                        <td>{{result.submitted}}</td>
+                        <td>{{result.is_international}}</td>
+                        <td>{{result.school}}</td>
+                        <td>{{result.major}}</td>
+                        <td>{{result.grad_date}}</td>
+                        <td>{{result.birthday}}</td>
+                        <td>{{result.gender}}</td>
+                        <td>{{result.race}}</td>
+                        <td>{{result.github}}</td>
+                        <td>{{result.devpost}}</td>
+                        <td>{{result.personal_website}}</td>
+                        <td>{{result.resume}}</td>
+                        <td>{{result.num_hackathons}}</td>
+                        <td>{{result.cortex}}</td>
+                        <td>{{result.passionate}}</td>
+                        <td>{{result.coolest_thing}}</td>
+                        <td>{{result.other_info}}</td>
+                        <td>{{result.needs_reimbursement}}</td>
+                        <td>{{result.can_pay}}</td>
+                        <td>{{result.from_city}}</td>
+                        <td>{{result.from_state}}</td>
+                        <td>{{result.reimbursement}}</td>
+                        <td>{{result.mentoring}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% for result in results %}
+
+        {% endfor %}
+
+    {% else %}
+        <h1>Sorry There is no result for your search. <a href="{{url_for('mhacks-applicationSearch')}}">Rerun the search</a></h1>
+    {% endif %}
+{% endblock %}

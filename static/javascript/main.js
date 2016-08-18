@@ -241,3 +241,21 @@ function anim_draw() {
 
     requestAnimationFrame(anim_draw);
 }
+
+function submit_score(id_in, score_in){
+
+
+    var data_in = {
+        id: id_in,
+        score: score_in
+    };
+
+
+    jQuery.ajax({
+        type: "POST",
+        url:"/send_score/",
+        data:data_in,
+        success: function(){
+            console.log("SUCCESS!");
+        }});
+}
