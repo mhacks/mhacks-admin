@@ -12,7 +12,7 @@
         <div style="text-align:center; padding-bottom:0;" class="section container">
             <h3>Looks like you're someone special ;)</h3>
             <h3>Head here to read applications:</h3>
-            <a href=""><button type="button">Read Apps</button></a> {# TODO: Fill URL #}
+            <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Apps</button></a> {# TODO: Fill URL #}
         </div>
     {% endif %}
     {% if request.user and request.user.groups.filter(name='sponsor').exists() %}
