@@ -16,7 +16,7 @@
         <table style="color:black;overflow-x:scroll;width:2000px;  " cellpadding="10">
             <thead >
                 <tr>
-                    <th>id</th>
+                    <th>score</th>
                     <th>name</th>
                     <th>email</th>
                     <th>has submitted?</th>
@@ -51,8 +51,8 @@
                         <td>
                             <form method="POST" action="{{ url_for('mhacks-sendscore')}}">
                                 {{ csrf_input }}
-                                <input type="text" name="id" value="{{result.id}}">
-                                score: <input type="text" name="score" value="{{result.score}}">
+                                <input type="hidden" name="id" value="{{result.id}}">
+                                <input type="text" name="score" value="{{result.score}}">
                                 <input type="submit" value="update">
                             </form>
 
