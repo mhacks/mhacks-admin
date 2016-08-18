@@ -174,5 +174,5 @@ class ApplicationSearchForm(forms.Form):
     gender = forms.CharField(label='gender', max_length=255)
     is_minor = forms.BooleanField(label='are the applicants minor?')
 
-    limit = forms.CharField(label='limit', max_length=255)
+    limit = forms.CharField(label='result number', max_length=255)
 

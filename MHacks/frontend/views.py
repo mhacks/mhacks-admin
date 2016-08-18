@@ -8,6 +8,7 @@ from django.http import (HttpResponseBadRequest, HttpResponseNotAllowed,
 from django.shortcuts import render, redirect
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, is_safe_url
+from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
@@ -236,38 +237,48 @@ def application_search(request):
         form = ApplicationSearchForm()
         context = {'form': form}
         return render(request, 'application_search.html', context=context)
-    elif request.method == 'POST':
-        print(request.POST)
+    return HttpResponseNotAllowed(permitted_methods=['GET'])
+
+
+@login_required
+@application_reader_required
+def application_review(request):
+    if request.method == 'GET':
         date = datetime.date(1998,10,07)
         applications = Application.objects.all()
-        if request.POST.get('first_name'):
-            applications = applications.filter(user__first_name__istartswith=request.POST['first_name'])
-        if request.POST.get('last_name'):
-            applications = applications.filter(user__last_name__istartswith=request.POST['last_name'])
-        if request.POST.get('email'):
-            applications = applications.filter(user__email=request.POST['email'])
-        if request.POST.get('school'):
-            applications = applications.filter(school__icontains=request.POST['school'])
-        if request.POST.get('major'):
-            applications = applications.filter(major__icontains=request.POST['major'])
-        if request.POST.get('gender'):
-            applications = applications.filter(gender__icontains=request.POST['gender'])
-        if request.POST.get('is_minor'):
+        if request.GET.get('first_name'):
+            applications = applications.filter(user__first_name__istartswith=request.GET['first_name'])
+        if request.GET.get('last_name'):
+            applications = applications.filter(user__last_name__istartswith=request.GET['last_name'])
+        if request.GET.get('email'):
+            applications = applications.filter(user__email=request.GET['email'])
+        if request.GET.get('school'):
+            applications = applications.filter(school__icontains=request.GET['school'])
+        if request.GET.get('major'):
+            applications = applications.filter(major__icontains=request.GET['major'])
+        if request.GET.get('gender'):
+            applications = applications.filter(gender__icontains=request.GET['gender'])
+        if request.GET.get('is_minor'):
             applications = applications.filter(birthday__lt=date)
-        if request.POST.get('limit'):
-            print("HERE!")
-            applications = applications if (int(request.POST['limit']) > len(applications)) else applications[:int(request.POST['limit'])]
+
+        #from the oldest applicants
+        applications = applications.order_by('-last_updated')
+
+        if request.GET.get('limit'):
+            applications = applications if (int(request.GET['limit']) > len(applications)) else applications[:int(request.GET['limit'])]
 
         context = {'results': applications}
         return render(request, 'application_view.html', context=context)
+    return HttpResponseNotAllowed(permitted_methods=['GET'])
+
 
 @login_required
 @application_reader_required
 def send_score(request):
-    print(request)
-    print(request.POST)
-    if request.POST.get('id') and request.POST.get('score'):
-        Application.objects.filter(id=request.POST['id']).update(score=request.POST['score'])
+    if request.method == 'POST':
+        if request.POST.get('id') and request.POST.get('score'):
+            Application.objects.filter(id=request.POST['id']).update(score=request.POST['score'])
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def live(request):
     return HttpResponseNotAllowed(permitted_methods=[])

@@ -28,5 +28,6 @@ urlpatterns = [
 
         # Application reading
     url(r'^application_search/$', application_search, name='mhacks-applicationSearch'),
+    url(r'^application_review/$', application_review, name='mhacks-applicationReview'),
     url(r'^send_score/$', send_score, name='mhacks-sendscore')
 ]

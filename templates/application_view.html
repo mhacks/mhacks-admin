@@ -49,9 +49,9 @@
                 {% for result in results %}
                     <tr>
                         <td>
-                            <form method="POST" action="{{ url_for('mhacks-sendscore')}}" target="_blank">
+                            <form method="POST" action="{{ url_for('mhacks-sendscore')}}">
                                 {{ csrf_input }}
-                                <input type="text" name="id" value="{{result.id}}" disabled>
+                                <input type="text" name="id" value="{{result.id}}">
                                 score: <input type="text" name="score" value="{{result.score}}">
                                 <input type="submit" value="update">
                             </form>
