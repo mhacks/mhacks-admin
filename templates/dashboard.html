@@ -13,26 +13,23 @@
     <div class="body-info" id="main-message">
         {% if request.user and request.user.groups.filter(name='application_reader').exists() %}
             <h2>Looks like you're an application reader! <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Apps</button></a></h2>
+            <br>
+            <hr>
         {% endif %}
-
-        <br>
-        <hr>
 
         {% if request.user and request.user.groups.filter(name='sponsor').exists() %}
             <h2>Looks like you're a sponsor!</h2>
             {# TODO: Show sponsor related stuff #}
+            <br>
+            <hr>
         {% endif %}
-
-        <br>
-        <hr>
 
         {% if request.user and request.user.groups.filter(name='stats_team').exists() %}
             <h2>Looks like you're on the stats team!</h2>
             {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
+            <br>
+            <hr>
         {% endif %}
-
-        <br>
-        <hr>
 
         {% if request.user and request.user.groups.filter(name='hacker').exists() %}
             {% if request.user.application and request.user.application.submitted %}
@@ -40,11 +37,11 @@
             {% else %}
                 <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>
             {% endif %}
+
+            <br>
+            <hr>
         {% endif %}
     </div>
-
-    <br>
-    <hr>
 
     <div class="body-info" id="apply-instructions">
         <h2>Here’s how it works:</h2>
