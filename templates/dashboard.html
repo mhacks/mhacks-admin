@@ -8,21 +8,32 @@
 {% block pagetitle %}MHacks Dashboard{% endblock %}
 
 {% block basic_page_content %}
-    {% if request.user and request.user.groups.filter(name='application_reader').exists() %}
-        <div style="text-align:center; padding-bottom:0;" class="section container">
-            <h3>Looks like you're someone special ;)</h3>
-            <h3>Head here to read applications:</h3>
-            <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Apps</button></a> {# TODO: Fill URL #}
-        </div>
-    {% endif %}
-    {% if request.user and request.user.groups.filter(name='sponsor').exists() %}
-        {# TODO: Show sponsor related information here #}
-    {% endif %}
-    {% if request.user and request.user.groups.filter(name='stats_team').exists() %}
-        {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
-    {% endif %}
     <br>
+
     <div class="body-info" id="main-message">
+        {% if request.user and request.user.groups.filter(name='application_reader').exists() %}
+            <h2>Looks like you're an application reader! <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Apps</button></a></h2>
+        {% endif %}
+
+        <br>
+        <hr>
+
+        {% if request.user and request.user.groups.filter(name='sponsor').exists() %}
+            <h2>Looks like you're a sponsor!</h2>
+            {# TODO: Show sponsor related stuff #}
+        {% endif %}
+
+        <br>
+        <hr>
+
+        {% if request.user and request.user.groups.filter(name='stats_team').exists() %}
+            <h2>Looks like you're on the stats team!</h2>
+            {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
+        {% endif %}
+
+        <br>
+        <hr>
+
         {% if request.user and request.user.groups.filter(name='hacker').exists() %}
             {% if request.user.application and request.user.application.submitted %}
                 <h2>Your application has been submitted. We look forward to reading it!</h2>
@@ -31,7 +42,10 @@
             {% endif %}
         {% endif %}
     </div>
+
     <br>
+    <hr>
+
     <div class="body-info" id="apply-instructions">
         <h2>Here’s how it works:</h2>
         <p>When you’re ready, hit the apply button and fill out an application. Our decisions are released on a weekly basis, so if you submit an application by Friday at 11:59pm, you will receive a decision on Monday.</p>

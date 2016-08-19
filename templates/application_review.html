@@ -10,7 +10,7 @@
 
         {% include 'header.html' %}
         {% if results %}
-        <h2>There are {{ results | length }} Matches found. Click <a href="{{ url_for('mhacks-applicationSearch') }}">here</a> to run another search</h2>
+        <h1>There are {{ results | length }} Matches found. Click <a href="{{ url_for('mhacks-applicationSearch') }}">here</a> to run another search</h1>
         <div >
             <table class="table table-striped" style="color:black;overflow-x:scroll;">
             <thead>
