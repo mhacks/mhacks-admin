@@ -245,19 +245,25 @@ def application_search(request):
 def application_review(request):
     if request.method == 'GET':
         date = datetime.date(1998,10,07)
-        applications = Application.objects.all()
-        if request.GET.get('first_name'):
-            applications = applications.filter(user__first_name__istartswith=request.GET['first_name'])
-        if request.GET.get('last_name'):
-            applications = applications.filter(user__last_name__istartswith=request.GET['last_name'])
-        if request.GET.get('email'):
-            applications = applications.filter(user__email=request.GET['email'])
-        if request.GET.get('school'):
-            applications = applications.filter(school__icontains=request.GET['school'])
-        if request.GET.get('major'):
-            applications = applications.filter(major__icontains=request.GET['major'])
-        if request.GET.get('gender'):
-            applications = applications.filter(gender__icontains=request.GET['gender'])
+
+        search_dict = {};
+
+        search_keys = {
+            'first_name' : ['user__first_name','istartswith'],
+            'last_name'  : ['user__last_name','istartswith'],
+            'email'      : ['user__email','iexact'],
+            'school'     : ['school','icontains'],
+            'major'      : ['major','icontains'],
+            'gender'     : ['gender','icontains']
+        }
+
+        for key in search_keys:
+            if request.GET.get(key):
+                condition = "{0}__{1}".format(search_keys[key][0],search_keys[key][1])
+                search_dict[condition] = request.GET[key]
+
+        applications = Application.objects.filter(**search_dict)
+
         if request.GET.get('is_minor'):
             applications = applications.filter(birthday__lt=date)
 

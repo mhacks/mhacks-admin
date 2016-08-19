@@ -11,43 +11,44 @@
         {% include 'header.html' %}
         {% if results %}
         <h2>There are {{ results | length }} Matches found. Click <a href="{{url_for('mhacks-applicationSearch')}}">here</a> to run another search</h2>
-        <table style="color:black;overflow-x:scroll;width:2000px;  " cellpadding="10">
+        <div >
+            <table class="table table-striped" style="color:black;overflow-x:scroll;">
             <thead>
                 <tr>
                     <th>score</th>
                     <th>name</th>
                     <th>email</th>
-                    <th>has submitted?</th>
-                    <th>last updated</th>
-                    <th>is international?</th>
+                    <th>has_submitted?</th>
+                    <th>last_updated</th>
+                    <th>is_international?</th>
                     <th>school</th>
                     <th>major</th>
-                    <th>graduation date</th>
+                    <th>graduation_date</th>
                     <th>birthday</th>
                     <th>gender</th>
                     <th>race</th>
                     <th>github</th>
                     <th>devpost</th>
-                    <th>personal website</th>
-                    <th>resume</th>
-                    <th>number of hackathons</th>
-                    <th>cortexes</th>
-                    <th>passionate about</th>
-                    <th>coolest thing built</th>
-                    <th>other information</th>
-                    <th>need reinbursement?</th>
+                    <th>personal_website</th>
+                    <th>resume_link</th>
+                    <th>number_of_hackathons</th>
+                    <th>interested_cortexes</th>
+                    <th>what_are_you_passionate_about</th>
+                    <th>the_coolest_thing_built</th>
+                    <th>any_other_information</th>
+                    <th>need_reinbursement?</th>
                     <th>can pay?</th>
-                    <th>from city</th>
-                    <th>from state</th>
+                    <th>from_city</th>
+                    <th>from_state</th>
                     <th>reimbursement</th>
-                    <th>want to mentor?</th>
+                    <th>want_to_mentor?</th>
                 </tr>
 
             </thead>
             <tbody>
                 {% for result in results %}
                     <tr>
-                        <td>
+                        <td class="col-md-1">
                             <form method="POST" action="{{ url_for('mhacks-sendscore')}}">
                                 {{ csrf_input }}
                                 <input type="hidden" name="id" value="{{result.id}}">
@@ -58,10 +59,10 @@
                         </td>
 
                         <td>{{result.user.first_name}} {{result.user.last_name}}</td>
-                        <td>{{result.user.email}}</td>
+                        <td >{{result.user.email}}</td>
 
-                        <td>{{result.submitted}}</td>
-                        <td>{{result.last_updated.strftime('%Y-%m-%d %H:%M')}}</td>
+                        <td >{{result.submitted}}</td>
+                        <td >{{result.last_updated.strftime('%Y-%m-%d %H:%M')}}</td>
                         <td>{{result.is_international}}</td>
                         <td>{{result.school}}</td>
                         <td>{{result.major}}</td>
@@ -88,6 +89,8 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
+
         {% for result in results %}
 
         {% endfor %}

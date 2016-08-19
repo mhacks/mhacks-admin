@@ -42,9 +42,12 @@ h2 {
     margin-top: 30px;
 }
 
-thead > tr > th{
+.table > thead > tr > th{
     text-align: center;
+    min-width: 200px;
+    padding: 10px 50px 10px 50px;
 }
+
 
 input[type=text]{
     margin-bottom: 10px;
@@ -69,35 +72,7 @@ html button, input[type=submit] {
     padding-bottom: 10px;
 }
 
-table {
-}
 
-table > thead tr:first-child th:first-child {
-    border-radius: 0.6em 0 0 0;
-}
-
-table > thead tr:first-child th:last-child {
-    border-radius: 0 0.6em 0 0;
-}
-
-table > tbody tr:last-child td:first-child {
-    border-radius: 0 0 0 0.6em;
-}
-
-tbody > tr:last-child td:last-child {
-    border-radius: 0 0 0.6em 0;
-}
-
-table, th, td {
-    border: 1px solid black;
-}
-th{
-    padding: 10px 10px 10px 10px;
-}
-
-td{
-    padding: 10px 5px 10px 10px;
-}
 .header-form{
     position: static;
 }
