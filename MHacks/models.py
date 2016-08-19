@@ -79,7 +79,6 @@ class MHacksUser(AbstractBaseUser, PermissionsMixin):
     def is_application_reader(self):
         return self.groups.filter(name='application_reader').exists()
 
-
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.
@@ -179,11 +178,13 @@ class Application(Any):
     resume = models.FileField(max_length=(10 * 1024 * 1024))  # 10 MB max file size
 
     # Experience
-    num_hackathons = models.IntegerField(default=0, validators=[MinValueValidator(limit_value=0, message='You went to negative hackathons? Weird...')])
+    num_hackathons = models.IntegerField(default=0, validators=[
+        MinValueValidator(limit_value=0, message='You went to negative hackathons? Weird...')])
     mentoring = models.BooleanField(default=False)
 
     # Interests
-    cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True), size=len(TECH_OPTIONS))
+    cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True),
+                        size=len(TECH_OPTIONS))
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()

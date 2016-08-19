@@ -10,38 +10,38 @@
 
         {% include 'header.html' %}
         {% if results %}
-        <h2>There are {{ results | length }} Matches found. Click <a href="{{url_for('mhacks-applicationSearch')}}">here</a> to run another search</h2>
+        <h2>There are {{ results | length }} Matches found. Click <a href="{{ url_for('mhacks-applicationSearch') }}">here</a> to run another search</h2>
         <div >
             <table class="table table-striped" style="color:black;overflow-x:scroll;">
             <thead>
                 <tr>
-                    <th>score</th>
-                    <th>name</th>
-                    <th>email</th>
-                    <th>has_submitted?</th>
-                    <th>last_updated</th>
-                    <th>is_international?</th>
-                    <th>school</th>
-                    <th>major</th>
-                    <th>graduation_date</th>
-                    <th>birthday</th>
-                    <th>gender</th>
-                    <th>race</th>
-                    <th>github</th>
-                    <th>devpost</th>
-                    <th>personal_website</th>
-                    <th>resume_link</th>
-                    <th>number_of_hackathons</th>
-                    <th>interested_cortexes</th>
-                    <th>what_are_you_passionate_about</th>
-                    <th>the_coolest_thing_built</th>
-                    <th>any_other_information</th>
-                    <th>need_reinbursement?</th>
-                    <th>can pay?</th>
-                    <th>from_city</th>
-                    <th>from_state</th>
-                    <th>reimbursement</th>
-                    <th>want_to_mentor?</th>
+                    <th>Score</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Submitted</th>
+                    <th>Last updated</th>
+                    <th>International</th>
+                    <th>School</th>
+                    <th>Major</th>
+                    <th>Graduation date</th>
+                    <th>Birthday</th>
+                    <th>Gender</th>
+                    <th>Race</th>
+                    <th>GitHub</th>
+                    <th>Devpost</th>
+                    <th>Personal Website</th>
+                    <th>Resume</th>
+                    <th>Hackathons attended</th>
+                    <th>Interests</th>
+                    <th>Tell us about a project that you worked on and why you're proud of it.</th>
+                    <th>What do you hope to take away from MHacks 8?</th>
+                    <th>Anything else?</th>
+                    <th>Needs reimbursement</th>
+                    <th>Can pay</th>
+                    <th>City</th>
+                    <th>State/Country</th>
+                    <th>Reimbursement</th>
+                    <th>Mentor</th>
                 </tr>
 
             </thead>

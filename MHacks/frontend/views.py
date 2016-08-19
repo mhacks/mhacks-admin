@@ -15,7 +15,8 @@ from rest_framework.authtoken.models import Token
 from MHacks.decorator import anonymous_required, application_reader_required
 from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm
 from MHacks.models import Application
-from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, send_application_confirmation_email
+from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
+    send_application_confirmation_email
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
 import datetime
 
@@ -26,7 +27,7 @@ def blackout(request):
     if request.method == 'POST':
         if 'email' not in request.POST:
             return HttpResponseBadRequest()
-        
+
         email = request.POST.get("email")
         list_id = "52259aef0d"
         try:
@@ -34,7 +35,8 @@ def blackout(request):
         except mailchimp.ListAlreadySubscribedError:
             return render(request, 'blackout.html', {'error': 'Looks like you\'re already subscribed!'})
         except:
-            return render(request, 'blackout.html', {'error': 'Looks like there\'s been an error registering you. Try again or email us at hackathon@umich.edu'})
+            return render(request, 'blackout.html', {
+                'error': 'Looks like there\'s been an error registering you. Try again or email us at hackathon@umich.edu'})
         return render(request, 'blackout.html', {'success': True})
     elif request.method == 'GET':
         return render(request, 'blackout.html', {})
@@ -230,6 +232,7 @@ def dashboard(request):
         return render(request, 'dashboard.html', {'groups': groups})
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
+
 @login_required
 @application_reader_required
 def application_search(request):
@@ -244,22 +247,22 @@ def application_search(request):
 @application_reader_required
 def application_review(request):
     if request.method == 'GET':
-        date = datetime.date(1998,10,07)
+        date = datetime.date(1998, 10, 07)
 
-        search_dict = {};
+        search_dict = {}
 
         search_keys = {
-            'first_name' : ['user__first_name','istartswith'],
-            'last_name'  : ['user__last_name','istartswith'],
-            'email'      : ['user__email','iexact'],
-            'school'     : ['school','icontains'],
-            'major'      : ['major','icontains'],
-            'gender'     : ['gender','icontains']
+            'first_name': ['user__first_name', 'istartswith'],
+            'last_name': ['user__last_name', 'istartswith'],
+            'email': ['user__email', 'iexact'],
+            'school': ['school', 'icontains'],
+            'major': ['major', 'icontains'],
+            'gender': ['gender', 'icontains']
         }
 
         for key in search_keys:
             if request.GET.get(key):
-                condition = "{0}__{1}".format(search_keys[key][0],search_keys[key][1])
+                condition = "{0}__{1}".format(search_keys[key][0], search_keys[key][1])
                 search_dict[condition] = request.GET[key]
 
         applications = Application.objects.filter(**search_dict)
@@ -267,14 +270,15 @@ def application_review(request):
         if request.GET.get('is_minor'):
             applications = applications.filter(birthday__lt=date)
 
-        #from the oldest applicants
+        # from the oldest applicants
         applications = applications.order_by('-last_updated')
 
         if request.GET.get('limit'):
-            applications = applications if (int(request.GET['limit']) > len(applications)) else applications[:int(request.GET['limit'])]
+            applications = applications if (int(request.GET['limit']) > len(applications)) else applications[:int(
+                request.GET['limit'])]
 
         context = {'results': applications}
-        return render(request, 'application_view.html', context=context)
+        return render(request, 'application_review.html', context=context)
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
 
@@ -285,6 +289,7 @@ def send_score(request):
         if request.POST.get('id') and request.POST.get('score'):
             Application.objects.filter(id=request.POST['id']).update(score=request.POST['score'])
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 def live(request):
     return HttpResponseNotAllowed(permitted_methods=[])
