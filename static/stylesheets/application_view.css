@@ -1,0 +1,86 @@
+/*
+THIS FILE IS GOING TO BE USED ACROSS ALL FORMS ON MHACKS.
+PLEASE KEEP THIS AS GENERAL AS POSSIBLE. IF YOU WANT TO
+ADD STYLING TO ONE FORM, PLEASE MAKE A NEW CSS FILE, AND ONLY
+INCLUDE THAT FILE ON YOUR SPECIFIC PAGE. THANK YOU.
+*/
+
+body {
+    font-family: 'Source Sans Pro';
+    background-color: #ffffff;
+    margin: 0;
+    overflow-x: scroll;
+    overflow-y: auto;
+    font-size: 12pt;
+}
+
+
+ul {
+    list-style-type: none;
+}
+
+p {
+    font-family: 'Source Sans Pro';
+    font-size: 12pt;
+    font-weight: 200;
+    width: 100%;
+}
+
+.header-form{
+    position: static;
+}
+
+.title-form h3 {
+    color: rgba(0, 169, 194, 1);
+    font-size: 35px;
+}
+
+.body-form {
+    margin-top: 30px;
+}
+
+.table > thead > tr > th{
+    text-align: center;
+    min-width: 200px;
+    padding: 10px 50px 10px 50px;
+}
+
+
+input[type=text]{
+    margin-bottom: 10px;
+}
+
+form{
+    text-align: center;
+}
+
+html button, input[type=submit] {
+    background: rgba(0, 169, 194, 1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.23), 0 3px 6px rgba(0,0,0,0.15);
+    border-radius: 5px;
+    -webkit-transition: .4s;
+    transition: .4s;
+    font-size:  14px;
+    color: white;
+    border: 0px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+.header-form{
+    position: static;
+}
+
+
+.body-form {
+    margin-top: 30px;
+}
+
+
+.logo{
+    display: block;
+    width: 70%;
+}
