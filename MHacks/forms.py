@@ -85,10 +85,10 @@ class ApplicationForm(forms.ModelForm):
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
-            for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city', 'from_state']:
+            for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city',
+                        'from_state']:
                 del self.fields[key]
                 self.fields['cortex'].short = False
-
 
     class Meta:
         from application_lists import TECH_OPTIONS
@@ -124,13 +124,16 @@ class ApplicationForm(forms.ModelForm):
             "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'id': 'graduation_date'}),
             'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
             'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'}),
-            'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md', 'id': 'school-autocomplete'}),
-            'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'class': 'form-control input-md', 'id': 'major-autocomplete'}),
+            'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md',
+                                             'id': 'school-autocomplete'}),
+            'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'class': 'form-control input-md',
+                                            'id': 'major-autocomplete'}),
             'gender': forms.TextInput(attrs={'placeholder': 'Pro/Pro/Pro', 'id': 'gender-autocomplete'}),
             'race': forms.TextInput(attrs={'placeholder': 'Hacker', 'id': 'race-autocomplete'}),
             'github': forms.TextInput(attrs={'placeholder': 'GitHub', 'class': 'form-control input-md'}),
             'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
-            'personal_website': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
+            'personal_website': forms.TextInput(
+                attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
@@ -162,10 +165,11 @@ class ApplicationForm(forms.ModelForm):
 
         return data
 
+
 class ApplicationSearchForm(forms.Form):
-    #user related
-    first_name = forms.CharField(label='first name starts with', max_length=255)
-    last_name = forms.CharField(label='last Name starts with', max_length=255)
+    # user related
+    first_name = forms.CharField(label='First name', max_length=255)
+    last_name = forms.CharField(label='Last name', max_length=255)
     email = forms.CharField(label='Email', max_length=255)
 
     #application

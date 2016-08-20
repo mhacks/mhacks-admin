@@ -29,10 +29,7 @@ p {
 .header-form{
     position: static;
 }
-h2 {
-    padding: 10px 0px 10px 0px;
-    color: rgba(0, 169, 194, 1);
-}
+
 .title-form h3 {
     color: rgba(0, 169, 194, 1);
     font-size: 35px;
