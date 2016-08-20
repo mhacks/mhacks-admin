@@ -5,7 +5,7 @@ from models import *
 
 @admin.register(MHacksUser)
 class UserAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ('first_name', 'last_name', 'email')
 
 
 @admin.register(Location)
@@ -15,12 +15,12 @@ class LocationAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ('name', 'info', 'location')
 
 
 @admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ('title', 'info', )
 
 
 @admin.register(Application)
