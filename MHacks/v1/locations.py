@@ -1,15 +1,6 @@
-from rest_framework.fields import CharField
-from rest_framework.serializers import ModelSerializer
 from MHacks.models import Location as LocationModel
-from serializers import GenericListCreateModel, GenericUpdateDestroyModel
-
-
-class LocationSerializer(ModelSerializer):
-    id = CharField(read_only=True)
-
-    class Meta:
-        model = LocationModel
-        fields = ('id', 'name', 'latitude', 'longitude')
+from MHacks.v1.serializers import LocationSerializer
+from MHacks.v1.util import GenericListCreateModel, GenericUpdateDestroyModel
 
 
 class Locations(GenericListCreateModel):

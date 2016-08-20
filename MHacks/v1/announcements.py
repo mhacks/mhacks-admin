@@ -1,16 +1,8 @@
 from django.utils import timezone
-from rest_framework.fields import CharField
+
 from MHacks.models import Announcement as AnnouncementModel
-from serializers import UnixEpochDateField, GenericListCreateModel, GenericUpdateDestroyModel, MHacksModelSerializer
-
-
-class AnnouncementSerializer(MHacksModelSerializer):
-    id = CharField(read_only=True)
-    broadcast_at = UnixEpochDateField()
-
-    class Meta:
-        model = AnnouncementModel
-        fields = ('id', 'title', 'info', 'broadcast_at', 'category', 'approved')
+from MHacks.v1.serializers import AnnouncementSerializer
+from MHacks.v1.util import GenericListCreateModel, GenericUpdateDestroyModel
 
 
 class Announcements(GenericListCreateModel):
