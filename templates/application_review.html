@@ -24,6 +24,10 @@
                     <th>Email</th>
                     <th>Submitted</th>
                     <th>Last updated</th>
+                    <th>Tell us about a project that you worked on and why you're proud of it.</th>
+                    <th>What do you hope to take away from MHacks 8?</th>
+                    <th>Anything else?</th>
+                    <th>Hackathons attended</th>
                     <th>International</th>
                     <th>School</th>
                     <th>Major</th>
@@ -35,11 +39,7 @@
                     <th>Devpost</th>
                     <th>Personal Website</th>
                     <th>Resume</th>
-                    <th>Hackathons attended</th>
                     <th>Interests</th>
-                    <th>Tell us about a project that you worked on and why you're proud of it.</th>
-                    <th>What do you hope to take away from MHacks 8?</th>
-                    <th>Anything else?</th>
                     <th>Needs reimbursement</th>
                     <th>Can pay</th>
                     <th>City</th>
@@ -60,6 +60,10 @@
                         <td >{{result.user.email}}</td>
                         <td >{{result.submitted}}</td>
                         <td >{{result.last_updated.strftime('%Y-%m-%d %H:%M')}}</td>
+                        <td>{{result.passionate}}</td>
+                        <td>{{result.coolest_thing}}</td>
+                        <td>{{result.other_info}}</td>
+                        <td>{{result.num_hackathons}}</td>
                         <td>{{result.is_international}}</td>
                         <td>{{result.school}}</td>
                         <td>{{result.major}}</td>
@@ -71,11 +75,7 @@
                         <td><a href="{{result.devpost}}">{{result.devpost}}</a></td>
                         <td><a href="{{result.personal_website}}">{{result.personal_website}}</a></td>
                         <td><a href="{{result.resume}}">{{result.resume}}</a></td>
-                        <td>{{result.num_hackathons}}</td>
                         <td>{{result.cortex}}</td>
-                        <td>{{result.passionate}}</td>
-                        <td>{{result.coolest_thing}}</td>
-                        <td>{{result.other_info}}</td>
                         <td>{{result.needs_reimbursement}}</td>
                         <td>{{result.can_pay}}</td>
                         <td>{{result.from_city}}</td>
