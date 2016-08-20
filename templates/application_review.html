@@ -8,12 +8,16 @@
 
 {% block content %}
 
-        {% include 'header.html' %}
-        {% if results %}
-        <h1>There are {{ results | length }} Matches found. Click <a href="{{ url_for('mhacks-applicationSearch') }}">here</a> to run another search</h1>
-        <div >
-            <table class="table table-striped" style="color:black;overflow-x:scroll;">
-            <thead>
+    {% include 'header.html' %}
+    {% if results %}
+        <h2 style="color: black; padding: 10px">There are {{ results | length }} Matches found. Click <a href="{{ url_for('mhacks-applicationSearch') }}">here</a> to run another search</h2>
+
+        <form method="POST" action="{{ url_for('mhacks-sendscore') }}">
+            {{ csrf_input }}
+            <input id="update-all-button" type="submit" value="Update all">
+
+            <table class="table table-striped" style="color:black; overflow-x:scroll; column-width: fit-content">
+                <thead>
                 <tr>
                     <th>Score</th>
                     <th>Name</th>
@@ -43,24 +47,17 @@
                     <th>Reimbursement</th>
                     <th>Mentor</th>
                 </tr>
+                </thead>
 
-            </thead>
-            <tbody>
+                <tbody>
                 {% for result in results | sort(attribute='user.first_name') %}
                     <tr>
                         <td class="col-md-1">
-                            <form method="POST" action="{{ url_for('mhacks-sendscore')}}">
-                                {{ csrf_input }}
-                                <input type="hidden" name="id" value="{{result.id}}">
-                                <input type="text" name="score" value="{{result.score}}">
-                                <input type="submit" value="Update">
-                            </form>
-
+                            <input type="hidden" name="id[]" value="{{result.id}}">
+                            <input type="text" name="score[]" value="{{result.score}}">
                         </td>
-
                         <td>{{result.user.first_name}} {{result.user.last_name}}</td>
                         <td >{{result.user.email}}</td>
-
                         <td >{{result.submitted}}</td>
                         <td >{{result.last_updated.strftime('%Y-%m-%d %H:%M')}}</td>
                         <td>{{result.is_international}}</td>
@@ -70,10 +67,10 @@
                         <td>{{result.birthday}}</td>
                         <td>{{result.gender}}</td>
                         <td>{{result.race}}</td>
-                        <td>{{result.github}}</td>
-                        <td>{{result.devpost}}</td>
-                        <td>{{result.personal_website}}</td>
-                        <td>{{result.resume}}</td>
+                        <td><a href="{{result.github}}">{{result.github}}</a></td>
+                        <td><a href="{{result.devpost}}">{{result.devpost}}</a></td>
+                        <td><a href="{{result.personal_website}}">{{result.personal_website}}</a></td>
+                        <td><a href="{{result.resume}}">{{result.resume}}</a></td>
                         <td>{{result.num_hackathons}}</td>
                         <td>{{result.cortex}}</td>
                         <td>{{result.passionate}}</td>
@@ -87,12 +84,11 @@
                         <td>{{result.mentoring}}</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
-        </div>
+                </tbody>
+            </table>
+        </form>
 
         {% for result in results %}
-
         {% endfor %}
 
     {% else %}

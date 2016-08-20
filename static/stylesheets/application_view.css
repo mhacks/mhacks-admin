@@ -6,7 +6,7 @@ INCLUDE THAT FILE ON YOUR SPECIFIC PAGE. THANK YOU.
 */
 
 body {
-    font-family: 'Source Sans Pro';
+    font-family: 'Source Sans Pro', sans-serif;
     background-color: #ffffff;
     margin: 0;
     overflow-x: scroll;
@@ -14,13 +14,12 @@ body {
     font-size: 12pt;
 }
 
-
 ul {
     list-style-type: none;
 }
 
 p {
-    font-family: 'Source Sans Pro';
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
     font-weight: 200;
     width: 100%;
@@ -32,19 +31,33 @@ p {
 
 .title-form h3 {
     color: rgba(0, 169, 194, 1);
-    font-size: 35px;
 }
 
 .body-form {
     margin-top: 30px;
 }
 
-.table > thead > tr > th{
-    text-align: center;
-    min-width: 200px;
-    padding: 10px 50px 10px 50px;
+thead, tbody { display: block; }
+
+tbody {
+    height: 650px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
 }
 
+.table > thead > tr > th{
+    text-align: center;
+    min-width: 300px;
+    max-width: 300px;
+    padding: 0 10px 0 10px;
+}
+
+td{
+    text-align: center;
+    min-width: 300px;
+    max-width: 300px;
+    padding: 0 10px 0 10px;
+}
 
 input[type=text]{
     margin-bottom: 10px;
@@ -60,13 +73,10 @@ html button, input[type=submit] {
     border-radius: 5px;
     -webkit-transition: .4s;
     transition: .4s;
-    font-size:  14px;
+    font-size: 14px;
     color: white;
-    border: 0px;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    border: 0;
+    padding: 10px 25px;
 }
 
 
@@ -83,4 +93,8 @@ html button, input[type=submit] {
 .logo{
     display: block;
     width: 70%;
+}
+
+#update-all-button {
+    text-align: right;
 }

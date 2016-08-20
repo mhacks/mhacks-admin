@@ -167,15 +167,17 @@ class ApplicationForm(forms.ModelForm):
 
 
 class ApplicationSearchForm(forms.Form):
-    # user related
+    # User related
     first_name = forms.CharField(label='First name', max_length=255)
     last_name = forms.CharField(label='Last name', max_length=255)
     email = forms.CharField(label='Email', max_length=255)
 
-    # application
-    school = forms.CharField(label='School', max_length=255)
+    # Application
+    school = forms.CharField(label='School/College', max_length=255)
     major = forms.CharField(label='Major', max_length=255)
-    gender = forms.CharField(label='Gender Pronouns', max_length=255)
-    is_minor = forms.BooleanField(label='Minor')
+    gender = forms.CharField(label='Gender pronouns', max_length=255)
+    is_minor = forms.BooleanField(label='Minors')
+    is_veteran = forms.BooleanField(label='Veteran hackers')
+    is_non_UM = forms.BooleanField(label='Non-UMich hackers')
 
-    limit = forms.CharField(label='Limit of results', max_length=255)
+    limit = forms.CharField(label='Number of results', max_length=255)
