@@ -268,6 +268,9 @@ def application_review(request):
 
         applications = Application.objects.filter(**search_dict)
 
+        # submitted applicantions
+        applications = applications.filter(submitted=True)
+
         if request.GET.get('is_veteran'):
             applications = applications.filter(num_hackathons__gt=1)
 
