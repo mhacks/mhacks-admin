@@ -46,7 +46,7 @@
 
             </thead>
             <tbody>
-                {% for result in results %}
+                {% for result in results | sort(attribute='user.first_name') %}
                     <tr>
                         <td class="col-md-1">
                             <form method="POST" action="{{ url_for('mhacks-sendscore')}}">
