@@ -274,6 +274,9 @@ def application_review(request):
         if request.GET.get('is_veteran'):
             applications = applications.filter(num_hackathons__gt=1)
 
+        if request.GET.get('is_beginner'):
+            applications = applications.filter(num_hackathons__lt=2)
+
         if request.GET.get('is_non_UM'):
             applications = applications.filter(~Q(user__email__icontains='umich.edu'))
 
