@@ -5,7 +5,7 @@ from pytz import utc, timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from MHacks.v1.util import now_as_utc_epoch, parse_date_last_updated, to_utc_epoch
+from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated, to_utc_epoch
 
 
 @api_view(http_method_names=['GET'])

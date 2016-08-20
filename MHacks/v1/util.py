@@ -1,6 +1,8 @@
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 
+from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated
+
 
 class GenericListCreateModel(CreateAPIView, ListAPIView):
     permission_classes = (DjangoModelPermissions,)
@@ -40,32 +42,3 @@ class GenericListCreateModel(CreateAPIView, ListAPIView):
 class GenericUpdateDestroyModel(RetrieveUpdateDestroyAPIView):
     permission_classes = (DjangoModelPermissions,)
     lookup_field = 'id'
-
-
-def parse_date_last_updated(request):
-    date_last_updated_raw = request.query_params.get('since', None)
-    if date_last_updated_raw:
-        try:
-            from pytz import utc
-            from datetime import datetime
-
-            return datetime.utcfromtimestamp(float(date_last_updated_raw)).replace(tzinfo=utc)
-        except ValueError:
-            pass
-    return None
-
-
-def now_as_utc_epoch():
-    from django.utils.timezone import now
-
-    return to_utc_epoch(now())
-
-
-def to_utc_epoch(date_time):
-    from datetime import datetime
-
-    if isinstance(date_time, datetime):
-        from calendar import timegm
-
-        return timegm(date_time.timetuple())
-    return None
