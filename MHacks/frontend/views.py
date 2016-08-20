@@ -10,6 +10,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 from rest_framework.authtoken.models import Token
 
 from MHacks.decorator import anonymous_required, application_reader_required
@@ -264,6 +265,12 @@ def application_review(request):
 
         applications = Application.objects.filter(**search_dict)
 
+        if request.GET.get('is_veteran'):
+            applications = applications.filter(num_hackathons__gt=1)
+
+        if request.GET.get('is_non_UM'):
+            applications = applications.filter(~Q(user__email__icontains='umich.edu'))
+
         if request.GET.get('is_minor'):
             applications = applications.filter(birthday__lt=date)
 
@@ -282,8 +289,10 @@ def application_review(request):
 @application_reader_required
 def send_score(request):
     if request.method == 'POST':
-        if request.POST.get('id') and request.POST.get('score'):
-            Application.objects.filter(id=request.POST['id']).update(score=request.POST['score'])
+        id_list = request.POST.getlist('id[]')
+        score_list = request.POST.getlist('score[]')
+        for i in range(len(id_list)):
+            Application.objects.filter(id=id_list[i]).update(score=score_list[i])
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def live(request):

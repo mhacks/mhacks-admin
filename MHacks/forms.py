@@ -173,6 +173,8 @@ class ApplicationSearchForm(forms.Form):
     major = forms.CharField(label='major', max_length=255)
     gender = forms.CharField(label='gender', max_length=255)
     is_minor = forms.BooleanField(label='are the applicants minor?')
+    is_veteran = forms.BooleanField(label='are the applicants veteran hackers?')
+    is_non_UM = forms.BooleanField(label='are the hackers not from UM?')
 
     limit = forms.CharField(label='result number', max_length=255)
 
