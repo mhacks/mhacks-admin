@@ -1,10 +1,12 @@
 from django.views.decorators.csrf import csrf_exempt
+
+from push_notifications.models import APNSDevice, GCMDevice
 from rest_framework.response import Response
 from rest_framework.authtoken import views
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication
-from push_notifications.models import APNSDevice, GCMDevice
-from serializers import AuthSerializer
+
+from MHacks.v1.serializers import AuthSerializer
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):

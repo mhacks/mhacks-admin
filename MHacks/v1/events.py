@@ -1,20 +1,6 @@
-from rest_framework.fields import CharField, ChoiceField
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
-from MHacks.models import Event as EventModel, Location as LocationModel
-from serializers import UnixEpochDateField, GenericListCreateModel, GenericUpdateDestroyModel, DurationInSecondsField
-
-
-class EventSerializer(ModelSerializer):
-    id = CharField(read_only=True)
-    start = UnixEpochDateField()
-    locations = PrimaryKeyRelatedField(many=True, pk_field=CharField(),
-                                       queryset=LocationModel.objects.all().filter(deleted=False))
-    duration = DurationInSecondsField()
-    category = ChoiceField(choices=EventModel.CATEGORIES)
-
-    class Meta:
-        model = EventModel
-        fields = ('id', 'name', 'info', 'start', 'duration', 'locations', 'category', 'approved')
+from MHacks.models import Event as EventModel
+from MHacks.v1.serializers import EventSerializer
+from MHacks.v1.util import GenericListCreateModel, GenericUpdateDestroyModel
 
 
 class Events(GenericListCreateModel):
