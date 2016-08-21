@@ -160,7 +160,7 @@ $menuTrigger.click(function(){
 $(".faq-item .question").click(function(event){
     var q = $(event.target);
     q.toggleClass("open");
-    $(".faq-item .answer[data-qid='" + q.data("qid") + "']").slideToggle('medium');
+    $(".faq-item .answer[data-qid='" + q.data("qid") + "']").slideToggle(200);
 });
 
 function colorName(index){
