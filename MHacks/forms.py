@@ -176,9 +176,15 @@ class ApplicationSearchForm(forms.Form):
     school = forms.CharField(label='School/College', max_length=255)
     major = forms.CharField(label='Major', max_length=255)
     gender = forms.CharField(label='Gender pronouns', max_length=255)
+    city = forms.CharField(label='From City', max_length=255)
+    state = forms.CharField(label='From State', max_length=255)
+    score_min = forms.IntegerField(label='Score Starts at')
+    score_max = forms.IntegerField(label='Score Ends at')
     is_minor = forms.BooleanField(label='Minors')
     is_veteran = forms.BooleanField(label='Veteran hackers')
     is_beginner = forms.BooleanField(label='Beginner hackers')
     is_non_UM = forms.BooleanField(label='Non-UMich hackers')
+
+
 
     limit = forms.CharField(label='Number of results', max_length=255)
