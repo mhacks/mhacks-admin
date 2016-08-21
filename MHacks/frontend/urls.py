@@ -4,7 +4,6 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^$', index, name='mhacks-home'),
-    # url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home'),  # Redirect everything to root page
 
     # Authentication
     url(r'^register/$', register, name='mhacks-register'),
@@ -20,7 +19,7 @@ urlpatterns = [
 
     # Content
     url(r'^dashboard/$', dashboard, name='mhacks-dashboard'),
-    url(r'^live/$', live, name='mhacks-live'),
+    # url(r'^live/$', live, name='mhacks-live'),
     url(r'^apply/$', application, name='mhacks-apply'),
     url(r'^thanks_for_registering/$', thanks_registering, name='mhacks-thanks-registering'),
     url(r'^applyMentor/$', apply_mentor, name='mhacks-applyMentor'),
@@ -28,5 +27,8 @@ urlpatterns = [
     # Application reading
     url(r'^application_search/$', application_search, name='mhacks-applicationSearch'),
     url(r'^application_review/$', application_review, name='mhacks-applicationReview'),
-    url(r'^send_score/$', send_score, name='mhacks-sendscore')
+    url(r'^send_score/$', send_score, name='mhacks-sendscore'),
+
+    # Redirect all other endpoints to the homepage
+    url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home')
 ]
