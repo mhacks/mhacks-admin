@@ -258,7 +258,11 @@ def application_review(request):
             'email': ['user__email', 'iexact'],
             'school': ['school', 'icontains'],
             'major': ['major', 'icontains'],
-            'gender': ['gender', 'icontains']
+            'gender': ['gender', 'icontains'],
+            'city': ['from_city', 'icontains'],
+            'state': ['from_state', 'icontains'],
+            'score_min': ['score','gte'],
+            'score_max': ['score','lte'],
         }
 
         for key in search_keys:
