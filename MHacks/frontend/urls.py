@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^send_score/$', send_score, name='mhacks-sendscore'),
 
     # Redirect all other endpoints to the homepage
-    url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home')
+    url(r'^.*/$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home')
 ]
