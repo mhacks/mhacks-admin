@@ -255,12 +255,12 @@ p {
 }
 
 #logoM {
-    height: 74.2%;
+    height: 90px;
     margin: 0 auto;
 }
 
 #logoText {
-    height: 25.6%;
+    height: 30px;
     display: block;
     margin: 0 auto;
 }
