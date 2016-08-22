@@ -23,6 +23,6 @@ class AnnouncementAdmin(admin.ModelAdmin):
     search_fields = ['title', 'info']
 
 
-@admin.register(Application)
+@admin.register(Application, User)
 class ApplicationAdmin(admin.ModelAdmin):
-    search_fields = ['decision']
+    search_fields = ['user__first_name', 'user__last_name', 'user__email', 'decision']
