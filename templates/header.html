@@ -4,8 +4,10 @@
         <p>Detroit Masonic Temple</p>
     </div>
     <div id="logo">
-        <img id="logoM" src="{{ static('assets/logo-m.png') }}" alt="MHacks 8 Logo - M">
-        <img id="logoText" src="{{ static('assets/logo-text.png') }}" alt="MHacks 8 Logo - Hacks 8">
+        <a href="/">
+            <img id="logoM" src="{{ static('assets/logo-m.png') }}" alt="MHacks 8 Logo - M">
+            <img id="logoText" src="{{ static('assets/logo-text.png') }}" alt="MHacks 8 Logo - Hacks 8">
+        </a>
     </div>
     <div id="headerButtons">
         <form method="GET" action="{{ url_for('mhacks-apply') }}">
