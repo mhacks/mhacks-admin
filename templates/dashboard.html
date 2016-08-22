@@ -34,20 +34,18 @@
         {% if request.user and request.user.groups.filter(name='hacker').exists() %}
             {% if application %}
                 {% if application.decision == 'Accept' %}
-                    <div style="background-color: greenyellow;">
-                        <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/MHacksHackathon/">Facebook event page</a> and join the community!</p>
-                        <p>Registration isn’t open yet, but check back here on August 29th for the form, bus routes, and your Pre-Event Checklist :) 🎉</p>
+                    <h2>Application Status: <span style="background-color: lawngreen; padding: 3px; text">ACCEPTED</span></h2>
+                    <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/MHacksHackathon/">Facebook event page</a> and join the community!</p>
+                    <p>Registration isn’t open yet, but check back here on August 29th for the form, bus routes, and your Pre-Event Checklist :) 🎉</p>
 
-                        {% if application.reimbursement %}
-                            <p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to this guide for more details on traveling that weekend.</p>
-                            <p>We’ll see you there!</p>
-                            </div>
-                        {% endif %}
+                    {% if application.reimbursement %}
+                        <p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to <a href="https://goo.gl/wORx7K">this guide</a> for more details on traveling that weekend.</p>
+                        <p>We’ll see you there!</p>
+                    {% endif %}
                 {% elif application.decision == 'Waitlist' %}
-                    <div style="background-color: yellow;">
-                        <p>Thank you for applying to MHacks 8. Unfortunately, we can't extend you an invitation at the moment, but hang tight! If there’s a change in your decision, we’ll let you know.
-                    </div>
-                {% elif application.decision == 'Decline' %}
+                    <h2>Application Status: <span style="background-color: yellow; padding: 3px; text">WAITLIST</span></h2>
+                    <p>Thank you for applying to MHacks 8. Unfortunately, we can't extend you an invitation at the moment, but hang tight! If there’s a change in your decision, we’ll let you know.
+                        {% elif application.decision == 'Decline' %}
                     <div>
                         <h2>Your application has been submitted. We look forward to reading it!</h2>
                     </div>
@@ -62,9 +60,6 @@
                 <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>
             {% endif %}
         {% endif %}
-
-
-
     </div>
 
     <div class="body-info" id="apply-instructions">
