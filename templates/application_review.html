@@ -21,6 +21,7 @@
                 <tr>
                     <th>Score</th>
                     <th>Decision</th>
+                    <th>Reimbursement</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Submitted</th>
@@ -53,9 +54,9 @@
                 <tbody>
                 {% for result in results | sort(attribute='user.first_name') %}
                     <tr>
-                        <input type="hidden" name="id[]" value="{{result.id}}">
+                        <input type="hidden" name="id[]" value="{{ result.id }}">
                         <td class="col-md-1">
-                            <input type="text" name="score[]" value="{{result.score}}">
+                            <input type="text" name="score[]" value="{{ result.score }}">
                         </td>
                         <td class="col-md-1">
                             <select type="text" name="decision[]">
@@ -63,6 +64,9 @@
                                 <option value="Accept" {% if result.decision == 'Accept' %} selected {% endif %}>Accept</option>
                                 <option value="Waitlist" {% if result.decision == 'Waitlist' %} selected {% endif %}>Waitlist</option>
                             </select>
+                        </td>
+                        <td class="col-md-1">
+                            <input type="number" name="reimbursement[]" value="{{ result.reimbursement }}">
                         </td>
                         <td>{{result.user.first_name}} {{result.user.last_name}}</td>
                         <td >{{result.user.email}}</td>

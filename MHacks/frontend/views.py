@@ -230,7 +230,13 @@ def update_password(request, uid, token):
 def dashboard(request):
     if request.method == 'GET':
         from MHacks.globals import groups
-        return render(request, 'dashboard.html', {'groups': groups})
+
+        try:
+            app = Application.objects.get(user=request.user)
+        except Application.DoesNotExist:
+            app = None
+
+        return render(request, 'dashboard.html', {'groups': groups, 'application': app})
 
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
@@ -309,9 +315,16 @@ def update_applications(request):
         id_list = request.POST.getlist('id[]')
         score_list = request.POST.getlist('score[]')
         decision_list = request.POST.getlist('decision[]')
+        reimbursement_list = request.POST.getlist('reimbursement[]')
 
         for i in range(len(id_list)):
-            Application.objects.filter(id=id_list[i]).update(score=score_list[i], decision=decision_list[i])
+            # negative check
+            reimbursement_amount = float(reimbursement_list[i])
+            reimbursement_amount = reimbursement_amount if reimbursement_amount >= 0 else 0
+
+            Application.objects.filter(id=id_list[i]).update(score=score_list[i],
+                                                             decision=decision_list[i],
+                                                             reimbursement=reimbursement_amount)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

@@ -200,7 +200,7 @@ class Application(Any):
 
     # Private administrative use
     score = models.FloatField(default=0)
-    reimbursement = models.FloatField(default=0)
+    reimbursement = models.FloatField(default=0, validators=[MinValueValidator(limit_value=0.0)])
     decision = models.CharField(max_length=16, choices=zip(APPLICATION_DECISION, APPLICATION_DECISION),
                                 default='Decline')
 
