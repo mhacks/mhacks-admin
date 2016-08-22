@@ -156,7 +156,7 @@ class PushToken(models.Model):
 
 
 class Application(Any):
-    from application_lists import TECH_OPTIONS
+    from application_lists import TECH_OPTIONS, APPLICATION_DECISION
 
     # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
@@ -201,6 +201,8 @@ class Application(Any):
     # Private administrative use
     score = models.FloatField(default=0)
     reimbursement = models.FloatField(default=0)
+    decision = models.CharField(max_length=16, choices=zip(APPLICATION_DECISION, APPLICATION_DECISION),
+                                default='Decline')
 
     def __unicode__(self):
         return self.user.get_full_name() + '\'s Application'

@@ -95,7 +95,7 @@ class ApplicationForm(forms.ModelForm):
         model = Application
 
         # use all fields except for these
-        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted']
+        exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted', 'decision']
 
         labels = {
             'school': 'School or University',

@@ -231,6 +231,7 @@ def dashboard(request):
     if request.method == 'GET':
         from MHacks.globals import groups
         return render(request, 'dashboard.html', {'groups': groups})
+
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
 
@@ -241,6 +242,7 @@ def application_search(request):
         form = ApplicationSearchForm()
         context = {'form': form}
         return render(request, 'application_search.html', context=context)
+
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
 
@@ -272,7 +274,7 @@ def application_review(request):
 
         applications = Application.objects.filter(**search_dict)
 
-        # submitted applicantions
+        # submitted applications
         applications = applications.filter(submitted=True)
 
         if request.GET.get('is_veteran'):
@@ -296,17 +298,21 @@ def application_review(request):
 
         context = {'results': applications}
         return render(request, 'application_review.html', context=context)
+
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
 
 @login_required
 @application_reader_required
-def send_score(request):
+def update_applications(request):
     if request.method == 'POST':
         id_list = request.POST.getlist('id[]')
         score_list = request.POST.getlist('score[]')
+        decision_list = request.POST.getlist('decision[]')
+
         for i in range(len(id_list)):
-            Application.objects.filter(id=id_list[i]).update(score=score_list[i])
+            Application.objects.filter(id=id_list[i]).update(score=score_list[i], decision=decision_list[i])
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

@@ -4,3 +4,9 @@ TECH_OPTIONS = [('ios', 'iOS'),
                 ('vr', 'Virtual/Augmented Reality'),
                 ('game_dev', 'Game Development'),
                 ('hardware', 'Hardware')]
+
+APPLICATION_DECISION = [
+    'Accept',
+    'Waitlist',
+    'Decline'
+]

@@ -25,4 +25,4 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['decision']

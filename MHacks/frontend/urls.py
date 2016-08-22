@@ -27,7 +27,7 @@ urlpatterns = [
     # Application reading
     url(r'^application_search/$', application_search, name='mhacks-applicationSearch'),
     url(r'^application_review/$', application_review, name='mhacks-applicationReview'),
-    url(r'^send_score/$', send_score, name='mhacks-sendscore'),
+    url(r'^update_applications/$', update_applications, name='mhacks-updateApplication'),
 
     # Redirect all other endpoints to the homepage
     url(r'^.*/$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home')

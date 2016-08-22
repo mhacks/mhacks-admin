@@ -12,7 +12,7 @@
     {% if results %}
         <h2 style="color: black; padding: 10px">There are {{ results | length }} Matches found. Click <a href="{{ url_for('mhacks-applicationSearch') }}">here</a> to run another search</h2>
 
-        <form method="POST" action="{{ url_for('mhacks-sendscore') }}">
+        <form method="POST" action="{{ url_for('mhacks-updateApplication') }}">
             {{ csrf_input }}
             <input id="update-all-button" type="submit" value="Update all">
 
@@ -20,6 +20,7 @@
                 <thead>
                 <tr>
                     <th>Score</th>
+                    <th>Decision</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Submitted</th>
@@ -52,9 +53,16 @@
                 <tbody>
                 {% for result in results | sort(attribute='user.first_name') %}
                     <tr>
+                        <input type="hidden" name="id[]" value="{{result.id}}">
                         <td class="col-md-1">
-                            <input type="hidden" name="id[]" value="{{result.id}}">
                             <input type="text" name="score[]" value="{{result.score}}">
+                        </td>
+                        <td class="col-md-1">
+                            <select type="text" name="decision[]">
+                                <option value="Decline" {% if result.decision == 'Decline' %} selected {% endif %}>Decline</option>
+                                <option value="Accept" {% if result.decision == 'Accept' %} selected {% endif %}>Accept</option>
+                                <option value="Waitlist" {% if result.decision == 'Waitlist' %} selected {% endif %}>Waitlist</option>
+                            </select>
                         </td>
                         <td>{{result.user.first_name}} {{result.user.last_name}}</td>
                         <td >{{result.user.email}}</td>
