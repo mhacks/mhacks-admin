@@ -3,6 +3,7 @@ from django.contrib.auth import login as auth_login, logout as auth_logout, get_
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.http import (HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
 from django.shortcuts import render, redirect
@@ -331,3 +332,31 @@ def update_applications(request):
 
 def live(request):
     return HttpResponseNotAllowed(permitted_methods=[])
+
+
+@login_required()
+def run_python(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden()
+
+    apps = Application.objects.all()
+    a_no_r = apps.filter(decision='Accept', reimbursement=0)
+    w = apps.filter(decision='Waitlist')
+
+    emails = list()
+    for app in a_no_r:
+        emails.append(app.user.email)
+
+    with open('accepted_and_no_reimbursement.txt', 'w') as fo:
+        for email in emails:
+            fo.write(email + '\n')
+
+    emails = list()
+    for app in w:
+        emails.append(app.user.email)
+
+    with open('waitlisted.txt', 'w') as fo2:
+        for email in emails:
+            fo2.write(email + '\n')
+
+    return HttpResponse(content='Success', status=200)

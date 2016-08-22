@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'MHacks',
     'push_notifications',
     'crispy_forms',
+    'import_export'
 ]
 
 MIDDLEWARE_CLASSES = [

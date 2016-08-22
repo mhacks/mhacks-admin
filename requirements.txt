@@ -10,3 +10,4 @@ djangorestframework==3.3.3
 drfdocs==0.0.9
 django-crispy-forms==1.6.0
 django-push-notifications==1.4.1
+django-import-export==0.4.5
