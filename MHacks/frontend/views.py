@@ -343,20 +343,22 @@ def run_python(request):
     a_no_r = apps.filter(decision='Accept', reimbursement=0)
     w = apps.filter(decision='Waitlist')
 
-    emails = list()
+    users = list()
     for app in a_no_r:
-        emails.append(app.user.email)
+        users.append(app.user)
 
-    with open('accepted_and_no_reimbursement.txt', 'w') as fo:
-        for email in emails:
-            fo.write(email + '\n')
+    with open('accepted_and_no_reimbursement.csv', 'w') as fo:
+        fo.write('name, email\n')
+        for user in users:
+            fo.write('{}, {}\n'.format(user.get_full_name(), user.email))
 
-    emails = list()
+    users = list()
     for app in w:
-        emails.append(app.user.email)
+        users.append(app.user)
 
-    with open('waitlisted.txt', 'w') as fo2:
-        for email in emails:
-            fo2.write(email + '\n')
+    with open('waitlisted.csv', 'w') as fo2:
+        fo2.write('name, email\n')
+        for user in users:
+            fo2.write('{}, {}\n'.format(user.get_full_name(), user.email))
 
     return HttpResponse(content='Success', status=200)
