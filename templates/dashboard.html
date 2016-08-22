@@ -33,26 +33,26 @@
 
         {% if request.user and request.user.groups.filter(name='hacker').exists() %}
             {% if application %}
-                {% if application.decision == 'Accept' %}
-                    <h2>Application Status: <span style="background-color: lawngreen; padding: 3px; border-radius:5px 5px 5px 5px;">ACCEPTED</span></h2>
-                    <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/1197509966946089/">Facebook event page</a> and join the community!</p>
-                    <p>Registration isn’t open yet, but check back here on August 29th for the form, bus routes, and your Pre-Event Checklist 🙂 🎉</p>
-
-                    {% if application.reimbursement %}
-                        <p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to <a href="https://goo.gl/wORx7K">this guide</a> for more details on traveling that weekend.</p>
-                        <p>We’ll see you there!</p>
-                    {% endif %}
-                {% elif application.decision == 'Waitlist' %}
-                    <h2>Application Status: <span style="background-color: yellow; padding: 3px; border-radius:5px 5px 5px 5px;">WAITLIST</span></h2>
-                    <p>Thank you for applying to MHacks 8. Unfortunately, we can't extend you an invitation at the moment, but hang tight! If there’s a change in your decision, we’ll let you know.
-                        {% elif application.decision == 'Decline' %}
+{#                {% if application.decision == 'Accept' %}#}
+{#                    <h2>Application Status: <span style="background-color: lawngreen; padding: 3px; border-radius:5px 5px 5px 5px;">ACCEPTED</span></h2>#}
+{#                    <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/1197509966946089/">Facebook event page</a> and join the community!</p>#}
+{#                    <p>Registration isn’t open yet, but check back here on August 29th for the form, bus routes, and your Pre-Event Checklist 🙂 🎉</p>#}
+{##}
+{#                    {% if application.reimbursement %}#}
+{#                        <p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to <a href="https://goo.gl/wORx7K">this guide</a> for more details on traveling that weekend.</p>#}
+{#                        <p>We’ll see you there!</p>#}
+{#                    {% endif %}#}
+{#                {% elif application.decision == 'Waitlist' %}#}
+{#                    <h2>Application Status: <span style="background-color: yellow; padding: 3px; border-radius:5px 5px 5px 5px;">WAITLIST</span></h2>#}
+{#                    <p>Thank you for applying to MHacks 8. Unfortunately, we can't extend you an invitation at the moment, but hang tight! If there’s a change in your decision, we’ll let you know.</p>#}
+{#                {% elif application.decision == 'Decline' %}#}
                     <div>
                         <h2>Your application has been submitted. We look forward to reading it!</h2>
                     </div>
                     <div style="background-color: gray; color: white; border-radius:5px 5px 5px 5px;">
                         <p>We haven’t gotten to read your application just yet, but we’re on it! You should receive a decision by next Monday. Hang tight!</p>
                     </div>
-                {% endif %}
+{#                {% endif %}#}
 
                 <br>
                 <hr>
