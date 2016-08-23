@@ -15,6 +15,11 @@
             <button type="submit">Apply</button>
         </form>
 
+        <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
+            {{ csrf_input }}
+            <button type="submit">Mentor</button>
+        </form>
+
         {% if request.user.is_authenticated() %}
             <form method="POST" action="{{ url_for('mhacks-logout') }}">
                 {{ csrf_input }}
@@ -33,6 +38,11 @@
             <form method="GET" action="{{ url_for('mhacks-apply') }}">
                 {{ csrf_input }}
                 <button type="submit">Apply</button>
+            </form>
+
+            <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
+                {{ csrf_input }}
+                <button type="submit">Mentor</button>
             </form>
 
             {% if request.user.is_authenticated() %}

@@ -20,14 +20,14 @@
             </div>
             <div id="headerButtons">
                 <a href="mailto:hackathon@umich.edu">Email</a>
-                <p style="font-size: 11pt; margin: 2px 0 2px 10px">Mentor Form coming soon!</p>
+                <a href="{{ url_for('mhacks-applyMentor') }}">Mentor</a>
                 <a href="{{ url_for('mhacks-apply') }}">Apply</a>
             </div>
             <div id="headerDropdown">
                 <i id="dropdownTrigger" class="fa fa-bars fa-2x" aria-hidden="false"></i>
                 <div id="dropdownContent" class="turquoise">
                     <a href="mailto:hackathon@umich.edu">Email</a>
-                    <p style="font-size: 11pt; margin: 2px 0">Mentor Form coming soon!</p>
+                    <a href="{{ url_for('mhacks-applyMentor') }}">Mentor</a>
                     <a href="{{ url_for('mhacks-apply') }}">Apply</a>
                 </div>
             </div>

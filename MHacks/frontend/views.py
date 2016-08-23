@@ -15,8 +15,8 @@ from django.db.models import Q
 from rest_framework.authtoken.models import Token
 
 from MHacks.decorator import anonymous_required, application_reader_required
-from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm
-from MHacks.models import Application
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, MentorApplicationForm
+from MHacks.models import Application, MentorApplication
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
     send_application_confirmation_email
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
@@ -89,13 +89,31 @@ def application(request):
     return render(request, 'application.html', context=context)
 
 
-# I just copied the code from apply, not sure if the mentorship form needs anything different -Nevin
+@login_required()
 def apply_mentor(request):
+    try:
+        app = MentorApplication.objects.get(user=request.user)
+    except MentorApplication.DoesNotExist:
+        app = None
+
     if request.method == 'GET':
-        return render(request, 'applyMentor.html', {})
-        pass
+        form = MentorApplicationForm(instance=app)
+    elif request.method == 'POST':
+        form = ApplicationForm(data=request.POST, instance=app)
+
+        if form.is_valid():
+            # save application
+            app = form.save(commit=False)
+            app.user = request.user
+            app.submitted = True
+            app.save()
+
+            return redirect(reverse('mhacks-dashboard'))
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
+    context = {'form': form}
+    return render(request, 'apply_mentor.html', context=context)
 
 
 @anonymous_required

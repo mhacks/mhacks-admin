@@ -4,7 +4,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
 from MHacks.widgets import ArrayFieldSelectMultiple, MHacksAdminFileWidget
-from models import MHacksUser, Application
+from models import MHacksUser, Application, MentorApplication
 from utils import validate_url
 
 
@@ -184,7 +184,40 @@ class ApplicationSearchForm(forms.Form):
     is_veteran = forms.BooleanField(label='Veteran hackers')
     is_beginner = forms.BooleanField(label='Beginner hackers')
     is_non_UM = forms.BooleanField(label='Non-UMich hackers')
-
-
-
     limit = forms.CharField(label='Number of results', max_length=255)
+
+
+class MentorApplicationForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(MentorApplicationForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        from application_lists import SKILLS
+        model = MentorApplication
+
+        # use all fields except for these
+        exclude = ['user', 'submitted', 'deleted']
+
+        labels = {
+            'first_time_mentor': 'I am a first time mentor!',
+            'what_importance': 'What do you think is important about being a mentor?',
+            'why_mentor': 'Why do you want to be a mentor?',
+            'mentorship_ideas': 'Do you have any ideas for mentorship at MHacks?',
+            'skills': 'What skills are you comfortable mentoring in?',
+            'other_skills': '',
+            'github': '',
+            'agree_tc': 'I understand that by committing to mentor, ...'
+        }
+
+        widgets = {
+            'skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style'}, choices=zip(SKILLS, SKILLS)),
+            'other_skills': forms.TextInput(attrs={'placeholder': 'Other skills'}),
+            'github': forms.TextInput(attrs={'placeholder': 'GitHub (optional)'})
+        }
+
+    # custom validator for urls
+    def clean_github(self):
+        data = self.cleaned_data['github']
+        validate_url(data, 'github.com')
+        return data

@@ -206,3 +206,28 @@ class Application(Any):
 
     def __unicode__(self):
         return self.user.get_full_name() + '\'s Application'
+
+
+class MentorApplication(Any):
+    from application_lists import SKILLS
+
+    user = models.OneToOneField(AUTH_USER_MODEL)
+
+    # Mentor Info
+    first_time_mentor = models.BooleanField(default=False)
+
+    # Short Response
+    what_importance = models.TextField()
+    why_mentor = models.TextField()
+    mentorship_ideas = models.TextField()
+
+    # Skill Review
+    skills = ArrayField(models.CharField(max_length=32, choices=zip(SKILLS, SKILLS), blank=True), size=len(SKILLS))
+    other_skills = models.CharField(max_length=255, default='', blank=True)
+    github = models.URLField(blank=True)
+
+    # Commitment
+    agree_tc = models.BooleanField(default=False)
+
+    # Internal
+    submitted = models.BooleanField(default=False)
