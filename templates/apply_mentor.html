@@ -10,8 +10,15 @@
 
 {% block basic_page_content %}
     <div style="text-align: left; padding: 20px">
-    <p style="text-align: center"><i>*If you want to hack AND mentor, fill out the <a href="{{url_for('mhacks-applyMentor')}}">hacker application</a> instead!</i></p>
-        <p>MHacks is all about making everyone feel welcome, and a part of that is making sure they can learn what they want to learn so they can build what they want to build. If you don't feel like an expert or don't feel like you know enough languages or frameworks or skills, that's completely okay. Even something small can change a hacker's entire experience.</p>
+        <p style="text-align: center"><b><i>
+            If you want to hack AND mentor, fill out the <a href="{{url_for('mhacks-apply')}}">hacker application</a> instead!
+        </i></b></p>
+        <p>MHacks is all about making everyone feel welcome, and a part of that is making sure they can learn what they
+            want to learn so they can build what they want to build. If you don't feel like an expert or don't feel
+            like you know enough languages or frameworks or skills, that's completely okay. Even something small can
+            change a hacker's entire experience.
+        </p>
+        <hr>
     </div>
 
     {{ super() }}

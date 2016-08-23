@@ -99,7 +99,7 @@ def apply_mentor(request):
     if request.method == 'GET':
         form = MentorApplicationForm(instance=app)
     elif request.method == 'POST':
-        form = ApplicationForm(data=request.POST, instance=app)
+        form = MentorApplicationForm(data=request.POST, instance=app)
 
         if form.is_valid():
             # save application

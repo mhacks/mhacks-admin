@@ -191,6 +191,7 @@ class MentorApplicationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MentorApplicationForm, self).__init__(*args, **kwargs)
+        self.fields['agree_tc'].required = True
 
     class Meta:
         from application_lists import SKILLS
@@ -204,10 +205,10 @@ class MentorApplicationForm(forms.ModelForm):
             'what_importance': 'What do you think is important about being a mentor?',
             'why_mentor': 'Why do you want to be a mentor?',
             'mentorship_ideas': 'Do you have any ideas for mentorship at MHacks?',
-            'skills': 'What skills are you comfortable mentoring in?',
+            'skills': 'What skills are you comfortable mentoring in? (CTRL/CMD + click to select multiple options!)',
             'other_skills': '',
             'github': '',
-            'agree_tc': 'I understand that by committing to mentor, ...'
+            'agree_tc': 'I understand that by committing to mentor at MHacks 8 during the weekend of October 7-9, 2016, I will not work on my own project and will help participants to the best of my ability.'
         }
 
         widgets = {
