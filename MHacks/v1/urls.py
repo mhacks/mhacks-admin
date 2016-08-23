@@ -9,11 +9,11 @@ from auth import Authentication
 urlpatterns = [
     # Authentication
     url(r'^login$', Authentication.as_view()),
-    url(r'^announcements/(?P<id>[0-9A-Za-z_\-]+)$', Announcement.as_view()),
+    url(r'^announcements/(?P<id>[0-9]+)$', Announcement.as_view()),
     url(r'^announcements/$', Announcements.as_view()),
-    url(r'^locations/(?P<id>[0-9A-Za-z_\-]+)$', Location.as_view()),
+    url(r'^locations/(?P<id>[0-9]+)$', Location.as_view()),
     url(r'^locations/$', Locations.as_view()),
-    url(r'^events/(?P<id>[0-9A-Za-z_\-]+)$', Event.as_view()),
+    url(r'^events/(?P<id>[0-9]+)$', Event.as_view()),
     url(r'^events$', Events.as_view()),
     url(r'^countdown$', get_countdown),
     url(r'^map$', get_map),
