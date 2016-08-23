@@ -235,3 +235,20 @@ class MentorApplication(Any):
     reimbursement = models.FloatField(default=0, validators=[MinValueValidator(limit_value=0.0)])
     decision = models.CharField(max_length=16, choices=zip(APPLICATION_DECISION, APPLICATION_DECISION),
                                 default='Decline')
+
+
+class Ticket(Any):
+    completed = models.BooleanField(default=False)
+    creator = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_tickets')
+    mentor = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='mentored_tickets', blank=True,
+                               null=True)
+    title = models.CharField(max_length=64, default=None)
+    description = models.CharField(max_length=255, blank=True, default='' )
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+
+    # TODO have actual options?
+    area = models.CharField(max_length=32, blank=True, default='')
+
+    def __unicode__(self):
+        return self.title + ' by ' + self.creator.get_full_name()
