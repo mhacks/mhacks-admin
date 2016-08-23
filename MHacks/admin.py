@@ -26,3 +26,9 @@ class AnnouncementAdmin(admin.ModelAdmin):
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
     search_fields = ['user__first_name', 'user__last_name', 'user__email', 'decision']
+    pass
+
+@admin.register(Ticket)
+class TicketAdmin(admin.ModelAdmin):
+    search_fields = ['title', 'completed', 'creator__first_name', 'mentor__first_name']
+    pass
