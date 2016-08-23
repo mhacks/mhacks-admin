@@ -4,9 +4,11 @@ from rest_framework.fields import CharField, ChoiceField
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
 
+from MHacks.models import Announcement as AnnouncementModel
 from MHacks.models import Event as EventModel
 from MHacks.models import Location as LocationModel
-from MHacks.models import Announcement as AnnouncementModel
+from MHacks.models import MHacksUser as MHacksUserModel
+from MHacks.models import Ticket as TicketModel
 from MHacks.v1.serializers.util import UnixEpochDateField, DurationInSecondsField
 
 
@@ -45,6 +47,24 @@ class LocationSerializer(MHacksModelSerializer):
     class Meta:
         model = LocationModel
         fields = ('id', 'name', 'latitude', 'longitude')
+
+
+class MHacksUserSerializer(MHacksModelSerializer):
+    id = CharField(read_only=True)
+
+    class Meta:
+        model = MHacksUserModel
+        fields = ('id', 'first_name', 'last_name', 'email')
+
+
+class TicketSerializer(MHacksModelSerializer):
+    id = CharField(read_only=True)
+    creator = MHacksUserSerializer()
+    mentor = MHacksUserSerializer()
+
+    class Meta:
+        model = TicketModel
+        fields = ('id', 'title', 'description', 'completed', 'creator', 'mentor', 'area')
 
 
 class AuthSerializer(AuthTokenSerializer):
