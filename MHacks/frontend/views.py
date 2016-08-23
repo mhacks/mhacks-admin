@@ -275,7 +275,7 @@ def application_search(request):
 @application_reader_required
 def application_review(request):
     if request.method == 'GET':
-        date = datetime.date(1998, 10, 07)
+        event_date = datetime.date(1998, 10, 7)
 
         search_dict = {}
 
@@ -312,7 +312,7 @@ def application_review(request):
             applications = applications.filter(~Q(user__email__icontains='umich.edu'))
 
         if request.GET.get('is_minor'):
-            applications = applications.filter(birthday__lt=date)
+            applications = applications.filter(birthday__gte=event_date)
 
         # from the oldest applicants
         applications = applications.order_by('last_updated')
