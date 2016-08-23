@@ -198,7 +198,7 @@ class MentorApplicationForm(forms.ModelForm):
         model = MentorApplication
 
         # use all fields except for these
-        exclude = ['user', 'submitted', 'deleted']
+        exclude = ['user', 'submitted', 'deleted', 'score', 'reimbursement', 'decision']
 
         labels = {
             'first_time_mentor': 'I am a first time mentor!',

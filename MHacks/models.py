@@ -209,7 +209,7 @@ class Application(Any):
 
 
 class MentorApplication(Any):
-    from application_lists import SKILLS
+    from application_lists import SKILLS, APPLICATION_DECISION
 
     user = models.OneToOneField(AUTH_USER_MODEL)
 
@@ -231,3 +231,7 @@ class MentorApplication(Any):
 
     # Internal
     submitted = models.BooleanField(default=False)
+    score = models.FloatField(default=0)
+    reimbursement = models.FloatField(default=0, validators=[MinValueValidator(limit_value=0.0)])
+    decision = models.CharField(max_length=16, choices=zip(APPLICATION_DECISION, APPLICATION_DECISION),
+                                default='Decline')
