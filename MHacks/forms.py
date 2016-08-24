@@ -249,5 +249,18 @@ class RegistrationForm(forms.ModelForm):
     def clean_waiver_signature(self):
         data = self.cleaned_data['waiver_signature']
         user = self.user
+        if user.get_full_name() != data.strip().lower():
+            raise forms.ValidationError('Please enter your name as it appears in your user account: {}'.format(user.get_full_name()))
+        return data
 
-        # TODO validate that the user fullname and the signed name match
+    def clean_code_of_conduct(self):
+        data = self.cleaned_data['code_of_conduct']
+        if not data:
+            raise forms.ValidationError('You must agree to the MHacks Code of Conduct.')
+        return data
+
+    def clean_mlh_code_of_conduct(self):
+        data = self.cleaned_data['mlh_code_of_conduct']
+        if not data:
+            raise forms.ValidationError('You must agree to the MLH Code of Conduct.')
+        return data

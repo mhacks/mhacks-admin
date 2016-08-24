@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^apply/$', application, name='mhacks-apply'),
     url(r'^thanks_for_registering/$', thanks_registering, name='mhacks-thanks-registering'),
     url(r'^applyMentor/$', apply_mentor, name='mhacks-applyMentor'),
+    url(r'^registration/$', registration, name='mhacks-registration'),
 
     # Application reading
     url(r'^application_search/$', application_search, name='mhacks-applicationSearch'),

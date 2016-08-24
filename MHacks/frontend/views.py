@@ -15,8 +15,9 @@ from django.db.models import Q
 from rest_framework.authtoken.models import Token
 
 from MHacks.decorator import anonymous_required, application_reader_required
-from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, MentorApplicationForm
-from MHacks.models import Application, MentorApplication
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, MentorApplicationForm, \
+    RegistrationForm
+from MHacks.models import Application, MentorApplication, Registration
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
     send_application_confirmation_email
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
@@ -114,6 +115,34 @@ def apply_mentor(request):
 
     context = {'form': form}
     return render(request, 'apply_mentor.html', context=context)
+
+
+@login_required()
+def registration(request):
+    # find the user's application if it exists
+    try:
+        app = Registration.objects.get(user=request.user)
+    except Registration.DoesNotExist:
+        app = None
+
+    if request.method == 'GET':
+        form = RegistrationForm(instance=app, user=request.user)
+    elif request.method == 'POST':
+        form = RegistrationForm(data=request.POST, instance=app, user=request.user)
+
+        if form.is_valid():
+            # save application
+            app = form.save(commit=False)
+            app.user = request.user
+            app.submitted = True
+            app.save()
+
+            return redirect(reverse('mhacks-dashboard'))
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
+    context = {'form': form}
+    return render(request, 'registration.html', context=context)
 
 
 @anonymous_required
@@ -288,8 +317,8 @@ def application_review(request):
             'gender': ['gender', 'icontains'],
             'city': ['from_city', 'icontains'],
             'state': ['from_state', 'icontains'],
-            'score_min': ['score','gte'],
-            'score_max': ['score','lte'],
+            'score_min': ['score', 'gte'],
+            'score_max': ['score', 'lte'],
         }
 
         for key in search_keys:
