@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, User
 from django.contrib.postgres.fields import ArrayField
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 
 from globals import GroupEnum
@@ -243,7 +243,7 @@ class Ticket(Any):
     mentor = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='mentored_tickets', blank=True,
                                null=True)
     title = models.CharField(max_length=64, default=None)
-    description = models.CharField(max_length=255, blank=True, default='' )
+    description = models.CharField(max_length=255, blank=True, default='')
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
 
@@ -252,3 +252,49 @@ class Ticket(Any):
 
     def __unicode__(self):
         return self.title + ' by ' + self.creator.get_full_name()
+
+
+class Registration(Any):
+    from application_lists import ACCEPTANCE, TRANSPORTATION, TECH_OPTIONS, T_SHIRT_SIZES, DIETARY_RESTRICTIONS, \
+        DEGREES, EMPLOYMENT_SKILLS
+
+    # User
+    user = models.OneToOneField(AUTH_USER_MODEL)
+
+    # Acceptance
+    acceptance = models.CharField(max_length=32, choices=ACCEPTANCE)
+
+    # Logistics
+    transportation = models.CharField(max_length=32, choices=TRANSPORTATION)
+
+    # Mentorship
+    want_help = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, blank=True), size=len(TECH_OPTIONS),
+                           blank=True)
+    other_want_help = models.CharField(max_length=64, blank=True)
+    can_help = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, blank=True), size=len(TECH_OPTIONS),
+                          blank=True)
+    other_can_help = models.CharField(max_length=64, blank=True)
+
+    # Day-of Specifics
+    t_shirt_size = models.CharField(max_length=1, choices=zip(T_SHIRT_SIZES, T_SHIRT_SIZES))
+    dietary_restrictions = models.CharField(max_length=32, choices=zip(DIETARY_RESTRICTIONS, DIETARY_RESTRICTIONS),
+                                            blank=True)
+    accommodations = models.TextField(blank=True)
+    medical_concerns = models.TextField(blank=True)
+    phone_number = models.CharField(max_length=16,
+                                    validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                                               message="Phone number must be entered in the format: \
+                                                               '+#########'. Up to 15 digits allowed.")])
+
+    # Sponsor & Employment Information
+    degree = models.CharField(max_length=16, choices=zip(DEGREES, DEGREES))
+    employment = models.CharField(max_length=32, choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS), blank=True)
+
+    # Waivers and Code of Conduct
+    code_of_conduct = models.BooleanField(default=False)
+    waiver_signature = models.CharField(max_length=128)
+    mlh_code_of_conduct = models.BooleanField(default=False)
+
+    # Internal
+    submitted = models.BooleanField(default=False)
+

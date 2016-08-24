@@ -2,9 +2,10 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.utils.safestring import mark_safe
 
 from MHacks.widgets import ArrayFieldSelectMultiple, MHacksAdminFileWidget
-from models import MHacksUser, Application, MentorApplication
+from models import MHacksUser, Application, MentorApplication, Registration
 from utils import validate_url
 
 
@@ -188,11 +189,6 @@ class ApplicationSearchForm(forms.Form):
 
 
 class MentorApplicationForm(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(MentorApplicationForm, self).__init__(*args, **kwargs)
-        self.fields['agree_tc'].required = True
-
     class Meta:
         from application_lists import SKILLS
         model = MentorApplication
@@ -222,3 +218,36 @@ class MentorApplicationForm(forms.ModelForm):
         data = self.cleaned_data['github']
         validate_url(data, 'github.com')
         return data
+
+    def clean_agree_tc(self):
+        data = self.cleaned_data['agree_tc']
+        if not data:
+            raise forms.ValidationError('You must agree to the terms & conditions to continue.')
+        return data
+
+
+class RegistrationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Registration
+
+        # use all fields except for these
+        exclude = ['user', 'submitted', 'deleted']
+
+        labels = {
+            'code_of_conduct': mark_safe('I have read and agree to the terms of the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTVllEckF5UHpYZk0/view">MHacks Code of Conduct</a>'),
+            'waiver_signature': mark_safe('By signing below, I indicate my acceptance of the terms stated in the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTX0c3NjUzV1F2WTQ/view">Accident Waiver and Release of Liability Form</a>'),
+            'mlh_code_of_conduct': mark_safe('We participate in Major League Hacking (MLH) as a MLH Member Event. You authorize us to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in line with the MLH Privacy Policy. <br> I have read and agree to the terms of the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>')
+        }
+
+        widgets = {
+        }
+
+    def clean_waiver_signature(self):
+        data = self.cleaned_data['waiver_signature']
+        user = self.user
+
+        # TODO validate that the user fullname and the signed name match

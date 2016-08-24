@@ -38,6 +38,7 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
     except mandrill.Error as e:
         logger = logging.getLogger(__name__)
         logger.error('A mandrill error occurred: %s - %s' % (e.__class__, e))
+        print('A mandrill error occurred: %s - %s' % (e.__class__, e))
         raise
 
 
@@ -96,7 +97,7 @@ def send_password_reset_email(user, request):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     update_password_url = reverse(
         'mhacks-update_password',
-        kwargs={'uid':uid, 'token': token}
+        kwargs={'uid': uid, 'token': token}
     )
     send_mandrill_mail(
         'change_password',
