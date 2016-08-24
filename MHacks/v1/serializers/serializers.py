@@ -59,12 +59,32 @@ class MHacksUserSerializer(MHacksModelSerializer):
 
 class TicketSerializer(MHacksModelSerializer):
     id = CharField(read_only=True)
-    creator = MHacksUserSerializer()
-    mentor = MHacksUserSerializer()
+    creator = MHacksUserSerializer(read_only=True)
+    mentor = MHacksUserSerializer(read_only=True, required=False)
+    title = CharField(required=True)
 
     class Meta:
         model = TicketModel
         fields = ('id', 'title', 'description', 'completed', 'creator', 'mentor', 'area')
+
+    #TODO better validation (invalid fields within creator/mentor)
+    def run_validation(self, data=None):
+        for key in data.keys():
+            if key not in self.fields:
+                data.pop(key)
+        return data
+
+    def create(self, validated_data):
+        print validated_data
+        creator_data = validated_data.pop('creator')
+        mentor_data = validated_data.pop('mentor', None)
+        creator = MHacksUserModel.objects.get(id=creator_data['id'])
+        ticket = TicketModel.objects.create(creator=creator, **validated_data)
+        if mentor_data:
+            mentor = MHacksUserModel.objects.get(id=mentor_data['id'])
+            ticket.mentor = mentor
+        ticket.save()
+        return ticket
 
 
 class AuthSerializer(AuthTokenSerializer):
