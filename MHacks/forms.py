@@ -83,6 +83,9 @@ class ApplicationForm(forms.ModelForm):
 
         self.fields['other_info'].travel = True
 
+
+
+
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
             for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city',
@@ -122,7 +125,7 @@ class ApplicationForm(forms.ModelForm):
 
         widgets = {
             "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'id': 'graduation_date'}),
-            'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style'}, choices=TECH_OPTIONS),
+            'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style textfield check-width'}, choices=TECH_OPTIONS),
             'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'}),
             'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md',
                                              'id': 'school-autocomplete'}),
@@ -187,11 +190,17 @@ class ApplicationSearchForm(forms.Form):
     limit = forms.CharField(label='Number of results', max_length=255)
 
 
+
 class MentorApplicationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MentorApplicationForm, self).__init__(*args, **kwargs)
         self.fields['agree_tc'].required = True
+
+        self.fields['first_time_mentor'].short = True
+        self.fields['mentorship_ideas'].skills = True
+        self.fields['github'].commit = True
+
 
     class Meta:
         from application_lists import SKILLS
@@ -212,9 +221,12 @@ class MentorApplicationForm(forms.ModelForm):
         }
 
         widgets = {
-            'skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style'}, choices=zip(SKILLS, SKILLS)),
+            'skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'}, choices=zip(SKILLS, SKILLS)),
             'other_skills': forms.TextInput(attrs={'placeholder': 'Other skills'}),
-            'github': forms.TextInput(attrs={'placeholder': 'GitHub (optional)'})
+            'github': forms.TextInput(attrs={'placeholder': 'GitHub (optional)'}),
+            'why_mentor': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'mentorship_ideas': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'what_importance': forms.Textarea(attrs={'class': 'textfield form-control'})
         }
 
     # custom validator for urls
