@@ -3,6 +3,7 @@ from django.contrib.auth import login as auth_login, logout as auth_logout, get_
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.http import (HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
@@ -201,11 +202,14 @@ def reset_password(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
-            user = get_user_model().objects.get(email=form.cleaned_data["email"])
+            try:
+                user = get_user_model().objects.get(email=form.cleaned_data["email"])
+            except ObjectDoesNotExist:
+                form.errors['email'] = ["No user with that email exists"]
+                return render(request, 'password_reset.html', context={'form': form, 'type': reset_type})
             if user:
                 send_password_reset_email(user, request)
-                reset_type = 'reset_requested'
-                form = None
+                return redirect(reverse('mhacks-password_reset_sent'))
     elif request.method == 'GET':
         form = PasswordResetForm()
     else:
@@ -214,6 +218,8 @@ def reset_password(request):
         form.fields['email'].longest = True
     return render(request, 'password_reset.html', context={'form': form, 'type': reset_type})
 
+def password_reset_sent(request):
+    return render(request, 'password_reset_sent.html')
 
 @anonymous_required
 def validate_email(request, uid, token):
