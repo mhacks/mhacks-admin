@@ -15,8 +15,7 @@
         <form method="POST" action="{{ url_for('mhacks-updateApplication') }}">
             {{ csrf_input }}
             <input id="update-all-button" type="submit" value="Update all">
-            <input type="hidden" name="application_type" value="hacker">
-
+            <input type="hidden" name="application_type" value="mentor">
 
             <table class="table table-striped" style="color:black; overflow-x:scroll; column-width: fit-content">
                 <thead>
@@ -28,27 +27,12 @@
                     <th>Email</th>
                     <th>Submitted</th>
                     <th>Last updated</th>
-                    <th>Tell us about a project that you worked on and why you're proud of it.</th>
-                    <th>What do you hope to take away from MHacks 8?</th>
-                    <th>Anything else?</th>
-                    <th>Hackathons attended</th>
-                    <th>International</th>
-                    <th>School</th>
-                    <th>Major</th>
-                    <th>Graduation date</th>
-                    <th>Birthday</th>
-                    <th>Gender</th>
-                    <th>Race</th>
+                    <th>First time mentor</th>
+                    <th>What do you think is important about being a mentor?</th>
+                    <th>Why do you want to be a mentor?</th>
+                    <th>Do you have any ideas for mentorship at MHacks?</th>
+                    <th>Skills</th>
                     <th>GitHub</th>
-                    <th>Devpost</th>
-                    <th>Personal Website</th>
-                    <th>Resume</th>
-                    <th>Interests</th>
-                    <th>Needs reimbursement</th>
-                    <th>Can pay</th>
-                    <th>City</th>
-                    <th>State/Country</th>
-                    <th>Mentor</th>
                 </tr>
                 </thead>
 
@@ -69,31 +53,16 @@
                         <td class="col-md-1">
                             <input type="number" name="reimbursement[]" value="{{ result.reimbursement }}">
                         </td>
-                        <td>{{result.user.first_name}} {{result.user.last_name}}</td>
-                        <td>{{result.user.email}}</td>
-                        <td>{{result.submitted}}</td>
-                        <td>{{result.last_updated.strftime('%Y-%m-%d %H:%M')}}</td>
-                        <td>{{result.passionate}}</td>
-                        <td>{{result.coolest_thing}}</td>
-                        <td>{{result.other_info}}</td>
-                        <td>{{result.num_hackathons}}</td>
-                        <td>{{result.is_international}}</td>
-                        <td>{{result.school}}</td>
-                        <td>{{result.major}}</td>
-                        <td>{{result.grad_date}}</td>
-                        <td>{{result.birthday}}</td>
-                        <td>{{result.gender}}</td>
-                        <td>{{result.race}}</td>
-                        <td><a href="{{result.github}}">{{result.github}}</a></td>
-                        <td><a href="{{result.devpost}}">{{result.devpost}}</a></td>
-                        <td><a href="{{result.personal_website}}">{{result.personal_website}}</a></td>
-                        <td><a href="{{result.resume}}">{{result.resume}}</a></td>
-                        <td>{{result.cortex}}</td>
-                        <td>{{result.needs_reimbursement}}</td>
-                        <td>{{result.can_pay}}</td>
-                        <td>{{result.from_city}}</td>
-                        <td>{{result.from_state}}</td>
-                        <td>{{result.mentoring}}</td>
+                        <td>{{ result.user.first_name }} {{ result.user.last_name }}</td>
+                        <td>{{ result.user.email }}</td>
+                        <td>{{ result.submitted }}</td>
+                        <td>{{ result.last_updated.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ result.first_time_mentor }}</td>
+                        <td>{{ result.what_importance }}</td>
+                        <td>{{ result.why_mentor }}</td>
+                        <td>{{ result.mentorship_ideas }}</td>
+                        <td>{{ result.skills|join(', ') }}<br>Other: {{ result.other_skills }}</td>
+                        <td>{{ result.github }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

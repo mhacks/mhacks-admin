@@ -375,6 +375,18 @@ def application_review(request):
 
 @login_required
 @application_reader_required
+def mentor_review(request):
+    if request.method == 'GET':
+        applications = MentorApplication.objects.all()
+        context = {'results': applications}
+
+        return render(request, 'mentor_review.html', context=context)
+
+    return HttpResponseNotAllowed(permitted_methods=['GET'])
+
+
+@login_required
+@application_reader_required
 def update_applications(request):
     if request.method == 'POST':
         id_list = request.POST.getlist('id[]')
@@ -387,9 +399,14 @@ def update_applications(request):
             reimbursement_amount = float(reimbursement_list[i])
             reimbursement_amount = reimbursement_amount if reimbursement_amount >= 0 else 0
 
-            Application.objects.filter(id=id_list[i]).update(score=score_list[i],
-                                                             decision=decision_list[i],
-                                                             reimbursement=reimbursement_amount)
+            if request.POST.get('application_type') == 'hacker':
+                Application.objects.filter(id=id_list[i]).update(score=score_list[i],
+                                                                 decision=decision_list[i],
+                                                                 reimbursement=reimbursement_amount)
+            elif request.POST.get('application_type') == 'mentor':
+                MentorApplication.objects.filter(id=id_list[i]).update(score=score_list[i],
+                                                                       decision=decision_list[i],
+                                                                       reimbursement=reimbursement_amount)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
