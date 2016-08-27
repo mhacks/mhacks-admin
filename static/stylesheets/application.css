@@ -84,3 +84,7 @@ p {
 .field-form .label-apply {
     display: block;
 }
+
+.check-width{
+    width: 40%;
+}
