@@ -12,7 +12,9 @@
 
     <div class="body-info" id="main-message">
         {% if request.user and request.user.groups.filter(name='application_reader').exists() %}
-            <h2>Looks like you're an application reader! <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Apps</button></a></h2>
+            <h2>Looks like you're an application reader!</h2>
+            <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Hacker Apps</button></a>
+            <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Mentor Apps</button></a>
             <br>
             <hr>
         {% endif %}
@@ -60,6 +62,33 @@
             {% else %}
                 <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>
             {% endif %}
+
+            {% if mentor_application %}
+                {% if mentor_application.decision == 'Accept' %}
+                    <h2>Mentor Status: <span class="rounded-box accept">ACCEPTED</span></h2>
+                    <p>We're super excited to have you mentor other hackers at MHacks 8! 🎉</p>
+
+                    {% if mentor_application.reimbursement %}
+                        <h2>Reimbursement amount: <span class="rounded-box accept">${{ '{:.2f}'.format(mentorship_application.reimbursement) }}</span> </h2>
+                        <p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to <a href="https://goo.gl/wORx7K">this guide</a> for more details on traveling that weekend.</p>
+                        <p>We’ll see you there!</p>
+                    {% endif %}
+                {% elif mentor_application.decision == 'Waitlist' %}
+                    <h2>Mentor Status: <span class="rounded-box waitlist">WAITLIST</span></h2>
+                    <p>Thank you for applying to be a mentor at MHacks 8. Unfortunately, we can't extend you an invitation at the moment, but hang tight! If there’s a change in your decision, we’ll let you know.</p>
+                {% elif mentor_application.decision == 'Decline' %}
+                    <div>
+                        <h2>Your mentor application has been submitted. We look forward to reading it!</h2>
+                    </div>
+                    <div class="rounded-box decline">
+                        <p>We haven’t gotten to read your mentor application just yet, but we’re on it! You should receive a decision by next Monday. Hang tight!</p>
+                    </div>
+                {% endif %}
+
+                <br>
+                <hr>
+            {% endif %}
+
         {% endif %}
     </div>
 

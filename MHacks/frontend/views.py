@@ -296,7 +296,12 @@ def dashboard(request):
         except Application.DoesNotExist:
             app = None
 
-        return render(request, 'dashboard.html', {'groups': groups, 'application': app})
+        try:
+            mentor_app = MentorApplication.objects.get(user=request.user)
+        except MentorApplication.DoesNotExist:
+            mentor_app = None
+
+        return render(request, 'dashboard.html', {'groups': groups, 'application': app, 'mentor_application': mentor_app})
 
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
