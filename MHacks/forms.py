@@ -2,9 +2,10 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.utils.safestring import mark_safe
 
 from MHacks.widgets import ArrayFieldSelectMultiple, MHacksAdminFileWidget
-from models import MHacksUser, Application, MentorApplication
+from models import MHacksUser, Application, MentorApplication, Registration
 from utils import validate_url
 
 
@@ -82,9 +83,6 @@ class ApplicationForm(forms.ModelForm):
         self.fields['race'].required = False
 
         self.fields['other_info'].travel = True
-
-
-
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
@@ -190,9 +188,7 @@ class ApplicationSearchForm(forms.Form):
     limit = forms.CharField(label='Number of results', max_length=255)
 
 
-
 class MentorApplicationForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super(MentorApplicationForm, self).__init__(*args, **kwargs)
         self.fields['agree_tc'].required = True
@@ -200,7 +196,6 @@ class MentorApplicationForm(forms.ModelForm):
         self.fields['first_time_mentor'].short = True
         self.fields['mentorship_ideas'].skills = True
         self.fields['github'].commit = True
-
 
     class Meta:
         from application_lists import SKILLS
@@ -222,8 +217,8 @@ class MentorApplicationForm(forms.ModelForm):
 
         widgets = {
             'skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'}, choices=zip(SKILLS, SKILLS)),
-            'other_skills': forms.TextInput(attrs={'placeholder': 'Other skills'}),
-            'github': forms.TextInput(attrs={'placeholder': 'GitHub (optional)'}),
+            'other_skills': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other skills'}),
+            'github': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'GitHub (optional)'}),
             'why_mentor': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'mentorship_ideas': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'what_importance': forms.Textarea(attrs={'class': 'textfield form-control'})
@@ -233,4 +228,50 @@ class MentorApplicationForm(forms.ModelForm):
     def clean_github(self):
         data = self.cleaned_data['github']
         validate_url(data, 'github.com')
+        return data
+
+    def clean_agree_tc(self):
+        data = self.cleaned_data['agree_tc']
+        if not data:
+            raise forms.ValidationError('You must agree to the terms & conditions to continue.')
+        return data
+
+
+class RegistrationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Registration
+
+        # use all fields except for these
+        exclude = ['user', 'submitted', 'deleted']
+
+        labels = {
+            'code_of_conduct': mark_safe('I have read and agree to the terms of the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTVllEckF5UHpYZk0/view">MHacks Code of Conduct</a>'),
+            'waiver_signature': mark_safe('By signing below, I indicate my acceptance of the terms stated in the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTX0c3NjUzV1F2WTQ/view">Accident Waiver and Release of Liability Form</a>'),
+            'mlh_code_of_conduct': mark_safe('We participate in Major League Hacking (MLH) as a MLH Member Event. You authorize us to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in line with the MLH Privacy Policy. <br> I have read and agree to the terms of the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>')
+        }
+
+        widgets = {
+        }
+
+    def clean_waiver_signature(self):
+        data = self.cleaned_data['waiver_signature']
+        user = self.user
+        if user.get_full_name() != data.strip().lower():
+            raise forms.ValidationError('Please enter your name as it appears in your user account: {}'.format(user.get_full_name()))
+        return data
+
+    def clean_code_of_conduct(self):
+        data = self.cleaned_data['code_of_conduct']
+        if not data:
+            raise forms.ValidationError('You must agree to the MHacks Code of Conduct.')
+        return data
+
+    def clean_mlh_code_of_conduct(self):
+        data = self.cleaned_data['mlh_code_of_conduct']
+        if not data:
+            raise forms.ValidationError('You must agree to the MLH Code of Conduct.')
         return data

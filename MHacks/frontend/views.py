@@ -120,6 +120,10 @@ def apply_mentor(request):
 
 @login_required()
 def registration(request):
+    # private for now, while we test stuff
+    if not request.user.is_superuser:
+        return HttpResponseForbidden()
+
     # find the user's application if it exists
     try:
         app = Registration.objects.get(user=request.user)
@@ -247,8 +251,10 @@ def reset_password(request):
         form.fields['email'].longest = True
     return render(request, 'password_reset.html', context={'form': form, 'type': reset_type})
 
+
 def password_reset_sent(request):
     return render(request, 'password_reset_sent.html')
+
 
 @anonymous_required
 def validate_email(request, uid, token):
