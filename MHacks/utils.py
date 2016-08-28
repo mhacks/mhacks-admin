@@ -27,13 +27,9 @@ def add_permissions(sender, **kwargs):
 
     # Not the cleanest way but yolo. Maybe use sets? Would make permission removal easier too
     for group_enum, group_permissions in permissions_map.iteritems():
-        group = groups_queryset.filter(name=group_enum)
-        if not group:
-            # Group does not exist yet
-            group = Group.objects.create(name=group_enum)
+        group, created = groups_queryset.get_or_create(name=group_enum)
+        if created:
             print '\nCreated group {}.'.format(group_enum)
-        else:
-            group = group[0]
 
         for permission in group_permissions:
             found_permissions = group.permissions.filter(codename=permission)
