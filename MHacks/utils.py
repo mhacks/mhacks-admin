@@ -19,7 +19,6 @@ from MHacks.globals import permissions_map
 
 
 # Updates permissions to groups
-# TODO have it reflect removed permissions from the permissions_map
 def add_permissions(sender, **kwargs):
     from django.contrib.auth.models import Group, Permission
     groups_queryset = Group.objects.all()
@@ -27,20 +26,21 @@ def add_permissions(sender, **kwargs):
 
     # Not the cleanest way but yolo. Maybe use sets? Would make permission removal easier too
     for group_enum, group_permissions in permissions_map.iteritems():
+        print ''
         group, created = groups_queryset.get_or_create(name=group_enum)
         if created:
-            print '\nCreated group {}.'.format(group_enum)
+            print 'Created group {}.'.format(group_enum)
 
+        group.permissions.clear()
         for permission in group_permissions:
-            found_permissions = group.permissions.filter(codename=permission)
-            if not found_permissions:
-                permission_object = permissions_queryset.filter(codename=permission)
-                if not permission_object:
-                    raise Exception('Invalid permission {}. '
-                                    'Have all the relevant migrations been applied?'.format(permission))
-                permission_object = permission_object[0]
-                print 'Added permission {} for group {}.'.format(permission, group_enum)
-                group.permissions.add(permission_object)
+            permission_object = permissions_queryset.filter(codename=permission)
+            if not permission_object:
+                raise Exception('Invalid permission {}. '
+                                'Have all the relevant migrations been applied?'.format(permission))
+            permission_object = permission_object[0]
+
+            group.permissions.add(permission_object)
+            print 'Added permission {} for group {}.'.format(permission, group_enum)
 
         group.save()
 
