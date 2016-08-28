@@ -122,7 +122,7 @@ def apply_mentor(request):
 def registration(request):
     # private for now, while we test stuff
     if not request.user.is_superuser:
-        return HttpResponseForbidden()
+        return redirect(reverse('mhacks-home'))
 
     # find the user's application if it exists
     try:
@@ -321,8 +321,6 @@ def application_search(request):
 @application_reader_required
 def application_review(request):
     if request.method == 'GET':
-        print('hacker' in request.GET)
-
         event_date = datetime.date(1998, 10, 7)
 
         search_dict = {}
@@ -424,13 +422,13 @@ def update_applications(request):
 
 
 def live(request):
-    return HttpResponseNotAllowed(permitted_methods=[])
+    return redirect(reverse('mhacks-home'))
 
 
 @login_required()
 def run_python(request):
     if not request.user.is_superuser:
-        return HttpResponseForbidden()
+        return redirect(reverse('mhacks-home'))
 
     apps = Application.objects.all()
     a_no_r = apps.filter(decision='Accept', reimbursement=0)
