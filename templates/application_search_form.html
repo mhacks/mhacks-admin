@@ -9,7 +9,7 @@
 
 {% block content %}
     {% if form %}
-        <form class="form-horizontal" method="GET" autocomplete="on" action="{% block form_action %}{% endblock %}" {% block form_enctype %}{% endblock %}>
+        <form class="form-horizontal" method="GET" autocomplete="on" action="{{ url_for('mhacks-applicationReview') }}" {% block form_enctype %}{% endblock %}>
             {{ csrf_input }}
             <fieldset>
                 {% include 'header.html' %}
@@ -59,14 +59,13 @@
                             {% endfor %}
                             </div>
                         <div class="submit-row">
-                            <button data-toggle="tooltip" id="submit" class="four columns offset-by-four">{% block submit_title %}Submit{% endblock %}</button>
+                            {% block form_action %}{% endblock %}
                         </div>
                         <div class="text-center row three">
-                        {% block form_footer %}
-                        {% endblock %}
+                            {% block form_footer %}
+                            {% endblock %}
+                        </div>
                     </div>
-                    </div>
-
             </fieldset>
         </form>
 

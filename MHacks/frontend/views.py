@@ -321,11 +321,13 @@ def application_search(request):
 @application_reader_required
 def application_review(request):
     if request.method == 'GET':
+        print('hacker' in request.GET)
+
         event_date = datetime.date(1998, 10, 7)
 
         search_dict = {}
 
-        search_keys = {
+        hacker_search_keys = {
             'first_name': ['user__first_name', 'istartswith'],
             'last_name': ['user__last_name', 'istartswith'],
             'email': ['user__email', 'iexact'],
@@ -338,21 +340,39 @@ def application_review(request):
             'score_max': ['score', 'lte'],
         }
 
+        mentor_search_keys = {
+            'first_name': ['user__first_name', 'istartswith'],
+            'last_name': ['user__last_name', 'istartswith'],
+            'email': ['user__email', 'iexact']
+        }
+
+        # pick search dict based on which type of search
+        search_keys = dict()
+        if 'hacker' in request.GET:
+            search_keys = hacker_search_keys
+        elif 'mentor' in request.GET:
+            search_keys = mentor_search_keys
+
         for key in search_keys:
             if request.GET.get(key):
                 condition = "{0}__{1}".format(search_keys[key][0], search_keys[key][1])
                 search_dict[condition] = request.GET[key]
 
-        applications = Application.objects.filter(**search_dict)
+        # get the types of applications based on which type of search
+        applications = Application.objects.none()
+        if 'hacker' in request.GET:
+            applications = Application.objects.filter(**search_dict)
+
+            if request.GET.get('is_veteran'):
+                applications = applications.filter(num_hackathons__gt=1)
+
+            if request.GET.get('is_beginner'):
+                applications = applications.filter(num_hackathons__lt=2)
+        elif 'mentor' in request.GET:
+            applications = MentorApplication.objects.filter(**search_dict)
 
         # submitted applications
         applications = applications.filter(submitted=True)
-
-        if request.GET.get('is_veteran'):
-            applications = applications.filter(num_hackathons__gt=1)
-
-        if request.GET.get('is_beginner'):
-            applications = applications.filter(num_hackathons__lt=2)
 
         if request.GET.get('is_non_UM'):
             applications = applications.filter(~Q(user__email__icontains='umich.edu'))
