@@ -15,6 +15,39 @@ from jinja2 import Environment
 from config.settings import EMAIL_HOST_USER
 from config.settings import MANDRILL_API_KEY
 
+from MHacks.globals import permissions_map
+
+
+# Updates permissions to groups
+# TODO have it reflect removed permissions from the permissions_map
+def add_permissions(sender, **kwargs):
+    from django.contrib.auth.models import Group, Permission
+    groups_queryset = Group.objects.all()
+    permissions_queryset = Permission.objects.all()
+
+    # Not the cleanest way but yolo. Maybe use sets? Would make permission removal easier too
+    for group_enum, group_permissions in permissions_map.iteritems():
+        group = groups_queryset.filter(name=group_enum)
+        if not group:
+            # Group does not exist yet
+            group = Group.objects.create(name=group_enum)
+            print '\nCreated group {}.'.format(group_enum)
+        else:
+            group = group[0]
+
+        for permission in group_permissions:
+            found_permissions = group.permissions.filter(codename=permission)
+            if not found_permissions:
+                permission_object = permissions_queryset.filter(codename=permission)
+                if not permission_object:
+                    raise Exception('Invalid permission {}. '
+                                    'Have all the relevant migrations been applied?'.format(permission))
+                permission_object = permission_object[0]
+                print 'Added permission {} for group {}.'.format(permission, group_enum)
+                group.permissions.add(permission_object)
+
+        group.save()
+
 
 # Sends mail through mandrill client.
 def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
