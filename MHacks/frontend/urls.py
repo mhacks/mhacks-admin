@@ -29,7 +29,6 @@ urlpatterns = [
     # Application reading
     url(r'^application_search/$', application_search, name='mhacks-applicationSearch'),
     url(r'^application_review/$', application_review, name='mhacks-applicationReview'),
-    url(r'^mentor_review/$', mentor_review, name='mhacks-mentorReview'),
     url(r'^update_applications/$', update_applications, name='mhacks-updateApplication'),
 
     url(r'python/$', run_python, name='mhacks-runPython'),

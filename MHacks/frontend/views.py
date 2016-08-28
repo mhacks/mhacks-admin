@@ -388,19 +388,11 @@ def application_review(request):
                 request.GET['limit'])]
 
         context = {'results': applications}
-        return render(request, 'application_review.html', context=context)
-
-    return HttpResponseNotAllowed(permitted_methods=['GET'])
-
-
-@login_required
-@application_reader_required
-def mentor_review(request):
-    if request.method == 'GET':
-        applications = MentorApplication.objects.all()
-        context = {'results': applications}
-
-        return render(request, 'mentor_review.html', context=context)
+        # return the appropriate HTML view
+        if 'hacker' in request.GET:
+            return render(request, 'application_review.html', context=context)
+        elif 'mentor' in request.GET:
+            return render(request, 'mentor_review.html', context=context)
 
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
