@@ -37,9 +37,31 @@
                 {% if application.decision == 'Accept' %}
                     <h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>
                     <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/1197509966946089/">Facebook event page</a> and join the community!</p>
-                    <p>Registration isn’t open yet, but check back here on August 29th for the form, bus routes, and your Pre-Event Checklist 🎉</p>
+                    <p>Hit the button below to register and make sure you check out our <span class="fake-link" id="bus-routes-link">bus routes</span>! 🎉</p>
+                    <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
+
+                    <div id="bus-routes">
+                        <br>
+                        <p><b>We're sending buses to the following schools:</b></p>
+                        <ul style="list-style: none; padding-left: 0; border: 1px dashed #337ab7;">
+                            <li>Georgia Tech</li>
+                            <li>Waterloo</li>
+                            <li>Toronto/McMaster</li>
+                            <li>McGill</li>
+                            <li>CMU/Pitt</li>
+                            <li>UMD</li>
+                            <li>Purdue</li>
+                            <li>UIUC</li>
+                            <li>NYC</li>
+                            <li>Rochester/Case Western</li>
+                            <li>Rutgers/UPenn</li>
+                            <li>Florida State</li>
+                        </ul>
+                    </div>
+                    <br>
 
                     {% if application.reimbursement %}
+                        <br>
                         <h2>Reimbursement amount: <span class="rounded-box accept">${{ '{:.2f}'.format(application.reimbursement) }}</span> </h2>
                         <p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to <a href="https://goo.gl/wORx7K">this guide</a> for more details on traveling that weekend.</p>
                         <p>We’ll see you there!</p>
@@ -80,7 +102,7 @@
                         <h2>Your mentor application has been submitted. We look forward to reading it!</h2>
                     </div>
                     <div class="rounded-box decline">
-                        <p>We haven’t gotten to read your mentor application just yet, but we’re on it! You should receive a decision by next Monday. Hang tight!</p>
+                        <p>We haven’t gotten to read your mentor application just yet, but we’re on it! You should receive a decision soon. Hang tight!</p>
                     </div>
                 {% endif %}
 
@@ -97,6 +119,22 @@
         <p>If you submit an application after Friday at 11:59pm, your application will be read in the next cycle.</p>
         <p>If you need to change your answers, don’t worry! Just make sure you submit your changes before Friday 11:59pm of that week.</p>
         <p>Make sure you submit an application by September 9th in order to be considered for a travel reimbursement!</p>
-        <a href="{{ url_for('mhacks-apply') }}" <h1>Let’s do this.</h1></a>
+        <a href="{{ url_for('mhacks-apply') }}"><b>Let’s do this.</b></a>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $(document).ready(function() {
+            $("#bus-routes").hide();
+            $("#bus-routes-link").on("click", function() {
+                if ($("#bus-routes").is(":visible")) {
+                    $("#bus-routes").hide();
+                } else {
+                    $("#bus-routes").show();
+                }
+            });
+        });
+    </script>
 {% endblock %}

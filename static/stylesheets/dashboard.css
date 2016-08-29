@@ -31,3 +31,12 @@
     background-color: dimgray;
     color: white;
 }
+
+.fake-link {
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.fake-link:hover {
+    text-decoration: underline;
+}
