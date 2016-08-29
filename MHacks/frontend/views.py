@@ -436,12 +436,12 @@ def run_python(request):
 
     users = list()
     for app in a_no_r:
-        users.append(app.user)
+        users.append(app)
 
     with open('accepted_and_no_reimbursement.csv', 'w') as fo:
         fo.write('name, email\n')
-        for user in users:
-            fo.write('{}, {}\n'.format(user.get_full_name(), user.email))
+        for app in users:
+            fo.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
     users = list()
     for app in w:
