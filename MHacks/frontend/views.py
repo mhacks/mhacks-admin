@@ -445,11 +445,11 @@ def run_python(request):
 
     users = list()
     for app in w:
-        users.append(app.user)
+        users.append(app)
 
     with open('waitlisted.csv', 'w') as fo2:
-        fo2.write('name, email\n')
-        for user in users:
-            fo2.write('{}, {}\n'.format(user.get_full_name(), user.email))
+        fo2.write('name, email, last_updated\n')
+        for app in users:
+            fo2.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
     return HttpResponse(content='Success', status=200)
