@@ -243,25 +243,52 @@ class RegistrationForm(forms.ModelForm):
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
     class Meta:
+        from application_lists import TECH_OPTIONS
         model = Registration
 
         # use all fields except for these
         exclude = ['user', 'submitted', 'deleted']
 
         labels = {
+            'acceptance': 'Do you accept your invitation to attend MHacks 8 this fall?',
+            'transportation': 'How do you plan on getting to MHacks 8?',
+            'want_help': 'What areas would you like to have help in? (CTRL/CMD + click to select multiple options!)',
+            'other_want_help': '',
+            'can_help': 'What areas can you mentor another hacker in? (CTRL/CMD + click to select multiple options!)',
+            'other_can_help': '',
+            't_shirt_size': 'Please select your T-shirt size:',
+            'dietary_restrictions': 'Please select any dietary restrictions:',
+            'accommodations': 'Would you need any accommodations?',
+            'medical_concerns': 'Do you have any medical concerns that we should be aware of?',
+            'phone_number': 'Please enter your phone number below:',
+            'degree': 'What degree are you currently pursuing?',
+            'employment': 'What types of employment are you interested in?',
             'code_of_conduct': mark_safe('I have read and agree to the terms of the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTVllEckF5UHpYZk0/view">MHacks Code of Conduct</a>'),
             'waiver_signature': mark_safe('By signing below, I indicate my acceptance of the terms stated in the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTX0c3NjUzV1F2WTQ/view">Accident Waiver and Release of Liability Form</a>'),
             'mlh_code_of_conduct': mark_safe('We participate in Major League Hacking (MLH) as a MLH Member Event. You authorize us to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in line with the MLH Privacy Policy. <br><br> I have read and agree to the terms of the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>')
         }
 
         widgets = {
+            'want_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
+                                                  choices=TECH_OPTIONS),
+            'other_want_help': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other areas'}),
+            'can_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
+                                                 choices=TECH_OPTIONS),
+            'other_can_help': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other areas'}),
+            'accommodations': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. wheelchair accessible transportation, closed captioning, etc.)'}),
+            'medical_concerns': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. asthma, diabetes, epilepsy, etc.)'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': '+##########'}),
+            'waiver_signature': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'First Last'})
         }
 
     def clean_waiver_signature(self):
         data = self.cleaned_data['waiver_signature']
+        print(data)
         user = self.user
+        if not data:
+            raise forms.ValidationError('You must sign the Accident Waiver and Release of Liability Form')
         if user.get_full_name() != data.strip().lower():
-            raise forms.ValidationError('Please enter your name as it appears in your user account: {}'.format(user.get_full_name()))
+            raise forms.ValidationError('Please sign your name as it appears in your user account: {}'.format(user.get_full_name()))
         return data
 
     def clean_code_of_conduct(self):
