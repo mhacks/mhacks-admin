@@ -92,11 +92,11 @@ class TicketSerializer(MHacksModelSerializer):
             return instance
 
         if 'completed' in validated_data.keys():
-            instance = self._complete_ticket(instance, validated_data['completed'], user)
+            instance = self._complete_ticket(instance, validated_data.get('completed'), user)
             return instance
 
         if instance.creator.id != user.id and not user.is_superuser:
-            raise ('You can\'t modify this.')
+            raise Exception('You can\'t modify this.')
         for attr, value in validated_data.iteritems():
             setattr(instance, attr, value)
         instance.save()
@@ -112,7 +112,7 @@ class TicketSerializer(MHacksModelSerializer):
         else:
             if not instance.mentor:
                 raise Exception('This ticket is already unassigned')
-            if instance.mentor.id != user.id:
+            if instance.mentor.id != user.id and instance.creator.id != user.id:
                 raise Exception('You can\'t unassign someone else')
             instance.mentor = None
             instance.accepted = False
@@ -121,14 +121,14 @@ class TicketSerializer(MHacksModelSerializer):
 
     @staticmethod
     def _complete_ticket(instance, value, user):
-        if not value:
+        if not (user.id == instance.creator.id or (instance.mentor and user.id == instance.mentor.id)):
+            raise Exception('Only individuals associated with a ticket can mark it completed.')
+        if value:
+            instance.completed = True
+        else:
             instance.mentor = None
             instance.accepted = False
             instance.completed = False
-        else:
-            if user.id != instance.creator.id or user.id != instance.mentor.id:
-                raise Exception('Only individuals associated with a ticket can mark it completed.')
-            instance.completed = True
 
         instance.save()
         return instance
