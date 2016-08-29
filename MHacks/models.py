@@ -281,6 +281,7 @@ class Registration(Any):
                                             blank=True)
     accommodations = models.TextField(blank=True)
     medical_concerns = models.TextField(blank=True)
+    anything_else = models.TextField(blank=True)
     phone_number = models.CharField(max_length=16,
                                     validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                                                message="Phone number must be entered in the format: \

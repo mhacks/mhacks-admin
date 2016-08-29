@@ -260,6 +260,7 @@ class RegistrationForm(forms.ModelForm):
             'dietary_restrictions': 'Please select any dietary restrictions:',
             'accommodations': 'Would you need any accommodations?',
             'medical_concerns': 'Do you have any medical concerns that we should be aware of?',
+            'anything_else': 'Anything else we should know?',
             'phone_number': 'Please enter your phone number below:',
             'degree': 'What degree are you currently pursuing?',
             'employment': 'What types of employment are you interested in?',
@@ -280,6 +281,7 @@ class RegistrationForm(forms.ModelForm):
                                                          choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS)),
             'accommodations': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. wheelchair accessible transportation, closed captioning, etc.)'}),
             'medical_concerns': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. asthma, diabetes, epilepsy, etc.)'}),
+            'anything_else': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(Your favorite joke...)'}),
             'phone_number': forms.TextInput(attrs={'placeholder': '+##########'}),
             'waiver_signature': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'First Last'})
         }
