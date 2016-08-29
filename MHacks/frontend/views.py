@@ -122,7 +122,15 @@ def apply_mentor(request):
 def registration(request):
     # private for now, while we test stuff
     if not request.user.is_superuser:
-        return redirect(reverse('mhacks-home'))
+        return redirect(reverse('mhacks-dashboard'))
+
+    # make sure the user is has submitted an application & has been accepted
+    try:
+        hacker_app = Application.objects.get(user=request.user)
+        if not hacker_app.decision == 'Accept':
+            return redirect(reverse('mhacks-dashboard'))
+    except Application.DoesNotExist:
+        return redirect(reverse('mhacks-dashboard'))
 
     # find the user's application if it exists
     try:
