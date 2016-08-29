@@ -239,6 +239,7 @@ class MentorApplication(Any):
 
 class Ticket(Any):
     completed = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
     creator = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_tickets')
     mentor = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='mentored_tickets', blank=True,
                                null=True)

@@ -68,7 +68,7 @@ class TicketSerializer(MHacksModelSerializer):
 
     class Meta:
         model = TicketModel
-        fields = ('id', 'title', 'description', 'completed', 'creator', 'mentor', 'area')
+        fields = ('id', 'title', 'description', 'creator', 'mentor', 'accepted', 'completed', 'area')
 
     # TODO better validation (invalid fields within mentor, check for required fields)
     # TODO raise validation errors when data is invalid
@@ -86,10 +86,50 @@ class TicketSerializer(MHacksModelSerializer):
 
     def update(self, instance, validated_data):
         user = self.context.get('request').user
+
+        if 'accepted' in validated_data.keys():
+            instance = self._assign_ticket(instance, validated_data.get('accepted'), user)
+            return instance
+
+        if 'completed' in validated_data.keys():
+            instance = self._complete_ticket(instance, validated_data['completed'], user)
+            return instance
+
         if instance.creator.id != user.id and not user.is_superuser:
             raise ('You can\'t modify this.')
         for attr, value in validated_data.iteritems():
             setattr(instance, attr, value)
+        instance.save()
+        return instance
+
+    @staticmethod
+    def _assign_ticket(instance, value, user):
+        if value:
+            if instance.mentor:
+                raise Exception('A mentor has already taken this ticket.')
+            instance.mentor = user
+            instance.accepted = True
+        else:
+            if not instance.mentor:
+                raise Exception('This ticket is already unassigned')
+            if instance.mentor.id != user.id:
+                raise Exception('You can\'t unassign someone else')
+            instance.mentor = None
+            instance.accepted = False
+        instance.save()
+        return instance
+
+    @staticmethod
+    def _complete_ticket(instance, value, user):
+        if not value:
+            instance.mentor = None
+            instance.accepted = False
+            instance.completed = False
+        else:
+            if user.id != instance.creator.id or user.id != instance.mentor.id:
+                raise Exception('Only individuals associated with a ticket can mark it completed.')
+            instance.completed = True
+
         instance.save()
         return instance
 
