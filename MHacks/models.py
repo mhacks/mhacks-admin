@@ -256,7 +256,7 @@ class Ticket(Any):
 
 class Registration(Any):
     from application_lists import ACCEPTANCE, TRANSPORTATION, TECH_OPTIONS, T_SHIRT_SIZES, DIETARY_RESTRICTIONS, \
-        DEGREES, EMPLOYMENT_SKILLS
+        DEGREES, EMPLOYMENT, EMPLOYMENT_SKILLS
 
     # User
     user = models.OneToOneField(AUTH_USER_MODEL)
@@ -288,7 +288,10 @@ class Registration(Any):
 
     # Sponsor & Employment Information
     degree = models.CharField(max_length=16, choices=zip(DEGREES, DEGREES))
-    employment = models.CharField(max_length=32, choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS), blank=True)
+    employment = models.CharField(max_length=64, choices=zip(EMPLOYMENT, EMPLOYMENT))
+    technical_skills = ArrayField(
+        models.CharField(max_length=32, choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS), blank=True),
+        size=len(EMPLOYMENT_SKILLS), blank=True)
 
     # Waivers and Code of Conduct
     code_of_conduct = models.BooleanField(default=False)
@@ -297,4 +300,3 @@ class Registration(Any):
 
     # Internal
     submitted = models.BooleanField(default=False)
-

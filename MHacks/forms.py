@@ -243,7 +243,7 @@ class RegistrationForm(forms.ModelForm):
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        from application_lists import TECH_OPTIONS
+        from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS
         model = Registration
 
         # use all fields except for these
@@ -263,6 +263,7 @@ class RegistrationForm(forms.ModelForm):
             'phone_number': 'Please enter your phone number below:',
             'degree': 'What degree are you currently pursuing?',
             'employment': 'What types of employment are you interested in?',
+            'technical_skills': 'Please select any technical skills you are competent in:',
             'code_of_conduct': mark_safe('I have read and agree to the terms of the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTVllEckF5UHpYZk0/view">MHacks Code of Conduct</a>'),
             'waiver_signature': mark_safe('By signing below, I indicate my acceptance of the terms stated in the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTX0c3NjUzV1F2WTQ/view">Accident Waiver and Release of Liability Form</a>'),
             'mlh_code_of_conduct': mark_safe('We participate in Major League Hacking (MLH) as a MLH Member Event. You authorize us to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in line with the MLH Privacy Policy. <br><br> I have read and agree to the terms of the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>')
@@ -275,6 +276,8 @@ class RegistrationForm(forms.ModelForm):
             'can_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
                                                  choices=TECH_OPTIONS),
             'other_can_help': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other areas'}),
+            'technical_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
+                                                         choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS)),
             'accommodations': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. wheelchair accessible transportation, closed captioning, etc.)'}),
             'medical_concerns': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. asthma, diabetes, epilepsy, etc.)'}),
             'phone_number': forms.TextInput(attrs={'placeholder': '+##########'}),
