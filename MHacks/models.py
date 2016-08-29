@@ -243,7 +243,7 @@ class Ticket(Any):
     mentor = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='mentored_tickets', blank=True,
                                null=True)
     title = models.CharField(max_length=64, default=None)
-    description = models.CharField(max_length=255, blank=True, default='')
+    description = models.CharField(max_length=255, default=None)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
 

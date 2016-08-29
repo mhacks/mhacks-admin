@@ -62,12 +62,14 @@ class TicketSerializer(MHacksModelSerializer):
     creator = MHacksUserSerializer(read_only=True)
     mentor = MHacksUserSerializer(read_only=True, required=False)
     title = CharField(required=True)
+    description = CharField(required=True)
 
     class Meta:
         model = TicketModel
         fields = ('id', 'title', 'description', 'completed', 'creator', 'mentor', 'area')
 
-    #TODO better validation (invalid fields within creator/mentor)
+    # TODO better validation (invalid fields within creator/mentor)
+    # TODO raise validation errors when data is invalid
     def run_validation(self, data=None):
         for key in data.keys():
             if key not in self.fields:
@@ -75,7 +77,6 @@ class TicketSerializer(MHacksModelSerializer):
         return data
 
     def create(self, validated_data):
-        print validated_data
         creator_data = validated_data.pop('creator')
         mentor_data = validated_data.pop('mentor', None)
         creator = MHacksUserModel.objects.get(id=creator_data['id'])
