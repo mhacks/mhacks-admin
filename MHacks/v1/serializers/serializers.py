@@ -60,32 +60,38 @@ class MHacksUserSerializer(MHacksModelSerializer):
 class TicketSerializer(MHacksModelSerializer):
     id = CharField(read_only=True)
     creator = MHacksUserSerializer(read_only=True)
-    mentor = MHacksUserSerializer(read_only=True, required=False)
+    mentor = MHacksUserSerializer(read_only=True)
     title = CharField(required=True)
     description = CharField(required=True)
+
+    _remove_from_request = ('id', 'creator', 'mentor')
 
     class Meta:
         model = TicketModel
         fields = ('id', 'title', 'description', 'completed', 'creator', 'mentor', 'area')
 
-    # TODO better validation (invalid fields within creator/mentor)
+    # TODO better validation (invalid fields within mentor, check for required fields)
     # TODO raise validation errors when data is invalid
     def run_validation(self, data=None):
         for key in data.keys():
-            if key not in self.fields:
+            if key in self._remove_from_request or key not in self.fields:
                 data.pop(key)
         return data
 
     def create(self, validated_data):
-        creator_data = validated_data.pop('creator')
-        mentor_data = validated_data.pop('mentor', None)
-        creator = MHacksUserModel.objects.get(id=creator_data['id'])
+        creator = self.context.get('request').user
         ticket = TicketModel.objects.create(creator=creator, **validated_data)
-        if mentor_data:
-            mentor = MHacksUserModel.objects.get(id=mentor_data['id'])
-            ticket.mentor = mentor
         ticket.save()
         return ticket
+
+    def update(self, instance, validated_data):
+        user = self.context.get('request').user
+        if instance.creator.id != user.id and not user.is_superuser:
+            raise ('You can\'t modify this.')
+        for attr, value in validated_data.iteritems():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
 
 
 class AuthSerializer(AuthTokenSerializer):
