@@ -129,7 +129,7 @@ class ApplicationForm(forms.ModelForm):
                                              'id': 'school-autocomplete'}),
             'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'class': 'form-control input-md',
                                             'id': 'major-autocomplete'}),
-            'gender': forms.TextInput(attrs={'placeholder': 'Pro/Pro/Pro', 'id': 'gender-autocomplete'}),
+            'gender': forms.TextInput(attrs={'placeholder': 'They/Them/Theirs', 'id': 'gender-autocomplete'}),
             'race': forms.TextInput(attrs={'placeholder': 'Hacker', 'id': 'race-autocomplete'}),
             'github': forms.TextInput(attrs={'placeholder': 'GitHub', 'class': 'form-control input-md'}),
             'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
