@@ -1,10 +1,13 @@
 from django.conf.urls import url
+
 from rest_framework_docs.views import DRFDocsView
-from announcements import Announcements, Announcement
-from locations import Locations, Location
-from events import Events, Event
-from views import get_countdown, get_map
-from auth import Authentication
+
+from MHacks.v1.announcements import Announcements, Announcement
+from MHacks.v1.auth import Authentication
+from MHacks.v1.events import Events, Event
+from MHacks.v1.locations import Locations, Location
+from MHacks.v1.tickets import Tickets, Ticket
+from MHacks.v1.views import get_countdown, get_map
 
 urlpatterns = [
     # Authentication
@@ -17,5 +20,8 @@ urlpatterns = [
     url(r'^events$', Events.as_view()),
     url(r'^countdown$', get_countdown),
     url(r'^map$', get_map),
-    url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs')
+    url(r'^tickets/(?P<id>[0-9]+)$', Ticket.as_view()),
+    url(r'^tickets/$', Tickets.as_view()),
+    url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs'),
 ]
+

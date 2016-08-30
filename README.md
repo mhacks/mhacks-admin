@@ -45,9 +45,6 @@ Getting started:
     # endif
     pip install -r requirements.txt
     ./manage.py migrate
-    # if <first set up>
-    ./manage.py loaddata permissions.json
-    # endif
     ./manage.py runserver
 ```
 

@@ -239,11 +239,12 @@ class MentorApplication(Any):
 
 class Ticket(Any):
     completed = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
     creator = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_tickets')
     mentor = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='mentored_tickets', blank=True,
                                null=True)
     title = models.CharField(max_length=64, default=None)
-    description = models.CharField(max_length=255, blank=True, default='')
+    description = models.CharField(max_length=255, default=None)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
 
@@ -256,7 +257,7 @@ class Ticket(Any):
 
 class Registration(Any):
     from application_lists import ACCEPTANCE, TRANSPORTATION, TECH_OPTIONS, T_SHIRT_SIZES, DIETARY_RESTRICTIONS, \
-        DEGREES, EMPLOYMENT_SKILLS
+        DEGREES, EMPLOYMENT, EMPLOYMENT_SKILLS
 
     # User
     user = models.OneToOneField(AUTH_USER_MODEL)
@@ -281,6 +282,7 @@ class Registration(Any):
                                             blank=True)
     accommodations = models.TextField(blank=True)
     medical_concerns = models.TextField(blank=True)
+    anything_else = models.TextField(blank=True)
     phone_number = models.CharField(max_length=16,
                                     validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                                                message="Phone number must be entered in the format: \
@@ -288,7 +290,10 @@ class Registration(Any):
 
     # Sponsor & Employment Information
     degree = models.CharField(max_length=16, choices=zip(DEGREES, DEGREES))
-    employment = models.CharField(max_length=32, choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS), blank=True)
+    employment = models.CharField(max_length=64, choices=zip(EMPLOYMENT, EMPLOYMENT))
+    technical_skills = ArrayField(
+        models.CharField(max_length=32, choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS), blank=True),
+        size=len(EMPLOYMENT_SKILLS), blank=True)
 
     # Waivers and Code of Conduct
     code_of_conduct = models.BooleanField(default=False)
@@ -297,4 +302,3 @@ class Registration(Any):
 
     # Internal
     submitted = models.BooleanField(default=False)
-
