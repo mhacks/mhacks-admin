@@ -302,3 +302,6 @@ class Registration(Any):
 
     # Internal
     submitted = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.user.get_full_name() + '\'s Registration'

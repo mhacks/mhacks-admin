@@ -62,7 +62,7 @@ def thanks_registering(request):
 def application(request):
     # find the user's application if it exists
     try:
-        app = Application.objects.get(user=request.user)
+        app = Application.objects.get(user=request.user, deleted=False)
     except Application.DoesNotExist:
         app = None
 
@@ -75,10 +75,9 @@ def application(request):
             # save application
             app = form.save(commit=False)
             app.user = request.user
-
-            if '_submit' in request.POST:
-                app.submitted = True
-                send_application_confirmation_email(request.user)
+            app.submitted = True
+            app.deleted = False
+            send_application_confirmation_email(request.user)
 
             # save the app regardless
             app.save()
@@ -94,7 +93,7 @@ def application(request):
 @login_required()
 def apply_mentor(request):
     try:
-        app = MentorApplication.objects.get(user=request.user)
+        app = MentorApplication.objects.get(user=request.user, deleted=False)
     except MentorApplication.DoesNotExist:
         app = None
 
@@ -108,6 +107,7 @@ def apply_mentor(request):
             app = form.save(commit=False)
             app.user = request.user
             app.submitted = True
+            app.deleted = False
             app.save()
 
             return redirect(reverse('mhacks-dashboard'))
@@ -130,7 +130,10 @@ def registration(request):
 
     # find the user's application if it exists
     try:
-        app = Registration.objects.get(user=request.user)
+        app = Registration.objects.get(user=request.user, deleted=False)
+
+        if app.submitted:
+            return redirect(reverse('mhacks-dashboard'))
     except Registration.DoesNotExist:
         app = None
 
@@ -296,16 +299,24 @@ def dashboard(request):
         from MHacks.globals import groups
 
         try:
-            app = Application.objects.get(user=request.user)
+            app = Application.objects.get(user=request.user, deleted=False)
         except Application.DoesNotExist:
             app = None
 
         try:
-            mentor_app = MentorApplication.objects.get(user=request.user)
+            mentor_app = MentorApplication.objects.get(user=request.user, deleted=False)
         except MentorApplication.DoesNotExist:
             mentor_app = None
 
-        return render(request, 'dashboard.html', {'groups': groups, 'application': app, 'mentor_application': mentor_app})
+        try:
+            registration_app = Registration.objects.get(user=request.user, deleted=False)
+        except Registration.DoesNotExist:
+            registration_app = None
+
+        return render(request, 'dashboard.html', {'groups': groups,
+                                                  'application': app,
+                                                  'mentor_application': mentor_app,
+                                                  'registration_application': registration_app})
 
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 

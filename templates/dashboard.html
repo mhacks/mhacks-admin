@@ -37,9 +37,17 @@
                 {% if application.decision == 'Accept' %}
                     <h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>
                     <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/1197509966946089/">Facebook event page</a> and join the community!</p>
-{#                    <p>Registration isn’t open yet, but check back here this week for the form, bus routes, and your Pre-Event Checklist 🎉</p>#}
                     <p>Hit the button below to register and make sure you check out our <span class="fake-link" id="bus-routes-link">bus routes</span>! 🎉</p>
-                    <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
+
+                    {% if registration_application and registration_application.submitted %}
+                        {% if registration_application.acceptance == 'yes' %}
+                            <h2>Registration Status: <span class="rounded-box accept">ACCEPTED INVITE</span></h2>
+                        {% elif registration_application.acceptance == 'no' %}
+                            <h2>Registration Status: <span class="rounded-box decline">DECLINED INVITE</span></h2>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
+                    {% endif %}
 
                     <div id="bus-routes">
                         <br>
@@ -99,15 +107,16 @@
 
         {% endif %}
     </div>
-
-    <div class="body-info" id="apply-instructions">
-        <h2>Here’s how it works:</h2>
-        <p>When you’re ready, hit the apply button and fill out an application. Our decisions are released on a weekly basis, so if you submit an application by Friday at 11:59pm, you will receive a decision on Monday.</p>
-        <p>If you submit an application after Friday at 11:59pm, your application will be read in the next cycle.</p>
-        <p>If you need to change your answers, don’t worry! Just make sure you submit your changes before Friday 11:59pm of that week.</p>
-        <p>Make sure you submit an application by September 9th in order to be considered for a travel reimbursement!</p>
-        <a href="{{ url_for('mhacks-apply') }}"><b>Let’s do this.</b></a>
-    </div>
+    {% if not application %}
+        <div class="body-info" id="apply-instructions">
+            <h2>Here’s how it works:</h2>
+            <p>When you’re ready, hit the apply button and fill out an application. Our decisions are released on a weekly basis, so if you submit an application by Friday at 11:59pm, you will receive a decision on Monday.</p>
+            <p>If you submit an application after Friday at 11:59pm, your application will be read in the next cycle.</p>
+            <p>If you need to change your answers, don’t worry! Just make sure you submit your changes before Friday 11:59pm of that week.</p>
+            <p>Make sure you submit an application by September 9th in order to be considered for a travel reimbursement!</p>
+            <a href="{{ url_for('mhacks-apply') }}"><b>Let’s do this.</b></a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}
