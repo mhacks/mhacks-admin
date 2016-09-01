@@ -279,26 +279,24 @@ class RegistrationForm(forms.ModelForm):
         self.fields['employment'].useclass = True
         self.fields['employment'].textclass = "application-subtitle"
 
-        self.fields['code_of_conduct'].before = True
-        self.fields['code_of_conduct'].beforetext = "Waivers and Code of Conduct"
+        self.fields['technical_skills'].after = True
+        self.fields['technical_skills'].aftertext = "Waivers and Code of Conduct"
 
-
-        # dont ask mich students about fields
+        # Don't ask umich students about fields
         if self.user and 'umich.edu' in self.user.email:
             for key in ['transportation']:
                 del self.fields[key]
             self.fields['acceptance'].after = False
 
+        # Remove fields/add additional text based on the hacker application
         hacker_app = Application.objects.get(user=self.user)
         if not hacker_app.mentoring:
             for key in ['can_help', 'other_can_help']:
                 del self.fields[key]
         
         if hacker_app.is_high_school:
-            self.fields['code_of_conduct'].after = True
-            self.fields['code_of_conduct'].aftertext = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
-            self.fields['code_of_conduct'].useclass = True
-            self.fields['code_of_conduct'].textclass = "application-subtitle"
+            self.fields['mlh_code_of_conduct'].after = True
+            self.fields['mlh_code_of_conduct'].aftertext = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
 
     class Meta:
         from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS

@@ -120,10 +120,6 @@ def apply_mentor(request):
 
 @login_required()
 def registration(request):
-    # private for now, while we test stuff
-    if not request.user.is_superuser:
-        return redirect(reverse('mhacks-dashboard'))
-
     # make sure the user is has submitted an application & has been accepted
     try:
         hacker_app = Application.objects.get(user=request.user)
