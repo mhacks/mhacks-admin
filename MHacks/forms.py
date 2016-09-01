@@ -344,11 +344,10 @@ class RegistrationForm(forms.ModelForm):
 
     def clean_waiver_signature(self):
         data = self.cleaned_data['waiver_signature']
-        print(data)
         user = self.user
         if not data:
             raise forms.ValidationError('You must sign the Accident Waiver and Release of Liability Form')
-        if user.get_full_name() != data.strip().lower():
+        if not user.get_full_name().lower() == data.strip().lower():
             raise forms.ValidationError('Please sign your name as it appears in your user account: {}'.format(user.get_full_name()))
         return data
 

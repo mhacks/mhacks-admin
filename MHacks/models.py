@@ -273,7 +273,7 @@ class Registration(Any):
                            blank=True)
     other_want_help = models.CharField(max_length=64, blank=True)
     can_help = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, blank=True), size=len(TECH_OPTIONS),
-                          blank=True)
+                          blank=True, null=True)
     other_can_help = models.CharField(max_length=64, blank=True)
 
     # Day-of Specifics
