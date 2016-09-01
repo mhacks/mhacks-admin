@@ -284,7 +284,7 @@ class RegistrationForm(forms.ModelForm):
 
 
         # dont ask mich students about fields
-        if self.user and 'umich1.edu' in self.user.email:
+        if self.user and 'umich.edu' in self.user.email:
             for key in ['transportation']:
                 del self.fields[key]
             self.fields['acceptance'].after = False
