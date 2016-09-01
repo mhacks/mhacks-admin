@@ -41,8 +41,8 @@ SKILLS = [
 ]
 
 ACCEPTANCE = [
-    ('yes', 'HAIL YEAH!'),
-    ('no', 'No, I can\'t make it')
+    ('yes', 'HAIL YEAH! 😀'),
+    ('no', 'No, I can\'t make it 😭')
 ]
 
 TRANSPORTATION = [

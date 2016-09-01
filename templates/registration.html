@@ -2,6 +2,20 @@
 
 {% block form_headers %}
     <link rel="stylesheet" media="all" href="{{ static('stylesheets/application.css') }}">
+     <script>
+      
+        $(document).ready(function() {
+            $("#id_employment").change(function() {
+            	console.log("ASdas");
+                if(this.value == "Not Interested") {
+                    $("#id_technical_skills").parent().hide();
+                }
+                else{
+                	$("#id_technical_skills").parent().show();
+                }
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block basic_page_title %}

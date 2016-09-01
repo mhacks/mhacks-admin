@@ -48,7 +48,8 @@ class ApplicationForm(forms.ModelForm):
         self.fields['is_high_school'].end_row = 12
         self.fields['is_international'].cols = 12
         self.fields['is_international'].end_row = 12
-        self.fields['is_high_school'].general = True
+        self.fields['is_high_school'].before = True
+        self.fields['is_high_school'].beforetext = "General Information"
 
         self.fields['is_high_school'].end_row = True
         self.fields['birthday'].end_row = True
@@ -59,7 +60,8 @@ class ApplicationForm(forms.ModelForm):
         self.fields['race'].cols = 6
         self.fields['gender'].cols = 6
         self.fields['birthday'].demographic = True
-        self.fields['race'].previous = True
+        self.fields['race'].after = True
+        self.fields['race'].aftertext = "Previous Experience"
 
         self.fields['github'].cols = 6
         self.fields['devpost'].cols = 6
@@ -71,9 +73,11 @@ class ApplicationForm(forms.ModelForm):
 
         self.fields['num_hackathons'].cols = 12
         self.fields['num_hackathons'].end_row = True
-        self.fields['mentoring'].interests = True
+        self.fields['mentoring'].after = True
+        self.fields['mentoring'].aftertext = "Interests"
 
-        self.fields['cortex'].short = True
+        self.fields['cortex'].after = True
+        self.fields['cortex'].aftertext = "Short Answer"
 
         self.fields['github'].required = False
         self.fields['devpost'].required = False
@@ -82,14 +86,16 @@ class ApplicationForm(forms.ModelForm):
         self.fields['gender'].required = False
         self.fields['race'].required = False
 
-        self.fields['other_info'].travel = True
+        self.fields['other_info'].after = True
+        self.fields['other_info'].aftertext = "Travel"
+
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
             for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city',
                         'from_state']:
                 del self.fields[key]
-                self.fields['cortex'].short = False
+                self.fields['cortex'].after = False
 
     class Meta:
         from application_lists import TECH_OPTIONS
@@ -193,9 +199,14 @@ class MentorApplicationForm(forms.ModelForm):
         super(MentorApplicationForm, self).__init__(*args, **kwargs)
         self.fields['agree_tc'].required = True
 
-        self.fields['first_time_mentor'].short = True
-        self.fields['mentorship_ideas'].skills = True
-        self.fields['github'].commit = True
+        self.fields['first_time_mentor'].after = True
+        self.fields['first_time_mentor'].aftertext = "Short Answer"
+
+        self.fields['mentorship_ideas'].after = True
+        self.fields['mentorship_ideas'].aftertext = "Skills"
+
+        self.fields['github'].after = True
+        self.fields['github'].aftertext = "Commitment"
 
     class Meta:
         from application_lists import SKILLS
@@ -241,6 +252,53 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(RegistrationForm, self).__init__(*args, **kwargs)
+ 
+
+        self.fields['acceptance'].before = True
+        self.fields['acceptance'].beforetext = "Acceptance"
+
+        self.fields['acceptance'].after = True
+        self.fields['acceptance'].aftertext = "Logistics"
+
+        self.fields['transportation'].before = True
+        self.fields['transportation'].beforetext = "Note: checking an option does not guarantee travel reimbursement. All travel reimbursements are granted on a case-by-case basis. The amount you received for travel reimbursement was explicitly stated in the email notifying you of your application status and is also available on your Hacker Dashboard. If you have any questions, email us at hackathon@umich.edu. "
+        self.fields['transportation'].useclass = True
+        self.fields['transportation'].textclass = "application-subtitle"
+
+        self.fields['want_help'].before = True
+        self.fields['want_help'].beforetext = "Mentorship"
+
+        self.fields['t_shirt_size'].before = True
+        self.fields['t_shirt_size'].beforetext = "Day-of Specifics"
+
+        self.fields['phone_number'].after = True
+        self.fields['phone_number'].aftertext = "Sponsor & Employment Information"
+
+        self.fields['employment'].before = True
+        self.fields['employment'].beforetext = "Sponsors will be able to sift through resumes based on the following data you provide. This is a great oppurtunity for you to showcase your resume to the world's top tech companies (most of whom are recruiting!). If you do not wish to have your resume looked at by our sponsors, please select 'Not Interested' in the following question"
+        self.fields['employment'].useclass = True
+        self.fields['employment'].textclass = "application-subtitle"
+
+        self.fields['code_of_conduct'].before = True
+        self.fields['code_of_conduct'].beforetext = "Waivers and Code of Conduct"
+
+
+        # dont ask mich students about fields
+        if self.user and 'umich1.edu' in self.user.email:
+            for key in ['transportation']:
+                del self.fields[key]
+            self.fields['acceptance'].after = False
+
+        hacker_app = Application.objects.get(user=self.user)
+        if not hacker_app.mentoring:
+            for key in ['can_help', 'other_can_help']:
+                del self.fields[key]
+        
+        if hacker_app.is_high_school:
+            self.fields['code_of_conduct'].after = True
+            self.fields['code_of_conduct'].aftertext = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
+            self.fields['code_of_conduct'].useclass = True
+            self.fields['code_of_conduct'].textclass = "application-subtitle"
 
     class Meta:
         from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS

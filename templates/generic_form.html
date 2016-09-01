@@ -23,15 +23,17 @@
                     <div class="row">
                         {% for field in form %}
 
-                            {% if field.field.general %}
-                              </div>
-                                <div class="row none" >
-                                     <div class="col-lg-12 text-center title-apply">
-                                        <div class="application-title ">General Information</div>
-                                        </div>
+
+                             {% if field.field.before %}
+                                </div>
+                                <div class="row one">
+                                    <div class="col-lg-12 text-center title-apply">
+                                        <div class="application-title  {{ field.field.textclass if field.field.useclass }}">{{ field.field.beforetext }}</div>
+                                    </div>
                                 </div>
                                 <div class="row ">
                             {% endif %}
+
 
                             <div class="field-form col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center addMargin ">
                                 <label class="label-apply">
@@ -63,67 +65,18 @@
                                 <div class="row ">
                             {% endif %}
 
-                            {% if field.field.previous %}
+                            {% if field.field.after %}
                                 </div>
                                 <div class="row three">
                                     <div class="col-lg-12 text-center title-apply">
-                                        <div class="application-title ">Previous Experience</div>
+                                        <div class="application-title "> {{ field.field.aftertext }}</div>
                                     </div>
                                 </div>
                                 <div class="row ">
 
                             {% endif %}
-                            {% if field.field.interests %}
-                                </div>
-                                <div class="row three">
-                                    <div class="col-lg-12 text-center title-apply">
-                                        <div class="application-title ">Interests</div>
-                                    </div>
-                                </div>
-                                <div class="row ">
 
-                            {% endif %}
-                            {% if field.field.short %}
-                                </div>
-                                <div class="row three">
-                                    <div class="col-lg-12 text-center title-apply ">
-                                        <div class="application-title ">Short Answer</div>
-                                    </div>
-                                </div>
-                                <div class="row ">
-                            {% endif %}
-
-                            {% if field.field.travel %}
-                                </div>
-                                <div class="row three">
-                                    <div class="col-lg-12 text-center title-apply ">
-                                        <div class="application-title ">Travel</div>
-                                    </div>
-                                </div>
-                                <div class="row ">
-                            {% endif %}
-
-                            {% if field.field.skills %}
-                                </div>
-                                <div class="row three">
-                                    <div class="col-lg-12 text-center title-apply">
-                                        <div class="application-title ">Skills</div>
-                                    </div>
-                                </div>
-                                <div class="row ">
-                            {% endif %}
-
-                            {% if field.field.commit %}
-                                </div>
-                                <div class="row three">
-                                    <div class="col-lg-12 text-center title-apply">
-                                        <div class="application-title ">Commitment</div>
-                                    </div>
-                                </div>
-                                <div class="row ">
-                            {% endif %}
-
-
+                           
                         {% endfor %}
                         </div>
                     <div class="submit-row">
