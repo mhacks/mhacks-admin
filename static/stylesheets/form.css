@@ -101,7 +101,6 @@ html input {
     -webkit-transition: .4s;
     transition: .4s;
     padding: 0;
-    float: left;
     margin-left: 20px;
 }
 
@@ -212,6 +211,7 @@ html button {
     display: inline-flex;
     width: 40%;
 }
+
 @media (max-width: 800px) {
     .container-form {
         width: 95%;
@@ -229,9 +229,24 @@ html button {
     font-size: 12px;
 }
 
-.full-width {
+.form-full {
+    margin: 0 5px 10px 5px;
     display: block;
+    text-align: center;
+    float: none;
     width: 100%;
+}
+
+.form-full label {
+    float: none;
+    text-align: center;
+    width: 100%;
+}
+
+.form-full input {
+    font-size: 15px;
+    float: none;
+    text-align: center;
 }
 
 .full {
@@ -241,10 +256,14 @@ html button {
 }
 
 .checkbox-style {
-	color:#000;
-	opacity:.7;
+    color:#000;
+    opacity:.7;
 }
 
 .check-width {
     width: 40%;
+}
+
+.file-upload {
+    padding-left: 20px;
 }

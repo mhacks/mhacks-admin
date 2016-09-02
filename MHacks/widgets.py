@@ -35,7 +35,7 @@ class MHacksAdminFileWidget(AdminFileWidget):
     """
     Overriding the AdminFileWidget / ClearableFileInput to remove the link (<a> tag)
     """
-    template_with_initial = ('<p class="file-upload">%s</p>'
+    template_with_initial = ('<div class="file-upload">%s</div>'
                              % (
                                  '%(initial_text)s: <b>%(initial)s</b> '
                                  '%(clear_template)s<br />%(input_text)s: %(input)s'

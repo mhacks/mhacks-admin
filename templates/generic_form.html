@@ -36,7 +36,7 @@
                                 </div>
                             {% endif %}
                         {% endif %}
-                        <div class="form-field col-lg-{{ field.field.cols if field.field.cols else '12' }}">
+                        <div class="form-{{ 'full' if field.field.full else 'field' }} col-lg-{{ field.field.cols if field.field.cols else '12' }}">
                             <label class="form-label">
                                 {{ field.label }}
                             </label>

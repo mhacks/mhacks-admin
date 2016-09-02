@@ -44,6 +44,10 @@ class ApplicationForm(forms.ModelForm):
         super(ApplicationForm, self).__init__(*args, **kwargs)
 
         self.fields['is_high_school'].title = 'General Information'
+        self.fields['is_high_school'].full = True
+        self.fields['is_international'].full = True
+        self.fields['mentoring'].full = True
+        self.fields['needs_reimbursement'].full = True
 
         self.fields['gender'].title = 'Demographic Info'
         self.fields['gender'].subtitle = 'Not Required'
@@ -65,6 +69,12 @@ class ApplicationForm(forms.ModelForm):
         self.fields['race'].required = False
 
         self.fields['needs_reimbursement'].title = 'Travel'
+
+        # self.fields['resume'].full = True
+        self.fields['cortex'].full = True
+        self.fields['passionate'].full = True
+        self.fields['coolest_thing'].full = True
+        self.fields['other_info'].full = True
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
@@ -104,7 +114,7 @@ class ApplicationForm(forms.ModelForm):
 
         widgets = {
             'grad_date': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'id': 'graduation_date'}),
-            'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style textfield check-width'}, choices=TECH_OPTIONS),
+            'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-style check-width'}, choices=TECH_OPTIONS),
             'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'}),
             'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md',
                                              'id': 'school-autocomplete'}),
@@ -120,7 +130,7 @@ class ApplicationForm(forms.ModelForm):
             'num_hackathons': forms.NumberInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'resume': MHacksAdminFileWidget(attrs={'class': 'input-md form-control'}),
+            'resume': MHacksAdminFileWidget(attrs={'class': 'full form-control'}),
             'from_state': forms.TextInput(attrs={'placeholder': 'State or country', 'id': 'state-autocomplete'})
         }
 
@@ -178,6 +188,12 @@ class MentorApplicationForm(forms.ModelForm):
         self.fields['skills'].title = "Skills"
         self.fields['agree_tc'].title = "Commitment"
 
+        self.fields['first_time_mentor'].full = True
+        self.fields['why_mentor'].full = True
+        self.fields['mentorship_ideas'].full = True
+        self.fields['what_importance'].full = True
+        self.fields['agree_tc'].full = True
+
     class Meta:
         from application_lists import SKILLS
         model = MentorApplication
@@ -191,15 +207,15 @@ class MentorApplicationForm(forms.ModelForm):
             'why_mentor': 'Why do you want to be a mentor?',
             'mentorship_ideas': 'Do you have any ideas for mentorship at MHacks?',
             'skills': 'What skills are you comfortable mentoring in? (CTRL/CMD + click to select multiple options!)',
-            'other_skills': '',
-            'github': '',
+            'other_skills': 'Other skills',
+            'github': 'GitHub',
             'agree_tc': 'I understand that by committing to mentor at MHacks 8 during the weekend of October 7-9, 2016, I will not work on my own project and will help participants to the best of my ability.'
         }
 
         widgets = {
-            'skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'}, choices=zip(SKILLS, SKILLS)),
-            'other_skills': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other skills'}),
-            'github': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'GitHub (optional)'}),
+            'skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'}, choices=zip(SKILLS, SKILLS)),
+            'other_skills': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': 'juggling...'}),
+            'github': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': '(optional)'}),
             'why_mentor': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'mentorship_ideas': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'what_importance': forms.Textarea(attrs={'class': 'textfield form-control'})
@@ -236,6 +252,14 @@ class RegistrationForm(forms.ModelForm):
         self.fields['employment'].subtitle = "Sponsors will be able to sift through resumes based on the following data you provide. This is a great oppurtunity for you to showcase your resume to the world's top tech companies (most of whom are recruiting!). If you do not wish to have your resume looked at by our sponsors, please select 'Not Interested' in the following question"
 
         self.fields['code_of_conduct'].title = "Waivers and Code of Conduct"
+        self.fields['mlh_code_of_conduct'].title = "MLH Code Of Conduct"
+
+        self.fields['code_of_conduct'].full = True
+        self.fields['waiver_signature'].full = True
+        self.fields['mlh_code_of_conduct'].full = True
+        self.fields['accommodations'].full = True
+        self.fields['medical_concerns'].full = True
+        self.fields['anything_else'].full = True
 
         # Don't ask umich students about fields
         if self.user and 'umich.edu' in self.user.email:
@@ -246,10 +270,9 @@ class RegistrationForm(forms.ModelForm):
         if not hacker_app.mentoring:
             for key in ['can_help', 'other_can_help']:
                 del self.fields[key]
-        
-        # if hacker_app.is_high_school:
-        #     self.fields['mlh_code_of_conduct'].title = "MLH Code Of Conduct"
-        #     self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
+
+        if hacker_app.is_high_school:
+            self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
 
     class Meta:
         from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS, ACCEPTANCE, T_SHIRT_SIZES
@@ -276,11 +299,12 @@ class RegistrationForm(forms.ModelForm):
             'technical_skills': 'Please select any technical skills you are competent in:',
             'code_of_conduct': mark_safe('I have read and agree to the terms of the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTVllEckF5UHpYZk0/view">MHacks Code of Conduct</a>'),
             'waiver_signature': mark_safe('By signing below, I indicate my acceptance of the terms stated in the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTX0c3NjUzV1F2WTQ/view">Accident Waiver and Release of Liability Form</a>'),
-            'mlh_code_of_conduct': mark_safe('We participate in Major League Hacking (MLH) as a MLH Member Event. You authorize us to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in line with the MLH Privacy Policy. <br><br> I have read and agree to the terms of the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>')
+            'mlh_code_of_conduct': mark_safe('<br>We participate in Major League Hacking (MLH) as a MLH Member Event. You authorize us to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in line with the MLH Privacy Policy. <br><br> I have read and agree to the terms of the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>')
         }
 
         widgets = {
-            'acceptance': forms.Select(attrs={'class': 'full checkbox-style check-width'}),
+            'acceptance': forms.Select(attrs={'class': 'full checkbox-style'}),
+            'transportation': forms.Select(attrs={'class': 'full checkbox-style'}),
             'want_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'},
                                                   choices=TECH_OPTIONS),
             'other_want_help': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': 'Other areas'}),
@@ -289,15 +313,15 @@ class RegistrationForm(forms.ModelForm):
             'other_can_help': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other areas'}),
             't_shirt_size': forms.Select(attrs={'class': 'full checkbox-style'}),
             'dietary_restrictions': forms.Select(attrs={'class': 'full checkbox-style'}),
-            'technical_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
+            'technical_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'},
                                                          choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS)),
             'accommodations': forms.Textarea(attrs={'class': 'full textfield form-control', 'placeholder': '(e.g. wheelchair accessible transportation, closed captioning, etc.)'}),
-            'medical_concerns': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. asthma, diabetes, epilepsy, etc.)'}),
-            'anything_else': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(Your favorite joke...)'}),
-            'phone_number': forms.TextInput(attrs={'placeholder': '+##########'}),
-            'waiver_signature': forms.TextInput(attrs={'class': 'full-width', 'placeholder': 'First Last'}),
-            'code_of_conduct': forms.CheckboxInput(attrs={'class': 'full-width'}),
-            'mlh_code_of_conduct': forms.CheckboxInput(attrs={'class': 'full-width'})
+            'medical_concerns': forms.Textarea(attrs={'class': 'full textfield form-control', 'placeholder': '(e.g. asthma, diabetes, epilepsy, etc.)'}),
+            'anything_else': forms.Textarea(attrs={'class': 'full textfield form-control', 'placeholder': '(Your favorite joke...)'}),
+            'phone_number': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': '+##########'}),
+            'employment': forms.Select(attrs={'class': 'full checkbox-style'}),
+            'degree': forms.Select(attrs={'class': 'full checkbox-style'}),
+            'waiver_signature': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'First Last'})
         }
 
     def clean_waiver_signature(self):
