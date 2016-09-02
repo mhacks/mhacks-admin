@@ -32,16 +32,6 @@ html input[type="checkbox"] {
     margin-top: -10px;
 }
 
-.full {
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: 15px;
-}
-
-.checkbox-style {
-	color:#000; 
-	opacity:.7;
-}
 .select_style {
     box-shadow: 0 3px 6px rgba(0,0,0,0.05), 0 3px 6px rgba(0,0,0,0.05);
     margin-left: auto;
@@ -86,10 +76,6 @@ html input[type="checkbox"] {
 
 .form-field .form-label {
     display: block;
-}
-
-.check-width {
-    width: 40%;
 }
 
 .ui-autocomplete {

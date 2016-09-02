@@ -117,7 +117,7 @@ class ApplicationForm(forms.ModelForm):
             'personal_website': forms.TextInput(
                 attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'num_hackathons': forms.NumberInput(attrs={'autocomplete': 'off'}),
+            'num_hackathons': forms.NumberInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'resume': MHacksAdminFileWidget(attrs={'class': 'input-md form-control'}),
@@ -239,8 +239,7 @@ class RegistrationForm(forms.ModelForm):
 
         # Don't ask umich students about fields
         if self.user and 'umich.edu' in self.user.email:
-            for key in ['transportation']:
-                del self.fields[key]
+            del self.fields['transportation']
 
         # Remove fields/add additional text based on the hacker application
         hacker_app = Application.objects.get(user=self.user)
@@ -248,12 +247,12 @@ class RegistrationForm(forms.ModelForm):
             for key in ['can_help', 'other_can_help']:
                 del self.fields[key]
         
-        if hacker_app.is_high_school:
-            self.fields['mlh_code_of_conduct'].title = "MLH Code Of Conduct"
-            self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
+        # if hacker_app.is_high_school:
+        #     self.fields['mlh_code_of_conduct'].title = "MLH Code Of Conduct"
+        #     self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
 
     class Meta:
-        from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS
+        from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS, ACCEPTANCE, T_SHIRT_SIZES
         model = Registration
 
         # use all fields except for these
@@ -281,19 +280,24 @@ class RegistrationForm(forms.ModelForm):
         }
 
         widgets = {
-            'want_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
+            'acceptance': forms.Select(attrs={'class': 'full checkbox-style check-width'}),
+            'want_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'},
                                                   choices=TECH_OPTIONS),
-            'other_want_help': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other areas'}),
+            'other_want_help': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': 'Other areas'}),
             'can_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
                                                  choices=TECH_OPTIONS),
             'other_can_help': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other areas'}),
+            't_shirt_size': forms.Select(attrs={'class': 'full checkbox-style'}),
+            'dietary_restrictions': forms.Select(attrs={'class': 'full checkbox-style'}),
             'technical_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
                                                          choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS)),
-            'accommodations': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. wheelchair accessible transportation, closed captioning, etc.)'}),
+            'accommodations': forms.Textarea(attrs={'class': 'full textfield form-control', 'placeholder': '(e.g. wheelchair accessible transportation, closed captioning, etc.)'}),
             'medical_concerns': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(e.g. asthma, diabetes, epilepsy, etc.)'}),
             'anything_else': forms.Textarea(attrs={'class': 'textfield form-control', 'placeholder': '(Your favorite joke...)'}),
             'phone_number': forms.TextInput(attrs={'placeholder': '+##########'}),
-            'waiver_signature': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'First Last'})
+            'waiver_signature': forms.TextInput(attrs={'class': 'full-width', 'placeholder': 'First Last'}),
+            'code_of_conduct': forms.CheckboxInput(attrs={'class': 'full-width'}),
+            'mlh_code_of_conduct': forms.CheckboxInput(attrs={'class': 'full-width'})
         }
 
     def clean_waiver_signature(self):

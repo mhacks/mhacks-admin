@@ -69,6 +69,13 @@ def application(request):
     if request.method == 'GET':
         form = ApplicationForm(instance=app, user=request.user)
     elif request.method == 'POST':
+        if not app:
+            try:
+                # look for deleted apps too
+                app = Application.objects.get(user=request.user)
+            except Application.DoesNotExist:
+                app = None
+
         form = ApplicationForm(data=request.POST, files=request.FILES, instance=app, user=request.user)
 
         if form.is_valid():
@@ -100,6 +107,13 @@ def apply_mentor(request):
     if request.method == 'GET':
         form = MentorApplicationForm(instance=app)
     elif request.method == 'POST':
+        if not app:
+            try:
+                # look for deleted apps too
+                app = MentorApplication.objects.get(user=request.user)
+            except MentorApplication.DoesNotExist:
+                app = None
+
         form = MentorApplicationForm(data=request.POST, instance=app)
 
         if form.is_valid():
@@ -140,6 +154,13 @@ def registration(request):
     if request.method == 'GET':
         form = RegistrationForm(instance=app, user=request.user)
     elif request.method == 'POST':
+        if not app:
+            try:
+                # look for deleted apps too
+                app = Registration.objects.get(user=request.user)
+            except Registration.DoesNotExist:
+                app = None
+
         form = RegistrationForm(data=request.POST, instance=app, user=request.user)
 
         if form.is_valid():
@@ -147,6 +168,7 @@ def registration(request):
             app = form.save(commit=False)
             app.user = request.user
             app.submitted = True
+            app.deleted = False
             app.save()
 
             return redirect(reverse('mhacks-dashboard'))
@@ -400,6 +422,7 @@ def application_review(request):
             applications = applications if (int(request.GET['limit']) > len(applications)) else applications[:int(
                 request.GET['limit'])]
 
+        applications = applications.filter(deleted=False)
         context = {'results': applications}
         # return the appropriate HTML view
         if 'hacker' in request.GET:

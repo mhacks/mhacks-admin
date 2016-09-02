@@ -277,7 +277,7 @@ class Registration(Any):
     other_can_help = models.CharField(max_length=64, blank=True)
 
     # Day-of Specifics
-    t_shirt_size = models.CharField(max_length=1, choices=zip(T_SHIRT_SIZES, T_SHIRT_SIZES))
+    t_shirt_size = models.CharField(max_length=4, choices=zip(T_SHIRT_SIZES, T_SHIRT_SIZES))
     dietary_restrictions = models.CharField(max_length=32, choices=zip(DIETARY_RESTRICTIONS, DIETARY_RESTRICTIONS),
                                             blank=True)
     accommodations = models.TextField(blank=True)

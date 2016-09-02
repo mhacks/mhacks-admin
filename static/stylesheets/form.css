@@ -228,3 +228,23 @@ html button {
     text-align: center;
     font-size: 12px;
 }
+
+.full-width {
+    display: block;
+    width: 100%;
+}
+
+.full {
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 15px;
+}
+
+.checkbox-style {
+	color:#000;
+	opacity:.7;
+}
+
+.check-width {
+    width: 40%;
+}
