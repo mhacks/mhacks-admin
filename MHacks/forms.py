@@ -43,41 +43,19 @@ class ApplicationForm(forms.ModelForm):
 
         super(ApplicationForm, self).__init__(*args, **kwargs)
 
-        self.fields['school'].cols = 12
-        self.fields['is_high_school'].cols = 12
-        self.fields['is_high_school'].end_row = 12
-        self.fields['is_international'].cols = 12
-        self.fields['is_international'].end_row = 12
-        self.fields['is_high_school'].before = True
-        self.fields['is_high_school'].beforetext = "General Information"
+        self.fields['is_high_school'].title = 'General Information'
 
-        self.fields['is_high_school'].end_row = True
-        self.fields['birthday'].end_row = True
+        self.fields['gender'].title = 'Demographic Info'
+        self.fields['gender'].subtitle = 'Not Required'
 
-        self.fields['major'].end_row = True
-        self.fields['grad_date'].end_row = True
+        self.fields['github'].title = 'Previous Experience'
 
-        self.fields['race'].cols = 6
-        self.fields['gender'].cols = 6
-        self.fields['birthday'].demographic = True
-        self.fields['race'].after = True
-        self.fields['race'].aftertext = "Previous Experience"
+        self.fields['cortex'].title = 'Interests'
+        self.fields['cortex'].subtitle = 'CTRL/CMD + click to multi-select!'
 
-        self.fields['github'].cols = 6
-        self.fields['devpost'].cols = 6
-        self.fields['devpost'].end_row = True
+        self.fields['passionate'].title = 'Short Answer'
 
-        self.fields['personal_website'].cols = 6
-        self.fields['resume'].cols = 6
-        self.fields['resume'].end_row = True
-
-        self.fields['num_hackathons'].cols = 12
-        self.fields['num_hackathons'].end_row = True
-        self.fields['mentoring'].after = True
-        self.fields['mentoring'].aftertext = "Interests"
-
-        self.fields['cortex'].after = True
-        self.fields['cortex'].aftertext = "Short Answer"
+        self.fields['personal_website'].space_after = True
 
         self.fields['github'].required = False
         self.fields['devpost'].required = False
@@ -86,16 +64,13 @@ class ApplicationForm(forms.ModelForm):
         self.fields['gender'].required = False
         self.fields['race'].required = False
 
-        self.fields['other_info'].after = True
-        self.fields['other_info'].aftertext = "Travel"
-
+        self.fields['needs_reimbursement'].title = 'Travel'
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
             for key in ['passionate', 'coolest_thing', 'other_info', 'needs_reimbursement', 'can_pay', 'from_city',
                         'from_state']:
                 del self.fields[key]
-                self.fields['cortex'].after = False
 
     class Meta:
         from application_lists import TECH_OPTIONS
@@ -113,7 +88,7 @@ class ApplicationForm(forms.ModelForm):
             'github': '',
             'devpost': '',
             'personal_website': '',
-            'cortex': 'CTRL/CMD + click to multi-select!',
+            'cortex': '',
             'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
             'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
@@ -128,7 +103,7 @@ class ApplicationForm(forms.ModelForm):
         }
 
         widgets = {
-            "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'id': 'graduation_date'}),
+            'grad_date': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'id': 'graduation_date'}),
             'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-inline checkbox-style textfield check-width'}, choices=TECH_OPTIONS),
             'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'}),
             'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md',
@@ -142,6 +117,7 @@ class ApplicationForm(forms.ModelForm):
             'personal_website': forms.TextInput(
                 attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'num_hackathons': forms.NumberInput(attrs={'autocomplete': 'off'}),
             'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'resume': MHacksAdminFileWidget(attrs={'class': 'input-md form-control'}),
@@ -198,15 +174,9 @@ class MentorApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MentorApplicationForm, self).__init__(*args, **kwargs)
         self.fields['agree_tc'].required = True
-
-        self.fields['first_time_mentor'].after = True
-        self.fields['first_time_mentor'].aftertext = "Short Answer"
-
-        self.fields['mentorship_ideas'].after = True
-        self.fields['mentorship_ideas'].aftertext = "Skills"
-
-        self.fields['github'].after = True
-        self.fields['github'].aftertext = "Commitment"
+        self.fields['what_importance'].title = "Short Answer"
+        self.fields['skills'].title = "Skills"
+        self.fields['agree_tc'].title = "Commitment"
 
     class Meta:
         from application_lists import SKILLS
@@ -252,41 +222,25 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(RegistrationForm, self).__init__(*args, **kwargs)
- 
 
-        self.fields['acceptance'].before = True
-        self.fields['acceptance'].beforetext = "Acceptance"
+        self.fields['acceptance'].title = "Acceptance"
 
-        self.fields['acceptance'].after = True
-        self.fields['acceptance'].aftertext = "Logistics"
+        self.fields['transportation'].title = "Logistics"
+        self.fields['transportation'].subtitle = "Note: checking an option does not guarantee travel reimbursement. All travel reimbursements are granted on a case-by-case basis. The amount you received for travel reimbursement was explicitly stated in the email notifying you of your application status and is also available on your Hacker Dashboard. If you have any questions, email us at hackathon@umich.edu. "
 
-        self.fields['transportation'].before = True
-        self.fields['transportation'].beforetext = "Note: checking an option does not guarantee travel reimbursement. All travel reimbursements are granted on a case-by-case basis. The amount you received for travel reimbursement was explicitly stated in the email notifying you of your application status and is also available on your Hacker Dashboard. If you have any questions, email us at hackathon@umich.edu. "
-        self.fields['transportation'].useclass = True
-        self.fields['transportation'].textclass = "application-subtitle"
+        self.fields['want_help'].title = "Mentorship"
 
-        self.fields['want_help'].before = True
-        self.fields['want_help'].beforetext = "Mentorship"
+        self.fields['t_shirt_size'].title = "Day-of Specifics"
 
-        self.fields['t_shirt_size'].before = True
-        self.fields['t_shirt_size'].beforetext = "Day-of Specifics"
+        self.fields['employment'].title = "Sponsor & Employment Information"
+        self.fields['employment'].subtitle = "Sponsors will be able to sift through resumes based on the following data you provide. This is a great oppurtunity for you to showcase your resume to the world's top tech companies (most of whom are recruiting!). If you do not wish to have your resume looked at by our sponsors, please select 'Not Interested' in the following question"
 
-        self.fields['phone_number'].after = True
-        self.fields['phone_number'].aftertext = "Sponsor & Employment Information"
-
-        self.fields['employment'].before = True
-        self.fields['employment'].beforetext = "Sponsors will be able to sift through resumes based on the following data you provide. This is a great oppurtunity for you to showcase your resume to the world's top tech companies (most of whom are recruiting!). If you do not wish to have your resume looked at by our sponsors, please select 'Not Interested' in the following question"
-        self.fields['employment'].useclass = True
-        self.fields['employment'].textclass = "application-subtitle"
-
-        self.fields['technical_skills'].after = True
-        self.fields['technical_skills'].aftertext = "Waivers and Code of Conduct"
+        self.fields['code_of_conduct'].title = "Waivers and Code of Conduct"
 
         # Don't ask umich students about fields
         if self.user and 'umich.edu' in self.user.email:
             for key in ['transportation']:
                 del self.fields[key]
-            self.fields['acceptance'].after = False
 
         # Remove fields/add additional text based on the hacker application
         hacker_app = Application.objects.get(user=self.user)
@@ -295,8 +249,8 @@ class RegistrationForm(forms.ModelForm):
                 del self.fields[key]
         
         if hacker_app.is_high_school:
-            self.fields['mlh_code_of_conduct'].after = True
-            self.fields['mlh_code_of_conduct'].aftertext = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
+            self.fields['mlh_code_of_conduct'].title = "MLH Code Of Conduct"
+            self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
 
     class Meta:
         from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS

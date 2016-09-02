@@ -19,17 +19,17 @@ from MHacks.globals import permissions_map
 
 
 # Updates permissions to groups
-def add_permissions(sender, **kwargs):
+def add_permissions(**kwargs):
     from django.contrib.auth.models import Group, Permission
     groups_queryset = Group.objects.all()
     permissions_queryset = Permission.objects.all()
 
     # Not the cleanest way but yolo. Maybe use sets? Would make permission removal easier too
     for group_enum, group_permissions in permissions_map.iteritems():
-        print ''
+        print('')
         group, created = groups_queryset.get_or_create(name=group_enum)
         if created:
-            print 'Created group {}.'.format(group_enum)
+            print('Created group {}.'.format(group_enum))
 
         group.permissions.clear()
         for permission in group_permissions:
@@ -40,7 +40,7 @@ def add_permissions(sender, **kwargs):
             permission_object = permission_object[0]
 
             group.permissions.add(permission_object)
-            print 'Added permission {} for group {}.'.format(permission, group_enum)
+            print('Added permission {} for group {}.'.format(permission, group_enum))
 
         group.save()
 
@@ -51,7 +51,7 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
         email_vars = dict()
 
     try:
-        MANDRILL_CLIENT = mandrill.Mandrill(MANDRILL_API_KEY)
+        mandrill_client = mandrill.Mandrill(MANDRILL_API_KEY)
         message = {
             'subject': subject,
             'from_email': 'hackathon@umich.edu',
@@ -63,7 +63,7 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
             message['global_merge_vars'].append(
                 {'name': k, 'content': v}
             )
-        return MANDRILL_CLIENT.messages.send_template(template_name, [], message)
+        return mandrill_client.messages.send_template(template_name, [], message)
     except mandrill.Error as e:
         logger = logging.getLogger(__name__)
         logger.error('A mandrill error occurred: %s - %s' % (e.__class__, e))
@@ -107,7 +107,7 @@ def send_verification_email(user, request):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     relative_confirmation_url = reverse(
         'mhacks-validate',
-        kwargs={'uid':uid, 'token': token}
+        kwargs={'uid': uid, 'token': token}
     )
     email_vars = {
         'confirmation_url': _get_absolute_url(request, relative_confirmation_url),

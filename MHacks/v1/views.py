@@ -9,7 +9,7 @@ from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated
 
 
 @api_view(http_method_names=['GET'])
-def get_countdown(request, *args, **kwargs):
+def get_countdown(request):
     """
     Gets the countdown representation for the hackathon
     """
@@ -29,7 +29,7 @@ def get_countdown(request, *args, **kwargs):
 
 
 @api_view(http_method_names=['GET'])
-def get_map(request, *args, **kwargs):
+def get_map(request):
     """
     Gets the map with the pin location for the map and a URL from where to download the map
 

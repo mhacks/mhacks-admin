@@ -16,12 +16,3 @@ function getCookie(name) {
     return cookieValue;
 }
 // ^^^ pulled straight from the django website ^^^
-$(function() {
-    // Input alignment
-    var alignment = function() {
-        var desiredWidth = $("#longest").width() + 1;
-        $(".input_word").width(desiredWidth);
-    };
-    $(window).resize(alignment);
-    alignment();
-});

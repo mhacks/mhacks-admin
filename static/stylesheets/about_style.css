@@ -491,7 +491,7 @@ section .title.fancy {
 		margin-right: 16px;
 	}
 	.actionable button:last-child{
-		margin-right: none;
+		margin-right: 0;
 	}
 
 	.actionable button:hover{
@@ -515,9 +515,7 @@ section .title.fancy {
 
 .mHacks-is .background-image {
 	position: relative;
-	background-image: url('/assets/auditorium.png');
-	background-repeat: no-repeat;
-	background-position: bottom;
+	background: url('/assets/auditorium.png') no-repeat bottom;
 	background-size: cover;
 	min-height: 480px;
 }

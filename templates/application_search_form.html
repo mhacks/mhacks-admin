@@ -27,8 +27,8 @@
                             {% for field in form %}
 
 
-                                <div class="field-form col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center addMargin ">
-                                    <label class="label-apply">
+                                <div class="field-form col-lg-{{ field.field.cols if field.field.cols else '12' }} text-center add-margin ">
+                                    <label class="form-label">
                                         {{ field.label }}
                                     </label>
                                     {{ field.as_widget() }}

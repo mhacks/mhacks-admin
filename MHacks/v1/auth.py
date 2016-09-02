@@ -51,6 +51,7 @@ class Authentication(views.ObtainAuthToken):
         serialized_user = {'name': user.get_full_name(), 'email': user.email}
 
         push_notification = serializer.validated_data['push_notification']
-        self.save_device(push_notification, user)
+        if push_notification:
+            self.save_device(push_notification, user)
 
         return Response({'token': token.key, 'groups': groups, 'user': serialized_user})

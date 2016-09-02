@@ -15,6 +15,7 @@ from MHacks.v1.serializers.util import UnixEpochDateField, DurationInSecondsFiel
 class MHacksModelSerializer(ModelSerializer):
     def to_representation(self, instance):
         if getattr(instance, 'deleted', False):
+            # noinspection PyProtectedMember
             return {instance._meta.pk.name: str(instance.pk), 'deleted': True}
         return super(MHacksModelSerializer, self).to_representation(instance)
 
@@ -140,24 +141,22 @@ class AuthSerializer(AuthTokenSerializer):
     token = serializers.CharField()
     is_gcm = serializers.BooleanField()
 
-    def validate(self, attrs):
-        # check if the token exist
-        token = attrs.get('token')
-        is_gcm = attrs.get('is_gcm')
+    def validate(self, attributes):
+        attributes = super(AuthSerializer, self).validate(attributes)
 
-        if 'token' not in attrs.keys():
-            msg = ('token not specified')
-            raise serializers.ValidationError(msg)
+        # Optionally add the token if it exists
+        if 'token' in attributes.keys() and 'is_gcm' in attributes.keys():
+            token = attributes.get('token')
+            is_gcm = attributes.get('is_gcm')
+            attributes['push_notification'] = {
+                'token': token,
+                'is_gcm': is_gcm
+            }
 
-        if 'is_gcm' not in attrs.keys():
-            msg = ('is_gcm not specified')
-            raise serializers.ValidationError(msg)
+        return attributes
 
-        attrs = super(AuthSerializer, self).validate(attrs)
+    def create(self, validated_data):
+        pass
 
-        attrs['push_notification'] = {
-            'token': token,
-            'is_gcm': is_gcm
-        }
-
-        return attrs
+    def update(self, instance, validated_data):
+        pass

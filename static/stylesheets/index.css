@@ -1,9 +1,87 @@
 p {
-  margin: 15px auto 25px;
+    margin: 15px auto 25px;
 }
 
 h3 {
-  font-family: 'Ubuntu';
-  font-weight: bolder;
-  margin: 0 0 8px 0;
+    font-weight: bolder;
+    margin: 0 0 8px 0;
+}
+/* ---- Grid ---- */
+
+.grid {
+    width: 100%;
+}
+
+/* clearfix */
+.grid:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+/* ---- Grid Item ---- */
+
+.grid-item, .grid-item-content {
+    width: 160px;
+    height: 120px;
+    z-index: 1;
+}
+
+.grid-item-content {
+    width: 160px;
+    height: 120px;
+    padding: 15px;
+    visibility: visible;
+    transition: all 0.2s;
+    border: 1px solid rgba(20, 20, 20, 0.1);
+}
+
+.grid-item[data-expandable='1'] {
+    cursor: pointer;
+}
+
+.grid-item[data-expandable='1'] .expand-icon:before {
+    font-family: FontAwesome;
+    content: "\f055";
+    position:absolute;
+    right: 0;
+    transition: all 0.2s;
+    height: 16px;
+    width: 16px;
+    margin: 10px;
+}
+
+.width2.grid-item, .width2 .grid-item-content {
+    width: 320px;
+}
+
+.tile-shadow {
+    /*box-shadow: 0 0 15px 2px rgba(50, 50, 50, 0.75);*/
+    z-index: 2;
+}
+
+/* --- Expanded Grid Item --- */
+
+.grid-item-expand {
+    width: 480px;
+    height: 360px;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.grid-item-expand.expand-small {
+    width: 480px !important;
+    height: 360px !important;
+}
+
+.grid-item-expand.expand-medium {
+    width: 640px !important;
+    height: 480px !important;
+}
+
+/* --- Grid Item Content --- */
+
+.grid-item:hover h1, .grid-item:hover h3 {
+    color: #0093B1 !important;
+    transition: color 0.2s;
 }

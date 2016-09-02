@@ -12,16 +12,9 @@
     <div class="container container-form">
 
         <div class="col-12 text-center title-form">
-        <h3 class="first head">
-            <span>{% block basic_page_title %}{% endblock %}</span>
-        </h3>
+            <h3>{% block basic_page_title %}{% endblock %}</h3>
         </div>
         {% block basic_page_content %}
         {% endblock %}
     </div>
-
-{% endblock %}
-
-{% block scripts %}
-    <script src="{{ static('javascript/header.js') }}" type="application/javascript"></script>
 {% endblock %}

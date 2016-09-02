@@ -3,7 +3,6 @@
 {% block form_headers %}
     <link rel="stylesheet" media="all" href="{{ static('stylesheets/application.css') }}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script src="{{ static('javascript/autocomplete_lists.js') }}"></script>
     <script>
@@ -30,7 +29,7 @@
         } );
         $(document).ready(function() {
             $('input[type="checkbox"][id="id_is_high_school"]').change(function() {
-                if(this.checked) {
+                if (this.checked) {
                     $("#graduation_date").parent().hide();
                     $("#major-autocomplete").parent().hide();
                 }
@@ -39,9 +38,23 @@
                     $("#major-autocomplete").parent().show();
                 }
             });
+            $('input[type="checkbox"][id="id_is_international"]').change(function() {
+                var stateAutocomplete = $("#state-autocomplete" );
+                if (this.checked) {
+                    stateAutocomplete.autocomplete("destroy");
+                    stateAutocomplete.removeData('autocomplete');
+                    stateAutocomplete.placeholder = "Country";
+                }
+                else {
+                    stateAutocomplete.autocomplete({
+                        source: STATES
+                    });
+                    stateAutocomplete.placeholder = "State";
+                }
+            });
             $("#id_can_pay").parent().hide();
             $('input[type="checkbox"][id="id_needs_reimbursement"]').change(function() {
-                if(this.checked) {
+                if (this.checked) {
                     $("#id_can_pay").parent().show();
                 }
                 else{

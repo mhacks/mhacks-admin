@@ -5,10 +5,10 @@
      <script>
         $(document).ready(function() {
             $("#id_employment").change(function() {
-                if(this.value == "Not Interested") {
+                if (this.value == "Not Interested") {
                     $("#id_technical_skills").parent().hide();
                 }
-                else{
+                else {
                 	$("#id_technical_skills").parent().show();
                 }
             });

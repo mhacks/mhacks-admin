@@ -20,6 +20,7 @@ class GenericListCreateModel(CreateAPIView, ListAPIView):
         response.data = {'results': response.data, 'date_updated': self.date_of_update}
         return response
 
+    # noinspection PyProtectedMember
     def create(self, request, *args, **kwargs):
         if hasattr(self, 'get_queryset'):
             queryset = self.get_queryset()

@@ -16,8 +16,9 @@ class ArrayFieldSelectMultiple(forms.SelectMultiple):
 
     def render_options(self, choices, value):
         # value *should* be a list, but it might be a delimited string.
-        if isinstance(value, str):  # python 2 users may need to use basestring instead of str
+        if isinstance(value, str) or isinstance(value, basestring):
             value = value.split(self.delimiter)
+
         return super(ArrayFieldSelectMultiple, self).render_options(choices, value)
 
     def value_from_datadict(self, data, files, name):

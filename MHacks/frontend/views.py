@@ -38,7 +38,7 @@ def blackout(request):
             MAILCHIMP_API.lists.subscribe(list_id, {'email': email}, double_optin=False)
         except mailchimp.ListAlreadySubscribedError:
             return render(request, 'blackout.html', {'error': 'Looks like you\'re already subscribed!'})
-        except:
+        except Exception:
             return render(request, 'blackout.html', {
                 'error': 'Looks like there\'s been an error registering you. Try again or email us at hackathon@umich.edu'})
         return render(request, 'blackout.html', {'success': True})

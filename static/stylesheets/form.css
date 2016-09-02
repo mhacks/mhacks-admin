@@ -6,67 +6,83 @@ INCLUDE THAT FILE ON YOUR SPECIFIC PAGE. THANK YOU.
 */
 
 body {
-    font-family: 'Source Sans Pro';
+    font-family: 'Source Sans Pro', sans-serif;
     background-color: #ffffff;
     margin: 0;
     overflow-x: hidden;
     overflow-y: auto;
     font-size: 12pt;
 }
-
+button {
+    cursor: pointer;
+}
 ul {
     list-style-type: none;
 }
 
 p {
-    font-family: 'Source Sans Pro';
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
     font-weight: 200;
     width: 100%;
 }
 
-.header-form{
+.header-form {
     position: static;
 }
 
 .title-form h3 {
     color: rgba(0, 169, 194, 1);
     font-size: 35px;
+    margin-bottom: 0;
 }
 
 .body-form {
     margin-top: 30px;
 }
-
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto
+}
 .container-form {
     width: 66%;
-    margin-top: 40px;
+    margin: 40px auto 40px auto;
     -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     -moz-box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    margin-left: auto;
-    margin-right: auto;
     border: 1px solid  rgba(0,0,0,0.33);
     padding-bottom: 30px;
     color: #333;
 }
 
-.logo{
+.logo {
     display: block;
     width: 70%;
 }
 
 /* INPUTS */
 
-html input{
-    border-bottom-color: #a0a0a0;
+html input {
+    border-bottom-color: #9b9b9b;
+}
+html input:focus {
+    outline: none;
+}
+html input[type="textarea"] {
+    resize: vertical;
 }
 
-html input[type="number"]{
+html input[type="number"] {
     box-sizing: border-box;
     text-align: center;
     font-size: 18px;
     padding-right: 8px;
+}
+html input[type="text"],
+html input[type="number"] {
+    max-height: 35px;
 }
 
 html input[type="text"],
@@ -77,14 +93,16 @@ html input[type="url"],
 html input[type="email"],
 html input[type="password"],
 html input[type="school"],
-html input{
+html input {
     box-shadow: none;
     opacity: 0.7;
     border-width: 0 0 1px 0;
     border-radius: 0;
     -webkit-transition: .4s;
     transition: .4s;
-    padding: 0px;
+    padding: 0;
+    float: left;
+    margin-left: 20px;
 }
 
 html input[type="text"]:hover,
@@ -120,7 +138,6 @@ html input:focus {
     border-width: 0 0 1px 0;
     border-radius: 0;
     opacity: 1;
-
 }
 
 html input[type="radio"],
@@ -130,13 +147,10 @@ html button {
     border-radius: 5px;
     -webkit-transition: .4s;
     transition: .4s;
-    font-size:  14px;
+    font-size: 14px;
     color: white;
-    border: 0px;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    border: 0;
+    padding: 10px 25px 10px 25px;
 }
 
 /* Rows */
@@ -150,7 +164,7 @@ html button {
 }
 
 .row.three {
-    margin-top: 48px;
+    margin-top: 30px;
 }
 
 .row.four {
@@ -161,8 +175,8 @@ html button {
     margin-top: 80px;
 }
 
-.row.none{
-    margin-top: 0px;
+.row.none {
+    margin-top: 0;
 }
 
 .submit-row {
@@ -175,16 +189,42 @@ html button {
     margin-left: auto;
     margin-right: auto;
     border: 1px solid  rgba(0,0,0,0.33);
-    border-radius: 0px;
+    border-radius: 0;
     background-color: #fff;
 }
 
-.label-apply {
+.form-label {
     font-weight: 200;
     font-size: 15px;
     margin-right: 7px;
+    width: 30%;
+    float: left;
+    text-align: right;
 }
 
-.field-form input {
+.form-field {
+    margin: 0 5px 10px 5px;
+    display: flex;
+}
+
+.form-field input {
     font-size: 15px;
+    display: inline-flex;
+    width: 40%;
+}
+@media (max-width: 800px) {
+    .container-form {
+        width: 95%;
+    }
+}
+
+.error {
+    display: flex;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: center;
+    font-size: 12px;
 }

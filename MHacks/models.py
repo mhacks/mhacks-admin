@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, User
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models

@@ -1,32 +1,26 @@
-var $bg = document.querySelector('#bgCanvas');
-var $bgElem = $('#bgCanvas');
-var $grid = $('.grid');
-var $header = $('.header');
-var $logoText = $('#logoText');
-var $logoM = $('#logoM');
-var $eventInfo = $('#eventInfo');
-var $headerButtons = $('#headerButtons');
-var $menuDropdown = $('#headerDropdown');
-var $menuTrigger = $('#dropdownTrigger');
-var $menuContent = $('#dropdownContent');
+'use strict';
 
+var $bg = document.querySelector('#bgCanvas');
+var $grid = $('.grid');
+var $menuContent = $('#dropdownContent');
 var $ctx;
 var colorRows = [];
 var rowHeight = 120;
-var animFrames = 135;
+var animationFrames = 135;
 var updateIndex = 0;
 var numChange = 3;
-var animPaused = false;
-var unpauseAnim;
+var animationPaused = false;
+var resumeAnimation;
 
 var colors = [
-    {r:000,g:169,b:194}, //turquoise            'rgba(0, 169, 194, 1)'
-    {r:000,g:099,b:176}, //blue                 'rgba(0, 99, 176, 1)'
-    {r:097,g:192,b:212}, //light turquoise      'rgba(97, 192, 212, 1)'
-    {r:015,g:059,b:127}, //dark blue            'rgba(15, 59, 127, 1)'
-    {r:064,g:161,b:218}, //light blue           'rgba(64, 161, 218, 1)'
-    {r:012,g:041,b:073}  //default background   'rgba(12,41,73,1)'
+    {r:0,  g:169,b:194}, // turquoise            'rgba(0, 169, 194, 1)'
+    {r:0,  g:99, b:176}, // blue                 'rgba(0, 99, 176, 1)'
+    {r:97, g:192,b:212}, // light turquoise      'rgba(97, 192, 212, 1)'
+    {r:15, g:59, b:127}, // dark blue            'rgba(15, 59, 127, 1)'
+    {r:64, g:161,b:218}, // light blue           'rgba(64, 161, 218, 1)'
+    {r:12, g:41, b: 73}  // default background   'rgba(12,41,73,1)'
 ];
+
 
 var $packery = $grid.packery({
     itemSelector: '.grid-item',
@@ -83,10 +77,10 @@ $(window).resize(function (){
     $bg.height = $grid.height();
     $bg.width = $(window).innerWidth();
 
-    animPaused = true;
-    clearTimeout(unpauseAnim);
-    unpauseAnim = setTimeout(function() {
-        animPaused = false;
+    animationPaused = true;
+    clearTimeout(resumeAnimation);
+    resumeAnimation = setTimeout(function() {
+        animationPaused = false;
         for(var r = 0; r < colorRows.length; r++){
             colorRows[r].c1 = colors.length - 1;
             colorRows[r].c2 = Math.floor(Math.random() * (colors.length - 1));
@@ -114,42 +108,6 @@ function gridResize() {
     setTimeout(gridResize, 200);
 }
 
-$(window).scroll(function() {
-    var scrollValue = $(this).scrollTop();
-
-    if(scrollValue < 60){
-        $header.css("height", 120 - scrollValue);
-        $header.removeClass("header-condensed");
-        $eventInfo.css("padding-left", 50 - 25 * scrollValue / 60);
-        $headerButtons.css("padding-right", 50 - 25 * scrollValue / 60);
-        $menuDropdown.css("padding-right", 50 - 25 * scrollValue / 60);
-        $menuContent.css("top", 120 - scrollValue);
-        if(scrollValue < 45){
-            $logoText.removeClass("visibilityHidden");
-            if(scrollValue > 15) {
-                $logoText.css("opacity", (45.0 - scrollValue) / 30.0);
-                $logoM.css("height", (74.2 + 15.8 * (1 - (45.0 - scrollValue) / 30.0)) + "%");
-            } else {
-                $logoText.css("opacity", 1);
-                $logoM.css("height", "74.2%");
-            }
-        } else {
-            $logoText.css("opacity", 0);
-            $logoText.addClass("visibilityHidden");
-            $logoM.css("height", "90%");
-        }
-    } else {
-        $header.css("height", 60);
-        $header.addClass("header-condensed");
-        $eventInfo.css("padding-left", 25);
-        $headerButtons.css("padding-right", 25);
-        $menuDropdown.css("padding-right", 25);
-        $menuContent.css("top", 60);
-        $logoText.css("opacity", 0);
-        $logoText.addClass("visibilityHidden");
-        $logoM.css("height", "90%");
-    }
-});
 
 $menuContent.css("display", "none");
 
@@ -163,23 +121,20 @@ $(".faq-item .question").click(function(event){
     $(".faq-item .answer[data-qid='" + q.data("qid") + "']").stop().slideToggle('medium');
 });
 
-function colorName(index){
-    return 'rgba(' + colors[index].r + ',' + colors[index].g + ',' + colors[index].b + ',1)';
-}
 
 function lerpColor(c1, c2, frame){
-    var r = Math.round(colors[c1].r + (colors[c2].r - colors[c1].r) * frame / animFrames);
-    var g = Math.round(colors[c1].g + (colors[c2].g - colors[c1].g) * frame / animFrames);
-    var b = Math.round(colors[c1].b + (colors[c2].b - colors[c1].b) * frame / animFrames);
+    var r = Math.round(colors[c1].r + (colors[c2].r - colors[c1].r) * frame / animationFrames);
+    var g = Math.round(colors[c1].g + (colors[c2].g - colors[c1].g) * frame / animationFrames);
+    var b = Math.round(colors[c1].b + (colors[c2].b - colors[c1].b) * frame / animationFrames);
     return 'rgba(' + r + ',' + g + ',' + b + ',1)';
 }
 
 $(function(){
     gridResize();
-    anim_init();
+    initializeAnimation();
 });
 
-function anim_init(){
+function initializeAnimation() {
     $bg.height = $grid.height(); //120 * Math.ceil($(window).innerHeight() / 120);
     $bg.width = $(window).innerWidth();
 
@@ -188,30 +143,30 @@ function anim_init(){
     $ctx.fillRect(0, 0, $bg.width, $bg.height);
 
     for(var y = 0; y < Math.ceil($bg.height / rowHeight); y++){
-        init_row(y);
+        initializeRow(y);
     }
 
-    window.requestAnimationFrame(anim_draw);
+    window.requestAnimationFrame(drawAnimation);
 }
 
-function init_row(i) {
-    colorRows[i] = {
+function initializeRow(rowNumber) {
+    colorRows[rowNumber] = {
         c1: colors.length - 1,
         c2: Math.floor(Math.random() * (colors.length - 1)),
-        frame: Math.floor(Math.random() * animFrames)
+        frame: Math.floor(Math.random() * animationFrames)
     };
 }
 
-function reset_row(i){
-    colorRows[i].c1 = colorRows[i].c2;
-    while(colorRows[i].c2 == colorRows[i].c1){
-        colorRows[i].c2 = Math.floor(Math.random() * (colors.length - 1));
+function resetRow(rowNumber){
+    colorRows[rowNumber].c1 = colorRows[rowNumber].c2;
+    while(colorRows[rowNumber].c2 == colorRows[rowNumber].c1){
+        colorRows[rowNumber].c2 = Math.floor(Math.random() * (colors.length - 1));
     }
-    colorRows[i].frame = 0;
+    colorRows[rowNumber].frame = 0;
 }
 
-function anim_draw() {
-    if($(window).innerWidth() >= 705 && !animPaused) {
+function drawAnimation() {
+    if($(window).innerWidth() >= 705 && !animationPaused) {
         var changed = [];
 
         for (var r = 0; r < numChange; r++) {
@@ -227,10 +182,10 @@ function anim_draw() {
             }
 
             if (colorRows[y] == undefined) {
-                init_row(y);
+                initializeRow(y);
             }
-            if (colorRows[y].frame >= animFrames) {
-                reset_row(y);
+            if (colorRows[y].frame >= animationFrames) {
+                resetRow(y);
             }
 
             $ctx.fillStyle = lerpColor(colorRows[y].c1, colorRows[y].c2, colorRows[y].frame);
@@ -239,5 +194,5 @@ function anim_draw() {
         }
     }
 
-    requestAnimationFrame(anim_draw);
+    requestAnimationFrame(drawAnimation);
 }
