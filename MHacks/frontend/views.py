@@ -469,8 +469,10 @@ def run_python(request):
         return redirect(reverse('mhacks-home'))
 
     apps = Application.objects.all()
+    mentor_apps = MentorApplication.objects.all()
     a_no_r = apps.filter(decision='Accept', reimbursement=0)
     w = apps.filter(decision='Waitlist')
+    m_a = mentor_apps.filter(decision='Accept')
 
     users = list()
     for app in a_no_r:
@@ -489,5 +491,14 @@ def run_python(request):
         fo2.write('name, email, last_updated\n')
         for app in users:
             fo2.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
+
+    users = list()
+    for app in m_a:
+        users.append(app)
+
+    with open('mentors_accepted.csv', 'w') as fo3:
+        fo3.write('name, email, last_updated\n')
+        for app in users:
+            fo3.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
     return HttpResponse(content='Success', status=200)
