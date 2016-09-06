@@ -467,8 +467,8 @@ def run_python(request):
         users.append(app)
 
     with open('mentors_accepted.csv', 'w') as fo3:
-        fo2.write('name, email, last_updated\n')
+        fo3.write('name, email, last_updated\n')
         for app in users:
-            fo2.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
+            fo3.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
     return HttpResponse(content='Success', status=200)
