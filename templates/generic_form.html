@@ -40,7 +40,11 @@
                             <label class="form-label">
                                 {{ field.label }}
                             </label>
-                            {{ field.as_widget() }}
+                            {% if field.field.full %}
+                                <div class="full-widget">{{ field.as_widget() }}</div>
+                            {% else %}
+                                {{ field.as_widget() }}
+                            {% endif %}
                         </div>
                         {% for error in form.errors[field.name] %}
                             <div class="text-center alert alert-danger error"><p>{{ error }}</p></div>
