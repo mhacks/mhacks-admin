@@ -312,7 +312,7 @@ class RegistrationForm(forms.ModelForm):
             'want_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'},
                                                   choices=TECH_OPTIONS),
             'other_want_help': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': 'Other areas'}),
-            'can_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style textfield check-width'},
+            'can_help': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'},
                                                  choices=TECH_OPTIONS),
             'other_can_help': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'Other areas'}),
             't_shirt_size': forms.Select(attrs={'class': 'full checkbox-style'}),
