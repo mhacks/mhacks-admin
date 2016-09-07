@@ -289,7 +289,7 @@ class Registration(Any):
                                                                '+#########'. Up to 15 digits allowed.")])
 
     # Sponsor & Employment Information
-    employment = models.CharField(max_length=64, choices=zip(EMPLOYMENT, EMPLOYMENT))
+    employment = models.CharField(max_length=64, choices=EMPLOYMENT)
     degree = models.CharField(max_length=16, choices=zip(DEGREES, DEGREES))
     technical_skills = ArrayField(
         models.CharField(max_length=32, choices=zip(EMPLOYMENT_SKILLS, EMPLOYMENT_SKILLS), blank=True),
