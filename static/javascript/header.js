@@ -44,6 +44,12 @@ $(window).scroll(function() {
     }
 });
 
+$(window).resize(function (){
+    if($(window).innerWidth() > 720){
+        $menuContent.slideUp();
+    }
+});
+
 $menuContent.css("display", "none");
 
 $menuTrigger.click(function(){

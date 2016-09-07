@@ -2,7 +2,6 @@
 
 var $bg = document.querySelector('#bgCanvas');
 var $grid = $('.grid');
-var $menuContent = $('#dropdownContent');
 var $ctx;
 var colorRows = [];
 var rowHeight = 120;
@@ -92,10 +91,6 @@ $(window).resize(function (){
     resizeEvent = setTimeout(function () {
         $packery.packery();
     }, 250);
-
-    if($(window).innerWidth() > 720){
-        $menuContent.slideUp();
-    }
 });
 
 function gridResize() {
@@ -107,13 +102,6 @@ function gridResize() {
 
     setTimeout(gridResize, 200);
 }
-
-
-$menuContent.css("display", "none");
-
-$menuTrigger.click(function(){
-    $menuContent.slideToggle();
-});
 
 $(".faq-item .question").click(function(event){
     var q = $(event.target);

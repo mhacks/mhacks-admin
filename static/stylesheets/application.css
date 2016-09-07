@@ -75,7 +75,9 @@ html input[type="checkbox"] {
 }
 
 .form-field .form-label {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .ui-autocomplete {

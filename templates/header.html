@@ -11,10 +11,12 @@
         </a>
     </div>
     <div id="headerButtons">
-        <form method="GET" action="{{ url_for('mhacks-apply') }}">
-            {{ csrf_input }}
-            <button type="submit">Apply</button>
-        </form>
+        {% if 'apply/' not in request.path %}
+            <form method="GET" action="{{ url_for('mhacks-apply') }}">
+                {{ csrf_input }}
+                <button type="submit">Apply</button>
+            </form>
+        {% endif %}
 
         <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
             {{ csrf_input }}
@@ -36,10 +38,12 @@
     <div id="headerDropdown">
         <i id="dropdownTrigger" class="fa fa-bars fa-2x" aria-hidden="false"></i>
         <div id="dropdownContent" class="turquoise">
-            <form method="GET" action="{{ url_for('mhacks-apply') }}">
-                {{ csrf_input }}
-                <button type="submit">Apply</button>
-            </form>
+            {% if 'apply/' not in request.path %}
+                <form method="GET" action="{{ url_for('mhacks-apply') }}">
+                    {{ csrf_input }}
+                    <button type="submit">Apply</button>
+                </form>
+            {% endif %}
 
             <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
                 {{ csrf_input }}
