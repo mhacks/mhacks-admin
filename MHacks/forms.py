@@ -160,6 +160,9 @@ class ApplicationForm(forms.ModelForm):
 
 
 class ApplicationSearchForm(forms.Form):
+    from application_lists import APPLICATION_DECISION
+    app_decisions = ['All'] + APPLICATION_DECISION
+
     # User related
     first_name = forms.CharField(label='First name', max_length=255)
     last_name = forms.CharField(label='Last name', max_length=255)
@@ -178,6 +181,7 @@ class ApplicationSearchForm(forms.Form):
     is_beginner = forms.BooleanField(label='Beginner hackers')
     is_non_UM = forms.BooleanField(label='Non-UMich hackers')
     limit = forms.CharField(label='Number of results', max_length=255)
+    decision = forms.ChoiceField(label='Filter by decision', choices=zip(app_decisions, app_decisions))
 
 
 class MentorApplicationForm(forms.ModelForm):

@@ -415,6 +415,9 @@ def application_review(request):
         if request.GET.get('is_minor'):
             applications = applications.filter(birthday__gte=event_date)
 
+        if request.GET.get('decision') and not request.GET.get('decision') == 'All':
+            applications = applications.filter(decision=request.GET.get('decision'))
+
         # from the oldest applicants
         applications = applications.order_by('last_updated')
 
