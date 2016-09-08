@@ -237,24 +237,6 @@ class MentorApplication(Any):
                                 default='Decline')
 
 
-class Ticket(Any):
-    completed = models.BooleanField(default=False)
-    accepted = models.BooleanField(default=False)
-    creator = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_tickets')
-    mentor = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='mentored_tickets', blank=True,
-                               null=True)
-    title = models.CharField(max_length=64, default=None)
-    description = models.CharField(max_length=255, default=None)
-    latitude = models.FloatField(blank=True, null=True)
-    longitude = models.FloatField(blank=True, null=True)
-
-    # TODO have actual options?
-    area = models.CharField(max_length=32, blank=True, default='')
-
-    def __unicode__(self):
-        return self.title + ' by ' + self.creator.get_full_name()
-
-
 class Registration(Any):
     from application_lists import ACCEPTANCE, TRANSPORTATION, TECH_OPTIONS, T_SHIRT_SIZES, DIETARY_RESTRICTIONS, \
         DEGREES, EMPLOYMENT, EMPLOYMENT_SKILLS
