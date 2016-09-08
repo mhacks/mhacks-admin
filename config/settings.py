@@ -117,6 +117,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
+    'EXCEPTION_HANDLER': 'mhacks.v1.utils.mhacks_exception_handler',
     'URL_FORMAT_OVERRIDE': None
 }
 

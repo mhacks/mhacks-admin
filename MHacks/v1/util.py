@@ -1,5 +1,7 @@
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.views import exception_handler
+
 
 from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated
 
@@ -43,3 +45,24 @@ class GenericListCreateModel(CreateAPIView, ListAPIView):
 class GenericUpdateDestroyModel(RetrieveUpdateDestroyAPIView):
     permission_classes = (DjangoModelPermissions,)
     lookup_field = 'id'
+
+
+def mhacks_exception_handler(exc, context):
+    # Call REST framework's default exception handler first,
+    # to get the standard error response.
+    response = exception_handler(exc, context)
+
+    if not response:
+        return response
+
+    if not response.data['detail']:
+        if len(response.data) == 0:
+            response.data = {'detail': 'Unknown error'}
+        elif isinstance(response.data, list):
+            response.data = {'detail': response.data[0]}
+        elif isinstance(response.data, dict):
+            first_key = response.data.keys()[0]
+            response.data = {'detail': "{}: {}".format(first_key, response.data[first_key])}
+        else:
+            response.data = {'detail': 'Unknown error'}
+    return response
