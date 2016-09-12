@@ -1,4 +1,4 @@
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import exception_handler
 
@@ -7,6 +7,7 @@ from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated
 
 
 class GenericListCreateModel(CreateAPIView, ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def __init__(self):
         self.date_of_update = None
