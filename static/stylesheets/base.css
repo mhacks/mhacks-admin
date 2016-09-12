@@ -431,6 +431,7 @@ a {
 
 .logo-row.small div {
     width: 20%;
+    min-width: 185px;
 }
 .logo-row.small a {
     max-width: 175px;
@@ -442,6 +443,7 @@ a {
 
 .logo-row.medium div {
     width: 33%;
+    min-width: 285px;
 }
 .logo-row.medium a {
     max-width: 275px;
@@ -453,6 +455,7 @@ a {
 
 .logo-row.large div {
     width: 50%;
+    min-width: 360px;
 }
 .logo-row.large a {
     max-width: 350px;
