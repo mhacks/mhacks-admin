@@ -7,7 +7,6 @@ from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated
 
 
 class GenericListCreateModel(CreateAPIView, ListAPIView):
-    permission_classes = (DjangoModelPermissions,)
 
     def __init__(self):
         self.date_of_update = None
@@ -55,14 +54,17 @@ def mhacks_exception_handler(exc, context):
     if not response:
         return response
 
-    if not response.data['detail']:
+    if not response.data.get('detail', None):
         if len(response.data) == 0:
             response.data = {'detail': 'Unknown error'}
         elif isinstance(response.data, list):
             response.data = {'detail': response.data[0]}
         elif isinstance(response.data, dict):
             first_key = response.data.keys()[0]
-            response.data = {'detail': "{}: {}".format(first_key, response.data[first_key])}
+            detail_for_key = response.data[first_key]
+            if isinstance(detail_for_key, list):
+                detail_for_key = detail_for_key[0]
+            response.data = {'detail': "{}: {}".format(first_key, detail_for_key)}
         else:
             response.data = {'detail': 'Unknown error'}
     return response

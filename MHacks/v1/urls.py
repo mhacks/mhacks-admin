@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from push_notifications.api.rest_framework import APNSDeviceViewSet, GCMDeviceViewSet
 from rest_framework_docs.views import DRFDocsView
 
 from MHacks.v1.announcements import Announcements, Announcement
@@ -10,15 +11,16 @@ from MHacks.v1.views import get_countdown, get_map
 
 urlpatterns = [
     # Authentication
-    url(r'^login$', Authentication.as_view()),
+    url(r'^login/$', Authentication.as_view(), name='api-login'),
     url(r'^announcements/(?P<id>[0-9A-Za-z_\-]+)$', Announcement.as_view()),
-    url(r'^announcements/$', Announcements.as_view()),
+    url(r'^announcements/$', Announcements.as_view(), name='announcements'),
     url(r'^locations/(?P<id>[0-9A-Za-z_\-]+)$', Location.as_view()),
-    url(r'^locations/$', Locations.as_view()),
+    url(r'^locations/$', Locations.as_view(), name='locations'),
     url(r'^events/(?P<id>[0-9A-Za-z_\-]+)$', Event.as_view()),
-    url(r'^events$', Events.as_view()),
-    url(r'^countdown$', get_countdown),
-    url(r'^map$', get_map),
+    url(r'^events/$', Events.as_view(), name='events'),
+    url(r'^countdown/$', get_countdown, name='countdown'),
+    url(r'^map/$', get_map, name='maps'),
+    url(r'^push_notifications/apns/$', APNSDeviceViewSet.as_view({'post': 'create', 'put': 'update'}), name='create_apns_device'),
+    url(r'^push_notifications/gcm/$', GCMDeviceViewSet.as_view({'post': 'create', 'put': 'update'}), name='create_gcm_device'),
     url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs'),
 ]
-

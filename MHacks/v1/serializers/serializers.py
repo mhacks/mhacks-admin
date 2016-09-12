@@ -60,8 +60,8 @@ class MHacksUserSerializer(MHacksModelSerializer):
 class AuthSerializer(AuthTokenSerializer):
     # Extends auth token serializer to accommodate push notifs
 
-    token = serializers.CharField()
-    is_gcm = serializers.BooleanField()
+    token = serializers.CharField(required=False)
+    is_gcm = serializers.BooleanField(required=False)
 
     def validate(self, attributes):
         attributes = super(AuthSerializer, self).validate(attributes)
@@ -70,9 +70,13 @@ class AuthSerializer(AuthTokenSerializer):
         if 'token' in attributes.keys() and 'is_gcm' in attributes.keys():
             token = attributes.get('token')
             is_gcm = attributes.get('is_gcm')
+            preference = attributes.get('preference', '63')
+            if not isinstance(preference, str):
+                preference = str(preference)
             attributes['push_notification'] = {
                 'token': token,
-                'is_gcm': is_gcm
+                'is_gcm': is_gcm,
+                'preference': preference
             }
 
         return attributes

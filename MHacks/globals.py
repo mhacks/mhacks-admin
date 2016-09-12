@@ -15,11 +15,7 @@ groups = GroupEnum()
 
 _permissions_tuples = (
     (GroupEnum.HACKER, ('add_application',
-                        'change_application',
-                        'add_pushtoken',
-                        'change_pushtoken',
-                        'add_ticket',
-                        'change_ticket')),
+                        'change_application')),
 
     (GroupEnum.SPONSOR, ('add_announcement',
                          'add_event')),
