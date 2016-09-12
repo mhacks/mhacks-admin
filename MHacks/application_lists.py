@@ -75,10 +75,10 @@ DEGREES = [
 ]
 
 EMPLOYMENT = [
-    'Internship (I am graduating in December 2016 or later)',
-    'Full­Time Employment (I am graduating prior to June 2016)',
-    'Part­Time Employment while in school (Co-op)',
-    'Not Interested'
+    ('internship', 'Internship (I am graduating in December 2017 or later)'),
+    ('full time', 'Full Time Employment (I am graduating prior to June 2017)'),
+    ('part time', 'Part Time Employment while in school (Co-op)'),
+    ('none', 'Not Interested')
 ]
 
 EMPLOYMENT_SKILLS = [

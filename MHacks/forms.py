@@ -279,7 +279,7 @@ class RegistrationForm(forms.ModelForm):
             self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
 
     class Meta:
-        from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS, ACCEPTANCE, T_SHIRT_SIZES
+        from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS
         model = Registration
 
         # use all fields except for these

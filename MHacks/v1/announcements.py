@@ -19,7 +19,7 @@ class Announcements(GenericListCreateModel):
             query_set = AnnouncementModel.objects.all().filter(last_updated__gte=date_last_updated)
         else:
             query_set = AnnouncementModel.objects.all().filter(deleted=False)
-        if not self.request.user.has_perm('mhacks.change_announcement'):
+        if not self.request.user or not self.request.user.has_perm('mhacks.change_announcement'):
             return query_set.filter(approved=True).filter(broadcast_at__lte=timezone.now())
         return query_set
 
