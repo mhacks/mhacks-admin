@@ -1,14 +1,17 @@
-from django.contrib.staticfiles.templatetags.staticfiles import static
-
 from datetime import datetime
 from pytz import utc, timezone
-from rest_framework.decorators import api_view
+
+from django.contrib.staticfiles.templatetags.staticfiles import static
+
+from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated, to_utc_epoch
 
 
 @api_view(http_method_names=['GET'])
+@authentication_classes((IsAuthenticatedOrReadOnly,))
 def get_countdown(request):
     """
     Gets the countdown representation for the hackathon
@@ -29,6 +32,7 @@ def get_countdown(request):
 
 
 @api_view(http_method_names=['GET'])
+@authentication_classes((IsAuthenticatedOrReadOnly,))
 def get_map(request):
     """
     Gets the map with the pin location for the map and a URL from where to download the map
