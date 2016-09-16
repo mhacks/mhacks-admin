@@ -1,5 +1,6 @@
 from datetime import datetime
 from pytz import utc, timezone
+import base64
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
@@ -50,4 +51,4 @@ def apple_site_association(request):
 @api_view(http_method_names=['GET'])
 @permission_classes((IsAuthenticated,))
 def apple_pass_endpoint(request):
-    return Response(data={"apple_pass": create_apple_pass(request.user).getvalue()})
+    return Response(data={"apple_pass": base64.encodestring(create_apple_pass(request.user).getvalue())})
