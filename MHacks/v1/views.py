@@ -58,3 +58,9 @@ def get_map(request):
                           'south_west_lat': 42.291820, 'south_west_lon': -83.716611,
                           'north_east_lat': 42.293530, 'north_east_lon': -83.713641,
                           'date_updated': now_as_utc_epoch()})
+
+
+@api_view(http_method_names=['GET'])
+@permission_classes((IsAuthenticatedOrReadOnly,))
+def apple_site_association(request):
+    return Response(data={"webcredentials": {"apps": ["478C74MJ7T.com.MPowered.MHacks"]}})
