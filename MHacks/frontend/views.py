@@ -187,8 +187,7 @@ def login(request):
     and modifications so we implement it ourselves
     """
     from django.contrib.auth.views import REDIRECT_FIELD_NAME
-    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
-                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, ''))
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():

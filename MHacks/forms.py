@@ -12,6 +12,7 @@ from utils import validate_url
 class LoginForm(AuthenticationForm):
     username = forms.EmailField(label='Email', max_length=254)
     password = forms.CharField(label='Password', max_length=128, strip=False, widget=forms.PasswordInput)
+    next = forms.CharField(label='', required=False, widget=forms.HiddenInput)
     password.longest = True
 
     def confirm_login_allowed(self, user):
