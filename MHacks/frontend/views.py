@@ -21,6 +21,7 @@ from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSe
 from MHacks.models import Application, MentorApplication, Registration
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
     send_application_confirmation_email
+from MHacks.pass_creator import create_apple_pass
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
 import datetime
 
@@ -505,3 +506,10 @@ def run_python(request):
             fo3.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
     return HttpResponse(content='Success', status=200)
+
+
+@login_required()
+def apple_pass(request):
+    response = HttpResponse(content=create_apple_pass(request.user).getvalue(), content_type='application/vnd.apple.pkpass')
+    response['MimeType'] = 'application/vnd.apple.pkpass'
+    return response

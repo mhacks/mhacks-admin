@@ -45,3 +45,4 @@ MAILCHIMP_API_KEY = '00000000000000000000000000000000-us1'  # Use API KEY for MA
 MAILCHIMP_INTEREST_LIST = 'https://us6.api.mailchimp.com/3.0/lists'  # Fill with actual list URL on production
 # ^ This is for the blackout interest link
 
+APPLE_WALLET_PASSPHRASE = ''
