@@ -4,10 +4,9 @@ from rest_framework.fields import CharField, ChoiceField
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
 
-from MHacks.models import Announcement as AnnouncementModel
-from MHacks.models import Event as EventModel
-from MHacks.models import Location as LocationModel
-from MHacks.models import MHacksUser as MHacksUserModel
+from MHacks.models import Announcement as AnnouncementModel, \
+    Event as EventModel, Location as LocationModel, \
+    ScanEvent as ScanEventModel, MHacksUser as MHacksUserModel
 from MHacks.v1.serializers.util import UnixEpochDateField, DurationInSecondsField
 
 
@@ -47,6 +46,15 @@ class LocationSerializer(MHacksModelSerializer):
     class Meta:
         model = LocationModel
         fields = ('id', 'name', 'latitude', 'longitude')
+
+
+class ScanEventSerializer(MHacksModelSerializer):
+    id = CharField(read_only=True)
+    expiry_date = UnixEpochDateField()
+
+    class Meta:
+        model = ScanEventModel
+        fields = ('id', 'name', 'expiry_date')
 
 
 class MHacksUserSerializer(MHacksModelSerializer):

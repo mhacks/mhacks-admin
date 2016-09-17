@@ -281,3 +281,13 @@ class Registration(Any):
 
     def __unicode__(self):
         return self.user.get_full_name() + '\'s Registration'
+
+
+class ScanEvent(Any):
+    name = models.CharField(max_length=60, unique=True)
+    number_of_allowable_scans = models.IntegerField(default=1)
+    users = models.ManyToManyField(AUTH_USER_MODEL, related_name="scan_event_users")
+    expiry_date = models.DateField(blank=True)
+
+    def __unicode__(self):
+        return self.name

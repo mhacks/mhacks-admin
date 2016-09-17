@@ -7,6 +7,7 @@ from MHacks.v1.announcements import Announcements, Announcement
 from MHacks.v1.auth import Authentication
 from MHacks.v1.events import Events, Event
 from MHacks.v1.locations import Locations, Location
+from MHacks.v1.scan_event import ScanEvents, ScanEvent
 from MHacks.v1.views import get_countdown, get_map, apple_pass_endpoint
 
 urlpatterns = [
@@ -18,6 +19,8 @@ urlpatterns = [
     url(r'^locations/$', Locations.as_view(), name='locations'),
     url(r'^events/(?P<id>[0-9A-Za-z_\-]+)$', Event.as_view()),
     url(r'^events/$', Events.as_view(), name='events'),
+    url(r'^scan_event/(?P<id>[0-9A-Za-z_\-]+)', ScanEvent.as_view()),
+    url(r'^scan_events', ScanEvents.as_view()),
     url(r'^countdown/$', get_countdown, name='countdown'),
     url(r'^map/$', get_map, name='maps'),
     url(r'^push_notifications/apns/$', APNSDeviceViewSet.as_view({'post': 'create', 'put': 'update'}), name='create_apns_device'),
