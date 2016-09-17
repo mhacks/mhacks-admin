@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'MHacks.apps.MhacksConfig',
     'push_notifications',
     'crispy_forms',
+    'explorer'
 ]
 
 MIDDLEWARE_CLASSES = [

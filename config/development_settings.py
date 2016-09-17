@@ -28,6 +28,10 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_CERTIFICATE": ""
 }
 
+#for sql django
+EXPLORER_PERMISSION_VIEW = lambda u: hasattr(u,'is_sponsor') and u.is_sponsor
+EXPLORER_PERMISSION_CHANGE = lambda u: hasattr(u,'is_sponsor') and u.is_sponsor
+
 # Security
 # https://docs.djangoproject.com/en/1.9/topics/security/#ssl-https
 # TODO: Use True for all of these for HTTPS on production settings
