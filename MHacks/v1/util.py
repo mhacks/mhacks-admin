@@ -65,7 +65,10 @@ def mhacks_exception_handler(exc, context):
             detail_for_key = response.data[first_key]
             if isinstance(detail_for_key, list):
                 detail_for_key = detail_for_key[0]
-            response.data = {'detail': "{}: {}".format(first_key, detail_for_key)}
+            if first_key.lower() == 'non_field_errors':
+                response.data = {'detail': "{}".format(detail_for_key)}
+            else:
+                response.data = {'detail': "{}: {}".format(first_key.title(), detail_for_key)}
         else:
             response.data = {'detail': 'Unknown error'}
     return response
