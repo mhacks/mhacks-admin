@@ -78,7 +78,7 @@ class AuthSerializer(AuthTokenSerializer):
         if 'token' in attributes.keys() and 'is_gcm' in attributes.keys():
             token = attributes.get('token')
             is_gcm = attributes.get('is_gcm')
-            preference = attributes.get('preference', '63')
+            preference = attributes.get('name', '63')
             if not isinstance(preference, str):
                 preference = str(preference)
             attributes['push_notification'] = {

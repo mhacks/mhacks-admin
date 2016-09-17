@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from push_notifications.api.rest_framework import APNSDeviceViewSet, GCMDeviceViewSet
+from rest_framework.permissions import AllowAny
 from rest_framework_docs.views import DRFDocsView
 
 from MHacks.v1.announcements import Announcements, Announcement
@@ -23,8 +24,8 @@ urlpatterns = [
     url(r'^scan_events', ScanEvents.as_view()),
     url(r'^countdown/$', get_countdown, name='countdown'),
     url(r'^map/$', get_map, name='maps'),
-    url(r'^push_notifications/apns/$', APNSDeviceViewSet.as_view({'post': 'create', 'put': 'update'}), name='create_apns_device'),
-    url(r'^push_notifications/gcm/$', GCMDeviceViewSet.as_view({'post': 'create', 'put': 'update'}), name='create_gcm_device'),
+    url(r'^push_notifications/apns/$', APNSDeviceViewSet.as_view({'post': 'create', 'put': 'update'}, permission_classes=(AllowAny,)), name='create_apns_device'),
+    url(r'^push_notifications/gcm/$', GCMDeviceViewSet.as_view({'post': 'create', 'put': 'update'}, permission_classes=(AllowAny,)), name='create_gcm_device'),
     url(r'^apple_pass/$', apple_pass_endpoint),
     url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs'),
 ]
