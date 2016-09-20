@@ -1,29 +1,29 @@
+import datetime
+
 import mailchimp
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponse
 from django.http import (HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, is_safe_url
-from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Q
 from rest_framework.authtoken.models import Token
 
 from MHacks.decorator import anonymous_required, application_reader_required
-from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, MentorApplicationForm, \
-    RegistrationForm
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, RegistrationForm
 from MHacks.models import Application, MentorApplication, Registration
+from MHacks.pass_creator import create_apple_pass
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
     send_application_confirmation_email
-from MHacks.pass_creator import create_apple_pass
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
-import datetime
 
 MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
 
@@ -467,59 +467,6 @@ def update_applications(request):
 
 def live(request):
     return redirect(reverse('mhacks-home'))
-
-
-@login_required()
-def run_python(request):
-    if not request.user.is_superuser:
-        return redirect(reverse('mhacks-home'))
-
-    apps = Application.objects.all()
-    mentor_apps = MentorApplication.objects.all()
-    reg_apps = Registration.objects.all()
-
-    a_no_r = apps.filter(decision='Accept', reimbursement=0)
-    w = apps.filter(decision='Waitlist')
-    m_a = mentor_apps.filter(decision='Accept')
-    r_b = reg_apps.filter(transportation='bus')
-
-    users = list()
-    for app in a_no_r:
-        users.append(app)
-
-    with open('accepted_and_no_reimbursement.csv', 'w') as fo:
-        fo.write('name, email\n')
-        for app in users:
-            fo.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
-
-    users = list()
-    for app in w:
-        users.append(app)
-
-    with open('waitlisted.csv', 'w') as fo2:
-        fo2.write('name, email, last_updated\n')
-        for app in users:
-            fo2.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
-
-    users = list()
-    for app in m_a:
-        users.append(app)
-
-    with open('mentors_accepted.csv', 'w') as fo3:
-        fo3.write('name, email, last_updated\n')
-        for app in users:
-            fo3.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
-
-    users = list()
-    for app in r_b:
-        users.append(app)
-
-    with open('registered_bus.csv', 'w') as fo4:
-        fo4.write('name, email, last_updated\n')
-        for app in users:
-            fo4.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
-
-    return HttpResponse(content='Success', status=200)
 
 
 @login_required()

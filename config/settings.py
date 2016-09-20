@@ -84,7 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -122,7 +121,6 @@ REST_FRAMEWORK = {
     'URL_FORMAT_OVERRIDE': None
 }
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -133,7 +131,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -147,3 +144,5 @@ STATICFILES_DIRS = [
 APPEND_SLASH = True
 
 MEDIA_ROOT = 'resumes/'
+
+EXPLORER_PERMISSION_VIEW = lambda u: u.is_superuser
