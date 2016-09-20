@@ -431,38 +431,54 @@ a {
 
 .logo-row.small div {
     width: 20%;
-    min-width: 185px;
+    min-width: 140px;
+    height: 80px;
 }
 .logo-row.small a {
-    max-width: 175px;
+    max-width: 130px;
 }
 .logo-row.small img {
     max-height: 80px;
-    max-width: 175px;
+    max-width: 130px;
 }
 
 .logo-row.medium div {
     width: 33%;
-    min-width: 285px;
+    min-width: 230px;
+    height: 150px;
 }
 .logo-row.medium a {
-    max-width: 275px;
+    max-width: 220px;
 }
 .logo-row.medium img {
-    max-height: 175px;
-    max-width: 275px;
+    max-height: 150px;
+    max-width: 220px;
 }
 
 .logo-row.large div {
     width: 50%;
     min-width: 360px;
+    height: 225px;
 }
 .logo-row.large a {
     max-width: 350px;
 }
 .logo-row.large img {
-    max-height: 300px;
+    max-height: 225px;
     max-width: 350px;
+}
+
+.logo-row.premium div {
+    width: 100%;
+    min-width: 700px;
+    height: 300px;
+}
+.logo-row.premium a {
+    max-width: 700px;
+}
+.logo-row.premium img {
+    max-height: 300px;
+    max-width: 700px;
 }
 
 .basic-info h1 {
@@ -688,6 +704,10 @@ li.answer {
 
     .logo-row div {
         width: 100% !important;
+        min-width: 0 !important;
+    }
+    .logo-row img {
+        max-width: 100% !important;
     }
 
     .quotes .quote-column {
