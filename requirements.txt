@@ -11,3 +11,4 @@ drfdocs==0.0.9
 django-crispy-forms==1.6.0
 django-push-notifications==1.4.1
 passbook==1.0.2
+django-sql-explorer==1.0
