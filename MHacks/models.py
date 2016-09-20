@@ -289,5 +289,8 @@ class ScanEvent(Any):
     users = models.ManyToManyField(AUTH_USER_MODEL, related_name="scan_event_users")
     expiry_date = models.DateField(blank=True)
 
+    class Meta:
+        permissions = (("can_perform_scan", "Can perform a scan"),)
+
     def __unicode__(self):
         return self.name

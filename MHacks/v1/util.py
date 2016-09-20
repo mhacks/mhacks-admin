@@ -1,7 +1,7 @@
 from rest_framework.permissions import DjangoModelPermissions, IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import exception_handler
-
+from MHacks.models import Application
 
 from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated
 
@@ -45,6 +45,19 @@ class GenericListCreateModel(CreateAPIView, ListAPIView):
 class GenericUpdateDestroyModel(RetrieveUpdateDestroyAPIView):
     permission_classes = (DjangoModelPermissions,)
     lookup_field = 'id'
+
+
+def serialized_user(user):
+    user_serialized = {'name': user.get_full_name(), 'email': user.email,
+                       'can_post_announcements': user.has_perm('MHacks.add_announcement'),
+                       'can_edit_announcements': user.has_perm('MHacks.change_announcement'),
+                       'can_perform_scan': user.has_perm('MHacks.can_perform_scan')}
+    try:
+        app = Application.objects.get(user=user, deleted=False)
+        user_serialized['school'] = app.school
+    except Application.DoesNotExist:
+        pass
+    return user_serialized
 
 
 def mhacks_exception_handler(exc, context):

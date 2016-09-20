@@ -10,8 +10,8 @@ class GroupEnum(object):
 
 groups = GroupEnum()
 
-# map from enum to codenames of permissions that they should have
-# codenames should all be in form of [add/delete/change]_[model_name]
+# map from enum to code names of permissions that they should have
+# code names should all be in form of [add/delete/change]_[model_name]
 
 _permissions_tuples = (
     (GroupEnum.HACKER, ('add_application',

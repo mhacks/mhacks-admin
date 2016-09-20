@@ -7,7 +7,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication
 
 from MHacks.v1.serializers import AuthSerializer
-from MHacks.models import Application
+from MHacks.v1.util import serialized_user
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -52,17 +52,8 @@ class Authentication(views.ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        groups = user.groups.values_list('name', flat=True)
-
-        serialized_user = {'name': user.get_full_name(), 'email': user.email}
-        try:
-            app = Application.objects.get(user=user, deleted=False)
-            serialized_user['school'] = app.school
-        except Application.DoesNotExist:
-            pass
 
         push_notification = serializer.validated_data.get('push_notification', None)
         if push_notification:
             self.save_device(push_notification, user)
-        # FIXME: Return permissions required on mobile rather than groups!
-        return Response({'token': token.key, 'groups': groups, 'user': serialized_user})
+        return Response({'token': token.key, 'user': serialized_user(user)})

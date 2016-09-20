@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 
 from MHacks.pass_creator import create_apple_pass
 from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated, to_utc_epoch
+from MHacks.v1.util import serialized_user
 
 
 @api_view(http_method_names=['GET'])
@@ -52,3 +53,9 @@ def apple_site_association(request):
 @permission_classes((IsAuthenticated,))
 def apple_pass_endpoint(request):
     return Response(data={"apple_pass": base64.encodestring(create_apple_pass(request.user).getvalue())})
+
+
+@api_view(http_method_names=['GET'])
+@permission_classes((IsAuthenticated,))
+def update_user_profile(request):
+    return Response(data=serialized_user(request.user))
