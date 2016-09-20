@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from MHacks.frontend.views import *
 from django.views.generic.base import RedirectView
 
@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^application_review/$', application_review, name='mhacks-applicationReview'),
     url(r'^update_applications/$', update_applications, name='mhacks-updateApplication'),
 
-    url(r'python/$', run_python, name='mhacks-runPython'),
+    url(r'^explorer/', include('explorer.urls')),
 
     # Apple Wallet pass support
     url(r'^apple_pass.pkpass$', apple_pass),

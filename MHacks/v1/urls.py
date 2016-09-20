@@ -1,13 +1,12 @@
-from django.conf.urls import url, include
-
+from django.conf.urls import url
 from rest_framework_docs.views import DRFDocsView
 
 from MHacks.v1.announcements import Announcements, Announcement
 from MHacks.v1.auth import Authentication
 from MHacks.v1.events import Events, Event
 from MHacks.v1.locations import Locations, Location
-from MHacks.v1.scan_event import ScanEvents, ScanEvent
 from MHacks.v1.push_notification_views import APNSTokenView, GCMTokenView
+from MHacks.v1.scan_event import ScanEvents, ScanEvent
 from MHacks.v1.views import get_countdown, get_map, apple_pass_endpoint, update_user_profile
 
 urlpatterns = [
@@ -27,6 +26,5 @@ urlpatterns = [
     url(r'^push_notifications/apns/$', APNSTokenView.as_view(), name='create_apns_device'),
     url(r'^push_notifications/gcm/$', GCMTokenView.as_view(), name='create_gcm_device'),
     url(r'^apple_pass/$', apple_pass_endpoint),
-    url(r'^explorer/', include('explorer.urls')),
     url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs'),
 ]
