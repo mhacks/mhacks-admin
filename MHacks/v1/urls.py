@@ -1,4 +1,5 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
+
 from rest_framework_docs.views import DRFDocsView
 
 from MHacks.v1.announcements import Announcements, Announcement
@@ -25,5 +26,6 @@ urlpatterns = [
     url(r'^push_notifications/apns/$', APNSTokenView.as_view(), name='create_apns_device'),
     url(r'^push_notifications/gcm/$', GCMTokenView.as_view(), name='create_gcm_device'),
     url(r'^apple_pass/$', apple_pass_endpoint),
+    url(r'^explorer/', include('explorer.urls')),
     url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs'),
 ]
