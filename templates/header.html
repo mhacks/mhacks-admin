@@ -13,13 +13,11 @@
     <div id="headerButtons">
         {% if 'apply/' not in request.path %}
             <form method="GET" action="{{ url_for('mhacks-apply') }}">
-                {{ csrf_input }}
                 <button type="submit">Apply</button>
             </form>
         {% endif %}
 
         <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
-            {{ csrf_input }}
             <button type="submit">Mentor</button>
         </form>
 
@@ -30,7 +28,6 @@
             </form>
         {% else %}
             <form method="GET" action="{{ url_for('mhacks-login') }}">
-                {{ csrf_input }}
                 <button type="submit">Login</button>
             </form>
         {% endif %}
@@ -40,13 +37,11 @@
         <div id="dropdownContent" class="turquoise">
             {% if 'apply/' not in request.path %}
                 <form method="GET" action="{{ url_for('mhacks-apply') }}">
-                    {{ csrf_input }}
                     <button type="submit">Apply</button>
                 </form>
             {% endif %}
 
             <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
-                {{ csrf_input }}
                 <button type="submit">Mentor</button>
             </form>
 
@@ -57,7 +52,6 @@
                 </form>
             {% else %}
                 <form method="GET" action="{{ url_for('mhacks-login') }}">
-                    {{ csrf_input }}
                     <button type="submit">Login</button>
                 </form>
             {% endif %}

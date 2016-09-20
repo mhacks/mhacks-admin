@@ -113,6 +113,7 @@ class Location(Any):
     name = models.CharField(max_length=60)
     latitude = models.FloatField()
     longitude = models.FloatField()
+    # FIXME: Add floor support here! Also probably get rid of longitude/latitude
 
     def __unicode__(self):
         return self.name
@@ -143,16 +144,6 @@ class Announcement(Any):
 
     def __unicode__(self):
         return self.title
-
-
-class PushToken(models.Model):
-    # 100 is arbitrary, if someone knows what the max length is?
-    token = models.CharField(max_length=100, unique=True, primary_key=True, db_index=True)
-    is_apns = models.BooleanField()
-    preferences = models.IntegerField()
-
-    def __unicode__(self):
-        return self.token
 
 
 class Application(Any):
@@ -236,6 +227,9 @@ class MentorApplication(Any):
     decision = models.CharField(max_length=16, choices=zip(APPLICATION_DECISION, APPLICATION_DECISION),
                                 default='Decline')
 
+    def __unicode__(self):
+        return self.user.get_full_name() + '\'s Mentor Application'
+
 
 class Registration(Any):
     from application_lists import ACCEPTANCE, TRANSPORTATION, TECH_OPTIONS, T_SHIRT_SIZES, DIETARY_RESTRICTIONS, \
@@ -287,3 +281,16 @@ class Registration(Any):
 
     def __unicode__(self):
         return self.user.get_full_name() + '\'s Registration'
+
+
+class ScanEvent(Any):
+    name = models.CharField(max_length=60, unique=True)
+    number_of_allowable_scans = models.IntegerField(default=1)
+    users = models.ManyToManyField(AUTH_USER_MODEL, related_name="scan_event_users")
+    expiry_date = models.DateField(blank=True)
+
+    class Meta:
+        permissions = (("can_perform_scan", "Can perform a scan"),)
+
+    def __unicode__(self):
+        return self.name

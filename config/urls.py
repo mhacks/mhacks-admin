@@ -18,9 +18,10 @@ from django.conf.urls import url, include
 from django.contrib.admin import site
 from MHacks.frontend.urls import urlpatterns as frontend_urls
 from MHacks.v1.urls import urlpatterns as api_urls
-
+from MHacks.v1.views import apple_site_association
 
 urlpatterns = [
+    url(r'^apple-app-site-association', apple_site_association),
     url(r'^admin/', include(site.urls)),
     url(r'^v1/', include(api_urls)),
     url(r'', include(frontend_urls)),

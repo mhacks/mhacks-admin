@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'MHacks.apps.MhacksConfig',
     'push_notifications',
     'crispy_forms',
+    'explorer'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -117,7 +118,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
-    'EXCEPTION_HANDLER': 'mhacks.v1.utils.mhacks_exception_handler',
+    'EXCEPTION_HANDLER': 'MHacks.v1.util.mhacks_exception_handler',
     'URL_FORMAT_OVERRIDE': None
 }
 

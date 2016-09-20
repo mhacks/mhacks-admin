@@ -33,6 +33,9 @@ urlpatterns = [
 
     url(r'python/$', run_python, name='mhacks-runPython'),
 
+    # Apple Wallet pass support
+    url(r'^apple_pass.pkpass$', apple_pass),
+
     # Redirect all other endpoints to the homepage
     url(r'^.*/$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home')
 ]

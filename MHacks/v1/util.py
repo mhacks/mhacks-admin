@@ -1,13 +1,13 @@
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import exception_handler
-
+from MHacks.models import Application
 
 from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated
 
 
 class GenericListCreateModel(CreateAPIView, ListAPIView):
-    permission_classes = (DjangoModelPermissions,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def __init__(self):
         self.date_of_update = None
@@ -47,6 +47,19 @@ class GenericUpdateDestroyModel(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
+def serialized_user(user):
+    user_serialized = {'name': user.get_full_name(), 'email': user.email,
+                       'can_post_announcements': user.has_perm('MHacks.add_announcement'),
+                       'can_edit_announcements': user.has_perm('MHacks.change_announcement'),
+                       'can_perform_scan': user.has_perm('MHacks.can_perform_scan')}
+    try:
+        app = Application.objects.get(user=user, deleted=False)
+        user_serialized['school'] = app.school
+    except Application.DoesNotExist:
+        pass
+    return user_serialized
+
+
 def mhacks_exception_handler(exc, context):
     # Call REST framework's default exception handler first,
     # to get the standard error response.
@@ -55,14 +68,20 @@ def mhacks_exception_handler(exc, context):
     if not response:
         return response
 
-    if not response.data['detail']:
+    if not response.data.get('detail', None):
         if len(response.data) == 0:
             response.data = {'detail': 'Unknown error'}
         elif isinstance(response.data, list):
             response.data = {'detail': response.data[0]}
         elif isinstance(response.data, dict):
             first_key = response.data.keys()[0]
-            response.data = {'detail': "{}: {}".format(first_key, response.data[first_key])}
+            detail_for_key = response.data[first_key]
+            if isinstance(detail_for_key, list):
+                detail_for_key = detail_for_key[0]
+            if first_key.lower() == 'non_field_errors':
+                response.data = {'detail': "{}".format(detail_for_key)}
+            else:
+                response.data = {'detail': "{}: {}".format(first_key.title(), detail_for_key)}
         else:
             response.data = {'detail': 'Unknown error'}
     return response

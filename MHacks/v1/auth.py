@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication
 
 from MHacks.v1.serializers import AuthSerializer
+from MHacks.v1.util import serialized_user
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -24,10 +25,13 @@ class Authentication(views.ObtainAuthToken):
 
     @staticmethod
     def save_device(push_notification, user):
+        # It's kinda dumb that we are shoving the preference down the 'name' field
+        # But we don't want to create a whole new table just to store that!
         if push_notification['is_gcm']:
             GCMDevice.objects.update_or_create(
                 registration_id=push_notification['token'],
                 defaults={
+                    'name': push_notification['preference'],
                     'registration_id': push_notification['token'],
                     'user': user
                 }
@@ -36,6 +40,7 @@ class Authentication(views.ObtainAuthToken):
             APNSDevice.objects.update_or_create(
                 registration_id=push_notification['token'],
                 defaults={
+                    'name': push_notification['preference'],
                     'registration_id': push_notification['token'],
                     'user': user
                 }
@@ -47,11 +52,8 @@ class Authentication(views.ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        groups = user.groups.values_list('name', flat=True)
-        serialized_user = {'name': user.get_full_name(), 'email': user.email}
 
-        push_notification = serializer.validated_data['push_notification']
+        push_notification = serializer.validated_data.get('push_notification', None)
         if push_notification:
             self.save_device(push_notification, user)
-
-        return Response({'token': token.key, 'groups': groups, 'user': serialized_user})
+        return Response({'token': token.key, 'user': serialized_user(user)})

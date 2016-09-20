@@ -28,6 +28,10 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_CERTIFICATE": ""
 }
 
+#for sql django
+EXPLORER_PERMISSION_VIEW = lambda u: hasattr(u,'is_sponsor') and u.is_sponsor
+EXPLORER_PERMISSION_CHANGE = lambda u: hasattr(u,'is_sponsor') and u.is_sponsor
+
 # Security
 # https://docs.djangoproject.com/en/1.9/topics/security/#ssl-https
 # TODO: Use True for all of these for HTTPS on production settings
@@ -45,3 +49,4 @@ MAILCHIMP_API_KEY = '00000000000000000000000000000000-us1'  # Use API KEY for MA
 MAILCHIMP_INTEREST_LIST = 'https://us6.api.mailchimp.com/3.0/lists'  # Fill with actual list URL on production
 # ^ This is for the blackout interest link
 
+APPLE_WALLET_PASSPHRASE = ''

@@ -6,3 +6,6 @@ venv/*
 config/production_settings.py
 production_settings.py
 resumes
+config/apple_wallet_certificate.pem
+config/apple_wallet_key.pem
+config/apple_wallet_wwdr.pem

@@ -4,10 +4,9 @@ from rest_framework.fields import CharField, ChoiceField
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
 
-from MHacks.models import Announcement as AnnouncementModel
-from MHacks.models import Event as EventModel
-from MHacks.models import Location as LocationModel
-from MHacks.models import MHacksUser as MHacksUserModel
+from MHacks.models import Announcement as AnnouncementModel, \
+    Event as EventModel, Location as LocationModel, \
+    ScanEvent as ScanEventModel, MHacksUser as MHacksUserModel
 from MHacks.v1.serializers.util import UnixEpochDateField, DurationInSecondsField
 
 
@@ -49,6 +48,15 @@ class LocationSerializer(MHacksModelSerializer):
         fields = ('id', 'name', 'latitude', 'longitude')
 
 
+class ScanEventSerializer(MHacksModelSerializer):
+    id = CharField(read_only=True)
+    expiry_date = UnixEpochDateField()
+
+    class Meta:
+        model = ScanEventModel
+        fields = ('id', 'name', 'expiry_date')
+
+
 class MHacksUserSerializer(MHacksModelSerializer):
     id = CharField(read_only=True)
 
@@ -60,8 +68,8 @@ class MHacksUserSerializer(MHacksModelSerializer):
 class AuthSerializer(AuthTokenSerializer):
     # Extends auth token serializer to accommodate push notifs
 
-    token = serializers.CharField()
-    is_gcm = serializers.BooleanField()
+    token = serializers.CharField(required=False)
+    is_gcm = serializers.BooleanField(required=False)
 
     def validate(self, attributes):
         attributes = super(AuthSerializer, self).validate(attributes)
@@ -70,9 +78,13 @@ class AuthSerializer(AuthTokenSerializer):
         if 'token' in attributes.keys() and 'is_gcm' in attributes.keys():
             token = attributes.get('token')
             is_gcm = attributes.get('is_gcm')
+            preference = attributes.get('name', '63')
+            if not isinstance(preference, str):
+                preference = str(preference)
             attributes['push_notification'] = {
                 'token': token,
-                'is_gcm': is_gcm
+                'is_gcm': is_gcm,
+                'preference': preference
             }
 
         return attributes

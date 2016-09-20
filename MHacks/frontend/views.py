@@ -21,6 +21,7 @@ from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSe
 from MHacks.models import Application, MentorApplication, Registration
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
     send_application_confirmation_email
+from MHacks.pass_creator import create_apple_pass
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
 import datetime
 
@@ -99,37 +100,40 @@ def application(request):
 
 @login_required()
 def apply_mentor(request):
-    try:
-        app = MentorApplication.objects.get(user=request.user, deleted=False)
-    except MentorApplication.DoesNotExist:
-        app = None
+    return redirect('https://docs.google.com/a/umich.edu/forms/d/e/1FAIpQLSdHtRqgaUORcwkwyOTkOZqDmcXGvPDmfZmEs2G13tbh9gzuBg/viewform')
 
-    if request.method == 'GET':
-        form = MentorApplicationForm(instance=app)
-    elif request.method == 'POST':
-        if not app:
-            try:
-                # look for deleted apps too
-                app = MentorApplication.objects.get(user=request.user)
-            except MentorApplication.DoesNotExist:
-                app = None
-
-        form = MentorApplicationForm(data=request.POST, instance=app)
-
-        if form.is_valid():
-            # save application
-            app = form.save(commit=False)
-            app.user = request.user
-            app.submitted = True
-            app.deleted = False
-            app.save()
-
-            return redirect(reverse('mhacks-dashboard'))
-    else:
-        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
-
-    context = {'form': form}
-    return render(request, 'apply_mentor.html', context=context)
+    # unused as of 9/19/16
+    # try:
+    #     app = MentorApplication.objects.get(user=request.user, deleted=False)
+    # except MentorApplication.DoesNotExist:
+    #     app = None
+    #
+    # if request.method == 'GET':
+    #     form = MentorApplicationForm(instance=app)
+    # elif request.method == 'POST':
+    #     if not app:
+    #         try:
+    #             # look for deleted apps too
+    #             app = MentorApplication.objects.get(user=request.user)
+    #         except MentorApplication.DoesNotExist:
+    #             app = None
+    #
+    #     form = MentorApplicationForm(data=request.POST, instance=app)
+    #
+    #     if form.is_valid():
+    #         # save application
+    #         app = form.save(commit=False)
+    #         app.user = request.user
+    #         app.submitted = True
+    #         app.deleted = False
+    #         app.save()
+    #
+    #         return redirect(reverse('mhacks-dashboard'))
+    # else:
+    #     return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+    #
+    # context = {'form': form}
+    # return render(request, 'apply_mentor.html', context=context)
 
 
 @login_required()
@@ -186,8 +190,7 @@ def login(request):
     and modifications so we implement it ourselves
     """
     from django.contrib.auth.views import REDIRECT_FIELD_NAME
-    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
-                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, ''))
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
@@ -473,9 +476,12 @@ def run_python(request):
 
     apps = Application.objects.all()
     mentor_apps = MentorApplication.objects.all()
+    reg_apps = Registration.objects.all()
+
     a_no_r = apps.filter(decision='Accept', reimbursement=0)
     w = apps.filter(decision='Waitlist')
     m_a = mentor_apps.filter(decision='Accept')
+    r_b = reg_apps.filter(transportation='bus')
 
     users = list()
     for app in a_no_r:
@@ -504,4 +510,20 @@ def run_python(request):
         for app in users:
             fo3.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
+    users = list()
+    for app in r_b:
+        users.append(app)
+
+    with open('registered_bus.csv', 'w') as fo4:
+        fo4.write('name, email, last_updated\n')
+        for app in users:
+            fo4.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
+
     return HttpResponse(content='Success', status=200)
+
+
+@login_required()
+def apple_pass(request):
+    response = HttpResponse(content=create_apple_pass(request.user).getvalue(), content_type='application/vnd.apple.pkpass')
+    response['MimeType'] = 'application/vnd.apple.pkpass'
+    return response
