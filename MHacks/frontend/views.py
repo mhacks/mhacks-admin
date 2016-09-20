@@ -473,9 +473,12 @@ def run_python(request):
 
     apps = Application.objects.all()
     mentor_apps = MentorApplication.objects.all()
+    reg_apps = Registration.objects.all()
+
     a_no_r = apps.filter(decision='Accept', reimbursement=0)
     w = apps.filter(decision='Waitlist')
     m_a = mentor_apps.filter(decision='Accept')
+    r_b = reg_apps.filter(transportation='bus')
 
     users = list()
     for app in a_no_r:
@@ -503,6 +506,15 @@ def run_python(request):
         fo3.write('name, email, last_updated\n')
         for app in users:
             fo3.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
+
+    users = list()
+    for app in r_b:
+        users.append(app)
+
+    with open('registered_bus.csv', 'w') as fo4:
+        fo4.write('name, email, last_updated\n')
+        for app in users:
+            fo4.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
     return HttpResponse(content='Success', status=200)
 
