@@ -67,10 +67,10 @@ def mhacks_exception_handler(exc, context):
 
     if not response:
         return response
-    if isinstance(response, str):
+    if isinstance(response.data, str):
         response.data = {'detail': response}
-    elif isinstance(response, list):
-        response.data = {'detail', response[0]}
+    elif isinstance(response.data, list):
+        response.data = {'detail': response.data[0]}
     elif not response.data.get('detail', None):
         if len(response.data) == 0:
             response.data = {'detail': 'Unknown error'}

@@ -24,3 +24,11 @@ class ScanEvents(GenericListCreateModel):
 class ScanEvent(GenericUpdateDestroyModel):
     serializer_class = ScanEventSerializer
     queryset = ScanEventModel.objects.all()
+
+
+# Scan Verifiers
+
+# TODO: Somebody who actually knows what needs to be verified on registration
+# and also what to return should actually implement this
+def registration_scan_verify(request, scanned_user):
+    return {'registered': True}

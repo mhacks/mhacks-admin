@@ -286,7 +286,7 @@ class Registration(Any):
 class ScanEvent(Any):
     name = models.CharField(max_length=60, unique=True)
     number_of_allowable_scans = models.IntegerField(default=1)
-    users = models.ManyToManyField(AUTH_USER_MODEL, related_name="scan_event_users", blank=True) # FIXME: Use through
+    scanned_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="scan_event_users", blank=True, through='ScanEventUser')
     expiry_date = models.DateTimeField(blank=True)
     custom_verification = models.CharField(blank=True, max_length=255)
 
@@ -295,3 +295,10 @@ class ScanEvent(Any):
 
     def __unicode__(self):
         return self.name
+
+
+# A custom proxy used for the Many To Many field below
+class ScanEventUser(models.Model):
+    scan_event = models.ForeignKey(ScanEvent, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    count = models.IntegerField(default=1)

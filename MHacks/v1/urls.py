@@ -7,7 +7,7 @@ from MHacks.v1.events import Events, Event
 from MHacks.v1.locations import Locations, Location
 from MHacks.v1.push_notification_views import APNSTokenView, GCMTokenView
 from MHacks.v1.scan_event import ScanEvents, ScanEvent
-from MHacks.v1.views import get_countdown, get_map, apple_pass_endpoint, update_user_profile
+from MHacks.v1.views import get_countdown, get_map, apple_pass_endpoint, update_user_profile, perform_scan
 
 urlpatterns = [
     # Authentication
@@ -19,12 +19,13 @@ urlpatterns = [
     url(r'^events/(?P<id>[0-9A-Za-z_\-]+)$', Event.as_view()),
     url(r'^events/$', Events.as_view(), name='events'),
     url(r'^scan_event/(?P<id>[0-9A-Za-z_\-]+)', ScanEvent.as_view()),
-    url(r'^scan_events', ScanEvents.as_view()),
+    url(r'^scan_events', ScanEvents.as_view(), name='scan_events'),
+    url(r'^perform_scan/', perform_scan, name='perform_scan'),
     url(r'^countdown/$', get_countdown, name='countdown'),
     url(r'^map/$', get_map, name='maps'),
     url(r'^profile/$', update_user_profile, name='profile'),
     url(r'^push_notifications/apns/$', APNSTokenView.as_view(), name='create_apns_device'),
     url(r'^push_notifications/gcm/$', GCMTokenView.as_view(), name='create_gcm_device'),
-    url(r'^apple_pass/$', apple_pass_endpoint),
+    url(r'^apple_pass/$', apple_pass_endpoint, name='apple_pass_endpoint'),
     url(r'^docs/$', DRFDocsView.as_view(template_name='docs.html'), name='docs'),
 ]

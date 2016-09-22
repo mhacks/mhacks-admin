@@ -2,12 +2,13 @@ from datetime import datetime
 from pytz import utc, timezone
 import base64
 
+from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, BasePermission
 
-from MHacks.models import ScanEvent, AUTH_USER_MODEL
+from MHacks.models import ScanEvent, ScanEventUser
 from MHacks.pass_creator import create_apple_pass
 from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated, to_utc_epoch
 from MHacks.v1.util import serialized_user
@@ -75,22 +76,44 @@ def perform_scan(request):
         information = request.POST
     else:
         information = request.GET
+
     scan_event_id = information.get('scan_event', None)
     user_id = information.get('user_id', None)
     if not scan_event_id or not user_id:
         raise ValidationError('Invalid fields provided')
+
     try:
         scan_event = ScanEvent.objects.get(pk=scan_event_id)
-        user = AUTH_USER_MODEL.objects.get(username=user_id)
-    except (ScanEvent.DoesNotExist, AUTH_USER_MODEL.DoesNotExist):
+        user = get_user_model().objects.get(email=user_id)
+    except (ScanEvent.DoesNotExist, get_user_model().DoesNotExist):
         raise ValidationError('Invalid scan event or user')
-    if scan_event.deleted or scan_event.expiry_date < datetime.now():
+
+    if scan_event.deleted or to_utc_epoch(scan_event.expiry_date) < now_as_utc_epoch():
         raise ValidationError('Scan event is no longer valid')
-    number_of_scans = scan_event.users.filter(user_pk=user.pk).count()
+
+    scan_event_user_join = None
+    try:
+        scan_event_user_join = ScanEventUser.objects.get(user=user, scan_event=scan_event)
+        number_of_scans = scan_event_user_join.count
+    except (ScanEventUser.DoesNotExist, get_user_model().DoesNotExist):
+        number_of_scans = 0
+
     if number_of_scans >= scan_event.number_of_allowable_scans:
         raise ValidationError('User has already been scanned the maximum amount')
-    if scan_event.custom_verification:
-        import MHacks.v1.util as utils
-        result = getattr(utils, scan_event.custom_verification)()
 
-    return Response(data={})
+    scan_result = {'scanned': True}
+
+    if scan_event.custom_verification:
+        import MHacks.v1.scan_event as scan_event_verifiers
+        scan_result['data'] = getattr(scan_event_verifiers, scan_event.custom_verification)(request, user)
+
+    # Only if its a POST request do we actually "do" the scan
+    # GET requests are peeks i.e. they don't modify the database at all
+    if request.method == 'POST':
+        if scan_event_user_join:
+            scan_event_user_join.count += 1
+        else:
+            scan_event_user_join = ScanEventUser(user=user, scan_event=scan_event, count=1)
+        scan_event_user_join.save()
+
+    return Response(data=scan_result)
