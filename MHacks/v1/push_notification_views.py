@@ -24,7 +24,7 @@ class PushNotificationView(generics.CreateAPIView):
             try:
                 instance = self.model_class.objects.filter(registration_id=request.data.get('registration_id', None))[0]
             except (self.model_class.DoesNotExist, IndexError):
-                raise ValidationError({'detail': 'Invalid request'})
+                raise ValidationError('Invalid request')
             serializer = self.get_serializer(instance=instance, data=request.data)
             serializer.is_valid(raise_exception=True)
         serializer.instance.user_id = request.user.pk if request.user and request.user.is_authenticated else None

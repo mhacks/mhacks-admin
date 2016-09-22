@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.utils import timezone
 
 from MHacks.models import Announcement as AnnouncementModel
@@ -15,12 +16,16 @@ class Announcements(GenericListCreateModel):
 
     def get_queryset(self):
         date_last_updated = super(Announcements, self).get_queryset()
-        if date_last_updated:
-            query_set = AnnouncementModel.objects.all().filter(last_updated__gte=date_last_updated)
-        else:
-            query_set = AnnouncementModel.objects.all().filter(deleted=False)
+
         if not self.request.user or not self.request.user.has_perm('mhacks.change_announcement'):
-            return query_set.filter(approved=True).filter(broadcast_at__lte=timezone.now())
+            query_set = AnnouncementModel.objects.all().filter(approved=True).filter(broadcast_at__lte=timezone.now())
+            if date_last_updated:
+                query_set.filter(Q(last_updated__gte=date_last_updated) | Q(broadcast_at__gte=date_last_updated))
+        else:
+            query_set = AnnouncementModel.objects.all()
+            if date_last_updated:
+                query_set.filter(last_updated__gte=date_last_updated)
+
         return query_set
 
 
