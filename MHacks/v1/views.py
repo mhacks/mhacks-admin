@@ -1,5 +1,5 @@
 from datetime import datetime
-from pytz import utc, timezone
+from pytz import utc
 import base64
 
 from django.contrib.auth import get_user_model
@@ -21,14 +21,14 @@ def get_countdown(request):
     Gets the countdown representation for the hackathon
     """
     # Update the date_updated to your current time if you modify the return value of the countdown
-    date_updated = datetime(year=2016, month=9, day=16, hour=0, minute=0, second=0, microsecond=0, tzinfo=utc)
+    date_updated = datetime(year=2016, month=9, day=22, hour=0, minute=0, second=0, microsecond=0, tzinfo=utc)
 
     client_updated = parse_date_last_updated(request)
     if client_updated and client_updated >= date_updated:
         return Response(data={'date_updated': now_as_utc_epoch()})
 
-    start_time = datetime(year=2016, month=10, day=8, hour=0, minute=0, second=0, microsecond=0,
-                          tzinfo=timezone('US/Eastern'))
+    start_time = datetime(year=2016, month=10, day=8, hour=4, minute=0, second=0, microsecond=0,
+                          tzinfo=utc)
     return Response(data={'start_time': to_utc_epoch(start_time),
                           'countdown_duration': 129600,  # 36 hours
                           'hacks_submitted': 118800,  # 33 hours
