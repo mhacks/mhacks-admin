@@ -15,8 +15,8 @@ def create_apple_pass(user):
     try:
         app = Application.objects.get(user=user, deleted=False)
         school_name = app.school
-        from datetime import datetime
-        is_minor = 'YES' if app.birthday >= datetime(year=1998, month=10, day=7) else 'NO'
+        from datetime import date
+        is_minor = 'YES' if app.birthday >= date(year=1998, month=10, day=7) else 'NO'
     except Application.DoesNotExist:
         school_name = 'Unknown'
         is_minor = 'Unknown'
