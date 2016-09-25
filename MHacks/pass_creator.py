@@ -22,9 +22,11 @@ def create_apple_pass(user):
         is_minor = 'Unknown'
 
     card_info.addSecondaryField('school', school_name, 'SCHOOL')
-    card_info.addAuxiliaryField('school', school_name, 'SCHOOL')
+    card_info.addBackField('school', school_name, 'SCHOOL')
+
     card_info.addSecondaryField('location', 'Masonic Temple', 'LOCATION')
     card_info.secondaryFields[1].textAlignment = Alignment.RIGHT
+
     card_info.addAuxiliaryField('minor', is_minor, 'IS MINOR')
     card_info.addBackField('minor', is_minor, 'IS MINOR')
 
@@ -44,7 +46,7 @@ def create_apple_pass(user):
     pass_file.barcode = Barcode(message=user.email, format=BarcodeFormat.QR)
     pass_file.backgroundColor = 'rgb(0, 188, 212)'
     pass_file.foregroundColor = 'rgb(250, 250, 250)'
-    pass_file.labelColor = 'rgb(229, 209, 28)'
+    pass_file.labelColor = 'rgba(0, 0, 0, 0.6)'
     pass_file.associatedStoreIdentifiers = [955659359]
 
     pass_file.relevantDate = "2016-10-07T17:00:00-04:00"
