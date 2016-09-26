@@ -233,7 +233,7 @@ html button {
     margin: 0 5px 10px 5px;
     display: inline;
     text-align: center;
-    float: none;
+    float: left;
     width: 100%;
 }
 
