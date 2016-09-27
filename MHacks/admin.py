@@ -36,3 +36,8 @@ class RegistrationAdmin(admin.ModelAdmin):
 @admin.register(ScanEvent)
 class ScanEventAdmin(admin.ModelAdmin):
     search_fields = ['name']
+
+
+@admin.register(ScanEventUser)
+class ScanEventUserAdmin(admin.ModelAdmin):
+    pass

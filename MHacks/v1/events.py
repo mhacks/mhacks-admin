@@ -16,7 +16,7 @@ class Events(GenericListCreateModel):
             query_set = EventModel.objects.all().filter(last_updated__gte=date_last_updated)
         else:
             query_set = EventModel.objects.all().filter(deleted=False)
-        if not self.request.user or not self.request.user.has_perm('mhacks.change_event'):
+        if not self.request.user or not self.request.user.has_perm('MHacks.change_event'):
             return query_set.filter(approved=True)
         return query_set
 

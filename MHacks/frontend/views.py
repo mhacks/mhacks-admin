@@ -541,7 +541,7 @@ def run_python(request):
             if app.birthday > event_date:
                 rmo.write('{}, {}, {}\n'.format(r.user.get_full_name(), r.user.email, r.last_updated))
 
-    with open('bus_list', 'w') as bl:
+    with open('bus_list.csv', 'w') as bl:
         bl.write('name, email, school, registered\n')
         accepted_hackers = Application.objects.filter(decision='Accept', school__in=schools_with_bus)
         for app in accepted_hackers:
@@ -552,5 +552,30 @@ def run_python(request):
                 registered = False
 
             bl.write('{}, {}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.school, registered))
+
+    with open('accepted_and_no_reimbursement.csv', 'w') as anr:
+        a_no_r = Application.objects.filter(decision='Accept', reimbursement=0)
+        anr.write('name, email\n')
+        for app in a_no_r:
+            anr.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
+
+    with open('waitlisted.csv', 'w') as wl:
+        w = Application.objects.filter(decision='Waitlist')
+        wl.write('name, email, last_updated\n')
+        for app in w:
+            wl.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
+
+    with open('accepted_no_registration.csv', 'w') as anr2:
+        accepted = Application.objects.filter(decision='Accept')
+        a_no_reg = list()
+        for app in accepted:
+            try:
+                Registration.objects.get(user=app.user)
+            except Exception as e:
+                a_no_reg.append(app)
+
+        anr2.write('name, email, last_updated\n')
+        for app in a_no_reg:
+            anr2.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
     return HttpResponse(status=200, content='Success')

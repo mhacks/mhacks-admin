@@ -323,7 +323,7 @@ class RegistrationForm(forms.ModelForm):
             'accommodations': forms.Textarea(attrs={'class': 'full textfield form-control', 'placeholder': '(e.g. wheelchair accessible transportation, closed captioning, etc.)'}),
             'medical_concerns': forms.Textarea(attrs={'class': 'full textfield form-control', 'placeholder': '(e.g. asthma, diabetes, epilepsy, etc.)'}),
             'anything_else': forms.Textarea(attrs={'class': 'full textfield form-control', 'placeholder': '(Your favorite joke...)'}),
-            'phone_number': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': '+##########'}),
+            'phone_number': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': ''}),
             'employment': forms.Select(attrs={'class': 'full checkbox-style'}),
             'degree': forms.Select(attrs={'class': 'full checkbox-style'}),
             'waiver_signature': forms.TextInput(attrs={'class': 'check-width', 'placeholder': 'First Last'})

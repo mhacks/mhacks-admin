@@ -302,3 +302,6 @@ class ScanEventUser(models.Model):
     scan_event = models.ForeignKey(ScanEvent, on_delete=models.CASCADE)
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     count = models.IntegerField(default=1)
+
+    def __unicode__(self):
+        return self.user.get_full_name() + '\'s ' + self.scan_event.name + ' Scan (' + str(self.count) + ')'
