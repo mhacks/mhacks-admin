@@ -17,7 +17,7 @@ class Announcements(GenericListCreateModel):
     def get_queryset(self):
         date_last_updated = super(Announcements, self).get_queryset()
 
-        if not self.request.user or not self.request.user.has_perm('mhacks.change_announcement'):
+        if not self.request.user or not self.request.user.has_perm('MHacks.change_announcement'):
             query_set = AnnouncementModel.objects.all().filter(approved=True).filter(broadcast_at__lte=timezone.now())
             if date_last_updated:
                 query_set.filter(Q(last_updated__gte=date_last_updated) | Q(broadcast_at__gte=date_last_updated))
