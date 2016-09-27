@@ -534,25 +534,25 @@ def run_python(request):
                             'New York Theological Seminary',
                             'Columbia University in the City of New York',]
 
-        with open('registered_minors.csv', 'w') as rmo:
-            rmo.write('name, email, last_updated\n')
-            registered_minors = Registration.objects.all()
-            for r in registered_minors:
-                app = Application.objects.get(user=r.user)
-                if app.birthday > event_date:
-                    rmo.write('{}, {}, {}\n'.format(r.user.get_full_name(), r.user.email, r.last_updated))
-
-        with open('bus_list.csv', 'w') as bl:
-            bl.write('name, email, school, registered\n')
-            accepted_hackers = Application.objects.filter(decision='Accept', school__in=schools_with_bus)
-            for app in accepted_hackers:
-                try:
-                    reg = Registration.objects.get(user=app.user)
-                    registered = True
-                except Exception as e:
-                    registered = False
-
-                bl.write('{}, {}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.school, registered))
+        # with open('registered_minors.csv', 'w') as rmo:
+        #     rmo.write('name, email, last_updated\n')
+        #     registered_minors = Registration.objects.all()
+        #     for r in registered_minors:
+        #         app = Application.objects.get(user=r.user)
+        #         if app.birthday > event_date:
+        #             rmo.write('{}, {}, {}\n'.format(r.user.get_full_name(), r.user.email, r.last_updated))
+        #
+        # with open('bus_list.csv', 'w') as bl:
+        #     bl.write('name, email, school, registered\n')
+        #     accepted_hackers = Application.objects.filter(decision='Accept', school__in=schools_with_bus)
+        #     for app in accepted_hackers:
+        #         try:
+        #             reg = Registration.objects.get(user=app.user)
+        #             registered = True
+        #         except Exception as e:
+        #             registered = False
+        #
+        #         bl.write('{}, {}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.school, registered))
 
         with open('accepted_and_no_reimbursement.csv', 'w') as anr:
             a_no_r = Application.objects.filter(decision='Accept', reimbursement=0)
@@ -580,6 +580,6 @@ def run_python(request):
                 anr2.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
     except Exception as e:
-        return HttpResponse(status=500, content=e.message)
+        return HttpResponse(status=200, content=e.message)
 
     return HttpResponse(status=200, content='Success')
