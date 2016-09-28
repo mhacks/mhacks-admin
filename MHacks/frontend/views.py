@@ -559,6 +559,11 @@ def run_python(request):
         for app in a_no_r:
             anr.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
 
+    return HttpResponse(status=200, content='Success')
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def run_csv(request):
     apps = Application.objects.all()
 
     w = apps.filter(decision='Waitlist')
