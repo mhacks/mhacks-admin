@@ -33,9 +33,6 @@ urlpatterns = [
 
     url(r'^explorer/', include('explorer.urls')),
 
-    # will eventually remove
-    url(r'^run_python/$', run_python, name='mhacks-runPython'),
-
     # Apple Wallet pass support
     url(r'^apple_pass.pkpass$', apple_pass),
 
