@@ -580,7 +580,7 @@ def run_python(request):
         except Exception as e:
             accepted_no_reg.append(app)
 
-    with open('accepted_no_registration.csv', 'v') as anr2:
+    with open('accepted_no_registration.csv', 'w') as anr2:
         anr2.write('name, email, last_updated\n')
         for app in accepted_no_reg:
             anr2.write('{}, {}, {}\n'.format(app.user.get_full_name(), app.user.email, app.last_updated))
