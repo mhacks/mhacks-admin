@@ -29,19 +29,19 @@ class Authentication(views.ObtainAuthToken):
         # But we don't want to create a whole new table just to store that!
         if push_notification['is_gcm']:
             GCMDevice.objects.update_or_create(
-                registration_id=push_notification['token'],
+                registration_id=push_notification['registration_id'],
                 defaults={
-                    'name': push_notification['preference'],
-                    'registration_id': push_notification['token'],
+                    'name': push_notification['name'],
+                    'registration_id': push_notification['registration_id'],
                     'user': user
                 }
             )
         else:
             APNSDevice.objects.update_or_create(
-                registration_id=push_notification['token'],
+                registration_id=push_notification['registration_id'],
                 defaults={
-                    'name': push_notification['preference'],
-                    'registration_id': push_notification['token'],
+                    'name': push_notification['name'],
+                    'registration_id': push_notification['registration_id'],
                     'user': user
                 }
             )
