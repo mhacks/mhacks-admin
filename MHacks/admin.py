@@ -41,3 +41,8 @@ class ScanEventAdmin(admin.ModelAdmin):
 @admin.register(ScanEventUser)
 class ScanEventUserAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Floor)
+class FloorAdmin(admin.ModelAdmin):
+    search_fields = ['name']

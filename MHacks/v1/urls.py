@@ -4,6 +4,7 @@ from rest_framework_docs.views import DRFDocsView
 from MHacks.v1.announcements import Announcements, Announcement
 from MHacks.v1.auth import Authentication
 from MHacks.v1.events import Events, Event
+from MHacks.v1.floors import Floors, Floor
 from MHacks.v1.locations import Locations, Location
 from MHacks.v1.push_notification_views import APNSTokenView, GCMTokenView
 from MHacks.v1.scan_event import ScanEvents, ScanEvent
@@ -18,6 +19,8 @@ urlpatterns = [
     url(r'^locations/$', Locations.as_view(), name='locations'),
     url(r'^events/(?P<id>[0-9A-Za-z_\-]+)$', Event.as_view()),
     url(r'^events/$', Events.as_view(), name='events'),
+    url(r'^floors/(?P<id>[0-9A-Za-z_\-]+)', Floor.as_view()),
+    url(r'^floors', Floors.as_view(), name='floors'),
     url(r'^scan_event/(?P<id>[0-9A-Za-z_\-]+)', ScanEvent.as_view()),
     url(r'^scan_events', ScanEvents.as_view(), name='scan_events'),
     url(r'^perform_scan/', perform_scan, name='perform_scan'),

@@ -6,7 +6,7 @@ from rest_framework.serializers import ModelSerializer
 
 from MHacks.models import Announcement as AnnouncementModel, \
     Event as EventModel, Location as LocationModel, \
-    ScanEvent as ScanEventModel, MHacksUser as MHacksUserModel
+    ScanEvent as ScanEventModel, MHacksUser as MHacksUserModel, Floor as FloorModel
 from MHacks.v1.serializers.util import UnixEpochDateField, DurationInSecondsField
 
 
@@ -40,12 +40,22 @@ class EventSerializer(MHacksModelSerializer):
         fields = ('id', 'name', 'info', 'start', 'duration', 'locations', 'category', 'approved')
 
 
-class LocationSerializer(MHacksModelSerializer):
+class FloorSerializer(MHacksModelSerializer):
     id = CharField(read_only=True)
 
     class Meta:
+        model = FloorModel
+        fields = ('id', 'name', 'image', 'index')
+
+
+class LocationSerializer(MHacksModelSerializer):
+    id = CharField(read_only=True)
+    floor = PrimaryKeyRelatedField(many=False, pk_field=CharField(),
+                                   queryset=FloorModel.objects.all().filter(deleted=False))
+
+    class Meta:
         model = LocationModel
-        fields = ('id', 'name', 'latitude', 'longitude')
+        fields = ('id', 'name', 'floor')
 
 
 class ScanEventSerializer(MHacksModelSerializer):

@@ -109,14 +109,21 @@ class Any(models.Model):
         abstract = True
 
 
-class Location(Any):
+class Floor(Any):
     name = models.CharField(max_length=60)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    # FIXME: Add floor support here! Also probably get rid of longitude/latitude
+    index = models.IntegerField(unique=True)
+    image = models.URLField()
 
     def __unicode__(self):
-        return self.name
+        return '{} displayed at index {}'.format(self.name, str(self.index))
+
+
+class Location(Any):
+    name = models.CharField(max_length=60)
+    floor = models.ForeignKey(Floor, on_delete=models.PROTECT, null=True)
+
+    def __unicode__(self):
+        return "{} on the {}".format(self.name, str(self.floor.name))
 
 
 class Event(Any):
