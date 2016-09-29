@@ -120,10 +120,12 @@ class Floor(Any):
 
 class Location(Any):
     name = models.CharField(max_length=60)
-    floor = models.ForeignKey(Floor, on_delete=models.PROTECT, null=True)
+    floor = models.ForeignKey(Floor, on_delete=models.PROTECT, null=True, blank=True)
 
     def __unicode__(self):
-        return "{} on the {}".format(self.name, str(self.floor.name))
+        if self.floor:
+            return "{} on the {}".format(self.name, str(self.floor.name))
+        return self.name
 
 
 class Event(Any):

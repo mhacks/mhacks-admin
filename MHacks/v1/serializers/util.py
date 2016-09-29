@@ -35,6 +35,13 @@ class DurationInSecondsField(serializers.Field):
         return value.total_seconds()
 
 
+class NonNullPrimaryKeyField(serializers.PrimaryKeyRelatedField):
+    def to_representation(self, value):
+        if not value:
+            return None
+        super(NonNullPrimaryKeyField, self).to_representation(value)
+
+
 def parse_date_last_updated(request):
     date_last_updated_raw = request.query_params.get('since', None)
     if date_last_updated_raw:
