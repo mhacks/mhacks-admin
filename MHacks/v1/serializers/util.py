@@ -43,6 +43,7 @@ def parse_date_last_updated(request):
             from datetime import datetime
             return datetime.utcfromtimestamp(float(date_last_updated_raw)).replace(tzinfo=utc)
         except ValueError:
+            print('Value error')
             pass
     return None
 
