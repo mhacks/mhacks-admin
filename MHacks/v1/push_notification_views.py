@@ -15,7 +15,7 @@ class PushNotificationView(generics.CreateAPIView):
         if not preference:
             preference = request.data.get('name', 63)
 
-        copied_data = request.data
+        copied_data = request.data.copy()
         copied_data['name'] = preference
 
         serializer = self.get_serializer(data=copied_data)
