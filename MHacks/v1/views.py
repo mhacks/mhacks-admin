@@ -92,24 +92,29 @@ def perform_scan(request):
         raise ValidationError('Scan event is no longer valid')
 
     scan_event_user_join = None
-    try:
-        scan_event_user_join = ScanEventUser.objects.get(user=user, scan_event=scan_event)
-        number_of_scans = scan_event_user_join.count
-    except (ScanEventUser.DoesNotExist, get_user_model().DoesNotExist):
-        number_of_scans = 0
+    if scan_event.number_of_allowable_scans:
+        try:
+            scan_event_user_join = ScanEventUser.objects.get(user=user, scan_event=scan_event)
+            number_of_scans = scan_event_user_join.count
+        except (ScanEventUser.DoesNotExist, get_user_model().DoesNotExist):
+            number_of_scans = 0
 
-    if number_of_scans >= scan_event.number_of_allowable_scans:
-        raise ValidationError('User has already been scanned the maximum amount')
+        if number_of_scans >= scan_event.number_of_allowable_scans:
+            raise ValidationError('User has already been scanned the maximum amount')
 
-    scan_result = {'scanned': True}
+    scan_result = {'scanned': True, 'data': []}
 
     if scan_event.custom_verification:
         import MHacks.v1.scan_event as scan_event_verifiers
-        scan_result['data'] = getattr(scan_event_verifiers, scan_event.custom_verification)(request, user)
+        try:
+            scan_result['data'] = getattr(scan_event_verifiers, scan_event.custom_verification)(request, user)
+        except AttributeError:
+            pass  # This shouldn't happen normally but we defensively protect against it
 
     # Only if its a POST request do we actually "do" the scan
     # GET requests are peeks i.e. they don't modify the database at all
-    if request.method == 'POST':
+    # If there is no number_of_allowable_scans we don't do anything on a POST either (unlimited)
+    if scan_event.number_of_allowable_scans and request.method == 'POST':
         if scan_event_user_join:
             scan_event_user_join.count += 1
         else:

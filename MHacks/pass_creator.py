@@ -5,7 +5,7 @@ from models import Application, Registration
 
 def create_apple_pass(user):
     card_info = EventTicket()
-    header_field = Field('date', 'Oct 7-9', 'DETROIT')
+    header_field = Field('date', 'Oct 7-9', 'MASONIC TEMPLE')
     header_field.textAlignment = Alignment.RIGHT
     card_info.headerFields.append(header_field)
     card_info.addPrimaryField('name', user.get_full_name(), 'HACKER')
@@ -16,24 +16,17 @@ def create_apple_pass(user):
         app = Application.objects.get(user=user, deleted=False)
         school_name = app.school
         from datetime import date
-        is_minor = 'YES' if app.birthday >= date(year=1998, month=10, day=7) else 'NO'
+        if app.user_is_minor():
+            card_info.addAuxiliaryField('minor', 'YES', 'MINOR')
+            card_info.addBackField('minor', 'YES', 'MINOR')
     except Application.DoesNotExist:
         school_name = 'Unknown'
-        is_minor = 'Unknown'
 
     card_info.addSecondaryField('school', school_name, 'SCHOOL')
     card_info.addBackField('school', school_name, 'SCHOOL')
 
-    card_info.addSecondaryField('location', 'Masonic Temple', 'LOCATION')
-    card_info.secondaryFields[1].textAlignment = Alignment.RIGHT
-
-    card_info.addAuxiliaryField('minor', is_minor, 'IS MINOR')
-    card_info.addBackField('minor', is_minor, 'IS MINOR')
-
     try:
         registration = Registration.objects.get(user=user, deleted=False)
-        card_info.addAuxiliaryField('tshirt', registration.t_shirt_size, 'T-SHIRT SIZE')
-        card_info.auxiliaryFields[1].textAlignment = Alignment.RIGHT
         card_info.addBackField('tshirt', registration.t_shirt_size, 'T-SHIRT SIZE')
         card_info.addBackField('dietary', registration.dietary_restrictions if registration.dietary_restrictions else 'None', 'DIETARY RESTRICTIONS')
     except Registration.DoesNotExist:

@@ -1,4 +1,6 @@
-from MHacks.models import ScanEvent as ScanEventModel
+from rest_framework.exceptions import ValidationError
+
+from MHacks.models import ScanEvent as ScanEventModel, Registration, Application
 from MHacks.v1.serializers import ScanEventSerializer
 from MHacks.v1.util import GenericListCreateModel, GenericUpdateDestroyModel
 
@@ -30,6 +32,59 @@ class ScanEvent(GenericUpdateDestroyModel):
 # IMPORTANT NOTE: All scan verifiers must go in this file as a global function, if not
 # it will simply not work
 
-# TODO: Somebody who actually knows what needs to be verified on registration and also what to return should actually implement this
 def registration_scan_verify(request, scanned_user):
-    return {'registered': True}  # Return some more useful stuff
+    try:
+        application = Application.objects.get(user=scanned_user)
+        registration = Registration.objects.get(user=scanned_user)
+        if not registration.acceptance:
+            raise Registration.DoesNotExist()
+    except (Application.DoesNotExist, Registration.DoesNotExist):
+        raise ValidationError('No registration found for {}. Register manually'.format(scanned_user.get_short_name()))
+    all_fields = _general_information(scanned_user, application)
+    if application.user_is_minor():
+        all_fields.append(_create_field('MINOR', 'Yes', color='FF0000'))
+    return all_fields
+
+
+def general_information_scan_verify(request, scanned_user):
+    return _general_information(scanned_user, _application_for_user_or_none(scanned_user))
+
+
+def swag_scan_verify(request, scanned_user):
+    try:
+        registration = Registration.objects.get(user=scanned_user)
+    except Registration.DoesNotExist:
+        raise ValidationError('No registration found for {}. Register manually'.format(scanned_user.get_short_name()))
+    return _general_information(scanned_user, _application_for_user_or_none(scanned_user)) + \
+            [_create_field('T-SHIRT SIZE', registration.t_shirt_size, 'tshirt', color='0000FF')]
+
+
+def meal_scan_verify(request, scanned_user):
+    try:
+        registration = Registration.objects.get(user=scanned_user)
+        dietary_restrictions = registration.dietary_restrictions if registration.dietary_restrictions else 'None'
+    except Registration.DoesNotExist:
+        dietary_restrictions = 'None'
+    return _general_information(scanned_user, _application_for_user_or_none(scanned_user)) + \
+           [_create_field('Dietary Restrictions', dietary_restrictions, 'dietary', '0000FF')]
+
+
+def _application_for_user_or_none(user):
+    try:
+        application = Application.objects.get(user=user)
+    except Application.DoesNotExist:
+        application = None
+    return application
+
+
+def _general_information(user, application):
+    return [_create_field('NAME', user.get_full_name()),
+            _create_field('EMAIL', user.email),
+            _create_field('SCHOOL', application.school if application else 'Unknown')]
+
+
+def _create_field(label, value, id_value=None, color=None):
+    return {'id': id_value if id_value else label.lower(),
+            'label': label,
+            'value': value,
+            'color': color if color else '000000'}

@@ -198,6 +198,10 @@ class Application(Any):
     def __unicode__(self):
         return self.user.get_full_name() + '\'s Application'
 
+    def user_is_minor(self):
+        from datetime import date
+        return self.birthday >= date(year=1998, month=10, day=7)
+
 
 class MentorApplication(Any):
     from application_lists import SKILLS, APPLICATION_DECISION

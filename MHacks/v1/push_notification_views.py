@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from push_notifications.api.rest_framework import APNSDeviceSerializer, GCMDeviceSerializer
@@ -7,15 +8,17 @@ from push_notifications.models import APNSDevice, GCMDevice
 
 class PushNotificationView(generics.CreateAPIView):
     model_class = None
+    permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
-        preference = request.data.get('preference', None)
-        if preference:
-            request.data['name'] = preference
-        if not request.data.get('name', None):
-            request.data['name'] = '63'
+        preference = request.data.get('preference', 0)
+        if not preference:
+            preference = request.data.get('name', 63)
 
-        serializer = self.get_serializer(data=request.data)
+        copied_data = request.data
+        copied_data['name'] = preference
+
+        serializer = self.get_serializer(data=copied_data)
         created = False
         try:
             serializer.is_valid(raise_exception=True)
@@ -27,7 +30,7 @@ class PushNotificationView(generics.CreateAPIView):
                 raise ValidationError('Invalid request')
             serializer = self.get_serializer(instance=instance, data=request.data)
             serializer.is_valid(raise_exception=True)
-        serializer.instance.user_id = request.user.pk if request.user and request.user.is_authenticated else None
+        serializer.instance.user_id = request.user.pk if request.user and request.user.is_authenticated() else None
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK, headers=headers)
