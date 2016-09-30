@@ -1,3 +1,4 @@
+# coding=utf-8
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
@@ -58,6 +59,23 @@ class MHacksUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    def application_or_none(self):
+        try:
+            return Application.objects.get(user=self, deleted=False)
+        except Application.DoesNotExist:
+            return None
+
+    def registration_or_none(self):
+        try:
+            return Registration.objects.get(user=self, deleted=False)
+        except Registration.DoesNotExist:
+            return None
+
+    def cleaned_school_name(self, application=None):
+        if not application:
+            application = self.application_or_none()
+        return application.school.replace('-', ' — ') if application else 'Unknown'
 
     class Meta:
         verbose_name = 'User'

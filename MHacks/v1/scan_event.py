@@ -33,13 +33,12 @@ class ScanEvent(GenericUpdateDestroyModel):
 # it will simply not work
 
 def registration_scan_verify(request, scanned_user):
-    try:
-        application = Application.objects.get(user=scanned_user)
-        registration = Registration.objects.get(user=scanned_user)
-        if not registration.acceptance:
-            raise Registration.DoesNotExist()
-    except (Application.DoesNotExist, Registration.DoesNotExist):
+    application = scanned_user.application_or_none()
+    registration = scanned_user.registration_or_none()
+    if not application or not registration:
         raise ValidationError('No registration found for {}. Register manually'.format(scanned_user.get_short_name()))
+    if not registration.acceptance:
+        raise ValidationError('{} did not accept registration'.format(scanned_user.get_short_name()))
     all_fields = _general_information(scanned_user, application)
     if application.user_is_minor():
         all_fields.append(_create_field('MINOR', 'Yes', color='FF0000'))
@@ -47,7 +46,7 @@ def registration_scan_verify(request, scanned_user):
 
 
 def general_information_scan_verify(request, scanned_user):
-    return _general_information(scanned_user, _application_for_user_or_none(scanned_user))
+    return _general_information(scanned_user)
 
 
 def swag_scan_verify(request, scanned_user):
@@ -55,32 +54,21 @@ def swag_scan_verify(request, scanned_user):
         registration = Registration.objects.get(user=scanned_user)
     except Registration.DoesNotExist:
         raise ValidationError('No registration found for {}. Register manually'.format(scanned_user.get_short_name()))
-    return _general_information(scanned_user, _application_for_user_or_none(scanned_user)) + \
+    return _general_information(scanned_user) + \
             [_create_field('T-SHIRT SIZE', registration.t_shirt_size, 'tshirt', color='0000FF')]
 
 
 def meal_scan_verify(request, scanned_user):
-    try:
-        registration = Registration.objects.get(user=scanned_user)
-        dietary_restrictions = registration.dietary_restrictions if registration.dietary_restrictions else 'None'
-    except Registration.DoesNotExist:
-        dietary_restrictions = 'None'
-    return _general_information(scanned_user, _application_for_user_or_none(scanned_user)) + \
+    registration = scanned_user.registration_or_none()
+    dietary_restrictions = registration.dietary_restrictions if registration and registration.dietary_restrictions else 'None'
+    return _general_information(scanned_user) + \
            [_create_field('Dietary Restrictions', dietary_restrictions, 'dietary', '0000FF')]
 
 
-def _application_for_user_or_none(user):
-    try:
-        application = Application.objects.get(user=user)
-    except Application.DoesNotExist:
-        application = None
-    return application
-
-
-def _general_information(user, application):
+def _general_information(user, application=None):
     return [_create_field('NAME', user.get_full_name()),
             _create_field('EMAIL', user.email),
-            _create_field('SCHOOL', application.school if application else 'Unknown')]
+            _create_field('SCHOOL', user.cleaned_school_name(application))]
 
 
 def _create_field(label, value, id_value=None, color=None):

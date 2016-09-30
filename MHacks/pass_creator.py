@@ -12,25 +12,21 @@ def create_apple_pass(user):
     card_info.addBackField('name', user.get_full_name(), 'NAME')
     card_info.addBackField('email', user.email, 'EMAIL')
 
-    try:
-        app = Application.objects.get(user=user, deleted=False)
-        school_name = app.school
-        from datetime import date
-        if app.user_is_minor():
-            card_info.addAuxiliaryField('minor', 'YES', 'MINOR')
-            card_info.addBackField('minor', 'YES', 'MINOR')
-    except Application.DoesNotExist:
-        school_name = 'Unknown'
+    app = user.application_or_none()
 
+    school_name = user.cleaned_school_name(app)
     card_info.addSecondaryField('school', school_name, 'SCHOOL')
     card_info.addBackField('school', school_name, 'SCHOOL')
 
-    try:
-        registration = Registration.objects.get(user=user, deleted=False)
+    if app:
+        if app.user_is_minor():
+            card_info.addAuxiliaryField('minor', 'YES', 'MINOR')
+            card_info.addBackField('minor', 'YES', 'MINOR')
+
+    registration = user.registration_or_none()
+    if registration:
         card_info.addBackField('tshirt', registration.t_shirt_size, 'T-SHIRT SIZE')
         card_info.addBackField('dietary', registration.dietary_restrictions if registration.dietary_restrictions else 'None', 'DIETARY RESTRICTIONS')
-    except Registration.DoesNotExist:
-        pass
 
     pass_file = Pass(card_info, passTypeIdentifier='pass.com.MPowered.MHacks.UserPass',
                      organizationName='MHacks', teamIdentifier='478C74MJ7T')
