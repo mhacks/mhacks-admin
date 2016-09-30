@@ -316,9 +316,9 @@ class Registration(Any):
 
 class ScanEvent(Any):
     name = models.CharField(max_length=60, unique=True)
-    number_of_allowable_scans = models.IntegerField(default=1)
+    number_of_allowable_scans = models.IntegerField(default=1, validators=[MinValueValidator(limit_value=0)])
     scanned_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="scan_event_users", blank=True, through='ScanEventUser')
-    expiry_date = models.DateTimeField(blank=True)
+    expiry_date = models.DateTimeField(blank=True, null=True)
     custom_verification = models.CharField(blank=True, max_length=255)
 
     class Meta:
