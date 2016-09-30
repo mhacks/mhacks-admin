@@ -23,11 +23,11 @@ class PushNotificationView(generics.CreateAPIView):
         try:
             serializer.is_valid(raise_exception=True)
             created = True
-        except ValidationError:
+        except ValidationError as e:
             try:
                 instance = self.model_class.objects.filter(registration_id=copied_data.get('registration_id', None))[0]
             except (self.model_class.DoesNotExist, IndexError):
-                raise ValidationError('Invalid request')
+                raise e
             serializer = self.get_serializer(instance=instance, data=copied_data)
             serializer.is_valid(raise_exception=True)
 
