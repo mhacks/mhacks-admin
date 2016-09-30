@@ -544,3 +544,5 @@ def resumes(request, filename):
         response['Content-Length'] = os.path.getsize(path)
 
         return response
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
