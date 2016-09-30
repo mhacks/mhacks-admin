@@ -198,7 +198,7 @@ class SponsorPortalForm(forms.Form):
     email = forms.CharField(label='Email', max_length=255)
 
     # Registration related
-    education = forms.CharField(label='Type of education', max_length=255)
+    education = forms.CharField(label='School or University', max_length=255)
     employment = forms.ChoiceField(label='Type of employment', choices=all_employment)
     degree = forms.ChoiceField(label='Type of degree', choices=zip(all_degrees, all_degrees))
     technical_skills = forms.ChoiceField(label='Filter by technical skills', choices=zip(all_employment_skills, all_employment_skills))
