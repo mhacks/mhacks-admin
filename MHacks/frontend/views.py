@@ -537,12 +537,12 @@ def resumes(request, filename):
 
     path = os.path.join(MEDIA_ROOT, filename)
     if os.path.isfile(path):
-        response = HttpResponse(
-            content_type='application/force-download')  # mimetype is replaced by content_type for django 1.7
+        response = HttpResponse(content=open(path, "rb"),
+                                content_type='application/force-download')
         response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename)
         response['X-Sendfile'] = smart_str(path)
         response['Content-Length'] = os.path.getsize(path)
 
         return response
 
-    return HttpResponseRedirect(request.META.get('HTTP_HOST'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'), kwargs={'alert': 'No resume found :('})

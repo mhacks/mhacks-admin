@@ -52,3 +52,11 @@
         <h1>Sorry! There are no result for your search. <a href="{{url_for('mhacks-sponsorPortal')}}">Rerun the search</a></h1>
     {% endif %}
 {% endblock %}
+
+<script type="text/javascript">
+ $(function(){
+   {% if alert %}
+      alert('{{alert}}');
+   {% endif %}
+ });
+</script>
