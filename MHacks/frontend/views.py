@@ -520,7 +520,7 @@ def sponsor_review(request):
             results.append((registration, hacker_app))
 
         if request.GET.get('education'):
-            results = [r for r in results if r[1] and r[1].school.contains(request.GET.get('education'))]
+            results = [r for r in results if r[1] and request.GET.get('education') in r[1].school.lower()]
 
         context = {
             'results': results
