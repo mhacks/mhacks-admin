@@ -1,3 +1,5 @@
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED
 from rest_framework.permissions import DjangoModelPermissions, IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import exception_handler
@@ -38,9 +40,11 @@ class GenericListCreateModel(CreateAPIView, ListAPIView):
         request_data['approved'] = request.user.has_perm('%(app_label)s.change_%(model_name)s' %
                                                          {'app_label': model_class._meta.app_label,
                                                           'model_name': model_class._meta.model_name})
-        request.data = request_data
-
-        return super(GenericListCreateModel, self).create(request, *args, **kwargs)
+        serializer = self.get_serializer(data=request_data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
 
 
 class GenericUpdateDestroyModel(RetrieveUpdateDestroyAPIView):
