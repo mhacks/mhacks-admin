@@ -75,7 +75,7 @@ class MHacksUser(AbstractBaseUser, PermissionsMixin):
     def cleaned_school_name(self, application=None):
         if not application:
             application = self.application_or_none()
-        return application.school.replace('-', ' — ') if application else 'Unknown'
+        return application.school.replace('-', ' – ') if application else 'Unknown'
 
     class Meta:
         verbose_name = 'User'
