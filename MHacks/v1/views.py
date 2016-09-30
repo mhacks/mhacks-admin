@@ -88,8 +88,9 @@ def perform_scan(request):
     except (ScanEvent.DoesNotExist, get_user_model().DoesNotExist):
         raise ValidationError('Invalid scan event or user')
 
-    if scan_event.deleted or to_utc_epoch(scan_event.expiry_date) < now_as_utc_epoch():
-        raise ValidationError('Scan event is no longer valid')
+    if scan_event.expiry_date:
+        if scan_event.deleted or to_utc_epoch(scan_event.expiry_date) < now_as_utc_epoch():
+            raise ValidationError('Scan event is no longer valid')
 
     scan_event_user_join = None
     if scan_event.number_of_allowable_scans:
