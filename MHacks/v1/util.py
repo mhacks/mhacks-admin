@@ -34,10 +34,11 @@ class GenericListCreateModel(CreateAPIView, ListAPIView):
             '`.queryset` or not have defined the `.get_queryset()` method.'
         )
         model_class = queryset.model
-
-        request.data['approved'] = request.user.has_perm('%(app_label)s.change_%(model_name)s' %
+        request_data = request.data.copy()
+        request_data['approved'] = request.user.has_perm('%(app_label)s.change_%(model_name)s' %
                                                          {'app_label': model_class._meta.app_label,
                                                           'model_name': model_class._meta.model_name})
+        request.data = request_data
 
         return super(GenericListCreateModel, self).create(request, *args, **kwargs)
 
