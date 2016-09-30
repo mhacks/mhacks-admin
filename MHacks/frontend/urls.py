@@ -31,6 +31,11 @@ urlpatterns = [
     url(r'^application_review/$', application_review, name='mhacks-applicationReview'),
     url(r'^update_applications/$', update_applications, name='mhacks-updateApplication'),
 
+    # Sponsor portal
+    url(r'^sponsor_portal', sponsor_portal, name='mhacks-sponsorPortal'),
+    url(r'^sponsor_review', sponsor_review, name='mhacks-sponsorReview'),
+    url(r'^resumes/(?P<filename>[\w.]{0,256})/$', resumes, name='mhacks-resumes'),
+
     url(r'^explorer/', include('explorer.urls')),
 
     # Apple Wallet pass support

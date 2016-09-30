@@ -1,4 +1,5 @@
 import datetime
+import os
 
 import mailchimp
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
@@ -12,13 +13,14 @@ from django.http import (HttpResponseBadRequest, HttpResponseNotAllowed,
                          HttpResponseForbidden)
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, smart_str
 from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
 from MHacks.decorator import anonymous_required, application_reader_required
-from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, RegistrationForm
+from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, RegistrationForm, \
+    SponsorPortalForm
 from MHacks.models import Application, MentorApplication, Registration
 from MHacks.pass_creator import create_apple_pass
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
@@ -368,7 +370,7 @@ def application_review(request):
         hacker_search_keys = {
             'first_name': ['user__first_name', 'istartswith'],
             'last_name': ['user__last_name', 'istartswith'],
-            'email': ['user__email', 'iexact'],
+            'email': ['user__email', 'icontains'],
             'school': ['school', 'icontains'],
             'major': ['major', 'icontains'],
             'gender': ['gender', 'icontains'],
@@ -381,7 +383,7 @@ def application_review(request):
         mentor_search_keys = {
             'first_name': ['user__first_name', 'istartswith'],
             'last_name': ['user__last_name', 'istartswith'],
-            'email': ['user__email', 'iexact']
+            'email': ['user__email', 'icontains']
         }
 
         # pick search dict based on which type of search
@@ -474,3 +476,71 @@ def apple_pass(request):
     response = HttpResponse(content=create_apple_pass(request.user).getvalue(), content_type='application/vnd.apple.pkpass')
     response['MimeType'] = 'application/vnd.apple.pkpass'
     return response
+
+
+@user_passes_test(lambda u: u.groups.filter(name='sponsor').exists())
+def sponsor_portal(request):
+    if request.method == 'GET':
+        form = SponsorPortalForm()
+        context = {'form': form}
+        return render(request, 'sponsor_portal.html', context=context)
+
+    return HttpResponseNotAllowed(permitted_methods=['GET'])
+
+
+@user_passes_test(lambda u: u.groups.filter(name='sponsor').exists())
+def sponsor_review(request):
+    if request.method == 'GET':
+        search_dict = dict()
+        search_keys = {
+            'first_name': ['user__first_name', 'istartswith'],
+            'last_name': ['user__last_name', 'istartswith'],
+            'email': ['user__email', 'icontains'],
+            'employment': ['employment', 'icontains'],
+            'degree': ['degree', 'icontains'],
+            'technical_skills': ['technical_skills', 'icontains']
+        }
+
+        for key in search_keys:
+            if request.GET.get(key):
+                if key in ['employment', 'degree', 'technical_skills'] and request.GET.get(key) == 'All':
+                    continue
+                else:
+                    condition = "{0}__{1}".format(search_keys[key][0], search_keys[key][1])
+                    search_dict[condition] = request.GET[key]
+
+        results = list()
+        registrations = Registration.objects.filter(**search_dict)
+        for registration in registrations:
+            try:
+                hacker_app = Application.objects.get(user=registration.user)
+            except Exception as e:
+                hacker_app = None
+
+            results.append((registration, hacker_app))
+
+        if request.GET.get('education'):
+            results = [r for r in results if r[1] and r[1].school.contains(request.GET.get('education'))]
+
+        context = {
+            'results': results
+        }
+
+        return render(request, 'sponsor_review.html', context=context)
+
+    return HttpResponseNotAllowed(permitted_methods=['GET'])
+
+
+@user_passes_test(lambda u: u.is_superuser or u.groups.filter(name='sponsor').exists())
+def resumes(request, filename):
+    from config.settings import MEDIA_ROOT
+
+    path = os.path.join(MEDIA_ROOT, filename)
+    if os.path.isfile(path):
+        response = HttpResponse(
+            content_type='application/force-download')  # mimetype is replaced by content_type for django 1.7
+        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename)
+        response['X-Sendfile'] = smart_str(path)
+        response['Content-Length'] = os.path.getsize(path)
+
+        return response

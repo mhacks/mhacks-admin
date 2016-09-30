@@ -20,7 +20,7 @@
 
         {% if request.user and request.user.groups.filter(name='sponsor').exists() %}
             <h2>Looks like you're a sponsor!</h2>
-            {# TODO: Show sponsor related stuff #}
+            <a href="{{url_for('mhacks-sponsorPortal')}}"><button type="button">Sponsor Portal</button></a>
             <br>
             <hr>
         {% endif %}

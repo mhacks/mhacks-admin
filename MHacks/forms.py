@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.postgres.fields import ArrayField
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.safestring import mark_safe
@@ -183,6 +184,24 @@ class ApplicationSearchForm(forms.Form):
     is_non_UM = forms.BooleanField(label='Non-UMich hackers')
     limit = forms.CharField(label='Number of results', max_length=255)
     decision = forms.ChoiceField(label='Filter by decision', choices=zip(app_decisions, app_decisions))
+
+
+class SponsorPortalForm(forms.Form):
+    from application_lists import EMPLOYMENT, DEGREES, EMPLOYMENT_SKILLS
+    all_degrees = ['All'] + DEGREES
+    all_employment = [('All', 'All')] + EMPLOYMENT
+    all_employment_skills = ['All'] + EMPLOYMENT_SKILLS
+
+    # User related
+    first_name = forms.CharField(label='First name', max_length=255)
+    last_name = forms.CharField(label='Last name', max_length=255)
+    email = forms.CharField(label='Email', max_length=255)
+
+    # Registration related
+    education = forms.CharField(label='Type of education', max_length=255)
+    employment = forms.ChoiceField(label='Type of employment', choices=all_employment)
+    degree = forms.ChoiceField(label='Type of degree', choices=zip(all_degrees, all_degrees))
+    technical_skills = forms.ChoiceField(label='Filter by technical skills', choices=zip(all_employment_skills, all_employment_skills))
 
 
 class MentorApplicationForm(forms.ModelForm):

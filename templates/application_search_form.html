@@ -9,7 +9,7 @@
 
 {% block content %}
     {% if form %}
-        <form class="form-horizontal" method="GET" autocomplete="on" action="{{ url_for('mhacks-applicationReview') }}" {% block form_enctype %}{% endblock %}>
+        <form class="form-horizontal" method="GET" autocomplete="on" action="{% block form_action_url %}{{ url_for('mhacks-applicationReview') }}{% endblock form_action_url %}" {% block form_enctype %}{% endblock %}>
             {{ csrf_input }}
             <fieldset>
                 {% include 'header.html' %}

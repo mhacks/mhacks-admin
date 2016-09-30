@@ -1,0 +1,21 @@
+{% extends 'application_search_form.html' %}
+
+{% block form_headers %}
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/application.css') }}">
+{% endblock %}
+
+{% block form_action_url %}
+    {{ url_for('mhacks-sponsorReview') }}
+{% endblock form_action_url %}
+
+{% block form_action %}
+    <input type="submit" value="Search" />
+{% endblock %}
+
+{% block form_enctype %}enctype="multipart/form-data"{% endblock %}
+
+{% block form_title %}
+    Sponsor Portal
+    <hr>
+    <h4>To see all hackers, hit search! You can filter the search using the form below.</h4>
+{% endblock %}
