@@ -148,3 +148,4 @@ MEDIA_ROOT = 'resumes/'
 # SQL explorer settings
 EXPLORER_PERMISSION_VIEW = lambda u: u.is_superuser
 # EXPLORER_CONNECTION_NAME =
+EXPLORER_SQL_WHITELIST = ('UPDATE')
