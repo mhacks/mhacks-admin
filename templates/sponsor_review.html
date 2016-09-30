@@ -12,37 +12,42 @@
     {% if results %}
         <h2 style="color: black; padding: 10px">There are {{ results | length }} Matches found. Click <a href="{{ url_for('mhacks-sponsorPortal') }}">here</a> to run another search</h2>
 
-            <table class="table table-striped" style="color:black; overflow-x:scroll; column-width: fit-content">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Education</th>
-                    <th>Employment</th>
-                    <th>Degree</th>
-                    <th>Technical skills</th>
-                    <th>GitHub</th>
-                    <th>Personal website</th>
-                    <th>Resume</th>
-                </tr>
-                </thead>
+        <table class="table table-striped" style="color:black; overflow-x:scroll; column-width: fit-content">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Education</th>
+                <th>Employment</th>
+                <th>Degree</th>
+                <th>Technical skills</th>
+                <th>GitHub</th>
+                <th>Personal website</th>
+                <th>Resume</th>
+            </tr>
+            </thead>
 
-                <tbody>
-                {% for result, hacker in results %}
-                    <tr>
-                        <td>{{result.user.first_name}} {{result.user.last_name}}</td>
-                        <td>{{result.user.email}}</td>
-                        <td>{{hacker.school}}</td>
-                        <td>{{result.employment}}</td>
-                        <td>{{result.degree}}</td>
-                        <td>{{result.technical_skills|join(', ') }}</td>
-                        <td><a href="{{ hacker.github }}">{{ hacker.github }}</a></td>
-                        <td><a href="{{ hacker.personal_website }}">{{ hacker.personal_website }}</a></td>
-                        <td><a href="{{ url_for('mhacks-resumes', kwargs={'filename': (hacker.resume|string)[2:]}) }}">{{ hacker.resume }}</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <tbody>
+            {% for result, hacker in results %}
+                <tr>
+                    <td>{{result.user.first_name}} {{result.user.last_name}}</td>
+                    <td>{{result.user.email}}</td>
+                    <td>{{hacker.school}}</td>
+                    <td>{{result.employment}}</td>
+                    <td>{{result.degree}}</td>
+                    <td>{{result.technical_skills|join(', ') }}</td>
+                    <td><a href="{{ hacker.github }}">{{ hacker.github }}</a></td>
+                    <td><a href="{{ hacker.personal_website }}">{{ hacker.personal_website }}</a></td>
+                    <td>
+                        <a href="{{ url_for('mhacks-resumes',
+                                    kwargs={'filename': (hacker.resume|string)[2:]}) }}">
+                            {{ hacker.resume }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% else %}
         <h1>Sorry! There are no result for your search. <a href="{{url_for('mhacks-sponsorPortal')}}">Rerun the search</a></h1>
     {% endif %}
