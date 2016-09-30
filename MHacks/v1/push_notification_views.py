@@ -31,7 +31,7 @@ class PushNotificationView(generics.CreateAPIView):
             serializer = self.get_serializer(instance=instance, data=copied_data)
             serializer.is_valid(raise_exception=True)
 
-        serializer.instance.user_id = request.user.pk if request.user and request.user.is_authenticated() else None
+        serializer.validated_data['user_id'] = request.user.pk if request.user and request.user.is_authenticated() else None
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
