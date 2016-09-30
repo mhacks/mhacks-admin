@@ -34,7 +34,7 @@ urlpatterns = [
     # Sponsor portal
     url(r'^sponsor_portal', sponsor_portal, name='mhacks-sponsorPortal'),
     url(r'^sponsor_review', sponsor_review, name='mhacks-sponsorReview'),
-    url(r'^resumes/(?P<filename>[\w.]{0,256})/$', resumes, name='mhacks-resumes'),
+    url(r'^resumes/(?P<filename>[*]{0,256})/$', resumes, name='mhacks-resumes'),
 
     url(r'^explorer/', include('explorer.urls')),
 
