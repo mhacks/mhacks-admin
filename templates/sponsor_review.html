@@ -39,10 +39,17 @@
                     <td><a href="{{ hacker.github }}">{{ hacker.github }}</a></td>
                     <td><a href="{{ hacker.personal_website }}">{{ hacker.personal_website }}</a></td>
                     <td>
-                        <a href="{{ url_for('mhacks-resumes',
+                        {% if (hacker.resume|string).startswith('./') %}
+                            <a href="{{ url_for('mhacks-resumes',
                                     kwargs={'filename': (hacker.resume|string)[2:]}) }}">
-                            {{ hacker.resume }}
-                        </a>
+                                {{ hacker.resume }}
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('mhacks-resumes',
+                                    kwargs={'filename': (hacker.resume|string)}) }}">
+                                {{ hacker.resume }}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
@@ -52,11 +59,3 @@
         <h1>Sorry! There are no result for your search. <a href="{{url_for('mhacks-sponsorPortal')}}">Rerun the search</a></h1>
     {% endif %}
 {% endblock %}
-
-<script type="text/javascript">
- $(function(){
-   {% if alert %}
-      alert('{{alert}}');
-   {% endif %}
- });
-</script>

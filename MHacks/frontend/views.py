@@ -545,4 +545,4 @@ def resumes(request, filename):
 
         return response
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'), kwargs={'alert': 'No resume found :('})
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
