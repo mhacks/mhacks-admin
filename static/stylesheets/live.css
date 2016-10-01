@@ -1,0 +1,97 @@
+.schedule {
+    width: 80%;
+    height: 100vh;
+
+    overflow-y:auto;
+}
+
+.schedule-header {
+    width: 100%;
+    height: 60px;
+    background-color: lightblue;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    min-height: calc(100% - 70px);
+
+    padding: 5px 35px 5px 25px;
+
+    background-color: lightcoral;
+}
+
+.time-markers{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.time-stamps {
+    margin-top: 18px;
+    float: left;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.time-stamps p {
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    font-variant: small-caps;
+}
+
+.time-stamps p:nth-child(odd){
+    border-top: 4px solid transparent;
+}
+
+.time-stamps p:nth-child(even){
+    border-top: 2px solid transparent;
+}
+
+.time-lines {
+    margin-top: 25px;
+    margin-left: 15px;
+    width: 100%;
+}
+
+.time-lines div {
+    width: 100%;
+    height: 40px;
+}
+
+.time-lines div:nth-child(odd){
+    border-top: 4px solid black;
+}
+
+.time-lines div:nth-child(even){
+    border-top: 2px solid black;
+}
+
+.events {
+    position: relative;
+}
+
+.event {
+    position: relative;
+    float: left;
+    border: 5px solid green;
+    border-radius: 5px;
+    background-color: lightgreen;
+    overflow: hidden;
+    height: 0;
+    transition: height 0.5s;
+    z-index: 5;
+}
+
+.event:hover {
+    height: auto;
+    transition: height 0.5s;
+    z-index: 10;
+}

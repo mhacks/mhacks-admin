@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/live.css') }}">
+    {% block basic_page_headers %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    {% include 'schedule.html' %}
+{% endblock %}
