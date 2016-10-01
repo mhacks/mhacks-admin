@@ -7,23 +7,44 @@
 {% endblock %}
 
 {% block content %}
-    <div class="header turquoise">
-        <div id="eventInfo">
-            <h2>October 7-9</h2>
-            <p>Detroit Masonic Temple</p>
+    <div class="live-header">
+        <div class="header lightTurquoise">
+            <div id="eventInfo">
+                <h2>October 7-9</h2>
+                <p>Detroit Masonic Temple</p>
+            </div>
+            <div id="logo">
+                <a href="{{ url_for('mhacks-live') }}">
+                    <img id="logo" src="{{ static('assets/logo.png') }}" alt="MHacks 8 Logo - M">
+                </a>
+            </div>
+            <div id="countdown-container">
+                {% include 'countdown.html' %}
+            </div>
         </div>
-        <div id="logo">
-            <a href="{{ url_for('mhacks-live') }}">
-                <img id="logo" src="{{ static('assets/logo.png') }}" alt="MHacks 8 Logo - M">
-            </a>
+        <div class="live-navbar">
+            <div class="live-navlink">
+                Announcements
+            </div>
+            <div class="live-navlink">
+                Schedule
+            </div>
+            <div class="live-navlink">
+                Map
+            </div>
+            <div class="live-navlink">
+                Live Stream
+            </div>
+            <div class="live-navlink">
+                Devpost
+            </div>
+            <div class="live-navlink">
+                Mentorship
+            </div>
+            <div class="live-navlink">
+                Hardware
+            </div>
         </div>
-        <div id="countdown-container">
-            {% include 'countdown.html' %}
-        </div>
-    </div>
-
-    <div class="live-navbar">
-
     </div>
 
     <div class="live-container">

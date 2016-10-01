@@ -1,4 +1,7 @@
-var announcements = [{title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1}];
+var announcements = [
+    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1},
+    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1},
+    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1}];
 var aContainer = $(".announcements-container");
 
 $(document).ready(function(){
@@ -39,14 +42,14 @@ function getAnnouncements(){
 
 function formatDate(d){
     var days = ["Friday", "Saturday", "Sunday"];
-    return days[(d.getDay() + 1) % 7] + ", " + (d.getHours() % 12) + ":" + d.getMinutes() + (d.getHours() >= 12 ? "pm" : "am");
+    return days[(d.getDay() + 2) % 7] + ", " + (d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
 }
 
 function displayAnnouncements(){
     announcements.forEach(function(a, idx){
         if(a !== "Unapproved Announcement") {
             aContainer.append(
-                "<div class='annnouncement' data-id='" + idx + "'>" +
+                "<div class='announcement' data-id='" + idx + "'>" +
                 "<h2>" + a.title + "</h2>" +
                 "<h3>" + formatDate(a.time) + "</h3>" +
                 "<p>" + a.info + "</p>" +

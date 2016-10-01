@@ -8,12 +8,14 @@ var numLines = 107;
 var baseTime = new Date("2016-10-07T19:00:00.000Z");
 var endTime = new Date("2016-10-10T00:00:00.000Z");
 
-var locations = [];
-var events = [{startTime: "2016-10-07T20:00:00.000Z", endTime: "2016-10-07T21:30:00.000Z", name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-07T20:30:00.000Z", endTime: "2016-10-07T23:30:00.000Z", name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-07T22:20:00.000Z", endTime: "2016-10-08T00:10:00.000Z", name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-07T21:00:00.000Z", endTime: "2016-10-07T22:15:00.000Z", name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-08T04:00:00.000Z", endTime: "2016-10-08T22:15:00.000Z", name: "Event Name", description:"This is an event.", category: "0"}];
+var locations = [{name: "Location 1", floor: "Floor 1"},
+                 {name: "Location 2", floor: "Floor 2"},
+                 {name: "Location 3", floor: "Floor 3"}];
+var events = [{startTime: "2016-10-07T20:00:00.000Z", endTime: "2016-10-07T21:30:00.000Z", locations: [1, 2], name: "Event Name", description:"This is an event.", category: "0"},
+              {startTime: "2016-10-07T20:30:00.000Z", endTime: "2016-10-07T23:30:00.000Z", locations: [1], name: "Event Name", description:"This is an event.", category: "2"},
+              {startTime: "2016-10-07T22:20:00.000Z", endTime: "2016-10-08T00:10:00.000Z", locations: [0, 2], name: "Event Name", description:"This is an event.", category: "0"},
+              {startTime: "2016-10-07T21:00:00.000Z", endTime: "2016-10-07T22:15:00.000Z", locations: [0, 1], name: "Event Name", description:"This is an event.", category: "1"},
+              {startTime: "2016-10-08T04:00:00.000Z", endTime: "2016-10-08T22:15:00.000Z", locations: [2], name: "Event Name", description:"This is an event.", category: "1"}];
 
 var oldLeft;
 
@@ -136,7 +138,13 @@ function processEvents(){
 
             //console.log(offset + "\t" + width);
 
-            eventsDiv.append("<div class='event width-" + width + " offset-" + offset + "' style='top:" + p.offset + "px; min-height: " + p.height + "px'><h2>" + e.name + "</h2><p>" + e.description + "</p></div>");
+            eventsDiv.append(
+                "<div class='event width-" + width + " offset-" + offset + " category-" + e.category + "' style='top:" + p.offset + "px; min-height: " + p.height + "px'>" +
+                    "<h2>" + e.name + "</h2>" +
+                    "<h3>" + formatTime(new Date(e.startTime)) + " - " + formatTime(new Date(e.endTime)) + "</h3>" +
+                    "<h3>" + formatLocations(e.locations) + "</h3>" +
+                    "<p>" + e.description + "</p>" +
+                "</div>");
         }
     });
     resizeEvents();
@@ -231,4 +239,16 @@ function drawMarkers(){
 
     /*$(".container").css("height", $(".time-markers").css("height"));*/
     eventsDiv.css("top", "-" + timeLines.height() + "px");
+}
+
+function formatTime(d){
+    return (d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
+}
+
+function formatLocations(locs){
+    var output = "";
+    locs.forEach(function(l, idx){
+        output += ((idx == 0) ? "" : ", ") + locations[l].name + " [" + locations[l].floor + "]";
+    });
+    return output;
 }
