@@ -1,5 +1,5 @@
 var eventsDiv = $(".events");
-var eventsArea = $(".time-lines");
+var timeLines = $(".time-lines");
 var timeStamps = $(".time-stamps");
 var numEvents = [];
 var placedEvents = [];
@@ -8,30 +8,99 @@ var numLines = 107;
 var baseTime = new Date("2016-10-07T19:00:00.000Z");
 var endTime = new Date("2016-10-10T00:00:00.000Z");
 
-var events = [{startTime: "2016-10-07T20:00:00.000Z", endTime: "2016-10-07T21:30:00.000", name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-07T20:30:00.000Z", endTime: "2016-10-07T23:30:00.000", name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-07T22:20:00.000Z", endTime: "2016-10-07T23:10:00.000", name: "Event Name", description:"This is an event.", category: "0"}];
+var locations = [];
+var events = [{startTime: "2016-10-07T20:00:00.000Z", endTime: "2016-10-07T21:30:00.000Z", name: "Event Name", description:"This is an event.", category: "0"},
+              {startTime: "2016-10-07T20:30:00.000Z", endTime: "2016-10-07T23:30:00.000Z", name: "Event Name", description:"This is an event.", category: "0"},
+              {startTime: "2016-10-07T22:20:00.000Z", endTime: "2016-10-08T00:10:00.000Z", name: "Event Name", description:"This is an event.", category: "0"},
+              {startTime: "2016-10-07T21:00:00.000Z", endTime: "2016-10-07T22:15:00.000Z", name: "Event Name", description:"This is an event.", category: "0"},
+              {startTime: "2016-10-08T04:00:00.000Z", endTime: "2016-10-08T22:15:00.000Z", name: "Event Name", description:"This is an event.", category: "0"}];
 
-$(document).ready(function(){
-    var currentTime = new Date();
-    if(3600000 * Math.floor(currentTime / 3600000) > baseTime){
-        baseTime = 3600000 * Math.floor(currentTime / 3600000);
-    }
-    numLines = (endTime - baseTime) / 1800000 + 1;
-    numLines = (numLines < 0) ? 0 : numLines;
+var oldLeft;
 
-    drawMarkers();
+$(document)
+    .ready(function(){
+        var currentTime = new Date();
+        if(3600000 * Math.floor(currentTime / 3600000) > baseTime){
+            baseTime = 3600000 * Math.floor(currentTime / 3600000);
+        }
+        numLines = (endTime - baseTime) / 1800000 + 1;
+        numLines = (numLines < 0) ? 0 : numLines;
 
-    for(var i = 0; i < numLines; ++i){
-        numEvents[i] = 0;
-        placedEvents[i] = 0;
-    }
+        drawMarkers();
+
+        for(var i = 0; i < numLines; ++i){
+            numEvents[i] = 0;
+            placedEvents[i] = 0;
+        }
+
+        getLocations();
+        getEvents();
+    })
+    .on('mouseenter', '.event', function(){
+        $(this).css("min-width", Math.floor(timeLines.width() - 20) + "px").addClass("shiftLeft");
+    })
+    .on('mouseleave', '.event', function(){
+        $(this).css("min-width", 0).removeClass("shiftLeft");
+    });
+
+$(window).resize(function(){
+    clearTimeout(doResizeEvents);
+    doResizeEvents = setTimeout(resizeEvents(), 100);
+});
+
+function getLocations(){
+    $.ajax({
+        url : "/v1/locations",
+        type: "GET",
+        dataType: "json",
+        success: function(response){
+            response.results.forEach(function(l){
+                locations[l.id] = {name: l.name, floor: l.floor};
+            });
+
+            console.log(response);
+        },
+        error: function(xhr, errmsg, err){
+            console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
+        }
+    });
+}
+
+function getEvents(){
+    $.ajax({
+        url : "/v1/events",
+        type: "GET",
+        dataType: "json",
+        success: function(response){
+            response.results.forEach(function(e){
+                if(e.approved) {
+                    events.push({
+                        startTime: e.start,
+                        endTime: e.start + e.duration,
+                        locations: e.locations,
+                        name: e.name,
+                        description: e.info,
+                        category: e.category
+                    });
+                }
+            });
+
+            processEvents();
+            console.log(response);
+        },
+        error: function(xhr, errmsg, err){
+            console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
+        }
+    });
+}
+
+function processEvents(){
     parseAllEvents();
 
     events.forEach(function(e){
         if(!e.expired) {
             var p = getPosition(e);
-            console.log(e.rawOffset + "\t" + e.rawHeight);
+            //console.log(e.rawOffset + "\t" + e.rawHeight);
 
             var width = numEvents[Math.floor(e.rawOffset)];
             for (var i = Math.floor(e.rawOffset) + 1; i < Math.ceil(e.rawOffset + e.rawHeight); ++i) {
@@ -43,8 +112,9 @@ $(document).ready(function(){
             var offset = -1;
             for (i = 0; offset == -1 && i < width; ++i) {
                 var validSpot = true;
+                // Check if spot i is valid for all spots along the height of the event card
                 for (var j = Math.floor(e.rawOffset); validSpot && j < Math.ceil(e.rawOffset + e.rawHeight); ++j) {
-                    if ((1 << i) & placedEvents[j] == (1 << i)) {
+                    if (((1 << i) & placedEvents[j]) != 0) {
                         validSpot = false;
                     }
                 }
@@ -64,19 +134,14 @@ $(document).ready(function(){
                 ++offset;
             }
 
-            console.log(offset + "\t" + width);
+            //console.log(offset + "\t" + width);
 
             eventsDiv.append("<div class='event width-" + width + " offset-" + offset + "' style='top:" + p.offset + "px; min-height: " + p.height + "px'><h2>" + e.name + "</h2><p>" + e.description + "</p></div>");
         }
     });
     resizeEvents();
-    console.log(numEvents);
-});
-
-$(window).resize(function(){
-    clearTimeout(doResizeEvents);
-    doResizeEvents = setTimeout(resizeEvents(), 100);
-});
+    //console.log(numEvents);
+}
 
 function parseAllEvents(){
     events.forEach(function(e){
@@ -92,6 +157,7 @@ function parseAllEvents(){
 
             e.rawOffset = (start.getTime() - baseTime.getTime()) / 1800000;
             e.rawHeight = (end.getTime() - start.getTime()) / 1800000;
+            //console.log(start.getTime() + "\t" + end.getTime() + "\t" + e.rawHeight);
 
             for (var i = Math.floor(e.rawOffset); i < Math.ceil(e.rawOffset + e.rawHeight); ++i) {
                 numEvents[i]++;
@@ -103,28 +169,26 @@ function parseAllEvents(){
 }
 
 function getPosition(e){
-    console.log(eventsArea.offset().top);
-    var pixelOffset = eventsArea.offset().top + 40 * e.rawOffset + Math.ceil(e.rawOffset / 2) * 4 + Math.floor(e.rawOffset / 2) * 2;
-    var pixelHeight = 40 * e.rawHeight - 10;
-    if(Math.ceil(e.rawOffset) % 2 == 0){
-        pixelHeight +=  Math.ceil(e.rawHeight / 2) * 4 + Math.floor(e.rawHeight / 2) * 2;
-    } else {
-        pixelHeight +=  Math.ceil(e.rawHeight / 2) * 2 + Math.floor(e.rawHeight / 2) * 4;
-    }
+    var pixelOffset = 40 * e.rawOffset;
+    var pixelHeight = 40 * e.rawHeight;
 
     return {offset: pixelOffset, height: pixelHeight};
 }
 
 function resizeEvents(){
-    var width = eventsArea.width() - 2 * (150 - timeStamps.width());
-    $(".width-1").css("width", width + "px");
-    $(".width-2").css("left", (150 + Math.floor(width * 0.04)) + "px");
-    $(".width-2").css("width", Math.floor(width * 0.48) + "px");
-    $(".width-3").css("left", (150 + Math.floor(width * 0.035)) + "px");
-    $(".width-3").css("width", Math.floor(width * 0.31) + "px");
-    $(".offset-1").css("left", "150px");
+    var width = timeLines.width() - 20;// * (120 - timeStamps.width());
+    var baseOffset = timeStamps.width() + 25;
 
-    console.log(width);
+    $(".offset-1").css("left", Math.floor(baseOffset) + "px");
+    $(".width-2.offset-2").css("left", Math.floor(baseOffset + (width - 10)/2 + 10) + "px" );
+    $(".width-3.offset-2").css("left", Math.floor(baseOffset + (width - 20)/3 + 10) + "px" );
+    $(".width-3.offset-3").css("left", Math.floor(baseOffset + 2 * (width - 20)/3 + 20) + "px" );
+
+    $(".width-1").css("width", Math.floor(width) + "px");
+    $(".width-2").css("width", Math.floor((width - 10)/2) + "px");
+    $(".width-3").css("width", Math.floor((width - 20)/3) + "px");
+
+    //console.log(width);
 }
 
 function drawMarkers(){
@@ -132,24 +196,24 @@ function drawMarkers(){
     var am = (hour < 12);
     var day = 0;
     for(var i = 0; i < numLines; ++i){
-        eventsArea.append("<div></div>");
+        timeLines.append("<div></div>");
         if(i % 2 == 0){
             var time = "";
             if(i == 0 || hour == 0){
                 switch(day){
                     case 0:
-                        time += "Fri ";
+                        time += "Fri. ";
                         break;
                     case 1:
-                        time += "Sat ";
+                        time += "Sat. ";
                         break;
                     case 2:
-                        time += "Sun ";
+                        time += "Sun. ";
                         break;
                 }
             }
-            time += ((hour % 12 == 0) ? 12 : (hour % 12)) + ":00 ";
-            time += (am) ? "AM" : "PM";
+            time += ((hour % 12 == 0) ? 12 : (hour % 12))/* + ":00 "*/;
+            time += (am) ? " am" : " pm";
             timeStamps.append("<p>" + time + "</p>");
 
             ++hour;
@@ -166,5 +230,5 @@ function drawMarkers(){
     }
 
     /*$(".container").css("height", $(".time-markers").css("height"));*/
-    eventsDiv.css("top", "-" + ($(".container").height() - 17) + "px");
+    eventsDiv.css("top", "-" + timeLines.height() + "px");
 }
