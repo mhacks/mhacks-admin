@@ -58,7 +58,6 @@ def index(request):
 def thanks_registering(request):
     return render(request, 'thanks_registering.html')
 
-
 @login_required()
 @permission_required('MHacks.add_application')
 @permission_required('MHacks.change_application')
@@ -470,8 +469,7 @@ def update_applications(request):
 
 
 def live(request):
-    return redirect(reverse('mhacks-home'))
-
+    return render(request, 'live.html')
 
 @login_required()
 def apple_pass(request):
