@@ -1,0 +1,14 @@
+{% extends 'basic_page.html' %}
+
+{%block basic_page_title %}Applications for MHacks 8 are now closed :({% endblock %}
+{%block pagetitle %}Applications Closed{% endblock %}
+
+{% block basic_page_content %}
+    <hr>
+    <p class="text-center">
+        Check your dashboard for your application status and to register for the event!
+        <br>
+        <br>
+        <a href="{{url_for('mhacks-dashboard')}}"><button type="button">Dashboard</button></a>
+    </p>
+{% endblock %}

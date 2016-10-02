@@ -63,6 +63,8 @@ def thanks_registering(request):
 @permission_required('MHacks.add_application')
 @permission_required('MHacks.change_application')
 def application(request):
+    return render(request, 'applications_closed.html')
+
     # find the user's application if it exists
     try:
         app = Application.objects.get(user=request.user, deleted=False)
