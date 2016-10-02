@@ -1,0 +1,392 @@
+body{
+    background-color: #e6f3f7;
+}
+
+.live-header {
+    width: 100%;
+    height: 180px;
+    background-color: #07889C;
+    box-shadow: 0 4px 5px 1px rgba(200, 200, 200, 0.80);
+}
+
+.header {
+    opacity: 1;
+    position: static !important;
+    background-color: #00A9C2;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.60);
+}
+
+.live-navbar {
+    width: 100%;
+    height: 60px;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.live-navlink {
+    margin: 0 15px;
+    position: relative;
+    display: inline-block;
+}
+
+.live-navlink::after {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+	height: 1px;
+	background: #fff;
+	content: '';
+	opacity: 0;
+	transition: height 0.3s, opacity 0.3s, transform 0.3s;
+	transform: translateY(5px);
+}
+
+.live-navlink:hover::after, .live-navlink:focus::after {
+    height: 2px;
+    opacity: 1;
+    transform: translateY(1px);
+}
+
+.live-container{
+    width:100vw;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.content-header {
+    width: 100%;
+    height: 60px;
+
+    background-color: white;
+    box-shadow: 0 3px 5px 1px rgba(192,192,192,1);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    border: 1px solid #cccccc88;
+    z-index: 20;
+}
+
+.content-header * {
+    margin: 0;
+}
+
+.content-header h1 {
+    margin-left: 20px;
+}
+
+.content-box {
+    background-color: white;
+    box-shadow: 0 2px 10px 1px rgba(160,160,160,1);
+}
+
+@media only screen and (max-width: 850px){
+    .live-container{
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+}
+
+@media only screen and (max-width: 700px){
+    #logo{
+        height: auto;
+        width: 90px;
+    }
+}
+
+@media only screen and (max-width: 550px){
+    .live-header {
+        height: 150px;
+    }
+    .header {
+        height: 90px;
+    }
+    #logo{
+        height: auto;
+        width: 60px;
+    }
+}
+
+/* ========== Schedule ========== */
+
+.schedule {
+    width: calc(100vw - 475px);
+    height: calc(100vh - 280px);
+
+    margin-right: 50px;
+    margin-top: 50px;
+
+    overflow: hidden;
+}
+
+.schedule-header {
+    justify-content: space-between;
+}
+
+.category-group {
+    height: 100%;
+    margin-right: 20px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.category-group *{
+    margin-left: 10px;
+    font-weight: 400;
+    font-size: 12pt;
+}
+
+.category-group *.category-0{
+    color: darkviolet;
+}
+.category-group *.category-1{
+    color: darkorange;
+}
+.category-group *.category-2{
+    color: darkgreen;
+}
+
+.schedule-container {
+    max-height: calc(100% - 60px);
+    width: 100%;
+
+    padding: 5px 35px 5px 25px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.time-markers{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.time-stamps {
+    margin-top: 11px;
+    float: left;
+    text-align: right;
+    flex-shrink: 0;
+    min-width: 75px;
+}
+
+.time-stamps p {
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    font-variant: small-caps;
+    color: black;
+}
+
+.time-stamps p:nth-child(odd){
+    border-top: 4px solid transparent;
+}
+
+.time-stamps p:nth-child(even){
+    border-top: 2px solid transparent;
+}
+
+.time-lines {
+    margin-top: 25px;
+    margin-left: 15px;
+    width: 100%;
+}
+
+.time-lines div {
+    width: 100%;
+    height: 40px;
+}
+
+.time-lines div:nth-child(odd){
+    border-top: 4px solid black;
+}
+
+.time-lines div:nth-child(even){
+    border-top: 2px solid black;
+}
+
+.events {
+    position: relative;
+}
+
+.event {
+    position: absolute;
+    float: left;
+    border: 5px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+    opacity: 0.95;
+    overflow: hidden;
+    height: 0;
+    transition: all 0.3s linear;
+    z-index: 5;
+}
+
+.event.category-0 {
+    border-color: darkviolet;
+}
+.event.category-1 {
+    border-color: darkorange;
+}
+.event.category-2 {
+    border-color: darkgreen;
+}
+
+.event:hover {
+    height: auto;
+    transition: height 0.3s linear, width 0.3s linear, min-width 0.3s linear, left 0.2s linear 0.1s;
+    z-index: 10;
+}
+
+.shiftLeft {
+    left: 100px !important;
+}
+
+.event h2 {
+    margin: 0 0 5px 0;
+    font-size: 12pt;
+}
+
+.event h3 {
+    margin: 0 0 8px 0;
+}
+
+.event p {
+    color: black !important;
+}
+
+.event.category-0 * {
+    color: darkviolet;
+}
+.event.category-1 * {
+    color: darkorange;
+}
+.event.category-2 * {
+    color: darkgreen;
+}
+
+@media only screen and (max-width: 850px){
+    .schedule{
+        width: calc(100vw - 100px);
+        height: 600px;
+        margin-right: 0;
+        margin-bottom: 100px;
+    }
+}
+
+/* ========== Announcements ========== */
+
+.announcements {
+    width: 300px;
+    height: calc(100vh - 280px);
+
+    margin-left: 50px;
+    margin-top: 50px;
+
+    overflow-y: hidden;
+}
+
+.announcements-container {
+    max-height: calc(100% - 60px);
+    overflow-y: auto;
+}
+
+.announcement {
+    border-bottom: 2px solid #cccccc88;
+    padding: 15px 20px;
+}
+
+.announcement h2 {
+    color: #0093B1;
+    margin: 0 0 5px 0;
+    font-size: 12pt;
+}
+
+.announcement h3 {
+    color: #0093B1;
+    margin: 0 0 8px 0;
+}
+
+.announcement p {
+    color: black;
+}
+
+@media only screen and (max-width: 850px){
+    .announcements{
+        width: calc(100vw - 100px);
+        height: 300px;
+        margin-left: 0;
+    }
+}
+
+/* ========== Countdowns ========== */
+
+.hideCountdown{
+    display: none;
+}
+
+#countdown-container {
+    padding-right: 50px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.countdown {
+    text-align: right;
+}
+
+.countdown *{
+    margin: 0;
+    color: white !important;
+}
+
+.countdown h3 {
+    font-weight: 400;
+}
+
+.countdown span {
+    font-weight: bold;
+    font-size: 23pt;
+    margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 700px) {
+    .countdown span {
+        font-size: 18pt;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .countdown span {
+        font-size: 12pt;
+    }
+
+    .countdown h3 {
+        font-size: 8pt;
+    }
+}
