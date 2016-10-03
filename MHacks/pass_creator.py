@@ -1,6 +1,5 @@
 from config.settings import APPLE_WALLET_PASSPHRASE, STATICFILES_DIRS
 from passbook.models import Pass, Barcode, EventTicket, BarcodeFormat, Alignment, Field
-from models import Application, Registration
 
 
 def create_apple_pass(user):
