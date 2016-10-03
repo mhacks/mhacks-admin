@@ -105,7 +105,7 @@ def perform_scan(request):
 
         if number_of_scans >= scan_event.number_of_allowable_scans:
             successful_scan = False
-            error = error_field('{} has been scanned the maximum amount for {}'.format(user.get_short_name(), scan_event.name))
+            error = error_field('Can\'t scan again')
 
     success = True
     if scan_event.custom_verification:

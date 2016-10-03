@@ -41,8 +41,7 @@ def registration_scan_verify(request, scanned_user):
         all_fields.append(_create_field('MINOR', 'Yes', color='FF0000'))
 
     if not registration or not registration.acceptance:
-        all_fields.append(error_field('No registration found for {}. Register manually'.
-                                      format(scanned_user.get_short_name())))
+        all_fields.append(error_field('Not registered. Send to registration desk.'))
         succeeded = False
     return succeeded, all_fields
 
@@ -56,10 +55,10 @@ def swag_scan_verify(request, scanned_user):
     all_fields = [_create_field('NAME', scanned_user.get_full_name())]
     registration = scanned_user.registration_or_none()
     if not registration:
-        all_fields.append(error_field('No registration found for {}'.format(scanned_user.get_short_name())))
+        all_fields.append(error_field('Not registered. Send to registration desk.'))
         succeeded = False
     else:
-        all_fields.append(_create_field('T-SHIRT SIZE', registration.t_shirt_size, '0000FF'))
+        all_fields.append(_create_field('T-SHIRT SIZE', registration.t_shirt_size))
 
     return succeeded, all_fields
 
