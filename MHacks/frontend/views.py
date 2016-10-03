@@ -544,7 +544,6 @@ def resumes(request, filename):
         response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename)
         response['X-Sendfile'] = smart_str(path)
         response['Content-Length'] = os.path.getsize(path)
-
         return response
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
