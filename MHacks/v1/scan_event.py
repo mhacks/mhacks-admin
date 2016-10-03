@@ -40,7 +40,7 @@ def registration_scan_verify(request, scanned_user):
     if application and application.user_is_minor():
         all_fields.append(_create_field('MINOR', 'Yes', color='FF0000'))
 
-    if not application or not registration or not registration.acceptance:
+    if not registration or not registration.acceptance:
         all_fields.append(error_field('No registration found for {}. Register manually'.
                                       format(scanned_user.get_short_name())))
         succeeded = False
@@ -48,23 +48,20 @@ def registration_scan_verify(request, scanned_user):
 
 
 def general_information_scan_verify(request, scanned_user):
-    return _general_information(scanned_user)
+    return True, _general_information(scanned_user)
 
 
 def swag_scan_verify(request, scanned_user):
-    try:
-        registration = Registration.objects.get(user=scanned_user)
-    except Registration.DoesNotExist:
-        raise ValidationError('No registration found for {}. Register manually'.format(scanned_user.get_short_name()))
-    return _general_information(scanned_user) + \
-           [_create_field('T-SHIRT SIZE', registration.t_shirt_size, '0000FF')]
-
-
-def meal_scan_verify(request, scanned_user):
+    succeeded = True
+    all_fields = [_create_field('NAME', scanned_user.get_full_name())]
     registration = scanned_user.registration_or_none()
-    dietary_restrictions = registration.dietary_restrictions if registration and registration.dietary_restrictions else 'None'
-    return _general_information(scanned_user) + \
-           [_create_field('Dietary Restrictions', dietary_restrictions, '0000FF')]
+    if not registration:
+        all_fields.append(error_field('No registration found for {}'.format(scanned_user.get_short_name())))
+        succeeded = False
+    else:
+        all_fields.append(_create_field('T-SHIRT SIZE', registration.t_shirt_size, '0000FF'))
+
+    return succeeded, all_fields
 
 
 def _general_information(user, application=None):
