@@ -37,12 +37,11 @@ def create_apple_pass(user):
     pass_file.labelColor = 'rgba(0, 0, 0, 0.6)'
     pass_file.associatedStoreIdentifiers = [955659359]
 
-    pass_file.relevantDate = "2016-10-07T17:00:00-04:00"
     pass_file.locations = [{'longitude': 42.3415958, 'latitude': -83.0606906},
                            {'longitude': 42.3420320, 'latitude': -83.0596780},
                            {'longitude': 42.3415800, 'latitude': -83.0607620}]
     i_beacon = IBeacon('5759985C-B037-43B4-939D-D6286CE9C941', 0, 0)
-    i_beacon.relevantText = 'You are near a scanner'
+    i_beacon.relevantText = 'You are near a scanner.'
     pass_file.ibeacons = [i_beacon]
 
     # Including the icon is necessary for the passbook to be valid.
