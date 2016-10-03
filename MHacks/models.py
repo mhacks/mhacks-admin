@@ -155,7 +155,7 @@ class Event(Any):
     locations = models.ManyToManyField(Location)
     start = models.DateTimeField()
     duration = models.DurationField()
-    CATEGORIES = ((0, 'Logistics'), (1, 'Social'), (2, 'Food'), (3, 'Tech Talk'), (4, 'Other'))
+    CATEGORIES = ((0, 'General'), (1, 'Logistics'), (2, 'Food'), (3, 'Learn'), (4, 'Social'))
     category = models.IntegerField(choices=CATEGORIES)
     approved = models.BooleanField(default=False)
 
@@ -168,9 +168,13 @@ class Announcement(Any):
     info = models.TextField(default='')
     broadcast_at = models.DateTimeField()
     category = models.PositiveIntegerField(validators=[MinValueValidator(0),
-                                                       MaxValueValidator(63)])
+                                                       MaxValueValidator(31)])
     approved = models.BooleanField(default=False)
     sent = models.BooleanField(default=False)
+
+    @staticmethod
+    def max_category():
+        return 31
 
     def __unicode__(self):
         return self.title

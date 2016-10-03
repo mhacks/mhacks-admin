@@ -91,7 +91,7 @@ class AuthSerializer(AuthTokenSerializer):
             is_gcm = attributes.get('is_gcm')
             preference = attributes.get('name', attributes.get('preference', '63'))
             if not isinstance(preference, str):
-                preference = '63'
+                preference = str(AnnouncementModel.max_category())
             attributes['push_notification'] = {
                 'registration_id': token,
                 'is_gcm': is_gcm,
