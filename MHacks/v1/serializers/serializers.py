@@ -45,7 +45,7 @@ class FloorSerializer(MHacksModelSerializer):
 
     class Meta:
         model = FloorModel
-        fields = ('id', 'name', 'image', 'index', 'offset_fraction', 'aspect_ratio')
+        fields = ('id', 'name', 'image', 'index', 'offset_fraction', 'aspect_ratio', 'description')
 
 
 class LocationSerializer(MHacksModelSerializer):
