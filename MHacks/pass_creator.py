@@ -1,5 +1,5 @@
 from config.settings import APPLE_WALLET_PASSPHRASE, STATICFILES_DIRS
-from passbook.models import Pass, Barcode, EventTicket, BarcodeFormat, Alignment, Field
+from passbook.models import Pass, Barcode, EventTicket, BarcodeFormat, Alignment, Field, IBeacon
 
 
 def create_apple_pass(user):
@@ -41,7 +41,9 @@ def create_apple_pass(user):
     pass_file.locations = [{'longitude': 42.3415958, 'latitude': -83.0606906},
                            {'longitude': 42.3420320, 'latitude': -83.0596780},
                            {'longitude': 42.3415800, 'latitude': -83.0607620}]
-    pass_file.ibeacons
+    i_beacon = IBeacon('5759985C-B037-43B4-939D-D6286CE9C941', None, None)
+    i_beacon.relevantText = 'You are near a scanner'
+    pass_file.ibeacons = [i_beacon]
 
     # Including the icon is necessary for the passbook to be valid.
     pass_file.addFile('icon.png', open(STATICFILES_DIRS[0] + '/assets/app_icon.png', 'r'))
