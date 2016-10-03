@@ -513,13 +513,13 @@ def sponsor_review(request):
 
         results = list()
         registrations = Registration.objects.filter(**search_dict)
-        for registration in registrations:
+        for reg in registrations:
             try:
-                hacker_app = Application.objects.get(user=registration.user)
-            except Exception as e:
+                hacker_app = Application.objects.get(user=reg.user)
+            except Application.DoesNotExist:
                 hacker_app = None
 
-            results.append((registration, hacker_app))
+            results.append((reg, hacker_app))
 
         if request.GET.get('education'):
             results = [r for r in results if r[1] and request.GET.get('education') in r[1].school.lower()]
