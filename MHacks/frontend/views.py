@@ -549,6 +549,7 @@ def resumes(request, filename):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+# I think we can remove this soon enough
 @user_passes_test(lambda u: u.is_superuser)
 def send_push_notification_test(request):
     from push_notifications.models import APNSDevice
