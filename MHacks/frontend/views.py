@@ -547,3 +547,9 @@ def resumes(request, filename):
         return response
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def send_push_notification_test(request):
+    from push_notifications.models import APNSDevice
+    APNSDevice.objects.all().send_message(request.GET.get('message', 'Test push notification'))
