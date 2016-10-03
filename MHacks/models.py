@@ -131,6 +131,9 @@ class Floor(Any):
     name = models.CharField(max_length=60)
     index = models.IntegerField(unique=True)
     image = models.URLField()
+    description = models.TextField(blank=True)
+    offset_fraction = models.FloatField(default=1.0)
+    aspect_ratio = models.FloatField(default=1.0)
 
     def __unicode__(self):
         return '{} displayed at index {}'.format(self.name, str(self.index))

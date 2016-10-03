@@ -71,7 +71,7 @@ class CanPerformScan(BasePermission):
 @api_view(http_method_names=['POST', 'GET'])
 @permission_classes((CanPerformScan,))
 def perform_scan(request):
-
+    from scan_event import error_field
     if request.method == 'POST':
         information = request.POST
     else:
@@ -92,6 +92,9 @@ def perform_scan(request):
         if scan_event.deleted or to_utc_epoch(scan_event.expiry_date) < now_as_utc_epoch():
             raise ValidationError('Scan event is no longer valid')
 
+    successful_scan = True
+    error = None
+    data = []
     scan_event_user_join = None
     if scan_event.number_of_allowable_scans:
         try:
@@ -101,21 +104,25 @@ def perform_scan(request):
             number_of_scans = 0
 
         if number_of_scans >= scan_event.number_of_allowable_scans:
-            raise ValidationError('User has already been scanned the maximum amount')
+            successful_scan = False
+            error = error_field('{} has been scanned the maximum amount for {}'.format(user.get_short_name(), scan_event.name))
 
-    scan_result = {'scanned': True, 'data': []}
-
+    success = True
     if scan_event.custom_verification:
         import MHacks.v1.scan_event as scan_event_verifiers
         try:
-            scan_result['data'] = getattr(scan_event_verifiers, scan_event.custom_verification)(request, user)
+            success, data = getattr(scan_event_verifiers, scan_event.custom_verification)(request, user)
         except AttributeError:
             pass  # This shouldn't happen normally but we defensively protect against it
+    successful_scan = successful_scan and success
+    if error:
+        data.append(error)
+    scan_result = {'scanned': successful_scan, 'data': data}
 
     # Only if its a POST request do we actually "do" the scan
     # GET requests are peeks i.e. they don't modify the database at all
     # If there is no number_of_allowable_scans we don't do anything on a POST either (unlimited)
-    if scan_event.number_of_allowable_scans and request.method == 'POST':
+    if successful_scan and scan_event.number_of_allowable_scans and request.method == 'POST':
         if scan_event_user_join:
             scan_event_user_join.count += 1
         else:
