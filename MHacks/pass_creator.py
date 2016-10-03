@@ -38,7 +38,10 @@ def create_apple_pass(user):
     pass_file.associatedStoreIdentifiers = [955659359]
 
     pass_file.relevantDate = "2016-10-07T17:00:00-04:00"
-    pass_file.locations = [{'longitude': 42.3415958, 'latitude': -83.0606906}]
+    pass_file.locations = [{'longitude': 42.3415958, 'latitude': -83.0606906},
+                           {'longitude': 42.3420320, 'latitude': -83.0596780},
+                           {'longitude': 42.3415800, 'latitude': -83.0607620}]
+    pass_file.ibeacons
 
     # Including the icon is necessary for the passbook to be valid.
     pass_file.addFile('icon.png', open(STATICFILES_DIRS[0] + '/assets/app_icon.png', 'r'))
