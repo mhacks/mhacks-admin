@@ -21,11 +21,14 @@ class Announcements(GenericListCreateModel):
             query_set = AnnouncementModel.objects.all().filter(approved=True).filter(broadcast_at__lte=timezone.now())
             if date_last_updated:
                 query_set = query_set.filter(Q(last_updated__gte=date_last_updated) | Q(broadcast_at__gte=date_last_updated))
+            else:
+                query_set = query_set.filter(deleted=False)
         else:
             query_set = AnnouncementModel.objects.all()
             if date_last_updated:
                 query_set = query_set.filter(last_updated__gte=date_last_updated)
-
+            else:
+                query_set = query_set.filter(deleted=False)
         return query_set
 
 

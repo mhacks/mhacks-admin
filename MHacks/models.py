@@ -120,7 +120,10 @@ class Any(models.Model):
 
     def delete(self, using=None, keep_parents=False):
         self.deleted = True
-        self.save(using=using, update_fields=['deleted'])
+        from datetime import datetime
+        from pytz import utc
+        self.last_updated = datetime.now(tz=utc)
+        self.save(using=using, update_fields=['deleted', 'last_updated'])
         return 1
 
     class Meta:

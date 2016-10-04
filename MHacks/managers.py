@@ -10,6 +10,6 @@ class MHacksQuerySet(QuerySet):
 
         if self._fields is not None:
             raise TypeError("Cannot call delete() after .values() or .values_list()")
-        rows = self.update(deleted=True)
-
-        return rows, len(rows)
+        from datetime import datetime
+        from pytz import utc
+        return self.update(deleted=True, last_updated=datetime.now(tz=utc))
