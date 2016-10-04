@@ -39,7 +39,7 @@ class NonNullPrimaryKeyField(serializers.PrimaryKeyRelatedField):
     def to_representation(self, value):
         if not value:
             return None
-        super(NonNullPrimaryKeyField, self).to_representation(value)
+        return super(NonNullPrimaryKeyField, self).to_representation(value)
 
 
 def parse_date_last_updated(request):
