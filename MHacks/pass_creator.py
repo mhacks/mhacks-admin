@@ -47,8 +47,10 @@ def create_apple_pass(user):
     # Including the icon is necessary for the passbook to be valid.
     pass_file.addFile('icon.png', open(STATICFILES_DIRS[0] + '/assets/app_icon.png', 'r'))
     pass_file.addFile('icon@2x.png', open(STATICFILES_DIRS[0] + '/assets/app_icon.png', 'r'))
+    pass_file.addFile('icon@3x.png', open(STATICFILES_DIRS[0] + '/assets/app_icon.png', 'r'))
     pass_file.addFile('logo.png', open(STATICFILES_DIRS[0] + '/assets/apple_pass_logo.png', 'r'))
     pass_file.addFile('logo@2x.png', open(STATICFILES_DIRS[0] + '/assets/apple_pass_logo.png', 'r'))
+    pass_file.addFile('logo@3x.png', open(STATICFILES_DIRS[0] + '/assets/apple_pass_logo.png', 'r'))
 
     # Create and return the Passbook file (.pkpass)
     return pass_file.create('config/apple_wallet_certificate.pem',
