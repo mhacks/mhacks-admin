@@ -547,3 +547,12 @@ def resumes(request, filename):
         return response
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+# Test method only for apple watch, remove eventually
+@user_passes_test(lambda u: u.is_superuser)
+def custom_push(request):
+    from push_notifications.models import APNSDevice
+    APNSDevice.objects.get(user=request.user).send_message('Test message', extra={'date': 1475339675,
+                                                                                  'category': 2,
+                                                                                  'title': 'Test'})
