@@ -47,7 +47,7 @@ $(document)
 
 $(window).resize(function(){
     clearTimeout(doResizeEvents);
-    doResizeEvents = setTimeout(resizeEvents(), 100);
+    doResizeEvents = setTimeout(resizeEvents(), 200);
 });
 
 function getLocations(){
