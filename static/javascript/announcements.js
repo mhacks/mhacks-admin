@@ -3,9 +3,6 @@ var aContainer = $(".announcements-container");
 
 $(document).ready(function(){
     getAnnouncements();
-
-    // Issues could occur with keeping announcements sorted - worth the overhead?
-    //setTimeout(updateAnnouncements(), 300000);
 });
 
 function getAnnouncements(){
@@ -22,14 +19,11 @@ function getAnnouncements(){
                         time: new Date(a.broadcast_at * 1000),
                         category: a.category
                     });
-                } else {
-                    announcements[a.id] = "Unapproved Announcement";
                 }
             });
         },
         complete: function(response){
             announcements.sort(announcementSorter);
-            console.log(announcements);
             displayAnnouncements();
         },
         error: function(xhr, errmsg, err){
@@ -50,58 +44,20 @@ function formatDate(d){
 
 function displayAnnouncements(){
     announcements.forEach(function(a, idx){
-        if(a !== "Unapproved Announcement") {
-            aContainer.append(
-                "<div class='announcement' data-id='" + idx + "'>" +
-                "<h2>" + a.title + "</h2>" +
-                "<h3>" + formatDate(a.time) + "</h3>" +
-                "<p>" + a.info + "</p>" +
-                "</div>"
-            );
-        }
-    });
-}
-
-function displayAnnouncement(idx){
-    var a = announcements[idx];
-    aContainer.append(
-        "<div class='announcement' data-id='" + idx + "'>" +
-        "<h2>" + a.title + "</h2>" +
-        "<h3>" + formatDate(a.time) + "</h3>" +
-        "<p>" + a.info + "</p>" +
-        "</div>"
-    );
-}
-
-function updateAnnouncements(){
-    $.ajax({
-        url : "/v1/announcements",
-        type: "GET",
-        dataType: "json",
-        success: function(response){
-            response.results.forEach(function(a){
-                if(a.approved) {
-                    var newAnnouncement = {
-                        title: a.title,
-                        info: a.info,
-                        time: new Date(a.broadcast_at * 1000),
-                        category: a.category
-                    };
-                    if(announcements[a.id] != newAnnouncement){
-                        announcements[a.id] = newAnnouncement;
-                        $(".announcement[data-id='" + a.id + "']").remove();
-                        displayAnnouncement(a.id);
-                    }
-                } else {
-                    announcements[a.id] = "Unapproved Announcement";
-                    $(".announcement[data-id='" + a.id + "']").remove();
-                }
-            });
-
-            console.log(response);
-        },
-        error: function(xhr, errmsg, err){
-            console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
-        }
+        aContainer.append(
+            "<div class='announcement'>" +
+                "<div class='category-container'>" +
+                    ((a.category & 1 != 0) ? "<div class='category-indicator category-0'></div>" : "") +
+                    ((a.category & 2 != 0) ? "<div class='category-indicator category-1'></div>" : "") +
+                    ((a.category & 4 != 0) ? "<div class='category-indicator category-2'></div>" : "") +
+                    ((a.category & 8 != 0) ? "<div class='category-indicator category-3'></div>" : "") +
+                "</div>" +
+                "<div class='announcement-details'>" +
+                    "<h2>" + a.title + "</h2>" +
+                    "<h3>" + formatDate(a.time) + "</h3>" +
+                    "<p>" + a.info + "</p>" +
+                "</div>" +
+            "</div>"
+        );
     });
 }

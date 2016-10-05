@@ -56,11 +56,9 @@ function getEvents(){
             response.results.forEach(function(l){
                 locations[l.id] = {name: l.name, floor: l.floor};
             });
-            console.log(response.results);
 
         },
         complete: function(){
-            console.log(locations);
             //Get events
             $.ajax({
                 url : "/v1/events",
@@ -79,7 +77,6 @@ function getEvents(){
                             });
                         }
                     });
-                    console.log(events);
                     processEvents();
                 },
                 error: function(xhr, errmsg, err){
