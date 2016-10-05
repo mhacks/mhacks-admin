@@ -244,8 +244,16 @@ function formatTime(d){
 
 function formatLocations(locs){
     var output = "";
+    var first = false;
     locs.forEach(function(l, idx){
-        output += ((idx == 0) ? "" : ", ") + locations[l].name + " [" + locations[l].floor + "]";
+        if(locations[l] != undefined) {
+            if(first){
+                first = false;
+            } else {
+                output += ", ";
+            }
+            output += locations[l].name + " [" + locations[l].floor + "]";
+        }
     });
     return output;
 }
