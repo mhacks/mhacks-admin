@@ -82,6 +82,8 @@ function getEvents(){
                     });
                 }
             });
+            console.log(response.results);
+            console.log(events);
             processEvents();
         },
         error: function(xhr, errmsg, err){

@@ -26,9 +26,11 @@ function getAnnouncements(){
                     announcements[a.id] = "Unapproved Announcement";
                 }
             });
+            console.log(response.results);
         },
         complete: function(response){
             announcements.sort(announcementSorter);
+            console.log(announcements);
             displayAnnouncements();
         },
         error: function(xhr, errmsg, err){
