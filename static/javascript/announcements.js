@@ -47,10 +47,10 @@ function displayAnnouncements(){
         aContainer.append(
             "<div class='announcement'>" +
                 "<div class='category-container'>" +
-                    ((a.category & 1 != 0) ? "<div class='category-indicator category-0'></div>" : "") +
-                    ((a.category & 2 != 0) ? "<div class='category-indicator category-1'></div>" : "") +
-                    ((a.category & 4 != 0) ? "<div class='category-indicator category-2'></div>" : "") +
-                    ((a.category & 8 != 0) ? "<div class='category-indicator category-3'></div>" : "") +
+                    ((a.category & 1) ? "<div class='category-indicator category-0'></div>" : "") +
+                    ((a.category & 2) ? "<div class='category-indicator category-1'></div>" : "") +
+                    ((a.category & 4) ? "<div class='category-indicator category-2'></div>" : "") +
+                    ((a.category & 8) ? "<div class='category-indicator category-3'></div>" : "") +
                 "</div>" +
                 "<div class='announcement-details'>" +
                     "<h2>" + a.title + "</h2>" +
