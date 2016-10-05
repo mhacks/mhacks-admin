@@ -1,7 +1,4 @@
-var announcements = [
-    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1},
-    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1},
-    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1}];
+var announcements = [];
 var aContainer = $(".announcements-container");
 
 $(document).ready(function(){
@@ -19,12 +16,12 @@ function getAnnouncements(){
         success: function(response){
             response.results.forEach(function(a){
                 if(a.approved) {
-                    announcements[a.id] = {
+                    announcements.push({
                         title: a.title,
                         info: a.info,
                         time: new Date(a.broadcast_at * 1000),
                         category: a.category
-                    };
+                    });
                 } else {
                     announcements[a.id] = "Unapproved Announcement";
                 }
@@ -47,7 +44,7 @@ function announcementSorter(a, b){
 
 function formatDate(d){
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    return days[d.getDay()] + " " + d.getMonth() + "-" + ("0" + d.getDate()).slice(-2) + ", "
+    return days[d.getDay()] + " " + (d.getMonth() + 1) + "-" + ("0" + d.getDate()).slice(-2) + ", "
         + (d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
 }
 

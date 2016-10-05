@@ -54,8 +54,9 @@ function getEvents(){
         dataType: "json",
         success: function(response){
             response.results.forEach(function(l){
-                locations[parseInt(l.id)] = {name: l.name, floor: l.floor};
+                locations[l.id] = {name: l.name, floor: l.floor};
             });
+            console.log(response.results);
 
         },
         complete: function(){
