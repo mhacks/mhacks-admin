@@ -26,7 +26,6 @@ function getAnnouncements(){
                     announcements[a.id] = "Unapproved Announcement";
                 }
             });
-            console.log(response.results);
         },
         complete: function(response){
             announcements.sort(announcementSorter);
@@ -44,8 +43,8 @@ function announcementSorter(a, b){
 }
 
 function formatDate(d){
-    var days = ["Friday", "Saturday", "Sunday"];
-    return days[(d.getDay() + 2) % 7] + ", " + (d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return days[d.getDay()] + ", " + (d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
 }
 
 function displayAnnouncements(){

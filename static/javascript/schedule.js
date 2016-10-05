@@ -48,6 +48,10 @@ $(window).resize(function(){
 });
 
 function getLocations(){
+
+}
+
+function getEvents(){
     $.ajax({
         url : "/v1/locations",
         type: "GET",
@@ -58,33 +62,32 @@ function getLocations(){
             });
 
         },
-        error: function(xhr, errmsg, err){
-            console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
-        }
-    });
-}
-
-function getEvents(){
-    $.ajax({
-        url : "/v1/events",
-        type: "GET",
-        dataType: "json",
-        success: function(response){
-            response.results.forEach(function(e){
-                if(e.approved) {
-                    events.push({
-                        startTime: e.start * 1000,
-                        endTime: e.start * 1000 + e.duration,
-                        locations: e.locations,
-                        name: e.name,
-                        description: e.info,
-                        category: e.category
+        complete: function(){
+            console.log(locations);
+            $.ajax({
+                url : "/v1/events",
+                type: "GET",
+                dataType: "json",
+                success: function(response){
+                    response.results.forEach(function(e){
+                        if(e.approved) {
+                            events.push({
+                                startTime: e.start * 1000,
+                                endTime: e.start * 1000 + e.duration,
+                                locations: e.locations,
+                                name: e.name,
+                                description: e.info,
+                                category: e.category
+                            });
+                        }
                     });
+                    console.log(events);
+                    processEvents();
+                },
+                error: function(xhr, errmsg, err){
+                    console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
                 }
             });
-            console.log(response.results);
-            console.log(events);
-            processEvents();
         },
         error: function(xhr, errmsg, err){
             console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
