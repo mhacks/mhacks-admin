@@ -167,6 +167,7 @@ body{
     align-items: center;
 
     border: 2px #0093B1 solid;
+    margin: 15px 10px 5px;
 }
 
 .schedule-legend>h2 {
@@ -182,27 +183,20 @@ body{
 }
 
 .schedule-categories {
+    width: 100%;
+    padding: 5px;
+
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-end;
+    justify-content: space-around;
     align-items: center;
 }
 
 .schedule-categories *{
-    margin: 0 10px;
+    margin: 0;
     font-weight: 400;
     font-size: 12pt;
-}
-
-.schedule-categories *.category-0{
-    color: darkviolet;
-}
-.schedule-categories *.category-1{
-    color: darkorange;
-}
-.schedule-categories *.category-2{
-    color: darkgreen;
 }
 
 .schedule-container {
@@ -284,16 +278,6 @@ body{
     z-index: 5;
 }
 
-.event.category-0 {
-    border-color: darkviolet;
-}
-.event.category-1 {
-    border-color: darkorange;
-}
-.event.category-2 {
-    border-color: darkgreen;
-}
-
 .event:hover {
     height: auto;
     transition: height 0.3s linear, width 0.3s linear, min-width 0.3s linear, left 0.2s linear 0.1s;
@@ -319,17 +303,57 @@ body{
     color: black !important;
 }
 
+.event.category-0 {
+    border-color: rgb(0, 188, 212);
+}
+.event.category-1 {
+    border-color: rgb(247, 139, 49);
+}
+.event.category-2 {
+    border-color: rgb(255, 202, 11);
+}
+.event.category-3 {
+    border-color: rgb(168, 110, 219);
+}
+.event.category-4 {
+    border-color: rgb(255, 0, 0);
+}
+
 .event.category-0 * {
-    color: darkviolet;
-    border-color: darkviolet;
+    color: rgb(0, 188, 212);
+    border-color: rgb(0, 188, 212);
 }
 .event.category-1 * {
-    color: darkorange;
-    border-color: darkorange;
+    color: rgb(247, 139, 49);
+    border-color: rgb(247, 139, 49);
 }
 .event.category-2 * {
-    color: darkgreen;
-    border-color: darkgreen;
+    color: rgb(255, 202, 11);
+    border-color: rgb(255, 202, 11);
+}
+.event.category-3 * {
+    color: rgb(168, 110, 219);
+    border-color: rgb(168, 110, 219);
+}
+.event.category-4 * {
+    color: rgb(255, 0, 0);
+    border-color: rgb(255, 0, 0);
+}
+
+.schedule-categories *.category-0{
+    color: rgb(0, 188, 212);
+}
+.schedule-categories *.category-1{
+    color: rgb(247, 139, 49);
+}
+.schedule-categories *.category-2{
+    color: rgb(255, 202, 11);
+}
+.schedule-categories *.category-3{
+    color: rgb(168, 110, 219);
+}
+.schedule-categories *.category-4{
+    color: rgb(255, 0, 0);
 }
 
 @media only screen and (max-width: 850px){

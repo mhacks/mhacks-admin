@@ -8,8 +8,14 @@ var numLines = 107;
 var baseTime = new Date("2016-10-07T19:00:00.000Z");
 var endTime = new Date("2016-10-10T00:00:00.000Z");
 
-var locations = [];
-var events = [];
+var locations = [{name: "Location 1", floor: "Floor 1"},
+                 {name: "Location 2", floor: "Floor 2"},
+                 {name: "Location 3", floor: "Floor 3"}];
+var events = [{startTime: "2016-10-07T20:00:00.000Z", endTime: "2016-10-07T21:30:00.000Z", locations: [1, 2], name: "Event Name", description:"This is an event.", category: "4"},
+              {startTime: "2016-10-07T20:30:00.000Z", endTime: "2016-10-07T23:30:00.000Z", locations: [1], name: "Event Name", description:"This is an event.", category: "2"},
+              {startTime: "2016-10-07T22:20:00.000Z", endTime: "2016-10-08T00:10:00.000Z", locations: [0, 2], name: "Event Name", description:"This is an event.", category: "0"},
+              {startTime: "2016-10-07T21:00:00.000Z", endTime: "2016-10-07T22:15:00.000Z", locations: [0, 1], name: "Event Name", description:"This is an event.", category: "3"},
+              {startTime: "2016-10-08T04:00:00.000Z", endTime: "2016-10-08T22:15:00.000Z", locations: [2], name: "Event Name", description:"This is an event.", category: "1"}];
 
 // Flip this flag to make the schedule not show old events (the time markers will start from the current time)
 var displayOld = true;
@@ -32,7 +38,6 @@ $(document)
             placedEvents[i] = 0;
         }
 
-        getLocations();
         getEvents();
     })
     .on('mouseenter', '.event', function(){
@@ -47,23 +52,21 @@ $(window).resize(function(){
     doResizeEvents = setTimeout(resizeEvents(), 200);
 });
 
-function getLocations(){
-
-}
-
 function getEvents(){
+    //Get locations
     $.ajax({
         url : "/v1/locations",
         type: "GET",
         dataType: "json",
         success: function(response){
             response.results.forEach(function(l){
-                locations[l.id] = {name: l.name, floor: l.floor};
+                locations[parseInt(l.id)] = {name: l.name, floor: l.floor};
             });
 
         },
         complete: function(){
             console.log(locations);
+            //Get events
             $.ajax({
                 url : "/v1/events",
                 type: "GET",
@@ -151,7 +154,6 @@ function processEvents(){
 }
 
 function parseAllEvents(){
-    console.log(events.length);
     events.forEach(function(e){
         var start = new Date(e.startTime);
         var end = new Date(e.endTime);

@@ -1,4 +1,7 @@
-var announcements = [];
+var announcements = [
+    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1},
+    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1},
+    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1}];
 var aContainer = $(".announcements-container");
 
 $(document).ready(function(){
