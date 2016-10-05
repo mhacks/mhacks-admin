@@ -136,7 +136,7 @@ function processEvents(){
             //console.log(offset + "\t" + width);
 
             eventsDiv.append(
-                "<div class='event width-" + width + " offset-" + offset + " category-" + e.category + "' style='top:" + p.offset + "px; min-height: " + p.height + "px'>" +
+                "<div class='event category-" + e.category + "' style='top:" + p.offset + "px; min-height: " + p.height + "px' data-colnum='" + width + "' data-colpos='" + offset + "'>" +
                     "<h2>" + e.name + "</h2>" +
                     "<h3>" + formatTime(new Date(e.startTime)) + " - " + formatTime(new Date(e.endTime)) + "</h3>" +
                     "<h3>" + formatLocations(e.locations) + "</h3>" +
@@ -182,18 +182,15 @@ function getPosition(e){
 
 function resizeEvents(){
     var width = timeLines.width() - 20;// * (120 - timeStamps.width());
-    var baseOffset = timeStamps.width() + 25;
+    var baseOffset = timeStamps.width() + 15;
 
-    $(".offset-1").css("left", Math.floor(baseOffset) + "px");
-    $(".width-2.offset-2").css("left", Math.floor(baseOffset + (width - 10)/2 + 10) + "px" );
-    $(".width-3.offset-2").css("left", Math.floor(baseOffset + (width - 20)/3 + 10) + "px" );
-    $(".width-3.offset-3").css("left", Math.floor(baseOffset + 2 * (width - 20)/3 + 20) + "px" );
-
-    $(".width-1").css("width", Math.floor(width) + "px");
-    $(".width-2").css("width", Math.floor((width - 10)/2) + "px");
-    $(".width-3").css("width", Math.floor((width - 20)/3) + "px");
-
-    //console.log(width);
+    $(".event").each(function(){
+        var colNum = $(this).data("colnum");
+        var colPos = $(this).data("colpos");
+        $(this)
+            .css("left", Math.floor(baseOffset + (colPos - 1) * (width - 10 * (colNum - 1)) / colNum + 10 * colPos) + "px")
+            .css("width", Math.floor((width - 10 * (colNum - 1)) / colNum) + "px");
+    });
 }
 
 function drawMarkers(){
@@ -244,7 +241,7 @@ function formatTime(d){
 
 function formatLocations(locs){
     var output = "";
-    var first = false;
+    var first = true;
     locs.forEach(function(l, idx){
         if(locations[l] != undefined) {
             if(first){
