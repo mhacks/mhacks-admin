@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/live.css') }}">
+    {% block basic_page_headers %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="live-header">
+        <div class="header lightTurquoise">
+            <div id="eventInfo">
+                <h2>October 7-9</h2>
+                <p>Detroit Masonic Temple</p>
+            </div>
+            <div id="logo">
+                <a href="{{ url_for('mhacks-live') }}">
+                    <img id="logo" src="{{ static('assets/logo.png') }}" alt="MHacks 8 Logo - M">
+                </a>
+            </div>
+            <div id="countdown-container">
+                {% include 'countdown.html' %}
+            </div>
+        </div>
+        <div class="live-navbar">
+            <a class="live-navlink" data-section="Announcements">
+                Announcements
+            </a>
+            <a class="live-navlink" data-section="Schedule">
+                Schedule
+            </a>
+            <a class="live-navlink" data-section="Maps">
+                Map
+            </a>
+            <a class="live-navlink" data-section="LiveStream">
+                Live Stream
+            </a>
+            <a class="live-navlink" target="_blank" href="https://mhacks8.devpost.com">
+                Devpost
+            </a>
+            <a class="live-navlink" data-section="Mentorship">
+                Mentorship
+            </a>
+            <a class="live-navlink" target="_blank" href="#">
+                Hardware
+            </a>
+        </div>
+    </div>
+
+    <div class="live-container col-2-flex">
+        <div class="live-section" data-section="Announcements">{% include 'announcements.html' %}</div>
+        <div class="live-section" data-section="Schedule">{% include 'schedule.html' %}</div>
+    </div>
+    <div class="live-container">
+        <div class="live-section" data-section="Maps">{% include 'maps.html' %}</div>
+    </div>
+    <div class="live-container col-2-flex">
+        <div class="live-section" data-section="LiveStream">{% include 'stream.html' %}</div>
+        <div class="live-section" data-section="Mentorship">{% include 'mentorship.html' %}</div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(".live-navlink").click(function(event){
+            var sectionName = $(event.target).data("section");
+            if(sectionName != undefined){
+                $("html, body").stop().animate({scrollTop:$(".live-section[data-section="+sectionName+"]").offset().top}, 'medium');
+            }
+        });
+    </script>
+{% endblock %}
