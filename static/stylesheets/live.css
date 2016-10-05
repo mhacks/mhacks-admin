@@ -159,19 +159,49 @@ body{
     overflow: hidden;
 }
 
-.category-group *{
-    margin-left: 10px;
+.schedule-legend {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px #0093B1 solid;
+}
+
+.schedule-legend>h2 {
+    color: white;
+    margin: 0 0 4px 0;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #0093B1;
+    background-color: #0093B1;
+    font-weight: 400;
+    font-size: 12pt;
+    width: 100%;
+    text-align: center;
+}
+
+.schedule-categories {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.schedule-categories *{
+    margin: 0 10px;
     font-weight: 400;
     font-size: 12pt;
 }
 
-.category-group *.category-0{
+.schedule-categories *.category-0{
     color: darkviolet;
 }
-.category-group *.category-1{
+.schedule-categories *.category-1{
     color: darkorange;
 }
-.category-group *.category-2{
+.schedule-categories *.category-2{
     color: darkgreen;
 }
 
@@ -282,7 +312,7 @@ body{
 .event h3 {
     margin: 0 0 4px 0;
     padding-bottom: 4px;
-    border-bottom: 2px solid #cccccccc;
+    border-bottom: 2px solid rgba(204, 204, 204, 0.8);
 }
 
 .event p {
@@ -502,13 +532,18 @@ body{
 /* ========== Mentorship ========== */
 
 .mentorship-container {
-    width: calc(100vw - 610px);
+    width: calc(50vw - 75px);
     padding: 20px;
     text-align: center;
 }
 
-.mentorship-container h2, .mentorship-container h3 {
+.mentorship-container h2 {
     color: #0093B1;
+}
+
+.mentorship-container h3 {
+    color: #0093B1;
+    font-size: 14pt;
 }
 
 .mentorship-container p {
@@ -522,21 +557,30 @@ body{
     }
 }
 
-/* ========== Live Stream ========== */
+/* ========== Hardware ========== */
 
-.stream-container {
-    width: 440px;
-    height: 265px;
+.hardware-container {
+    width: calc(50vw - 75px);
+    padding: 20px;
+    text-align: center;
+}
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
+.hardware-container h2{
+    color: #0093B1;
+}
+
+.hardware-container h3 {
+    color: #0093B1;
+    font-size: 14pt;
+}
+
+.hardware-container p {
+    color: black;
+    width: 100%;
 }
 
 @media only screen and (max-width: 850px){
-    .stream-container {
+    .hardware-container {
         width: calc(100vw - 100px);
     }
 }

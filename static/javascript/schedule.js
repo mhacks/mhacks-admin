@@ -8,25 +8,22 @@ var numLines = 107;
 var baseTime = new Date("2016-10-07T19:00:00.000Z");
 var endTime = new Date("2016-10-10T00:00:00.000Z");
 
-var locations = [{name: "Location 1", floor: "Floor 1"},
-                 {name: "Location 2", floor: "Floor 2"},
-                 {name: "Location 3", floor: "Floor 3"}];
-var events = [{startTime: "2016-10-07T20:00:00.000Z", endTime: "2016-10-07T21:30:00.000Z", locations: [1, 2], name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-07T20:30:00.000Z", endTime: "2016-10-07T23:30:00.000Z", locations: [1], name: "Event Name", description:"This is an event.", category: "2"},
-              {startTime: "2016-10-07T22:20:00.000Z", endTime: "2016-10-08T00:10:00.000Z", locations: [0, 2], name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-07T21:00:00.000Z", endTime: "2016-10-07T22:15:00.000Z", locations: [0, 1], name: "Event Name", description:"This is an event.", category: "1"},
-              {startTime: "2016-10-08T04:00:00.000Z", endTime: "2016-10-08T22:15:00.000Z", locations: [2], name: "Event Name", description:"This is an event.", category: "1"}];
+var locations = [];
+var events = [];
 
-var oldLeft;
+// Flip this flag to make the schedule not show old events (the time markers will start from the current time)
+var displayOld = true;
 
 $(document)
     .ready(function(){
-        var currentTime = new Date();
-        if(3600000 * Math.floor(currentTime / 3600000) > baseTime){
-            baseTime = 3600000 * Math.floor(currentTime / 3600000);
+        if(!displayOld) {
+            var currentTime = new Date();
+            if (3600000 * Math.floor(currentTime / 3600000) > baseTime) {
+                baseTime = 3600000 * Math.floor(currentTime / 3600000);
+            }
+            numLines = (endTime - baseTime) / 1800000 + 1;
+            numLines = (numLines < 0) ? 0 : numLines;
         }
-        numLines = (endTime - baseTime) / 1800000 + 1;
-        numLines = (numLines < 0) ? 0 : numLines;
 
         drawMarkers();
 
@@ -60,7 +57,6 @@ function getLocations(){
                 locations[l.id] = {name: l.name, floor: l.floor};
             });
 
-            console.log(response);
         },
         error: function(xhr, errmsg, err){
             console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
@@ -77,8 +73,8 @@ function getEvents(){
             response.results.forEach(function(e){
                 if(e.approved) {
                     events.push({
-                        startTime: e.start,
-                        endTime: e.start + e.duration,
+                        startTime: e.start * 1000,
+                        endTime: e.start * 1000 + e.duration,
                         locations: e.locations,
                         name: e.name,
                         description: e.info,
@@ -86,9 +82,7 @@ function getEvents(){
                     });
                 }
             });
-
             processEvents();
-            console.log(response);
         },
         error: function(xhr, errmsg, err){
             console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
@@ -152,6 +146,7 @@ function processEvents(){
 }
 
 function parseAllEvents(){
+    console.log(events.length);
     events.forEach(function(e){
         var start = new Date(e.startTime);
         var end = new Date(e.endTime);

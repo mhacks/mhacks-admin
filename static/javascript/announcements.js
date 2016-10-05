@@ -1,13 +1,11 @@
-var announcements = [
-    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1},
-    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1},
-    {title: "Announcement", info: "This is an announcement.", time: new Date("2016-10-07T19:00:00.000Z"), category: 1}];
+var announcements = [];
 var aContainer = $(".announcements-container");
 
 $(document).ready(function(){
     getAnnouncements();
 
-    setTimeout(updateAnnouncements(), 300000);
+    // Issues could occur with keeping announcements sorted - worth the overhead?
+    //setTimeout(updateAnnouncements(), 300000);
 });
 
 function getAnnouncements(){
@@ -21,23 +19,26 @@ function getAnnouncements(){
                     announcements[a.id] = {
                         title: a.title,
                         info: a.info,
-                        time: new Date(a.broadcast_at),
+                        time: new Date(a.broadcast_at * 1000),
                         category: a.category
                     };
                 } else {
                     announcements[a.id] = "Unapproved Announcement";
                 }
             });
-
-            console.log(response);
         },
         complete: function(response){
+            announcements.sort(announcementSorter);
             displayAnnouncements();
         },
         error: function(xhr, errmsg, err){
             console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
         }
     });
+}
+
+function announcementSorter(a, b){
+    return b.time - a.time;
 }
 
 function formatDate(d){
@@ -81,7 +82,7 @@ function updateAnnouncements(){
                     var newAnnouncement = {
                         title: a.title,
                         info: a.info,
-                        time: new Date(a.broadcast_at),
+                        time: new Date(a.broadcast_at * 1000),
                         category: a.category
                     };
                     if(announcements[a.id] != newAnnouncement){
