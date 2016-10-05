@@ -471,6 +471,7 @@ def update_applications(request):
 def live(request):
     return render(request, 'live.html')
 
+
 @login_required()
 def apple_pass(request):
     response = HttpResponse(content=create_apple_pass(request.user).getvalue(), content_type='application/vnd.apple.pkpass')
