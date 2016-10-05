@@ -62,7 +62,7 @@ function displayAnnouncements(){
 function displayAnnouncement(idx){
     var a = announcements[idx];
     aContainer.append(
-        "<div class='annnouncement' data-id='" + idx + "'>" +
+        "<div class='announcement' data-id='" + idx + "'>" +
         "<h2>" + a.title + "</h2>" +
         "<h3>" + formatDate(a.time) + "</h3>" +
         "<p>" + a.info + "</p>" +

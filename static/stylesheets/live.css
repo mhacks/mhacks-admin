@@ -88,7 +88,7 @@ body{
     justify-content: flex-start;
     align-items: center;
 
-    border: 1px solid #cccccc88;
+    border: 1px solid rgba(204,204,204,0.5);
     z-index: 20;
 }
 
@@ -325,7 +325,7 @@ body{
 }
 
 .announcement {
-    border-bottom: 2px solid #cccccc88;
+    border-bottom: 2px solid rgba(204,204,204,0.5);
     padding: 15px 20px;
 }
 
@@ -427,7 +427,7 @@ body{
 }
 
 .maps-link:hover {
-    background-color: #cccccc88;
+    background-color: rgba(204,204,204,0.5);
 }
 
 .maps-link.selected {
