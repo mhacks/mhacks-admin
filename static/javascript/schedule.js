@@ -71,7 +71,7 @@ function getEvents(){
                         if(e.approved) {
                             events.push({
                                 startTime: e.start * 1000,
-                                endTime: e.start * 1000 + e.duration,
+                                endTime: e.start * 1000 + e.duration * 1000,
                                 locations: e.locations,
                                 name: e.name,
                                 description: e.info,
