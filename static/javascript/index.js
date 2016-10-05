@@ -103,13 +103,6 @@ function gridResize() {
     setTimeout(gridResize, 200);
 }
 
-$(".faq-item .question").click(function(event){
-    var q = $(event.target);
-    q.toggleClass("open");
-    $(".faq-item .answer[data-qid='" + q.data("qid") + "']").stop().slideToggle('medium');
-});
-
-
 function lerpColor(c1, c2, frame){
     var r = Math.round(colors[c1].r + (colors[c2].r - colors[c1].r) * frame / animationFrames);
     var g = Math.round(colors[c1].g + (colors[c2].g - colors[c1].g) * frame / animationFrames);

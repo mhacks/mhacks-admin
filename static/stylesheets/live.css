@@ -125,6 +125,10 @@ body{
         justify-content: flex-start;
     }
 
+    .content-box{
+        width: calc(100vw - 100px);
+    }
+
     .content-box:first-child {
         margin-bottom: 50px;
     }
@@ -188,7 +192,7 @@ body{
 
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 }
@@ -413,7 +417,7 @@ body{
 }
 
 .announcements-categories *{
-    margin: 0;
+    margin: 0 5px;
     font-weight: 400;
     font-size: 12pt;
 }
@@ -639,6 +643,15 @@ body{
         font-size: 8pt;
         min-width: 120px;
     }
+    .maps-link {
+        font-size: 10pt;
+        width: 22px;
+        height: 22px;
+        padding-top: 0;
+        margin: 0 3px;
+        text-align: center;
+        cursor: pointer;
+    }
 }
 
 /* ========== Mentorship ========== */
@@ -695,4 +708,11 @@ body{
     .hardware-container {
         width: calc(100vw - 100px);
     }
+}
+
+/* ========== FAQ ========== */
+
+.faq-container {
+    width: calc(100vw - 100px);
+    padding: 30px;
 }
