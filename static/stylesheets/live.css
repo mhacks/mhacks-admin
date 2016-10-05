@@ -37,7 +37,7 @@ body{
     color: white;
 }
 
-.live-navlink:hover {
+.live-navlink:hover, .live-navlink:focus {
     color: white;
     text-decoration: none;
 }
