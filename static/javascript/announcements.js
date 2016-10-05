@@ -47,7 +47,8 @@ function announcementSorter(a, b){
 
 function formatDate(d){
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    return days[d.getDay()] + ", " + (d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
+    return days[d.getDay()] + " " + d.getMonth() + "-" + ("0" + d.getDate()).slice(-2) + ", "
+        + (d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
 }
 
 function displayAnnouncements(){

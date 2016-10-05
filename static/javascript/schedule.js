@@ -8,14 +8,8 @@ var numLines = 107;
 var baseTime = new Date("2016-10-07T19:00:00.000Z");
 var endTime = new Date("2016-10-10T00:00:00.000Z");
 
-var locations = [{name: "Location 1", floor: "Floor 1"},
-                 {name: "Location 2", floor: "Floor 2"},
-                 {name: "Location 3", floor: "Floor 3"}];
-var events = [{startTime: "2016-10-07T20:00:00.000Z", endTime: "2016-10-07T21:30:00.000Z", locations: [1, 2], name: "Event Name", description:"This is an event.", category: "4"},
-              {startTime: "2016-10-07T20:30:00.000Z", endTime: "2016-10-07T23:30:00.000Z", locations: [1], name: "Event Name", description:"This is an event.", category: "2"},
-              {startTime: "2016-10-07T22:20:00.000Z", endTime: "2016-10-08T00:10:00.000Z", locations: [0, 2], name: "Event Name", description:"This is an event.", category: "0"},
-              {startTime: "2016-10-07T21:00:00.000Z", endTime: "2016-10-07T22:15:00.000Z", locations: [0, 1], name: "Event Name", description:"This is an event.", category: "3"},
-              {startTime: "2016-10-08T04:00:00.000Z", endTime: "2016-10-08T22:15:00.000Z", locations: [2], name: "Event Name", description:"This is an event.", category: "1"}];
+var locations = [];
+var events = [];
 
 // Flip this flag to make the schedule not show old events (the time markers will start from the current time)
 var displayOld = true;
