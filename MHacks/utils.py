@@ -136,7 +136,7 @@ def send_registration_email(user, request):
     send_mandrill_mail('ticket_email', 'Your MHacks Ticket', user.email,
                        email_vars={
                            'FIRST_NAME': user.get_short_name(),
-                           'WALLET_URL': 'cid:mhacks.pkpass',
+                           'WALLET_URL': _get_absolute_url(request, reverse('mhacks-apple-pass')),
                            'QR_CODE': "cid:qrcode.png",
                        },
                        attachments=[{'content': base64.b64encode(create_apple_pass(user).getvalue()),
