@@ -138,6 +138,8 @@ def send_registration_email(user, request):
                            'FIRST_NAME': user.get_short_name(),
                            'WALLET_URL': _get_absolute_url(request, reverse('mhacks-apple-pass')),
                            'QR_CODE': "cid:qrcode.png",
+                           'FULL_NAME': user.get_full_name(),
+                           'SCHOOL': user.cleaned_school_name()
                        },
                        attachments=[{'content': base64.b64encode(create_apple_pass(user).getvalue()),
                                      'name': 'mhacks.pkpass',
