@@ -11,15 +11,25 @@
         </a>
     </div>
     <div id="headerButtons">
-        {% if 'apply/' not in request.path %}
-            <form method="GET" action="{{ url_for('mhacks-apply') }}">
-                <button type="submit">Apply</button>
+        {% if 'live/' not in request.path %}
+            <form method="GET" action="{{ url_for('mhacks-live') }}">
+                <button type="submit">Live</button>
             </form>
         {% endif %}
-
-        <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
-            <button type="submit">Mentor</button>
-        </form>
+        {% if 'dashboard/' not in request.path %}
+            <form method="GET" action="{{ url_for('mhacks-dashboard') }}">
+                <button type="submit" style="width: 110px;">Dashboard</button>
+            </form>
+        {% endif %}
+{#        {% if 'apply/' not in request.path %}#}
+{#            <form method="GET" action="{{ url_for('mhacks-apply') }}">#}
+{#                <button type="submit">Apply</button>#}
+{#            </form>#}
+{#        {% endif %}#}
+{##}
+{#        <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">#}
+{#            <button type="submit">Mentor</button>#}
+{#        </form>#}
 
         {% if request.user.is_authenticated() %}
             <form method="POST" action="{{ url_for('mhacks-logout') }}">

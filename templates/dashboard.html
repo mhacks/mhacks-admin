@@ -33,6 +33,20 @@
         {% endif %}
 
         {% if request.user and request.user.groups.filter(name='hacker').exists() %}
+            {% if registration_application and registration_application.submitted %}
+                {% if registration_application.acceptance == 'accepted_yes' %}
+                    <h2>Registration Status: <span class="rounded-box accept">ACCEPTED INVITE</span></h2>
+                    <p>You should have received an email with your pass to the event.</p>
+                    <p>If you can't find it, you can present this QR code too.</p>
+                    <img class="qr-code" src="data:image/png;base64,{{ qr_code }}">
+                    <a href="{{ url_for('mhacks-apple-pass') }}">
+                        <img class="apple-wallet" src="{{ static('assets/add_apple_wallet.svg') }}">
+                    </a>
+                {% elif registration_application.acceptance == 'accepted_no' %}
+                    <h2>Registration Status: <span class="rounded-box decline">DECLINED INVITE</span></h2>
+                {% endif %}
+            {% endif %}
+
             {% if application %}
                 {% if application.decision == 'Accept' %}
                     <h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>
@@ -41,22 +55,14 @@
                     <p><a href="https://www.eventbrite.com/e/mhacks-8-busses-registration-27238162076">Click here to register for a bus! (Eventbrite)</a></p>
                     <p>Please note: UMich students do not have to register for busses. There will be busses departing from Pierpont Commons at 4:00pm and 5:30pm on Friday.</p>
 
-                    {% if registration_application and registration_application.submitted %}
-                        {% if registration_application.acceptance == 'yes' %}
-                            <h2>Registration Status: <span class="rounded-box accept">ACCEPTED INVITE</span></h2>
-                        {% elif registration_application.acceptance == 'no' %}
-                            <h2>Registration Status: <span class="rounded-box decline">DECLINED INVITE</span></h2>
-                        {% endif %}
-                    {% else %}
-                        <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
-                    {% endif %}
-
                     <div id="bus-routes">
                         <br>
                         <img id="bus-routes-img" src="{{ static('assets/bus_routes_white.png') }}">
                     </div>
                     <br>
-
+                    {% if not registration_application %}
+                        <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
+                    {% endif %}
                     {% if application.reimbursement %}
                         <br>
                         <h2>Reimbursement amount: <span class="rounded-box accept">${{ '{:.2f}'.format(application.reimbursement) }}</span> </h2>
@@ -77,48 +83,30 @@
 
                 <br>
                 <hr>
-            {% else %}
-                <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>
+{#            {% else %}#}
+{#                <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>#}
             {% endif %}
-
-            {% if mentor_application %}
-                {% if mentor_application.decision == 'Accept' %}
-                    <h2>Mentor Status: <span class="rounded-box accept">ACCEPTED</span></h2>
-                    <p>We're super excited to have you mentor other hackers at MHacks 8! 🎉</p>
-
-                    {% if mentor_application.reimbursement %}
-                        <h2>Reimbursement amount: <span class="rounded-box accept">${{ '{:.2f}'.format(mentorship_application.reimbursement) }}</span> </h2>
-                        <p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to <a href="https://goo.gl/wORx7K">this guide</a> for more details on traveling that weekend.</p>
-                        <p>We’ll see you there!</p>
-                    {% endif %}
-                {% elif mentor_application.decision == 'Waitlist' %}
-                    <h2>Mentor Status: <span class="rounded-box waitlist">WAITLIST</span></h2>
-                    <p>Thank you for applying to be a mentor at MHacks 8. Unfortunately, we can't extend you an invitation at the moment, but hang tight! If there’s a change in your decision, we’ll let you know.</p>
-                {% elif mentor_application.decision == 'Decline' %}
-                    <div>
-                        <h2>Your mentor application has been submitted. We look forward to reading it!</h2>
-                    </div>
-                    <div class="rounded-box decline">
-                        <p>We haven’t gotten to read your mentor application just yet, but we’re on it! You should receive a decision soon. Hang tight!</p>
-                    </div>
-                {% endif %}
-
-                <br>
-                <hr>
-            {% endif %}
-
+        {% endif %}
+        {% if not registration_application and not application %}
+            <h2>Are you a walk on?</h2>
+            <p>After registering you will receive an email with your MHacks ticket attached which you must present to get access to the event.</p>
+            <p>Your dashboard will also be updated to display your MHacks ticket after you have registered so you can come back here to get access to it.</p>
+            <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
         {% endif %}
     </div>
-    {% if not application %}
-        <div class="body-info" id="apply-instructions">
-            <h2>Here’s how it works:</h2>
-            <p>When you’re ready, hit the apply button and fill out an application. Our decisions are released on a weekly basis, so if you submit an application by Friday at 11:59pm, you will receive a decision on Monday.</p>
-            <p>If you submit an application after Friday at 11:59pm, your application will be read in the next cycle.</p>
-            <p>If you need to change your answers, don’t worry! Just make sure you submit your changes before Friday 11:59pm of that week.</p>
-            <p>Make sure you submit an application by September 9th in order to be considered for a travel reimbursement!</p>
-            <a href="{{ url_for('mhacks-apply') }}"><b>Let’s do this.</b></a>
-        </div>
-    {% endif %}
+    {# Enable registration for walk-ons #}
+
+    {# Disable applications for now #}
+    {#    {% if not application %}#}
+    {#        <div class="body-info" id="apply-instructions">#}
+    {#            <h2>Here’s how it works:</h2>#}
+    {#            <p>When you’re ready, hit the apply button and fill out an application. Our decisions are released on a weekly basis, so if you submit an application by Friday at 11:59pm, you will receive a decision on Monday.</p>#}
+    {#            <p>If you submit an application after Friday at 11:59pm, your application will be read in the next cycle.</p>#}
+    {#            <p>If you need to change your answers, don’t worry! Just make sure you submit your changes before Friday 11:59pm of that week.</p>#}
+    {#            <p>Make sure you submit an application by September 9th in order to be considered for a travel reimbursement!</p>#}
+    {#            <a href="{{ url_for('mhacks-apply') }}"><b>Let’s do this.</b></a>#}
+    {#        </div>#}
+    {#    {% endif %}#}
 {% endblock %}
 
 {% block scripts %}
@@ -136,3 +124,4 @@
         });
     </script>
 {% endblock %}
+

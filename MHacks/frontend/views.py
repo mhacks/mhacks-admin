@@ -24,7 +24,7 @@ from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSe
 from MHacks.models import Application, MentorApplication, Registration
 from MHacks.pass_creator import create_apple_pass
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
-    send_application_confirmation_email
+    send_application_confirmation_email, send_registration_email
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
 
 MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
@@ -141,13 +141,14 @@ def apply_mentor(request):
 
 @login_required()
 def registration(request):
+    # Changed to make this work for walk ons
     # make sure the user is has submitted an application & has been accepted
-    try:
-        hacker_app = Application.objects.get(user=request.user)
-        if not hacker_app.decision == 'Accept':
-            return redirect(reverse('mhacks-dashboard'))
-    except Application.DoesNotExist:
-        return redirect(reverse('mhacks-dashboard'))
+    # try:
+    #     hacker_app = Application.objects.get(user=request.user)
+    #     if not hacker_app.decision == 'Accept':
+    #         return redirect(reverse('mhacks-dashboard'))
+    # except Application.DoesNotExist:
+    #     return redirect(reverse('mhacks-dashboard'))
 
     # find the user's application if it exists
     try:
@@ -177,7 +178,7 @@ def registration(request):
             app.submitted = True
             app.deleted = False
             app.save()
-
+            send_registration_email(request.user, request)
             return redirect(reverse('mhacks-dashboard'))
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
@@ -325,26 +326,20 @@ def update_password(request, uid, token):
 def dashboard(request):
     if request.method == 'GET':
         from MHacks.globals import groups
-
-        try:
-            app = Application.objects.get(user=request.user, deleted=False)
-        except Application.DoesNotExist:
-            app = None
-
+        from MHacks.pass_creator import create_qr_code_image
+        app = request.user.application_or_none()
+        registration_app = request.user.registration_or_none()
+        qr_code = create_qr_code_image(request.user)
         try:
             mentor_app = MentorApplication.objects.get(user=request.user, deleted=False)
         except MentorApplication.DoesNotExist:
             mentor_app = None
 
-        try:
-            registration_app = Registration.objects.get(user=request.user, deleted=False)
-        except Registration.DoesNotExist:
-            registration_app = None
-
         return render(request, 'dashboard.html', {'groups': groups,
                                                   'application': app,
                                                   'mentor_application': mentor_app,
-                                                  'registration_application': registration_app})
+                                                  'registration_application': registration_app,
+                                                  'qr_code': qr_code})
 
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
@@ -468,8 +463,10 @@ def update_applications(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def live(request):
     return render(request, 'live.html')
+
 
 @login_required()
 def apple_pass(request):
@@ -545,3 +542,17 @@ def resumes(request, filename):
         return response
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def test_send_registration(request):
+    from MHacks.models import MHacksUser
+    if 'for' not in request.GET:
+        return HttpResponseBadRequest()
+    try:
+        user = MHacksUser.objects.get(email=request.GET['for'])
+    except MHacksUser.DoesNotExist:
+        return HttpResponseBadRequest()
+
+    send_registration_email(user, request)
+    return HttpResponse(status=200)
