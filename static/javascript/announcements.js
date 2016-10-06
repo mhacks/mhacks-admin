@@ -1,5 +1,6 @@
 var announcements = [];
 var aContainer = $(".announcements-container");
+var refresh = $("#refreshAnnouncements");
 
 $(document).ready(function(){
     getAnnouncements();
@@ -11,6 +12,7 @@ function getAnnouncements(){
         type: "GET",
         dataType: "json",
         success: function(response){
+            refresh.toggleClass(".fa-spin");
             response.results.forEach(function(a){
                 if(a.approved) {
                     announcements.push({
@@ -25,9 +27,11 @@ function getAnnouncements(){
         complete: function(response){
             announcements.sort(announcementSorter);
             displayAnnouncements();
+            refresh.toggleClass(".fa-spin");
         },
         error: function(xhr, errmsg, err){
             console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
+            refresh.toggleClass(".fa-spin");
         }
     });
 }
@@ -61,3 +65,8 @@ function displayAnnouncements(){
         );
     });
 }
+
+refresh.click(function(){
+    $(".announcement").remove();
+    getAnnouncements();
+});

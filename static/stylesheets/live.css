@@ -377,6 +377,11 @@ body{
     overflow-y: hidden;
 }
 
+#refreshAnnouncements {
+    color: #0093B1;
+    cursor: pointer;
+}
+
 .announcements-container {
     max-height: calc(100% - 60px);
     overflow-y: auto;
@@ -715,4 +720,18 @@ body{
 .faq-container {
     width: calc(100vw - 100px);
     padding: 30px;
+}
+
+.faq-item {
+    width: 45%;
+}
+
+.faq-item img {
+    max-width: 100%;
+}
+
+@media only screen and (max-width: 850px){
+    .faq-item {
+        width: 90%;
+    }
 }
