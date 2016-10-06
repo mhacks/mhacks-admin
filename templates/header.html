@@ -11,12 +11,12 @@
         </a>
     </div>
     <div id="headerButtons">
-        {% if 'dashboard/' not in request.path %}
+        {% if 'live/' not in request.path %}
             <form method="GET" action="{{ url_for('mhacks-live') }}">
                 <button type="submit">Live</button>
             </form>
         {% endif %}
-        {% if 'live/' not in request.path %}
+        {% if 'dashboard/' not in request.path %}
             <form method="GET" action="{{ url_for('mhacks-dashboard') }}">
                 <button type="submit" style="width: 110px;">Dashboard</button>
             </form>
