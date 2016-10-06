@@ -129,14 +129,18 @@ def send_password_reset_email(user, request):
     )
 
 
-def send_registration_email(user, request):
+def send_registration_email(user, request=None):
     from pass_creator import create_qr_code_image
-    from pass_creator import  create_apple_pass
+    from pass_creator import create_apple_pass
     import base64
+    if request:
+        wallet_url = _get_absolute_url(request, reverse('mhacks-apple-pass'))
+    else:
+        wallet_url = "{0}://{1}{2}".format('https', 'mhacks.org', reverse('mhacks-apple-pass'))
     send_mandrill_mail('ticket_email', 'Your MHacks Ticket', user.email,
                        email_vars={
                            'FIRST_NAME': user.get_short_name(),
-                           'WALLET_URL': _get_absolute_url(request, reverse('mhacks-apple-pass')),
+                           'WALLET_URL': wallet_url,
                            'QR_CODE': "cid:qrcode.png",
                            'FULL_NAME': user.get_full_name(),
                            'SCHOOL': user.cleaned_school_name()
