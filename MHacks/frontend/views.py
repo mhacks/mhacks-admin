@@ -463,6 +463,7 @@ def update_applications(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def live(request):
     return render(request, 'live.html')
 
