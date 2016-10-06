@@ -60,7 +60,9 @@
                         <img id="bus-routes-img" src="{{ static('assets/bus_routes_white.png') }}">
                     </div>
                     <br>
-
+                    {% if not registration_application %}
+                        <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
+                    {% endif %}
                     {% if application.reimbursement %}
                         <br>
                         <h2>Reimbursement amount: <span class="rounded-box accept">${{ '{:.2f}'.format(application.reimbursement) }}</span> </h2>
@@ -85,7 +87,7 @@
 {#                <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>#}
             {% endif %}
         {% endif %}
-        {% if not registration_application %}
+        {% if not registration_application and not application %}
             <h2>Are you a walk on?</h2>
             <p>After registering you will receive an email with your MHacks ticket attached which you must present to get access to the event.</p>
             <p>Your dashboard will also be updated to display your MHacks ticket after you have registered so you can come back here to get access to it.</p>
