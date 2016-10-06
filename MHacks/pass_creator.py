@@ -64,6 +64,6 @@ def create_qr_code_image(user):
     import StringIO
     import base64
     output = StringIO.StringIO()
-    image = qrcode.make(user.email)
+    image = qrcode.make(user.email, border=0)
     image.save(output)
     return base64.b64encode(output.getvalue())
