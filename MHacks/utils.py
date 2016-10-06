@@ -71,19 +71,6 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
         raise
 
 
-def send_email(to_email, email_template_name, html_email_template_name, context):
-
-    # Email subject *must not* contain newlines
-    subject = ''.join(context['subject'].splitlines())
-    body = loader.render_to_string(email_template_name, context)
-    if html_email_template_name is not None:
-        html_email = loader.render_to_string(html_email_template_name, context)
-    else:
-        html_email = None
-    send_mail(subject=subject, message=body, from_email=EMAIL_HOST_USER, recipient_list=[to_email],
-              html_message=html_email)
-
-
 # Turns a relative URL into an absolute URL.
 def _get_absolute_url(request, relative_url):
     return "{0}://{1}{2}".format(
