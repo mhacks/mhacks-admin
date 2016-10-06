@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^explorer/', include('explorer.urls')),
 
     # Apple Wallet pass support
-    url(r'^apple_pass.pkpass$', apple_pass),
+    url(r'^apple_pass.pkpass$', apple_pass, name='mhacks-apple-pass'),
 
     # Redirect all other endpoints to the homepage
     url(r'^.*/$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home')

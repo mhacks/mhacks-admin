@@ -141,13 +141,14 @@ def apply_mentor(request):
 
 @login_required()
 def registration(request):
+    # Changed to make this work for walk ons
     # make sure the user is has submitted an application & has been accepted
-    try:
-        hacker_app = Application.objects.get(user=request.user)
-        if not hacker_app.decision == 'Accept':
-            return redirect(reverse('mhacks-dashboard'))
-    except Application.DoesNotExist:
-        return redirect(reverse('mhacks-dashboard'))
+    # try:
+    #     hacker_app = Application.objects.get(user=request.user)
+    #     if not hacker_app.decision == 'Accept':
+    #         return redirect(reverse('mhacks-dashboard'))
+    # except Application.DoesNotExist:
+    #     return redirect(reverse('mhacks-dashboard'))
 
     # find the user's application if it exists
     try:
@@ -325,26 +326,20 @@ def update_password(request, uid, token):
 def dashboard(request):
     if request.method == 'GET':
         from MHacks.globals import groups
-
-        try:
-            app = Application.objects.get(user=request.user, deleted=False)
-        except Application.DoesNotExist:
-            app = None
-
+        from MHacks.pass_creator import create_qr_code_image
+        app = request.user.application_or_none()
+        registration_app = request.user.registration_or_none()
+        qr_code = create_qr_code_image(request.user)
         try:
             mentor_app = MentorApplication.objects.get(user=request.user, deleted=False)
         except MentorApplication.DoesNotExist:
             mentor_app = None
 
-        try:
-            registration_app = Registration.objects.get(user=request.user, deleted=False)
-        except Registration.DoesNotExist:
-            registration_app = None
-
         return render(request, 'dashboard.html', {'groups': groups,
                                                   'application': app,
                                                   'mentor_application': mentor_app,
-                                                  'registration_application': registration_app})
+                                                  'registration_application': registration_app,
+                                                  'qr_code': qr_code})
 
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 

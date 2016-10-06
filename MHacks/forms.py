@@ -289,14 +289,15 @@ class RegistrationForm(forms.ModelForm):
         if self.user and 'umich.edu' in self.user.email:
             del self.fields['transportation']
 
+        # Changed to allow for walk ons
         # Remove fields/add additional text based on the hacker application
-        hacker_app = Application.objects.get(user=self.user)
-        if not hacker_app.mentoring:
-            for key in ['can_help', 'other_can_help']:
-                del self.fields[key]
+        # hacker_app = Application.objects.get(user=self.user)
+        # if not hacker_app.mentoring:
+        #     for key in ['can_help', 'other_can_help']:
+        #         del self.fields[key]
 
-        if hacker_app.is_high_school:
-            self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
+        # if hacker_app.is_high_school:
+        # self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
 
     class Meta:
         from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS

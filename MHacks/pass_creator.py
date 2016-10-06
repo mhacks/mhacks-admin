@@ -1,5 +1,6 @@
 from config.settings import APPLE_WALLET_PASSPHRASE, STATICFILES_DIRS
 from passbook.models import Pass, Barcode, EventTicket, BarcodeFormat, Alignment, Field, IBeacon
+import qrcode
 
 
 def create_apple_pass(user):
@@ -57,3 +58,12 @@ def create_apple_pass(user):
                             'config/apple_wallet_key.pem',
                             'config/apple_wallet_wwdr.pem',
                             APPLE_WALLET_PASSPHRASE)
+
+
+def create_qr_code_image(user):
+    import StringIO
+    import base64
+    output = StringIO.StringIO()
+    image = qrcode.make(user.email)
+    image.save(output)
+    return base64.b64encode(output.getvalue())
