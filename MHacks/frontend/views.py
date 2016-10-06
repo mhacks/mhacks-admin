@@ -24,7 +24,7 @@ from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSe
 from MHacks.models import Application, MentorApplication, Registration
 from MHacks.pass_creator import create_apple_pass
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
-    send_application_confirmation_email
+    send_application_confirmation_email, send_registration_email
 from config.settings import MAILCHIMP_API_KEY, LOGIN_REDIRECT_URL
 
 MAILCHIMP_API = mailchimp.Mailchimp(MAILCHIMP_API_KEY)
@@ -178,7 +178,7 @@ def registration(request):
             app.submitted = True
             app.deleted = False
             app.save()
-
+            send_registration_email(request.user, request)
             return redirect(reverse('mhacks-dashboard'))
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
@@ -542,3 +542,17 @@ def resumes(request, filename):
         return response
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def test_send_registration(request):
+    from MHacks.models import MHacksUser
+    if 'for' not in request.GET:
+        return HttpResponseBadRequest()
+    try:
+        user = MHacksUser.objects.get(email=request.GET['for'])
+    except MHacksUser.DoesNotExist:
+        return HttpResponseBadRequest()
+
+    send_registration_email(user, request)
+    return HttpResponse(status=200)

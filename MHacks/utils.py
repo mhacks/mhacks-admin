@@ -46,7 +46,7 @@ def add_permissions(**kwargs):
 
 
 # Sends mail through mandrill client.
-def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
+def send_mandrill_mail(template_name, subject, email_to, email_vars=None, attachments=None, images=None):
     if not email_vars:
         email_vars = dict()
 
@@ -59,6 +59,10 @@ def send_mandrill_mail(template_name, subject, email_to, email_vars=None):
             'to': [{'email': email_to}],
             'global_merge_vars': []
         }
+        if attachments:
+            message['attachments'] = attachments
+        if images:
+            message['images'] = images
         for k, v in email_vars.items():
             message['global_merge_vars'].append(
                 {'name': k, 'content': v}
@@ -123,6 +127,26 @@ def send_password_reset_email(user, request):
             'update_password_url': _get_absolute_url(request, update_password_url)
         }
     )
+
+
+def send_registration_email(user, request):
+    from pass_creator import create_qr_code_image
+    from pass_creator import  create_apple_pass
+    import base64
+    send_mandrill_mail('ticket_email', 'Your MHacks Ticket', user.email,
+                       email_vars={
+                           'FIRST_NAME': user.get_short_name(),
+                           'WALLET_URL': _get_absolute_url(request, reverse('mhacks-apple-pass'))
+                       },
+                       attachments=[{'content': base64.b64encode(create_apple_pass(user).getvalue()),
+                                     'name': 'mhacks.pkpass',
+                                     'type': 'application/vnd.apple.pkpass'
+                                     }],
+                       images=[{'content': create_qr_code_image(user),
+                                'name': 'qrcode.png',
+                                'type': 'image/png'
+                                }]
+                       )
 
 
 def validate_signed_token(uid, token, require_token=True):
