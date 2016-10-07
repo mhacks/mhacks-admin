@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from push_notifications.models import APNSDevice, GCMDevice
-from push_notifications.apns import APNSDataOverflow
+from push_notifications.apns import APNSDataOverflow, apns_send_bulk_message
 from MHacks.models import Announcement
 
 
@@ -28,8 +28,9 @@ class Command(BaseCommand):
             print(len(gcm_devices))
             for i in range(0, len(apns_devices), 50):
                 try:
-                    apns_devices[i:i + 50].send_message(announcement.info, sound='default',
-                                                        extra={"category": announcement.category, "title": announcement.title})
+                    reg_ids = map(lambda d: d.registration_id, apns_devices[i:i + 50])
+                    return apns_send_bulk_message(registration_ids=reg_ids, alert=announcement.info, sound='default',
+                                                  extra={"category": announcement.category, "title": announcement.title})
                 except APNSDataOverflow:
-                    apns_devices[i:i + 50].send_message(announcement.title)
+                    pass
             gcm_devices.send_message(announcement.info)
