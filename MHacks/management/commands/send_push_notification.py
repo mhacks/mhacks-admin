@@ -27,10 +27,12 @@ class Command(BaseCommand):
             print(len(apns_devices))
             print(len(gcm_devices))
             for i in range(0, len(apns_devices), 50):
+                from datetime import time
                 try:
                     reg_ids = map(lambda d: d.registration_id, apns_devices[i:i + 50])
-                    return apns_send_bulk_message(registration_ids=reg_ids, alert=announcement.info, sound='default',
-                                                  extra={"category": announcement.category, "title": announcement.title})
+                    apns_send_bulk_message(registration_ids=reg_ids, alert=announcement.info, sound='default',
+                                           extra={"category": announcement.category, "title": announcement.title})
+                    time.sleep(0.5)
                 except APNSDataOverflow:
                     pass
             gcm_devices.send_message(announcement.info)
