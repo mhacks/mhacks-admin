@@ -110,6 +110,10 @@ a {
     width: 49.5%;
 }
 
+.col-3 {
+    width: 33%;
+}
+
 .col-2-bigL {
     width: 59.5%;
     padding-left: 25px;
@@ -609,7 +613,7 @@ a {
     opacity: 0.6;
 }
 
-#mlh-logo {
+.partner-logo {
     max-height: 80px;
     max-width:100%;
 }
@@ -676,6 +680,10 @@ li.answer {
     }
 
     .col-2, .col-2-bigL, .col-2-smallR{
+        width: 100%;
+    }
+
+    .col-3 {
         width: 100%;
     }
 

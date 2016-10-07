@@ -36,9 +36,11 @@ $(document)
     })
     .on('mouseenter', '.event', function(){
         $(this).css("min-width", Math.floor(timeLines.width() - 20) + "px").addClass("shiftLeft");
+        $(".event:not(:hover)").addClass("event-dimmed");
     })
     .on('mouseleave', '.event', function(){
         $(this).css("min-width", 0).removeClass("shiftLeft");
+        $(".event").removeClass("event-dimmed");
     });
 
 $(window).resize(function(){

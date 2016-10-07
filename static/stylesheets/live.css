@@ -284,8 +284,14 @@ body{
 
 .event:hover {
     height: auto;
-    transition: height 0.3s linear, width 0.3s linear, min-width 0.3s linear, left 0.2s linear 0.1s;
+    opacity: 1;
+    transition: height 0.3s linear, width 0.3s linear, min-width 0.3s linear, left 0.2s linear 0.1s, opacity 0.2s;
     z-index: 10;
+}
+
+.event-dimmed {
+    opacity: 0.3;
+    transition: opacity 0.3s;
 }
 
 .shiftLeft {
@@ -422,9 +428,11 @@ body{
 }
 
 .announcements-categories *{
-    margin: 0 5px;
+    margin: 0 2px;
     font-weight: 400;
     font-size: 12pt;
+    width: 100px;
+    text-align: center;
 }
 
 .announcement {
@@ -659,6 +667,27 @@ body{
     }
 }
 
+/* ========== FAQ ========== */
+
+.faq-container {
+    width: calc(100vw - 100px);
+    padding: 30px;
+}
+
+.faq-item {
+    width: 45%;
+}
+
+.faq-item img {
+    max-width: 100%;
+}
+
+@media only screen and (max-width: 850px){
+    .faq-item {
+        width: 90%;
+    }
+}
+
 /* ========== Mentorship ========== */
 
 .mentorship-container {
@@ -679,6 +708,24 @@ body{
 .mentorship-container p {
     color: black;
     width: 100%;
+}
+
+.mentorship-block {
+    border-top: 2px solid #0093B1;
+}
+
+.mentorship-block:last-child {
+    border-bottom: 2px solid #0093B1;
+}
+
+.mentorship-minerva {
+    text-align: left;
+    width: 100%;
+}
+
+.mentorship-minerva img {
+    margin: 5px 0;
+    border: 2px solid #e6f3f7;
 }
 
 @media only screen and (max-width: 850px){
@@ -712,26 +759,5 @@ body{
 @media only screen and (max-width: 850px){
     .hardware-container {
         width: calc(100vw - 100px);
-    }
-}
-
-/* ========== FAQ ========== */
-
-.faq-container {
-    width: calc(100vw - 100px);
-    padding: 30px;
-}
-
-.faq-item {
-    width: 45%;
-}
-
-.faq-item img {
-    max-width: 100%;
-}
-
-@media only screen and (max-width: 850px){
-    .faq-item {
-        width: 90%;
     }
 }
