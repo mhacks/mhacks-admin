@@ -13,8 +13,9 @@ function getAnnouncements(){
         dataType: "json",
         success: function(response){
             refresh.toggleClass(".fa-spin");
+            var now = new Date().getTime() / 1000;
             response.results.forEach(function(a){
-                if(a.approved) {
+                if(a.approved && a.broadcast_at <= now) {
                     announcements.push({
                         title: a.title,
                         info: a.info,
