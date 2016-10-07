@@ -643,32 +643,13 @@ li.answer {
     font-size: 10pt;
     text-align:center;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-#footer-left {
-    position: absolute;
-    bottom: 30px;
-    left: 40px;
-    height: 150px;
-}
-
-#footer-right {
-    text-align: center;
-    position: absolute;
-    bottom: 20px;
-    right: 40px;
-    max-width: 33%;
-    height: 160px;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
-#footer-right p {
-    width: 100%;
-    margin: 0 auto 10px;
+#footer-flag {
+    height: 150px;
+    margin-bottom: 5px;
 }
 
 /* --- @media Queries --- */
