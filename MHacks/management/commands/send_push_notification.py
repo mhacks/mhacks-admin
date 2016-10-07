@@ -26,11 +26,10 @@ class Command(BaseCommand):
 
             print(len(apns_devices))
             print(len(gcm_devices))
-
-            # try:
-            #     aps_data = {"alert": {"body": announcement.info, "title": announcement.title},
-            #                 "sound": "default"}
-            #     apns_devices.send_message(announcement.info, sound='default', extra={"category": announcement.category, "title": announcement.title})
-            # except APNSDataOverflow:
-            #     apns_devices.send_message(announcement.title)
-            # gcm_devices.send_message(announcement.info)
+            for i in range(0, len(apns_devices), 50):
+                try:
+                    apns_devices[i:i + 50].send_message(announcement.info, sound='default',
+                                                        extra={"category": announcement.category, "title": announcement.title})
+                except APNSDataOverflow:
+                    apns_devices[i:i + 50].send_message(announcement.title)
+            gcm_devices.send_message(announcement.info)
