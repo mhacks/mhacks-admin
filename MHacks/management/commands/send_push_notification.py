@@ -23,10 +23,13 @@ class Command(BaseCommand):
                 apns_devices = APNSDevice.objects.all().filter(active=True)
                 gcm_devices = GCMDevice.objects.all().filter(active=True)
 
-            try:
-                aps_data = {"alert": {"body": announcement.info, "title": announcement.title},
-                            "sound": "default"}
-                apns_devices.send_message(announcement.info, sound='default', extra={"category": announcement.category, "title": announcement.title})
-            except APNSDataOverflow:
-                apns_devices.send_message(announcement.title)
-            gcm_devices.send_message(announcement.info)
+            print(apns_devices)
+            print(gcm_devices)
+
+            # try:
+            #     aps_data = {"alert": {"body": announcement.info, "title": announcement.title},
+            #                 "sound": "default"}
+            #     apns_devices.send_message(announcement.info, sound='default', extra={"category": announcement.category, "title": announcement.title})
+            # except APNSDataOverflow:
+            #     apns_devices.send_message(announcement.title)
+            # gcm_devices.send_message(announcement.info)
