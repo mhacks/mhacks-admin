@@ -16,6 +16,12 @@ class PushNotificationView(generics.CreateAPIView):
         if not preference:
             preference = request.data.get('name', str(Announcement.max_category()))
 
+        try:
+            if int(preference) <= 0:
+                preference = str(Announcement.max_category())
+        except ValueError:
+            preference = str(Announcement.max_category())
+
         copied_data = request.data.copy()
         copied_data['name'] = preference
 

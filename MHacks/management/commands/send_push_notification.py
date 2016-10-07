@@ -1,16 +1,33 @@
 from django.core.management.base import BaseCommand
-from push_notifications.models import APNSDevice
+from push_notifications.models import APNSDevice, GCMDevice
+from push_notifications.apns import APNSDataOverflow
 from MHacks.models import Announcement
-from datetime import datetime
 
 
 class Command(BaseCommand):
-    help = 'Run for push notifications'
-
-    def add_arguments(self, parser):
-        pass
+    help = 'Run for sending push notifications for all announcements before now'
 
     def handle(self, *args, **options):
         import pytz
-        announcement = Announcement.objects.all().filter(sent=False, broadcast_at__lte=datetime.now(pytz.utc))[0]
-        APNSDevice.objects.all().filter(active=True).send_message(announcement.info)
+        from datetime import datetime
+        announcements = Announcement.objects.all().filter(sent=False, broadcast_at__lte=datetime.now(pytz.utc))
+        for announcement in announcements:
+            announcement.sent = True
+            announcement.save()  # Save immediately so even if this takes time to run, we won't have duplicate pushes
+            if announcement.category and (announcement.category & 1 == 0):
+                apns_devices = APNSDevice.objects.all().filter(active=True).extra(where=['CAST(name as INTEGER) & %s != 0'],
+                                                                                  params=str(announcement.category))
+                gcm_devices = GCMDevice.objects.all().filter(active=True).extra(where=['CAST(name as INTEGER) & %s != 0'],
+                                                                                params=str(announcement.category))
+            else:
+                apns_devices = APNSDevice.objects.all().filter(active=True)
+                gcm_devices = GCMDevice.objects.all().filter(active=True)
+
+            try:
+                aps_data = {"alert": {"body": announcement.info, "title": announcement.title},
+                            "sound": "default",
+                            "content-available": 1}
+                apns_devices.send_message(None, extra={'aps_data': aps_data, "category": announcement.category, "title": announcement.title})
+            except APNSDataOverflow:
+                apns_devices.send_message(announcement.title)
+            gcm_devices.send_message(announcement.info)
