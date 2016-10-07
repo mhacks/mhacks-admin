@@ -137,7 +137,7 @@ def send_registration_email(user, request=None):
         wallet_url = _get_absolute_url(request, reverse('mhacks-apple-pass'))
     else:
         wallet_url = "{0}://{1}{2}".format('https', 'mhacks.org', reverse('mhacks-apple-pass'))
-    send_mandrill_mail('ticket_email', 'Your MHacks Ticket', user.email,
+    send_mandrill_mail('ticket_email_simple', 'Your MHacks Ticket', user.email,
                        email_vars={
                            'FIRST_NAME': user.get_short_name(),
                            'WALLET_URL': wallet_url,
