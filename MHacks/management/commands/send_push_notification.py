@@ -25,9 +25,8 @@ class Command(BaseCommand):
 
             try:
                 aps_data = {"alert": {"body": announcement.info, "title": announcement.title},
-                            "sound": "default",
-                            "content-available": 1}
-                apns_devices.send_message(None, extra={'aps_data': aps_data, "category": announcement.category, "title": announcement.title})
+                            "sound": "default"}
+                apns_devices.send_message(announcement.info, sound='default', extra={"category": announcement.category, "title": announcement.title})
             except APNSDataOverflow:
                 apns_devices.send_message(announcement.title)
             gcm_devices.send_message(announcement.info)
