@@ -43,7 +43,7 @@ class ScanEventAdmin(admin.ModelAdmin):
 
 @admin.register(ScanEventUser)
 class ScanEventUserAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['scan_event__name']
 
 
 @admin.register(Floor)
