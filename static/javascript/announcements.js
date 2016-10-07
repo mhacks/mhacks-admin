@@ -68,5 +68,6 @@ function displayAnnouncements(){
 
 refresh.click(function(){
     $(".announcement").remove();
+    announcements = [];
     getAnnouncements();
 });
