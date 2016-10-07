@@ -37,16 +37,6 @@ def get_countdown(request):
 
 @api_view(http_method_names=['GET'])
 @permission_classes((IsAuthenticatedOrReadOnly,))
-def get_map(request):
-    """
-    Gets the map information
-    """
-    # FIXME: Implement
-    raise ValidationError('Not implemented yet')
-
-
-@api_view(http_method_names=['GET'])
-@permission_classes((IsAuthenticatedOrReadOnly,))
 def apple_site_association(request):
     return Response(data={"webcredentials": {"apps": ["478C74MJ7T.com.MPowered.MHacks"]}})
 

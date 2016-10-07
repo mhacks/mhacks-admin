@@ -8,7 +8,7 @@ from MHacks.v1.floors import Floors, Floor
 from MHacks.v1.locations import Locations, Location
 from MHacks.v1.push_notification_views import APNSTokenView, GCMTokenView
 from MHacks.v1.scan_event import ScanEvents, ScanEvent
-from MHacks.v1.views import get_countdown, get_map, apple_pass_endpoint, update_user_profile, perform_scan
+from MHacks.v1.views import get_countdown, apple_pass_endpoint, update_user_profile, perform_scan
 
 urlpatterns = [
     # Authentication
@@ -21,11 +21,10 @@ urlpatterns = [
     url(r'^events/$', Events.as_view(), name='events'),
     url(r'^floors/(?P<id>[0-9A-Za-z_\-]+)', Floor.as_view()),
     url(r'^floors', Floors.as_view(), name='floors'),
-    url(r'^scan_event/(?P<id>[0-9A-Za-z_\-]+)', ScanEvent.as_view()),
+    url(r'^scan_events/(?P<id>[0-9A-Za-z_\-]+)', ScanEvent.as_view()),
     url(r'^scan_events', ScanEvents.as_view(), name='scan_events'),
     url(r'^perform_scan/', perform_scan, name='perform_scan'),
     url(r'^countdown/$', get_countdown, name='countdown'),
-    url(r'^map/$', get_map, name='maps'),
     url(r'^profile/$', update_user_profile, name='profile'),
     url(r'^push_notifications/apns/$', APNSTokenView.as_view(), name='create_apns_device'),
     url(r'^push_notifications/gcm/$', GCMTokenView.as_view(), name='create_gcm_device'),
