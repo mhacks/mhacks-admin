@@ -15,7 +15,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'info', 'location']
+    search_fields = ['name', 'info']
 
 
 @admin.register(Announcement)
