@@ -16,11 +16,13 @@ class LocationAdmin(admin.ModelAdmin):
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     search_fields = ['name', 'info']
+    list_display = ['name', 'start', 'duration', 'category']
 
 
 @admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
     search_fields = ['title', 'info']
+    list_display = ['title', 'broadcast_at', 'category', 'approved']
 
 
 @admin.register(Application)
