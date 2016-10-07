@@ -12,6 +12,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         import pytz
-        announcements = Announcement.objects.all().filter(sent=False, broadcast_at__lte=datetime.now(pytz.utc))
-        for announcement in announcements:
-            APNSDevice.objects.all().filter(active=True).send_message(announcement.info)
+        announcement = Announcement.objects.all().filter(sent=False, broadcast_at__lte=datetime.now(pytz.utc))[0]
+        APNSDevice.objects.all().filter(active=True).send_message(announcement.info)
