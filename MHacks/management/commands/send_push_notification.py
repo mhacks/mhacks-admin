@@ -14,6 +14,7 @@ class Command(BaseCommand):
         for announcement in announcements:
             announcement.sent = True
             announcement.save()  # Save immediately so even if this takes time to run, we won't have duplicate pushes
+            print(announcement)
             if announcement.category and (announcement.category & 1 == 0):
                 apns_devices = APNSDevice.objects.all().filter(active=True).extra(where=['CAST(name as INTEGER) & %s != 0'],
                                                                                   params=str(announcement.category))
@@ -23,11 +24,13 @@ class Command(BaseCommand):
                 apns_devices = APNSDevice.objects.all().filter(active=True)
                 gcm_devices = GCMDevice.objects.all().filter(active=True)
 
-            try:
-                aps_data = {"alert": {"body": announcement.info, "title": announcement.title},
-                            "sound": "default",
-                            "content-available": 1}
-                apns_devices.send_message(None, extra={'aps_data': aps_data, "category": announcement.category, "title": announcement.title})
-            except APNSDataOverflow:
-                apns_devices.send_message(announcement.title)
-            gcm_devices.send_message(announcement.info)
+            print(len(apns_devices))
+            print(len(gcm_devices))
+
+            # try:
+            #     aps_data = {"alert": {"body": announcement.info, "title": announcement.title},
+            #                 "sound": "default"}
+            #     apns_devices.send_message(announcement.info, sound='default', extra={"category": announcement.category, "title": announcement.title})
+            # except APNSDataOverflow:
+            #     apns_devices.send_message(announcement.title)
+            # gcm_devices.send_message(announcement.info)
