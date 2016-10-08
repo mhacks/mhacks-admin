@@ -16,12 +16,17 @@ class LocationAdmin(admin.ModelAdmin):
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     search_fields = ['name', 'info']
-    list_display = ['name', 'start', 'duration', 'category', 'deleted_string']
+    list_display = ['name', 'start', 'duration', 'category', 'deleted_string', 'location_list']
 
     def deleted_string(self, obj):
         return 'Deleted' if obj.deleted else ''
 
+    def location_list(self, obj):
+        print(obj.locations.all())
+        return ', '.join(map(lambda l: l.__unicode__(), obj.locations.all()))
+
     deleted_string.short_description = 'DELETED'
+    location_list.short_description = 'LOCATIONS'
 
 
 @admin.register(Announcement)
