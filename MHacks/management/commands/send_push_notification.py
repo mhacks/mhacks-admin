@@ -10,7 +10,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         import pytz
         from datetime import datetime
-        announcements = Announcement.objects.all().filter(sent=False, broadcast_at__lte=datetime.now(pytz.utc))
+        announcements = Announcement.objects.all().filter(sent=False, approved=True, broadcast_at__lte=datetime.now(pytz.utc))
         for announcement in announcements:
             announcement.sent = True
             announcement.save()  # Save immediately so even if this takes time to run, we won't have duplicate pushes
