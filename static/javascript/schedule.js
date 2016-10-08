@@ -9,23 +9,7 @@ var baseTime = new Date("2016-10-07T19:00:00.000Z");
 var endTime = new Date("2016-10-10T00:00:00.000Z");
 
 var locations = [];
-var events = [
-    {
-        startTime: 1475875662937,
-        endTime: 1475875662937 + 3600000,
-        locations: [],
-        name: "Name",
-        description: "Info",
-        category: 0
-    }, {
-        startTime: 1475875662937 + 1800000,
-        endTime: 1475875662937 + 5400000,
-        locations: [],
-        name: "Name",
-        description: "Info",
-        category: 0
-    }
-];
+var events = [];
 
 // Flip this flag to make the schedule not show old events (the time markers will start from the current time)
 var displayOld = true;
