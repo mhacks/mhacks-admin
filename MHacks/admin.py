@@ -16,13 +16,23 @@ class LocationAdmin(admin.ModelAdmin):
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     search_fields = ['name', 'info']
-    list_display = ['name', 'start', 'duration', 'category', 'deleted']
+    list_display = ['name', 'start', 'duration', 'category', 'deleted_string']
+
+    def deleted_string(self, obj):
+        return 'Deleted' if obj.deleted else ''
+
+    deleted_string.short_description = 'DELETED'
 
 
 @admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
     search_fields = ['title', 'info']
-    list_display = ['title', 'broadcast_at', 'category', 'approved', 'deleted']
+    list_display = ['title', 'broadcast_at', 'category', 'sent', 'approved', 'deleted_string']
+
+    def deleted_string(self, obj):
+        return 'Deleted' if obj.deleted else ''
+
+    deleted_string.short_description = 'DELETED'
 
 
 @admin.register(Application)

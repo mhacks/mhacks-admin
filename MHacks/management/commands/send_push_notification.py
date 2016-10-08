@@ -14,7 +14,6 @@ class Command(BaseCommand):
         for announcement in announcements:
             announcement.sent = True
             announcement.save()  # Save immediately so even if this takes time to run, we won't have duplicate pushes
-            print(announcement)
             if announcement.category and (announcement.category & 1 == 0):
                 apns_devices = APNSDevice.objects.all().filter(active=True).extra(where=['CAST(name as INTEGER) & %s != 0'],
                                                                                   params=str(announcement.category))
@@ -24,8 +23,6 @@ class Command(BaseCommand):
                 apns_devices = APNSDevice.objects.all().filter(active=True)
                 gcm_devices = GCMDevice.objects.all().filter(active=True)
 
-            print(len(apns_devices))
-            print(len(gcm_devices))
             for i in range(0, len(apns_devices), 50):
                 import time
                 try:
