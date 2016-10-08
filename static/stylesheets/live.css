@@ -118,7 +118,8 @@ body{
 
 @media only screen and (max-width: 850px){
     .live-container{
-        margin: 0 50px;
+        width: calc(100% - 20px);
+        margin: 0 10px;
 
         flex-direction: column;
         align-items: center;
@@ -126,7 +127,7 @@ body{
     }
 
     .content-box{
-        width: calc(100vw - 100px);
+        width: calc(100vw - 50px) !important;
     }
 
     .content-box:first-child {
@@ -204,7 +205,7 @@ body{
 }
 
 .schedule-container {
-    max-height: calc(100% - 60px);
+    max-height: calc(100% - 140px);
     width: 100%;
 
     padding: 5px 35px 5px 25px;
@@ -285,7 +286,8 @@ body{
 .event:hover {
     height: auto;
     opacity: 1;
-    transition: height 0.3s linear, width 0.3s linear, min-width 0.3s linear, left 0.2s linear 0.1s, opacity 0.2s;
+    box-shadow: 0 4px 5px 1px rgba(200, 200, 200, 0.80);
+    transition: all 0.2s linear; /*height 0.3s linear, width 0.3s linear, min-width 0.3s linear, left 0.2s linear 0.1s, opacity 0.2s;*/
     z-index: 10;
 }
 
@@ -368,9 +370,14 @@ body{
 
 @media only screen and (max-width: 850px){
     .schedule{
-        width: calc(100vw - 100px);
         height: 600px;
         margin-right: 0;
+    }
+}
+
+@media only screen and (max-width: 400px){
+    .schedule-container {
+        max-height: calc(100% - 160px);
     }
 }
 
@@ -389,7 +396,7 @@ body{
 }
 
 .announcements-container {
-    max-height: calc(100% - 60px);
+    max-height: calc(100% - 160px);
     overflow-y: auto;
 }
 
@@ -506,9 +513,18 @@ body{
 
 @media only screen and (max-width: 850px){
     .announcements{
-        width: calc(100vw - 100px);
         height: 300px;
         margin-left: 0;
+    }
+
+    .announcements-container {
+        max-height: calc(100% - 140px);
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .announcements-container {
+        max-height: calc(100% - 160px);
     }
 }
 
@@ -638,23 +654,16 @@ body{
 @media only screen and (max-width: 850px){
     .maps-container {
         max-width: none;
-        width: calc(100vw - 100px);
+        width: 100%;
     }
     .floor-diagram {
         width: 100%;
     }
 }
 
-@media only screen and (max-width: 700px){
-    .floor-details {
-        min-width: 240px;
-    }
-}
-
 @media only screen and (max-width: 500px){
     .floor-details {
         font-size: 8pt;
-        min-width: 120px;
     }
     .maps-link {
         font-size: 10pt;
@@ -730,7 +739,7 @@ body{
 
 @media only screen and (max-width: 850px){
     .mentorship-container {
-        width: calc(100vw - 100px);
+        width: 100%;
     }
 }
 
@@ -758,6 +767,6 @@ body{
 
 @media only screen and (max-width: 850px){
     .hardware-container {
-        width: calc(100vw - 100px);
+        width: 100%;
     }
 }

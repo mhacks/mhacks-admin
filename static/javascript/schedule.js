@@ -9,7 +9,23 @@ var baseTime = new Date("2016-10-07T19:00:00.000Z");
 var endTime = new Date("2016-10-10T00:00:00.000Z");
 
 var locations = [];
-var events = [];
+var events = [
+    {
+        startTime: 1475875662937,
+        endTime: 1475875662937 + 3600000,
+        locations: [],
+        name: "Name",
+        description: "Info",
+        category: 0
+    }, {
+        startTime: 1475875662937 + 1800000,
+        endTime: 1475875662937 + 5400000,
+        locations: [],
+        name: "Name",
+        description: "Info",
+        category: 0
+    }
+];
 
 // Flip this flag to make the schedule not show old events (the time markers will start from the current time)
 var displayOld = true;
@@ -35,11 +51,9 @@ $(document)
         getEvents();
     })
     .on('mouseenter', '.event', function(){
-        $(this).css("min-width", Math.floor(timeLines.width() - 20) + "px").addClass("shiftLeft");
         $(".event:not(:hover)").addClass("event-dimmed");
     })
     .on('mouseleave', '.event', function(){
-        $(this).css("min-width", 0).removeClass("shiftLeft");
         $(".event").removeClass("event-dimmed");
     });
 
