@@ -26,9 +26,11 @@ class Command(BaseCommand):
             for i in range(0, len(apns_devices), 50):
                 import time
                 try:
+                    aps_data = {"alert": {"title": announcement.title, "body": announcement.info},
+                                "sound": "default"}
                     reg_ids = map(lambda d: d.registration_id, apns_devices[i:i + 50])
-                    apns_send_bulk_message(registration_ids=reg_ids, alert=announcement.info, sound='default',
-                                           extra={"category": announcement.category, "title": announcement.title})
+                    apns_send_bulk_message(registration_ids=reg_ids, alert=None,
+                                           extra={"aps": aps_data, "category": announcement.category, "title": announcement.title})
                     time.sleep(1)
                 except APNSDataOverflow:
                     pass
