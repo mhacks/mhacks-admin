@@ -3,6 +3,11 @@ from MHacks.frontend.views import *
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
+    # Blackout
+    url(r'^$', blackout, name='mhacks-blackout'),
+    url(r'^.*/$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-blackout'),
+
+    # Homepage
     url(r'^$', index, name='mhacks-home'),
 
     # Authentication
