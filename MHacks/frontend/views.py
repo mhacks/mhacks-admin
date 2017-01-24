@@ -36,7 +36,7 @@ def blackout(request):
             return HttpResponseBadRequest()
 
         email = request.POST.get("email")
-        list_id = "52259aef0d"
+        list_id = "d9245d6d34"
         try:
             MAILCHIMP_API.lists.subscribe(list_id, {'email': email}, double_optin=False)
         except mailchimp.ListAlreadySubscribedError:
