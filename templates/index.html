@@ -8,124 +8,47 @@
     <canvas id="bgCanvas"></canvas>
     <div id="container">
         {% include 'header.html' %}
-        <div class="grid">
-            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-icon">
-                    <img class="tile-image" src="{{ static('assets/categoryLogos-11.png') }}" alt="Hardware">
+
+        <div class="categories-section">
+
+            <h2 class="categories-header">Event Categories</h2>
+
+            <div class="col-1 flex-row category-row">
+                <div class="col-3 category-item">
+                    <img src="{{ static('assets/GM_logo.png') }}" alt="iOS Event Category" />
+                    <h4>Hi! I'm iOS</h4>
+                    <p>Cutting edge phone apps are my thing.</p>
+                </div>
+                <div class="col-3 category-item">
+                    <img src="{{ static('assets/GM_logo.png') }}" alt="iOS Event Category" />
+                    <h4>Hi! I'm VR</h4>
+                    <p>Cutting edge phone apps are my thing.</p>
+                </div>
+                <div class="col-3 category-item">
+                    <img src="{{ static('assets/GM_logo.png') }}" alt="iOS Event Category" />
+                    <h4>Hi! I'm Game Dev</h4>
+                    <p>Cutting edge phone apps are my thing.</p>
                 </div>
             </div>
-            <div class="grid-item expand-small blue tile-shadow" data-remove="0" data-expandable="1">
-                <div class="expand-icon"></div>
-                <div class="grid-item-content">
-                    <div class="basic-info">
-                        <h1>What is MHacks?</h1>
-                    </div>
-                    <div class="extra-info">
-                        <p>
-                            MHacks is a 36-hour hackathon hosted by University of Michigan students.
-                        </p>
-                        <p>
-                            2,000 hackers will gather from around the world, and we’ll provide you with everything you
-                            need to be as curious, productive, and passionate as you can be. Whether it’s your first
-                            time hacking or your eighth, MHacks is a weekend experience you won’t want to miss.
-                        </p>
-                    </div>
+
+            <div class="col-1 flex-row category-row">
+                <div class="col-3 category-item">
+                    <img src="{{ static('assets/GM_logo.png') }}" alt="iOS Event Category" />
+                    <h4>Hi! I'm Android</h4>
+                    <p>Cutting edge phone apps are my thing.</p>
+                </div>
+                <div class="col-3 category-item">
+                    <img src="{{ static('assets/GM_logo.png') }}" alt="iOS Event Category" />
+                    <h4>Hi! I'm Web Dev</h4>
+                    <p>Cutting edge phone apps are my thing.</p>
+                </div>
+                <div class="col-3 category-item">
+                    <img src="{{ static('assets/GM_logo.png') }}" alt="iOS Event Category" />
+                    <h4>Hi! I'm Hardware</h4>
+                    <p>Cutting edge phone apps are my thing.</p>
                 </div>
             </div>
-            <div class="grid-item width2" data-remove="0" data-expandable="0">
-                <div class="grid-item-image">
-                    <img class="flavor-image" src="{{ static('assets/main-page-1.png') }}" alt="Headset Technology">
-                </div>
-            </div>
-            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-icon">
-                    <img class="tile-image" src="{{ static('assets/categoryLogos-06.png') }}" alt="Video Games">
-                </div>
-            </div>
-            <div class="grid-item blue" data-remove="1" data-expandable="0">
-                <div class="grid-item-icon">
-                    <img class="tile-image" src="{{ static('assets/categoryLogos-07.png') }}"
-                         alt="Virtual Reality Headset">
-                </div>
-            </div>
-            <div class="grid-item darkBlue tile-shadow" data-remove="0" data-expandable="0">
-                <a href="https://www.facebook.com/MHacksHackathon/" target="_blank">
-                    <div class="grid-item-icon clickable-icon">
-                        <img src="{{ static('assets/fb-link.png') }}"
-                             alt="MHacks Facebook, https://www.facebook.com/MHacksHackathon"/>
-                    </div>
-                </a>
-            </div>
-            <div class="grid-item width2" data-remove="0" data-expandable="0">
-                <div class="grid-item-image">
-                    <img class="flavor-image" src="{{ static('assets/main-page-2.png') }}" alt="LED Strip Device">
-                </div>
-            </div>
-            <div class="grid-item lightBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-icon">
-                    <img class="tile-image" src="{{ static('assets/categoryLogos-08.png') }}" alt="Smartphone">
-                </div>
-            </div>
-            <div class="grid-item width2" data-remove="0" data-expandable="0">
-                <div class="grid-item-image">
-                    <img class="flavor-image" src="{{ static('assets/main-page-3.png') }}"
-                         alt="Mentor Helping Students">
-                </div>
-            </div>
-            <div class="grid-item expand-medium darkBlue tile-shadow" data-remove="0" data-expandable="1">
-                <div class="expand-icon"></div>
-                <div class="grid-item-content">
-                    <div class="basic-info">
-                        <h1>What's new with MHacks 8?</h1>
-                    </div>
-                    <div class="extra-info">
-                        <p>
-                            This year, we’re returning to <b>Detroit</b> for the first time since MHacks III. <a
-                                href="http://www.themasonic.com/" target="_blank">The Masonic Temple</a> in Detroit is
-                            the largest in
-                            the world and is located in the heart of the Motor City. Built in 1922, this historic
-                            building is the perfect setting for a weekend in a city thriving with renewed
-                            entrepreneurial spirit. We hope you use this energy and atmosphere to drive your hacks.
-                        </p>
-                        <p>
-                            A change of venue gives us a chance to increase our attendance to 2,000 hackers, which
-                            allows us to grow the MHacks community. In doing so, we’re able to provide the support our
-                            hackers need to discover hacking and develop their skills alongside teammates, mentors,
-                            competitors, and friends.
-                        </p>
-                        <p>
-                            This Fall, we’re also going to focus on wellness. Sometimes, hackathons have been notorious
-                            for unhealthy food, sleep deprivation, and uncomfortable hacking spaces. And we don’t think
-                            it should take two weeks to recover from one. We will have healthier food options, sleeping
-                            spaces, and more health life hacks to keep you feeling your best during the weekend, and
-                            after.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-item lightTurquoise" data-remove="1" data-expandable="0">
-                <div class="grid-item-icon">
-                    <img class="tile-image" src="{{ static('assets/categoryLogos-10.png') }}" alt="Computer">
-                </div>
-            </div>
-            <div class="grid-item lightBlue tile-shadow" data-remove="0" data-expandable="0">
-                <a href="https://twitter.com/mhacks" target="_blank">
-                    <div class="grid-item-icon clickable-icon">
-                        <img src="{{ static('assets/twitter-link.png') }}"
-                             alt="MHacks Twitter, https://twitter.com/mhacks"/>
-                    </div>
-                </a>
-            </div>
-            <div class="grid-item width2" data-remove="0" data-expandable="0">
-                <div class="grid-item-image">
-                    <img class="flavor-image" src="{{ static('assets/main-page-4.png') }}" alt="Students Collaborating">
-                </div>
-            </div>
-            <div class="grid-item darkBlue" data-remove="1" data-expandable="0">
-                <div class="grid-item-icon">
-                    <img class="tile-image" src="{{ static('assets/categoryLogos-09.png') }}" alt="Android Robot">
-                </div>
-            </div>
+
         </div>
 
         <div class="more-info">
