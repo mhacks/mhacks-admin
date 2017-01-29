@@ -1,6 +1,24 @@
 # MHacks Backend And Frontend
 
 ## Installation
+
+### New way
+1. [Get Docker](https://docs.docker.com/engine/getstarted/step_one/#/step-1-get-docker)
+2. [Get Docker Compose](https://docs.docker.com/compose/install/)
+4. Clone this repo: `git clone https://github.com/MHacks-Website`
+4. Change directory to the deploy directory: `cd deploy`
+5. Start whatever environment you want
+    - Development
+        - `docker-compose -f development.yml up -d`
+        - **NOTE: Your git repo will be linked to the development environment, so your local changes will be reflected with a container restart**
+    - Production (You're gonna need some more env data)
+        - `docker-compose -f production.yml up -d`
+        - **NOTE: This takes care of setting up NGINX AND LetsEncrypt with the appropriate hosts (and autorenewal!).**
+6. Access `http://localhost:8000` and start developing!
+
+#### More docs regarding development will be added later
+
+### Old way
 Pre-installed packages:
 - Python 2.7
 - Git
@@ -19,16 +37,16 @@ t
 links.txt
     writing manifest file 'pip-egg-info/psycopg2.egg-info/SOURCES.txt'
     warning: manifest_maker: standard file '-c' not found
-    
+
     Error: pg_config executable not found.
-    
+
     Please add the directory containing pg_config to the PATH
     or specify the full executable path with the option:
-    
+
         python setup.py build_ext --pg-config /path/to/pg_config build ..$
-    
+
     or with the pg_config option in 'setup.cfg'.
-    
+
     ----------------------------------------
 Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-b$
 ild-vqrPuW/psycopg2/
