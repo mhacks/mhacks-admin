@@ -10,7 +10,7 @@ body {
     overflow-y: auto;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
-    color: rgba(255, 255, 255, 0.8);
+    color: #66686a;
     background-color: #0c2949;
 }
 
@@ -29,7 +29,7 @@ h2 {
     text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.4px;
     font-weight: bolder;
-    color: white;
+    color: #66686a;
     padding: 0;
     margin-top: 0;
 }
@@ -47,7 +47,7 @@ h4 {
     font-size: 14pt;
     text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.4px;
-    color: rgba(37, 37, 37, 0.63);
+    color: #66686a;
     padding: 0;
     margin-top: 0;
 }
@@ -96,6 +96,12 @@ a {
     margin-left: 0;
     width: 100%;
     position: absolute;
+}
+
+.section-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .center-col {
@@ -487,12 +493,12 @@ a {
 
 .basic-info h1 {
     /* Style as h2 */
-    font-family: 'Ubuntu';
+    font-family: 'Ubuntu', sans-serif;
     font-size: 14pt;
-    text-shadow: 0px 0px 50px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.4px;
     font-weight: bolder;
-    color: white;
+    color: #66686a;
     padding: 0;
     margin-top: 0;
     transition: 0.2s;
