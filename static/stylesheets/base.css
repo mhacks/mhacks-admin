@@ -11,7 +11,7 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
     color: #66686a;
-    background-color: #0c2949;
+    background-color: white;
 }
 
 h1 {
@@ -177,34 +177,31 @@ a {
     align-items: center;
     z-index: 9999;
     opacity: 0.95;
+    background-color: white;
 }
 
 .header button {
     font-size: 16px;
-    font-family: 'Source Sans Pro', sans-serif;
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 2px 5px 0 #727272;
+    font-weight: bolder;
 
     padding: 5px 10px;
     width: 90px;
     margin: 2px 0 2px 10px;
+
+    background-color: white;
     border-radius: 5px;
+    border-color: #33c5f4;
+    border-width: 2px;
+    border-style: solid;
 
     text-decoration: none;
-    color: rgba(0, 169, 194, 0.7);
-    font-weight: bold;
-    letter-spacing: 0.6px;
-
     transition: all 0.2s;
-
-    border-width: 0;
     line-height: inherit;
 }
 
 .header button:hover {
-    background-color: #FFE641;
-    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
-    color: rgba(37, 37, 37, 0.63);
+    background-color: #33c5f4;
+    color: white;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -215,7 +212,7 @@ a {
 }
 
 .header-condensed {
-    height: 60px !important;
+    height: 80px !important;
     transition: height 0.4s;
 }
 
@@ -233,24 +230,23 @@ a {
 #eventInfo * {
     margin: 0;
     padding: 0;
+    color: #33c5f4;
 }
 
 #logo {
-    height: 100%;
-    width: 120px;
+    height: 70%;
+    width: 300px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#logoM {
-    height: 90px;
+#logo-text {
+    max-width: 100%;
+    max-height: 100%;
     margin: 0 auto;
     vertical-align: middle;
-}
-
-#logoText {
-    height: 30px;
-    display: block;
-    margin: 0 auto;
 }
 
 #logo a {
@@ -646,7 +642,7 @@ li.answer {
 .footer-bar {
     height: 180px;
     width: 100%;
-    background-color: #0093B1;
+    background-color: #33c5f4;
     padding-bottom: 20px;
     color: white;
     font-family:'Ubuntu', sans-serif;
@@ -823,8 +819,8 @@ html input[type="checkbox"] {
 }
 
 html button {
-    color: #000000;
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    font-family: 'Ubuntu' sans-serif;
+    color: #33c5f4;
     border-radius: 0;
     -webkit-transition: .4s;
     transition: .4s;
