@@ -188,6 +188,10 @@ a {
     width: 90px;
     margin: 2px 0 2px 10px;
 
+    box-shadow: none;
+
+    color: #33c5f4;
+
     background-color: white;
     border-radius: 5px;
     border-color: #33c5f4;

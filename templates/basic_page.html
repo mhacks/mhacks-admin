@@ -9,11 +9,12 @@
 {% block content %}
     {% include 'header.html' %}
 
+    <div class="col-12 text-center title-form">
+        <h3>{% block basic_page_title %}{% endblock %}</h3>
+    </div>
+
     <div class="container container-form">
 
-        <div class="col-12 text-center title-form">
-            <h3>{% block basic_page_title %}{% endblock %}</h3>
-        </div>
         {% block basic_page_content %}
         {% endblock %}
     </div>

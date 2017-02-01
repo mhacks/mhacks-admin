@@ -6,7 +6,7 @@ INCLUDE THAT FILE ON YOUR SPECIFIC PAGE. THANK YOU.
 */
 
 body {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     background-color: #ffffff;
     margin: 0;
     overflow-x: hidden;
@@ -21,20 +21,33 @@ ul {
 }
 
 p {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 12pt;
-    font-weight: 200;
     width: 100%;
+}
+
+.ui-widget-content {
+    box-shadow: 0px 1px 5px 0px gray;
+}
+.ui-menu .ui-menu-item {
+    background-color: white;
+    margin-left: 20px !important;
 }
 
 .header-form {
     position: static;
 }
 
+.title-form {
+    background-color: #33c5f4;
+}
+
 .title-form h3 {
-    color: rgba(0, 169, 194, 1);
-    font-size: 35px;
-    margin-bottom: 0;
+    font-weight: bolder;
+    color: #4a90c1;
+    font-size: 20px;
+    margin: 0;
+    padding: 15px 0;
 }
 
 .body-form {
@@ -49,10 +62,6 @@ p {
 .container-form {
     width: 66%;
     margin: 40px auto 40px auto;
-    -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    -moz-box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    border: 1px solid  rgba(0,0,0,0.33);
     padding-bottom: 30px;
     color: #333;
 }
@@ -70,6 +79,11 @@ html input {
 html input:focus {
     outline: none;
 }
+
+html input[type="checkbox"]{
+
+}
+
 html input[type="textarea"] {
     resize: vertical;
 }

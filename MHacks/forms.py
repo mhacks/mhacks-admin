@@ -45,14 +45,14 @@ class ApplicationForm(forms.ModelForm):
 
         super(ApplicationForm, self).__init__(*args, **kwargs)
 
-        self.fields['is_high_school'].title = 'General Information'
+        self.fields['is_high_school'].title = ''
         self.fields['is_high_school'].full = True
         self.fields['is_international'].full = True
         self.fields['mentoring'].full = True
         self.fields['needs_reimbursement'].full = True
 
         self.fields['gender'].title = 'Demographic Info'
-        self.fields['gender'].subtitle = 'Not Required'
+        self.fields['gender'].subtitle = '(Not Required)'
 
         self.fields['github'].title = 'Previous Experience'
 
