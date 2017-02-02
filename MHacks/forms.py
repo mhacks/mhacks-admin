@@ -155,6 +155,7 @@ class ApplicationForm(forms.ModelForm):
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
 
             # 'needs_reimbursement': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
+            'from_city': forms.TextInput(attrs={'placeholder': 'City'}),
             'from_state': forms.TextInput(attrs={'placeholder': 'State or country', 'id': 'state-autocomplete'})
 
         }
