@@ -14,22 +14,16 @@
         {% if request.user and request.user.groups.filter(name='application_reader').exists() %}
             <h2>Looks like you're an application reader!</h2>
             <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Apps</button></a>
-            <br>
-            <hr>
         {% endif %}
 
         {% if request.user and request.user.groups.filter(name='sponsor').exists() %}
             <h2>Looks like you're a sponsor!</h2>
             <a href="{{url_for('mhacks-sponsorPortal')}}"><button type="button">Sponsor Portal</button></a>
-            <br>
-            <hr>
         {% endif %}
 
         {% if request.user and request.user.groups.filter(name='stats_team').exists() %}
             <h2>Looks like you're on the stats team!</h2>
             {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
-            <br>
-            <hr>
         {% endif %}
 
         {% if request.user and request.user.groups.filter(name='hacker').exists() %}
@@ -80,18 +74,24 @@
                         <p>We haven’t gotten to read your application just yet, but we’re on it! You should receive a decision by next Monday. Hang tight!</p>
                     </div>
                 {% endif %}
-
-                <br>
-                <hr>
 {#            {% else %}#}
 {#                <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>#}
             {% endif %}
         {% endif %}
         {% if not registration_application and not application %}
-            <h2>Are you a walk on?</h2>
-            <p>After registering you will receive an email with your MHacks ticket attached which you must present to get access to the event.</p>
-            <p>Your dashboard will also be updated to display your MHacks ticket after you have registered so you can come back here to get access to it.</p>
-            <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
+        <div class="dashboard-registration">
+            <h2>INSERT TEXT HERE</h2>
+            <p>SOMETHING ABOUT APPLYING FOR BOTH OR ONE OR NEITHER</p>
+            <p>LOL IM A BOAT CHOO CHO</p>
+            <div class="row-container">
+                <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
+                    <button type="submit">Mentor</button>
+                </form>
+                <form method="GET" action="{{ url_for('mhacks-apply') }}">
+                    <button type="submit">Apply</button>
+                </form>
+            </div>
+        </div>
         {% endif %}
     </div>
     {# Enable registration for walk-ons #}

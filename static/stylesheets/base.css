@@ -829,7 +829,8 @@ html input[type="checkbox"] {
 }
 
 html button {
-    font-family: 'Ubuntu' sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+
     color: #33c5f4;
     border-radius: 0;
     -webkit-transition: .4s;
@@ -885,4 +886,45 @@ html fieldset {
 }
 .text-center {
     text-align: center;
+}
+
+.dashboard-registration button {
+    font-size: 16px;
+    font-weight: bolder;
+
+    padding: 10px 20px;
+    width: 120px;
+    margin: 2px 0 2px 20px;
+
+    box-shadow: none;
+
+    color: #33c5f4;
+
+    background-color: white;
+    border-radius: 5px;
+    border-color: #33c5f4;
+    border-width: 2px;
+    border-style: solid;
+
+    text-decoration: none;
+    transition: all 0.2s;
+    line-height: inherit;
+}
+
+.dashboard-registration button:hover {
+    background-color: #33c5f4;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dashboard-registration .row-container {
+    margin-top: 40px;
+}
+
+.row-container {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

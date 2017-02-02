@@ -61,6 +61,7 @@ h3 {
     .categories-header {
         padding-bottom: 40px;
     }
+
     .category-row:last-child {
         padding-top: 0;
         padding-bottom: 40px;
@@ -76,7 +77,6 @@ h3 {
 
     .centered-image-container {
         width: auto;
-        height: auto;
         max-width: 210px;
         max-height: 210px;
         display: inline-block;
