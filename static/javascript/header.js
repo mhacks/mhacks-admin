@@ -67,6 +67,8 @@ $(window).scroll(function() {
         $headerButtons.css("padding-right", 25);
         $menuDropdown.css("padding-right", 25);
         $menuContent.css("top", 60);
+        $eventInfo.css("opacity", 1);
+        $headerButtons.css("opacity", 1);
     }
 });
 
