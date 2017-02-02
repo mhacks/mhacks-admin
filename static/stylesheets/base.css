@@ -165,7 +165,7 @@ a {
 
 .header {
     top: 0;
-    height: 100%;
+    height: 60px;
     box-shadow: 0 -4px 16px 0 #000000;
     text-align: center;
     padding: 0;
