@@ -13,6 +13,14 @@ APPLICATION_DECISION = [
     'Decline'
 ]
 
+USER_FOCUSED_DESIGN_SKILLS = [
+    'User experience research',
+    'Interaction design',
+    'Graphic design',
+    'Product design',
+    'Design thinking'
+]
+
 SKILLS = [
     'HTML/CSS',
     'Javascript',

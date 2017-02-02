@@ -220,6 +220,7 @@ class MentorApplicationForm(forms.ModelForm):
 
     class Meta:
         from application_lists import SKILLS
+        from application_lists import USER_FOCUSED_DESIGN_SKILLS as DESIGN_SKILLS
         model = MentorApplication
 
         # use all fields except for these
@@ -230,6 +231,8 @@ class MentorApplicationForm(forms.ModelForm):
             'what_importance': 'What do you think is important about being a mentor?',
             'why_mentor': 'Why do you want to be a mentor?',
             'mentorship_ideas': 'Do you have any ideas for mentorship at MHacks?',
+            'user_design_question': 'Do you have experience in user-focused design?',
+            'user_design_question_cont': 'Which areas are you comfortable mentoring in?',
             'skills': 'What skills are you comfortable mentoring in? (CTRL/CMD + click to select multiple options!)',
             'other_skills': 'Other skills',
             'github': 'GitHub',
@@ -242,7 +245,10 @@ class MentorApplicationForm(forms.ModelForm):
             'github': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': '(optional)'}),
             'why_mentor': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'mentorship_ideas': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'what_importance': forms.Textarea(attrs={'class': 'textfield form-control'})
+            'what_importance': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'user_design_question': forms.TypedChoiceField(coerce=lambda x: x == True, choices=((False, 'No'),(True, 'Yes'))),
+            'user_design_question_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'}, choices=zip(DESIGN_SKILLS, DESIGN_SKILLS))
+            'other_design_skills': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': 'Dank meme design'})
         }
 
     # custom validator for urls
