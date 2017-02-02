@@ -247,7 +247,7 @@ class MentorApplicationForm(forms.ModelForm):
             'mentorship_ideas': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'what_importance': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'user_design_question': forms.TypedChoiceField(coerce=lambda x: x == True, choices=((False, 'No'),(True, 'Yes'))),
-            'user_design_question_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'}, choices=zip(DESIGN_SKILLS, DESIGN_SKILLS))
+            'user_design_question_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'}, choices=zip(DESIGN_SKILLS, DESIGN_SKILLS)),
             'other_design_skills': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': 'Dank meme design'})
         }
 
