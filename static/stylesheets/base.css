@@ -165,7 +165,7 @@ a {
 
 .header {
     top: 0;
-    height: 120px;
+    height: 100%;
     box-shadow: 0 -4px 16px 0 #000000;
     text-align: center;
     padding: 0;
@@ -176,7 +176,7 @@ a {
     justify-content: space-between;
     align-items: center;
     z-index: 9999;
-    opacity: 0.95;
+    opacity: 1;
     background-color: white;
 }
 
@@ -224,6 +224,7 @@ a {
     padding-left: 50px;
     text-align: left;
     width: 300px;
+    opacity: 0;
 }
 
 .header-condensed #eventInfo {
@@ -253,6 +254,10 @@ a {
     vertical-align: middle;
 }
 
+.logo-scale {
+    transform: scale(3.33333);
+}
+
 #logo a {
     background-color: rgba(0,0,0,0);
     box-shadow: 0 0 0 0 #000000;
@@ -268,6 +273,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    opacity: 0;
 }
 
 .header-condensed #headerButtons, .header-condensed #headerDropdown {
