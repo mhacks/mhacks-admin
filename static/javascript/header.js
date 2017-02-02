@@ -11,6 +11,7 @@ var shouldScale = window.location.pathname == '/';
 $(document).ready(function(){
     if (shouldScale){
         $header.css("height", "100%");
+        $header.css("box-shadow", "none");
     } else {
         // not on home page
         $header.css("opacity", 0.95);
@@ -47,7 +48,7 @@ $(window).scroll(function() {
                 $eventInfo.css("opacity", 1);
                 $headerButtons.css("opacity", 1);
                 $logoScale.css("transform", "scale(1)");
-                shouldScale = false;
+                // shouldScale = false;
 
             }
         }

@@ -326,6 +326,82 @@ a {
     color: #FFE641;
 }
 
+/* --- Dynamic People --- */
+.dynamic-people {
+    margin-top: 13%;
+    display: flex;
+    position: relative;
+    width: 80%;
+    left: 12%;
+    align-items: flex-end;
+}
+
+#p1 {
+    width: 10%;
+}
+
+#p2 {
+    width: 13.8%;
+    position: relative;
+    left: -1%;
+}
+
+#p3 {
+    width: 12.9%;
+    position: relative;
+    left: -4%;
+    z-index: 2;
+}
+
+#p4 {
+    width: 11%;
+    position: relative;
+    left: -5.5%;
+}
+
+#p5 {
+    width: 10%;
+    position: relative;
+    left: -8%;
+    z-index: 2;
+}
+
+#p6 {
+    width: 13%;
+    position: relative;
+    left: -9.2%;
+}
+
+#p7 {
+    width: 11.17%;
+    position: relative;
+    left: -11.5%;
+    z-index: 2;
+}
+
+#p8 {
+    width: 14%;
+    position: relative;
+    left: -15%;
+}
+
+#p9 {
+    width: 10%;
+    position: relative;
+    left: -17.2%;
+    z-index: 2;
+}
+
+#p10 {
+    width: 9%;
+    position: relative;
+    left: -19%;
+}
+
+
+
+
+
 /* --- Non-Tiled Section --- */
 
 .more-info {
