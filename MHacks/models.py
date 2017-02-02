@@ -241,7 +241,7 @@ class Application(Any):
 
 
 class MentorApplication(Any):
-    from application_lists import SKILLS, APPLICATION_DECISION
+    from application_lists import SKILLS, APPLICATION_DECISION, USER_FOCUSED_DESIGN_SKILLS
 
     user = models.OneToOneField(AUTH_USER_MODEL)
 
@@ -252,6 +252,17 @@ class MentorApplication(Any):
     what_importance = models.TextField()
     why_mentor = models.TextField()
     mentorship_ideas = models.TextField()
+
+    # User-Focused Design Skills Review
+    has_user_design_experience = models.BooleanField(default=False)
+    user_focused_design_skills = ArrayField(
+        models.CharField(
+            max_length=32,
+            choices=zip(USER_FOCUSED_DESIGN_SKILLS, USER_FOCUSED_DESIGN_SKILLS),
+            blank=True),
+        size=len(USER_FOCUSED_DESIGN_SKILLS)
+    )
+    other_design_skills = models.CharField(max_length=255, default='', blank=True)
 
     # Skill Review
     skills = ArrayField(models.CharField(max_length=32, choices=zip(SKILLS, SKILLS), blank=True), size=len(SKILLS))

@@ -210,6 +210,7 @@ class MentorApplicationForm(forms.ModelForm):
         self.fields['agree_tc'].required = True
         self.fields['what_importance'].title = "Short Answer"
         self.fields['skills'].title = "Skills"
+        self.fields['has_user_design_experience'].title = "User-Focused Design Skills"
         self.fields['agree_tc'].title = "Commitment"
 
         self.fields['first_time_mentor'].full = True
@@ -218,7 +219,11 @@ class MentorApplicationForm(forms.ModelForm):
         self.fields['what_importance'].full = True
         self.fields['agree_tc'].full = True
 
+
+
+
     class Meta:
+
         from application_lists import SKILLS
         from application_lists import USER_FOCUSED_DESIGN_SKILLS as DESIGN_SKILLS
         model = MentorApplication
@@ -231,8 +236,8 @@ class MentorApplicationForm(forms.ModelForm):
             'what_importance': 'What do you think is important about being a mentor?',
             'why_mentor': 'Why do you want to be a mentor?',
             'mentorship_ideas': 'Do you have any ideas for mentorship at MHacks?',
-            'user_design_question': 'Do you have experience in user-focused design?',
-            'user_design_question_cont': 'Which areas are you comfortable mentoring in?',
+            'has_user_design_experience': 'Do you have experience in user-focused design?',
+            'user_focused_design_skills': 'If yes, which areas are you comfortable mentoring in? (CTRL/CMD + click to select multiple options!)',
             'skills': 'What skills are you comfortable mentoring in? (CTRL/CMD + click to select multiple options!)',
             'other_skills': 'Other skills',
             'github': 'GitHub',
@@ -246,10 +251,11 @@ class MentorApplicationForm(forms.ModelForm):
             'why_mentor': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'mentorship_ideas': forms.Textarea(attrs={'class': 'textfield form-control'}),
             'what_importance': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'user_design_question': forms.TypedChoiceField(coerce=lambda x: x == True, choices=((False, 'No'),(True, 'Yes'))),
-            'user_design_question_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'}, choices=zip(DESIGN_SKILLS, DESIGN_SKILLS)),
+            'has_user_design_experience': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
+            'user_focused_design_skills': ArrayFieldSelectMultiple(attrs={'class': 'full checkbox-style check-width'}, choices=zip(DESIGN_SKILLS, DESIGN_SKILLS)),
             'other_design_skills': forms.TextInput(attrs={'class': 'full check-width', 'placeholder': 'Dank meme design'})
         }
+
 
     # custom validator for urls
     def clean_github(self):
@@ -279,7 +285,7 @@ class RegistrationForm(forms.ModelForm):
         self.fields['t_shirt_size'].title = "Day-of Specifics"
 
         self.fields['employment'].title = "Sponsor & Employment Information"
-        self.fields['employment'].subtitle = "Sponsors will be able to sift through resumes based on the following data you provide. This is a great oppurtunity for you to showcase your resume to the world's top tech companies (most of whom are recruiting!). If you do not wish to have your resume looked at by our sponsors, please select 'Not Interested' in the following question"
+        self.fields['employment'].subtitle = "Sponsors will be able to sift through resumes based on the following data you provide. This is a great opportunity for you to showcase your resume to the world's top tech companies (most of whom are recruiting!). If you do not wish to have your resume looked at by our sponsors, please select 'Not Interested' in the following question"
 
         self.fields['code_of_conduct'].title = "Waivers and Code of Conduct"
         self.fields['mlh_code_of_conduct'].title = "MLH Code Of Conduct"
