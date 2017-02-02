@@ -236,7 +236,7 @@ class MentorApplicationForm(forms.ModelForm):
             'skills': 'What skills are you comfortable mentoring in? (CTRL/CMD + click to select multiple options!)',
             'other_skills': 'Other skills',
             'github': 'GitHub',
-            'agree_tc': 'I understand that by committing to mentor at MHacks 8 during the weekend of October 7-9, 2016, I will not work on my own project and will help participants to the best of my ability.'
+            'agree_tc': 'I understand that by committing to mentor at MHacks 9 during the weekend of March 24-26, I will not work on my own project and will help participants to the best of my ability.'
         }
 
         widgets = {
