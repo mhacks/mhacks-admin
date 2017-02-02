@@ -45,38 +45,33 @@ class ApplicationForm(forms.ModelForm):
 
         super(ApplicationForm, self).__init__(*args, **kwargs)
 
-        self.fields['is_high_school'].title = ''
+        self.fields['is_high_school'].title = "General Information"
+        self.fields['gender'].title = 'Demographic Info'
+        self.fields['gender'].subtitle = '(Optional)'
+        self.fields['num_hackathons'].title = 'Previous Experience'
+        self.fields['cortex'].title = 'Interests'
+        self.fields['cortex'].subtitle = 'CTRL/CMD + click to multi-select!'
+        self.fields['passionate'].title = 'Short Answer'
+        self.fields['needs_reimbursement'].title = 'Travel'
+
         self.fields['is_high_school'].full = True
         self.fields['is_international'].full = True
         self.fields['mentoring'].full = True
-        self.fields['needs_reimbursement'].full = True
-
-        self.fields['gender'].title = 'Demographic Info'
-        self.fields['gender'].subtitle = '(Not Required)'
-
-        self.fields['github'].title = 'Previous Experience'
-
-        self.fields['cortex'].title = 'Interests'
-        self.fields['cortex'].subtitle = 'CTRL/CMD + click to multi-select!'
-
-        self.fields['passionate'].title = 'Short Answer'
-
-        self.fields['personal_website'].space_after = True
+        # self.fields['needs_reimbursement'].full = True
+        self.fields['cortex'].full = True
+        self.fields['passionate'].full = True
+        self.fields['coolest_thing'].full = True
+        self.fields['other_info'].full = True
 
         self.fields['github'].required = False
         self.fields['devpost'].required = False
         self.fields['personal_website'].required = False
         self.fields['other_info'].required = False
+        self.fields['other_links'].required = False
         self.fields['gender'].required = False
         self.fields['race'].required = False
+        self.fields['passionate'].required = True
 
-        self.fields['needs_reimbursement'].title = 'Travel'
-
-        # self.fields['resume'].full = True
-        self.fields['cortex'].full = True
-        self.fields['passionate'].full = True
-        self.fields['coolest_thing'].full = True
-        self.fields['other_info'].full = True
 
         # if the user is from UMich, exclude the short answer and reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
@@ -93,47 +88,76 @@ class ApplicationForm(forms.ModelForm):
 
         labels = {
             'school': 'School or University',
+            'major': 'Major',
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
             'is_high_school': 'I am a high school student.',
             'is_international': 'I am an international student.',
-            'github': '',
-            'devpost': '',
-            'personal_website': '',
+
+            'gender': 'Gender (optional)',
+            'race': 'Race (optional)',
+
+            'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
+            'has_side_projects': 'Have you made anything outside of school (side projects, hacks, etc)?',
+            'num_cs_courses': 'How many CS courses have you taken?',
+            'num_ux_courses': 'How many UX/Design courses have you taken?',
+            'github': 'GitHub',
+            'linkedin': 'LinkedIn',
+            'devpost': 'DevPost',
+            'personal_website': 'Personal Website/Portfolio',
+            'other_links': 'Anything else!',
+            'resume': 'Resume (If you don\'t have a formal resume, you can upload a skills sheet, a bullet-pointed list, etc!)',
+
+
             'cortex': '',
+
+
             'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
             'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
-            'num_hackathons': 'How many hackathons have you attended? (Put 0 if this is your first!)',
+
+
             'can_pay': 'How much of the travel cost can you pay?',
             'mentoring': 'I am interested in mentoring other hackers!',
             'needs_reimbursement': 'I will be needing travel reimbursement to attend MHacks.',
             'from_city': 'Which city will you be traveling from?',
             'from_state': 'Which state or country will you be traveling from? (Type your country if you are traveling internationally)',
-            'gender': 'Preferred gender pronouns',
-            'resume': 'Resume (If you don\'t have a formal resume, you can upload a skills sheet, a bullet-pointed list, etc!)'
         }
 
         widgets = {
-            'grad_date': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'id': 'graduation_date'}),
-            'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-style check-width'}, choices=TECH_OPTIONS),
-            'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'}),
             'school': forms.TextInput(attrs={'placeholder': 'Hackathon College', 'class': 'form-control input-md',
                                              'id': 'school-autocomplete'}),
             'major': forms.TextInput(attrs={'placeholder': 'Hackathon Science', 'class': 'form-control input-md',
                                             'id': 'major-autocomplete'}),
+            "grad_date": forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY', 'id': 'graduation_date'}),
+            'birthday': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'}),
+            # 'is_high_school': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
+            # 'is_international': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
+
+            # TODO: change this to dropdown lists
             'gender': forms.TextInput(attrs={'placeholder': 'They/Them/Theirs', 'id': 'gender-autocomplete'}),
             'race': forms.TextInput(attrs={'placeholder': 'Hacker', 'id': 'race-autocomplete'}),
-            'github': forms.TextInput(attrs={'placeholder': 'GitHub', 'class': 'form-control input-md'}),
-            'devpost': forms.TextInput(attrs={'placeholder': 'Devpost', 'class': 'form-control input-md'}),
-            'personal_website': forms.TextInput(
-                attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
-            'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'num_hackathons': forms.NumberInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),
-            'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
-            'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
+
+            'has_side_projects': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
+
+            'github': forms.TextInput(attrs={'placeholder': 'https://github.com/username', 'class': 'form-control input-md'}),
+            'linkedin': forms.TextInput(attrs={'placeholder': 'https://linkedin.com/in/username', 'class': 'form-control input-md'}),
+            'devpost': forms.TextInput(attrs={'placeholder': 'https://devpost.com/username', 'class': 'form-control input-md'}),
+            'personal_website': forms.TextInput(attrs={'placeholder': 'Personal Website', 'class': 'form-control input-md'}),
+            'other_links': forms.TextInput(attrs={'placeholder': 'Other links', 'class': 'form-control input-md'}),
+
             'resume': MHacksAdminFileWidget(attrs={'class': 'full form-control'}),
+
+            'cortex': ArrayFieldSelectMultiple(attrs={'class': 'checkbox-style check-width'}, choices=TECH_OPTIONS),
+            'mentoring': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
+
+            'passionate': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'coolest_thing': forms.Textarea(attrs={'class': 'textfield form-control'}),
+            'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
+
+            # 'needs_reimbursement': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
             'from_state': forms.TextInput(attrs={'placeholder': 'State or country', 'id': 'state-autocomplete'})
+
         }
 
     # custom validator for urls
@@ -207,7 +231,9 @@ class SponsorPortalForm(forms.Form):
 class MentorApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MentorApplicationForm, self).__init__(*args, **kwargs)
+
         self.fields['agree_tc'].required = True
+
         self.fields['what_importance'].title = "Short Answer"
         self.fields['skills'].title = "Skills"
         self.fields['has_user_design_experience'].title = "User-Focused Design Skills"
@@ -219,13 +245,10 @@ class MentorApplicationForm(forms.ModelForm):
         self.fields['what_importance'].full = True
         self.fields['agree_tc'].full = True
 
-
-
-
     class Meta:
-
         from application_lists import SKILLS
         from application_lists import USER_FOCUSED_DESIGN_SKILLS as DESIGN_SKILLS
+
         model = MentorApplication
 
         # use all fields except for these

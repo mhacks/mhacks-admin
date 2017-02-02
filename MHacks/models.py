@@ -196,23 +196,31 @@ class Application(Any):
     birthday = models.DateField()
 
     # Demographic
-    gender = models.CharField(max_length=32, default='')
+    gender = models.CharField(max_length=64, default='')
     race = models.CharField(max_length=64, default='')
 
-    # External Links
-    github = models.URLField()
-    devpost = models.URLField()
-    personal_website = models.URLField()
-    resume = models.FileField(max_length=(10 * 1024 * 1024))  # 10 MB max file size
-
-    # Experience
+    # Previous Experience
     num_hackathons = models.IntegerField(default=0, validators=[
         MinValueValidator(limit_value=0, message='You went to negative hackathons? Weird...')])
-    mentoring = models.BooleanField(default=False)
+    has_side_projects = models.BooleanField(default=False)
+    num_cs_courses = models.IntegerField(default=0)
+    num_ux_courses = models.IntegerField(default=0)
+
+    # External Links
+    github = models.URLField(default='https://github.com/username')
+    linkedin = models.URLField(default='https://linkedin.com/in/username')
+    devpost = models.URLField(default='https://devpost.com/username')
+    personal_website = models.URLField(default='')
+    other_links = models.URLField(default='')
+    resume = models.FileField(max_length=(10 * 1024 * 1024))  # 10 MB max file size
+
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True),
                         size=len(TECH_OPTIONS))
+    mentoring = models.BooleanField(default=False)
+
+    # Short Answer
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()
@@ -237,7 +245,7 @@ class Application(Any):
 
     def user_is_minor(self):
         from datetime import date
-        return self.birthday >= date(year=1998, month=10, day=7)
+        return self.birthday >= date(year=1999, month=03, day=24)
 
 
 class MentorApplication(Any):
