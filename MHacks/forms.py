@@ -90,8 +90,8 @@ class ApplicationForm(forms.ModelForm):
             'school': 'University',
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
-            'is_high_school': 'I am a high school student.',
-            'is_international': 'I am an international student.',
+            'is_high_school': 'I am a high school student',
+            'is_international': 'I am an international student',
 
             'gender': 'Gender (optional)',
             'race': 'Race (optional)',
@@ -155,6 +155,7 @@ class ApplicationForm(forms.ModelForm):
             'other_info': forms.Textarea(attrs={'class': 'textfield form-control'}),
 
             # 'needs_reimbursement': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
+            'from_city': forms.TextInput(attrs={'placeholder': 'City'}),
             'from_state': forms.TextInput(attrs={'placeholder': 'State or country', 'id': 'state-autocomplete'})
 
         }

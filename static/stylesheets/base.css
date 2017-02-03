@@ -165,7 +165,7 @@ a {
 
 .header {
     top: 0;
-    height: 120px;
+    height: 60px;
     box-shadow: 0 -4px 16px 0 #000000;
     text-align: center;
     padding: 0;
@@ -176,7 +176,7 @@ a {
     justify-content: space-between;
     align-items: center;
     z-index: 9999;
-    opacity: 0.95;
+    opacity: 1;
     background-color: white;
 }
 
@@ -224,6 +224,7 @@ a {
     padding-left: 50px;
     text-align: left;
     width: 300px;
+    opacity: 0;
 }
 
 .header-condensed #eventInfo {
@@ -253,6 +254,10 @@ a {
     vertical-align: middle;
 }
 
+.logo-scale {
+    transform: scale(3.33333);
+}
+
 #logo a {
     background-color: rgba(0,0,0,0);
     box-shadow: 0 0 0 0 #000000;
@@ -268,6 +273,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    opacity: 0;
 }
 
 .header-condensed #headerButtons, .header-condensed #headerDropdown {
@@ -326,9 +332,17 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #e6f3f7;
+    background-color: white;
     color: rgba(37, 37, 37, 0.63);
     padding: 40px 5% 70px;
+}
+
+.faq-header {
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px 0;
+    font-weight: 300;
+    font-size: 26px;
 }
 
 .faq-row {
@@ -345,8 +359,8 @@ a {
 }
 
 .faq-item .question {
-    font-family: 'Ubuntu';
-    color: rgba(0, 169, 194, 1);
+    font-family: 'Ubuntu', sans-serif;
+    color: #33c5f4;
     font-size: 14pt;
 }
 
@@ -376,7 +390,6 @@ a {
 
 .big-tile {
     background-color: white;
-    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.35);
     padding: 30px;
     margin-bottom: 10px;
 
@@ -520,82 +533,6 @@ a {
     padding: 15px 0 0 0;
 }
 
-.grid-item-expand .grid-item-content {
-    width: 480px;
-    height: 360px;
-    background: #e6f3f7;
-    color: rgba(37, 37, 37, 0.63);
-    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
-    overflow-x: hidden;
-    overflow-y: auto;
-    transition: all 0.2s;
-}
-
-.grid-item-expand .basic-info h1 {
-    /* Back to h1 styling */
-    font-family: 'Ubuntu';
-    font-size: 18pt;
-    font-weight: bold;
-    color: #0093B1;
-    padding: 0;
-    margin: 18px 4%;
-    transition: all 0.2s;
-}
-
-.grid-item-expand.expand-small .grid-item-content {
-    width: 480px;
-    height: 360px;
-}
-
-.grid-item-expand.expand-medium .grid-item-content {
-    width: 640px;
-    height: 480px;
-}
-
-.grid-item-expand[data-expandable='1'] .expand-icon:before {
-    font-family: FontAwesome;
-    content: "\f056";
-    color: #0093B1;
-    position:absolute;
-    right: 0;
-    transition: all 0.2s;
-    height: 16px;
-    width: 16px;
-    margin: 10px 20px;
-}
-
-.grid-item[data-expandable='1']:hover .grid-item-content {
-    background: #FFE641;
-    box-shadow: -3px 3px 40px rgba(32, 32, 32, 0.15);
-    color: rgba(37, 37, 37, 0.63);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.grid-item-expand > .grid-item-content > .extra-info {
-    height: auto;
-    visibility: visible;
-    display: initial;
-    transition: all 0.2s;
-}
-
-.grid-item-image {
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.grid-item-icon {
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
 
 .clickable-icon {
     transition: background-color 0.2s;
@@ -823,7 +760,8 @@ html input[type="checkbox"] {
 }
 
 html button {
-    font-family: 'Ubuntu' sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+
     color: #33c5f4;
     border-radius: 0;
     -webkit-transition: .4s;
@@ -879,4 +817,53 @@ html fieldset {
 }
 .text-center {
     text-align: center;
+}
+
+.dashboard-registration button {
+    font-size: 16px;
+    font-weight: bolder;
+
+    padding: 10px 20px;
+    width: 120px;
+    margin: 2px 0 2px 20px;
+
+    box-shadow: none;
+
+    color: #33c5f4;
+
+    background-color: white;
+    border-radius: 5px;
+    border-color: #33c5f4;
+    border-width: 2px;
+    border-style: solid;
+
+    text-decoration: none;
+    transition: all 0.2s;
+    line-height: inherit;
+}
+
+.dashboard-registration button:hover {
+    background-color: #33c5f4;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dashboard-registration .row-container {
+    margin-top: 40px;
+}
+
+.row-container {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-header {
+    text-transform: uppercase;
+    text-align: center;
+    padding: 40px 0;
+    font-weight: 300;
+    font-size: 26px;
 }

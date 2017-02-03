@@ -3,7 +3,7 @@
  */
 
 $( function() {
-    $('input[type="checkbox"]').parent().addClass('checkbox-form-container');
+    $( '.form-full .full-widget input[type="checkbox"]').parent().parent().addClass('checkbox-form-container');
 
     $( "#school-autocomplete" ).autocomplete({
         source: COLLEGES
