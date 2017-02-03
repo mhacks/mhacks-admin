@@ -1,4 +1,5 @@
 var $header = $('.header');
+var $headerPad = $('#header-pad');
 var $logoText = $('#logo-text');
 var $logoScale = $('.logo-scale');
 var $eventInfo = $('#eventInfo');
@@ -18,6 +19,7 @@ $(document).ready(function(){
         $eventInfo.css("opacity", 1);
         $headerButtons.css("opacity", 1);
         $logoText.removeClass('logo-scale');
+        $headerPad.css("padding-top", 60);
     }
 });
 

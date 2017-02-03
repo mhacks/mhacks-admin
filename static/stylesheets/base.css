@@ -162,6 +162,9 @@ a {
 }
 
 /* --- Header and Header Content --- */
+#header-pad {
+    padding-top: 120px;
+}
 
 .header {
     top: 0;
