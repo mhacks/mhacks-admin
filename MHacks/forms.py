@@ -90,8 +90,8 @@ class ApplicationForm(forms.ModelForm):
             'school': 'University',
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
-            'is_high_school': 'I am a high school student.',
-            'is_international': 'I am an international student.',
+            'is_high_school': 'I am a high school student',
+            'is_international': 'I am an international student',
 
             'gender': 'Gender (optional)',
             'race': 'Race (optional)',
