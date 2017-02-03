@@ -3,7 +3,6 @@
  */
 
 $( function() {
-
     $( '.form-full .full-widget input[type="checkbox"]').parent().parent().addClass('checkbox-form-container');
 
     $( "#school-autocomplete" ).autocomplete({
@@ -15,7 +14,7 @@ $( function() {
     });
 
     $( "#gender-autocomplete" ).autocomplete({
-        source: GENDER_PRONOUNS
+        source: GENDERS
     });
 
     $( "#race-autocomplete" ).autocomplete({
