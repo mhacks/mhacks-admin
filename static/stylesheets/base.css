@@ -327,8 +327,48 @@ a {
 }
 
 /* --- Dynamic People --- */
+#bubble {
+    margin-top: 800px;
+    margin-bottom: 200px;
+    position: relative;
+    left: calc(50% - 130px);
+    height: 40px;
+    width: 40px;     
+}
+
+#bubble-text {
+    position: relative;
+    top: -12px;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+
+#bubble-circle {
+    background-color: #169ccc;
+    border: 1px solid #999;
+    height: 10em;
+    left: 5em;
+    position: absolute;
+    top: 5em;
+    width: 12em;
+    -moz-border-radius: 80px;
+    -webkit-border-radius: 80px;
+    border-radius: 80px; 
+}
+
+#bubble-triangle {
+    border-color: transparent transparent #169ccc transparent;
+    border-style: solid;
+    border-width: 2em;
+    position: relative;
+    top: 7em;
+    -webkit-transform:rotate(-40deg);
+    -moz-transform: rotate(-40deg);
+    width: 0px;
+}
+
 .dynamic-people {
-    margin-top: 13%;
     display: flex;
     position: relative;
     width: 80%;
@@ -336,10 +376,10 @@ a {
     justify-content: center
 }
 
-// .person {
-//     margin-left: 70%;
-//     margin-right: 70%;
-// }
+.person {
+    margin-left: 70%;
+    margin-right: 70%;
+}
 
 #p1 {
     width: 10%;

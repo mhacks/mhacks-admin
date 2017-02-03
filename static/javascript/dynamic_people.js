@@ -1,12 +1,19 @@
-// individual people
-$p1 = $('p1');
-$p2 = $('p2');
-$p3 = $('p3');
-$p4 = $('p4');
-$p5 = $('p5');
-$p6 = $('p6');
-$p7 = $('p7');
-$p8 = $('p8');
-$p9 = $('p9');
-$p10 = $('p10');
+$person = $('.person');
+$people = $('.dynamic-people');
+$bubble = $('#bubble');
 
+$(window).scroll(function() {
+    var scrollValue = Math.max($(this).scrollTop(), 0);
+    var screenHeight = $(this).outerHeight();
+    var screenWidth = $(this).outerWidth();
+    var multiplier = scrollValue / screenHeight;
+    if (multiplier < 1) {
+    	$person.css("margin-left", screenWidth * 0.055 * (1 - multiplier) + "%");
+    	$person.css("margin-right", screenWidth * 0.055 * (1 - multiplier) + "%");
+    } else {
+    	$person.css("margin-left", "0%");
+    	$person.css("margin-right", "0%");
+    	
+    }
+    $bubble.css("opacity", multiplier - .2);
+});
