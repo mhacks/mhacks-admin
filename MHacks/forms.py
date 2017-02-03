@@ -87,8 +87,7 @@ class ApplicationForm(forms.ModelForm):
         exclude = ['user', 'deleted', 'score', 'reimbursement', 'submitted', 'decision']
 
         labels = {
-            'school': 'School or University',
-            'major': 'Major',
+            'school': 'University',
             "grad_date": 'Expected graduation date',
             'birthday': 'Date of birth',
             'is_high_school': 'I am a high school student.',
