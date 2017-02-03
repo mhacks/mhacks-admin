@@ -1,5 +1,22 @@
 # coding=utf-8
 
+# both demographic info and gender are optional
+DEMOGRAPHIC_INFO = [
+    ('american_indian_or_alaskan_native', 'American Indian or Alaskan Native'),
+    ('asian_or_pacific_islander', 'Asian or Pacific Islander'),
+    ('black', 'Black'),
+    ('hispanic', "Hispanic"),
+    ('white', 'White'),
+]
+
+GENDER = [
+    ('male', 'Male'),
+    ('female', 'Female'),
+    ('non_binary', 'Non-Binary'),
+    ('other', 'Other')
+]
+
+
 TECH_OPTIONS = [('ios', 'iOS'),
                 ('android', 'Android'),
                 ('web_dev', 'Web Dev'),
@@ -11,6 +28,14 @@ APPLICATION_DECISION = [
     'Accept',
     'Waitlist',
     'Decline'
+]
+
+USER_FOCUSED_DESIGN_SKILLS = [
+    'User experience research',
+    'Interaction design',
+    'Graphic design',
+    'Product design',
+    'Design thinking'
 ]
 
 SKILLS = [
@@ -123,3 +148,5 @@ EMPLOYMENT_SKILLS = [
     'Web Development',
     'Windows Development'
 ]
+
+

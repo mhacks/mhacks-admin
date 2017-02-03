@@ -283,3 +283,7 @@ html button {
 .file-upload {
     padding-left: 20px;
 }
+
+.checkbox-form-container {
+    display: flex;
+}
