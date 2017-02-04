@@ -51,9 +51,15 @@ $(window).scroll(function() {
     } else {
         $header.css("opacity", 0.95);
         $logoScale.css("transform", "scale(1)");
+        
+        // button visibility
+        $eventInfo.css("transition", "opacity 1s ease");
+        $headerButtons.css("transition", "opacity 1s ease");
+        $headerDropdown.css("transition", "opacity 1s ease");
         $eventInfo.css("opacity", 1);
         $headerButtons.css("opacity", 1);
         $headerDropdown.css("opacity", 1);
+
         $logoText.removeClass('logo-scale');
         $headerPad.css("padding-top", 60);
         $header.css("height", 60);
