@@ -2,10 +2,11 @@
  * Created by Omkar on 8/15/2016.
  */
 
-var GENDER_PRONOUNS = [
-    'He/Him/His',
-    'She/Her/Hers',
-    'They/Them/Theirs'
+var GENDERS = [
+    'Male',
+    'Female',
+    'Non-Binary',
+    'Other'
 ];
 
 var RACES = [

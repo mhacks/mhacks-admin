@@ -16,9 +16,6 @@ body {
 button {
     cursor: pointer;
 }
-ul {
-    list-style-type: none;
-}
 
 p {
     font-family: 'Ubuntu', sans-serif;
@@ -260,6 +257,23 @@ html button {
     text-align: center;
 }
 
+.form-field ul,
+.form-full ul {
+    list-style-type: none;
+}
+
+.form-field ul li,
+.form-full ul li {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.form-field ul li input[type="radio"],
+.form-full ul li input[type="radio"] {
+    width: 12px;
+    height: 12px;
+}
+
 .full {
     margin-left: 30px;
     margin-right: 30px;
@@ -286,4 +300,24 @@ html button {
 
 .checkbox-form-container {
     display: flex;
+}
+
+.checkbox-form-container label {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: 200;
+    font-size: 15px;
+    margin-right: 7px;
+    float: left;
+    text-align: right;
+}
+
+.checkbox-form-container .full-widget {
+    margin: 0 0 0 20px;
+}
+
+#id_needs_reimbursement {
+    margin: 4px 0 0 20px;
 }
