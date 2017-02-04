@@ -173,6 +173,7 @@ a {
     text-align: center;
     padding: 0;
     width: 100%;
+    max-width: 100%;
     position: fixed;
     display: flex;
     flex-direction: row;
@@ -258,7 +259,7 @@ a {
 }
 
 .logo-scale {
-    transform: scale(3.33333);
+    
 }
 
 #logo a {
@@ -321,12 +322,12 @@ a {
 }
 
 #dropdownTrigger {
-    color: rgba(255, 255, 255, 0.8);
+    color: #33c5f4;
 }
 
 #dropdownTrigger:hover{
     cursor: pointer;
-    color: #FFE641;
+    color: rgba(15, 59, 127, 1);
 }
 
 /* --- Dynamic People --- */
