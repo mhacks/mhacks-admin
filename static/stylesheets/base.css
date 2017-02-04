@@ -121,6 +121,10 @@ a {
     background-color: #ef7a54;
 }
 
+.red-bg {
+    background-color: #f16768;
+}
+
 #container {
     margin-left: 0;
     width: 100%;
@@ -749,10 +753,8 @@ li.answer {
 .footer-bar {
     height: 180px;
     width: 100%;
-    background-color: #33c5f4;
     padding-bottom: 20px;
     color: white;
-    font-family:'Ubuntu', sans-serif;
     font-size: 10pt;
     text-align:center;
     display: flex;
@@ -786,7 +788,7 @@ li.answer {
 }
 
 .contact *:hover{
-    color: black;
+    color: #4a4948;
     text-decoration: none;
 }
 
