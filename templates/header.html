@@ -10,28 +10,12 @@
         </a>
     </div>
     <div id="headerButtons">
-{#        {% if 'live/' not in request.path %}#}
-{#            <form method="GET" action="{{ url_for('mhacks-live') }}">#}
-{#                <button type="submit">Live</button>#}
-{#            </form>#}
-{#        {% endif %}#}
-
-        {% if request.user.is_authenticated() and 'dashboard/' not in request.path %}
-            <form method="GET" action="{{ url_for('mhacks-dashboard') }}">
-                <button type="submit" style="width: 110px;">Dashboard</button>
-            </form>
-        {% endif %}
-
-{#        <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">#}
-{#            <button type="submit">Mentor</button>#}
-{#        </form>#}
-{#        {% if 'apply/' not in request.path %}#}
-{#            <form method="GET" action="{{ url_for('mhacks-apply') }}">#}
-{#                <button type="submit">Apply</button>#}
-{#            </form>#}
-{#        {% endif %}#}
-
         {% if request.user.is_authenticated() %}
+            {% if 'dashboard/' not in request.path %}
+                <form method="GET" action="{{ url_for('mhacks-dashboard') }}">
+                    <button type="submit" style="width: 110px;">Dashboard</button>
+                </form>
+            {% endif %}
             <form method="POST" action="{{ url_for('mhacks-logout') }}">
                 {{ csrf_input }}
                 <button type="submit">Logout</button>
@@ -45,27 +29,21 @@
     <div id="headerDropdown">
         <i id="dropdownTrigger" class="fa fa-bars fa-2x" aria-hidden="false"></i>
         <div id="dropdownContent" class="turquoise">
-
-            <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
-                <button type="submit">Mentor</button>
-            </form>
-
-            {% if 'apply/' not in request.path %}
-                <form method="GET" action="{{ url_for('mhacks-apply') }}">
-                    <button type="submit">Apply</button>
+            {% if request.user.is_authenticated() %}
+                {% if 'dashboard/' not in request.path %}
+                    <form method="GET" action="{{ url_for('mhacks-dashboard') }}">
+                        <button type="submit" style="width: 110px;">Dashboard</button>
+                    </form>
+                {% endif %}
+                <form method="POST" action="{{ url_for('mhacks-logout') }}">
+                    {{ csrf_input }}
+                    <button type="submit">Logout</button>
+                </form>
+            {% else %}
+                <form method="GET" action="{{ url_for('mhacks-login') }}">
+                    <button type="submit">Login</button>
                 </form>
             {% endif %}
-
-{#            {% if request.user.is_authenticated() %}#}
-{#                <form method="POST" action="{{ url_for('mhacks-logout') }}">#}
-{#                    {{ csrf_input }}#}
-{#                    <button type="submit">Logout</button>#}
-{#                </form>#}
-{#            {% else %}#}
-{#                <form method="GET" action="{{ url_for('mhacks-login') }}">#}
-{#                    <button type="submit">Login</button>#}
-{#                </form>#}
-{#            {% endif %}#}
         </div>
     </div>
 </div>

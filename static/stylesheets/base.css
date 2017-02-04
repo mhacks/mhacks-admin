@@ -10,7 +10,7 @@ body {
     overflow-y: auto;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
-    color: #66686a;
+    color: #4a4948;
     background-color: white;
 }
 
@@ -28,8 +28,8 @@ h2 {
     font-size: 14pt;
     text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.4px;
-    font-weight: bolder;
-    color: #66686a;
+    font-weight: bold;
+    color: #4a4948;
     padding: 0;
     margin-top: 0;
 }
@@ -56,7 +56,7 @@ p {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
     font-weight: 200;
-    width: 92%;
+    width: 80%;
 }
 a {
     color: #337ab7;
@@ -64,7 +64,7 @@ a {
 }
 /* --- Utility Classes --- */
 
-.turquoise {
+/*.turquoise {
     background: rgba(0, 169, 194, 0.7);
 }
 
@@ -90,7 +90,7 @@ a {
 
 .grey-text {
     color: rgba(37, 37, 37, 0.63);
-}
+}*/
 
 #container {
     margin-left: 0;
@@ -109,7 +109,7 @@ a {
 }
 
 .col-1 {
-    width: 96%;
+    width: 80%;
 }
 
 .col-2 {
@@ -133,7 +133,7 @@ a {
 .flex-row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 0 auto;
     align-items: center;
 }
@@ -150,15 +150,6 @@ a {
 
 .noUnderline {
     text-decoration: none !important;
-}
-
-/* --- Background --- */
-
-#bgCanvas {
-    z-index: -9999;
-    position: absolute;
-    top: 120px;
-    float: left;
 }
 
 /* --- Header and Header Content --- */
@@ -182,6 +173,7 @@ a {
     z-index: 9999;
     opacity: 1;
     background-color: white;
+    border-bottom: #4a4948 solid 3px;
 }
 
 .header button {
@@ -225,10 +217,15 @@ a {
 }
 
 #eventInfo {
-    padding-left: 50px;
     text-align: left;
     width: 300px;
-    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 25px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .header-condensed #eventInfo {
@@ -271,13 +268,15 @@ a {
 }
 
 #headerButtons {
-    padding-right: 50px;
     text-align: center;
     width: 300px;
+    position: fixed;
+    top: 0;
+    right: 25px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    opacity: 0;
 }
 
 .header-condensed #headerButtons, .header-condensed #headerDropdown {
@@ -286,10 +285,11 @@ a {
 }
 
 #headerDropdown {
-    display: none;
-    position: relative;
     width: 300px;
-    padding-right: 50px;
+    position: fixed;
+    top: 15px;
+    right: 25px;
+    height: 60px;
     text-align: right;
 }
 
@@ -304,12 +304,21 @@ a {
 
     height: 120px;
     width: 160px;
-    top: 120px;
-    right: 0;
+    top: 57px;
+    right: -160px;
+    transition: right 0.5s;
 
-    border-left: 1px solid rgba(20, 20, 20, 0.1);
-    border-right: 1px solid rgba(20, 20, 20, 0.1);
-    border-bottom: 1px solid rgba(20, 20, 20, 0.1);
+    border-top: 3px solid #4a4948;
+    border-left: 3px solid #4a4948;
+    border-bottom: 3px solid #4a4948;
+
+    background-color: white;
+    opacity: 0.95;
+}
+
+#dropdownContent.expanded {
+    right: 0px;
+    transition: right 0.5s;
 }
 
 #dropdownContent a {
@@ -720,13 +729,57 @@ li.answer {
     font-size: 10pt;
     text-align:center;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+}
+
+.footer-left{
+    height: 100%;
+    width: 100px;
+    margin-left: 50px;
 }
 
 #footer-flag {
     height: 150px;
     margin-bottom: 5px;
+}
+
+.footer-middle{
+    height: 100%;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contact *{
+    margin: 0 5px;
+    color: white;
+}
+
+.contact *:hover{
+    color: black;
+    text-decoration: none;
+}
+
+.footer-middle p {
+    margin: 0;
+}
+
+.footer-right{
+    height: 100%;
+    width: 100px;
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-right p {
+    margin: 0;
+    font-size: 14pt;
 }
 
 /* --- @media Queries --- */
@@ -991,9 +1044,7 @@ html fieldset {
 }
 
 .section-header {
-    text-transform: uppercase;
     text-align: center;
-    padding: 40px 0;
-    font-weight: 300;
+    padding: 50px 0 40px;
     font-size: 26px;
 }

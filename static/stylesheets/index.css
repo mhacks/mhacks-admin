@@ -28,8 +28,17 @@ h3 {
     max-height: 100%;
 }
 
+.info-section{
+    background-color: #eef1f3;
+    padding-bottom: 50px;
+}
+
+.event-info-section p {
+
+}
+
 .categories-section {
-    background-color: #F3F3F4;
+
 }
 
 .categories-header {
@@ -41,7 +50,7 @@ h3 {
 }
 
 .category-row:last-child {
-    padding: 100px 0;
+    padding-bottom: 60px;
 }
 
 .category-item {
@@ -81,8 +90,4 @@ h3 {
         max-height: 210px;
         display: inline-block;
     }
-}
-
-.event-new-info-section {
-    padding-bottom: 40px;
 }
