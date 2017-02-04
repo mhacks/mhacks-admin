@@ -26,7 +26,6 @@ h1 {
 h2 {
     font-family: 'Ubuntu', sans-serif;
     font-size: 14pt;
-    text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.4px;
     font-weight: bold;
     color: #4a4948;
@@ -36,7 +35,6 @@ h2 {
 
 h3 {
     font-size: 11pt;
-    text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.4px;
     color: white;
     padding: 0;
@@ -45,19 +43,18 @@ h3 {
 h4 {
     font-family: 'Ubuntu', sans-serif;
     font-size: 14pt;
-    text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.4px;
-    color: #66686a;
+    color: #4a4948;
     padding: 0;
     margin-top: 0;
 }
 
 p {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 12pt;
-    font-weight: 200;
+    font-weight: 300;
     width: 80%;
 }
+
 a {
     color: #337ab7;
     text-decoration: none
@@ -92,6 +89,38 @@ a {
     color: rgba(37, 37, 37, 0.63);
 }*/
 
+.yellow-text {
+    color: #e8b92b;
+}
+
+.mustard-text {
+    color: #c09b2e;
+}
+
+.orange-text {
+    color: #ed9a48;
+}
+
+.orange-red-text {
+    color: #ef7a54;
+}
+
+.red-text {
+    color: #f16768;
+}
+
+.yellow-bg {
+    background-color: #e8b92b;
+}
+
+.orange-bg {
+    background-color: #ed9a48;
+}
+
+.orange-red-bg {
+    background-color: #ef7a54;
+}
+
 #container {
     margin-left: 0;
     width: 100%;
@@ -113,7 +142,7 @@ a {
 }
 
 .col-2 {
-    width: 49.5%;
+    width: 49%;
 }
 
 .col-3 {
@@ -349,7 +378,7 @@ a {
     position: relative;
     left: calc(50% - 130px);
     height: 40px;
-    width: 40px;     
+    width: 40px;
 }
 
 #bubble-text {
@@ -370,7 +399,7 @@ a {
     width: 12em;
     -moz-border-radius: 80px;
     -webkit-border-radius: 80px;
-    border-radius: 80px; 
+    border-radius: 80px;
 }
 
 #bubble-triangle {
@@ -498,8 +527,6 @@ a {
 }
 
 .faq-item .question {
-    font-family: 'Ubuntu', sans-serif;
-    color: #33c5f4;
     font-size: 14pt;
 }
 
@@ -528,7 +555,6 @@ a {
 }
 
 .big-tile {
-    background-color: white;
     padding: 30px;
     margin-bottom: 10px;
 
@@ -542,21 +568,24 @@ a {
     font-size: 14pt;
     margin: 0;
     padding: 0;
+    color: white;
+    width: 100%;
+    font-weight: 300;
 }
 
 .quote:before, .quote:after {
-    color: rgba(0, 169, 194, 0.9);
+    color: white;
     content: '"';
     font-size: 14pt;
 }
 
 .source {
-    color: #40A1DA;
+    color: white;
     font-size: 14pt;
-    font-style: italic;
     text-align: right;
     margin: 10px 0 0 0;
     padding: 0;
+    font-weight: 400;
 }
 
 .sponsors-image {
@@ -647,8 +676,6 @@ a {
     /* Style as h2 */
     font-family: 'Ubuntu', sans-serif;
     font-size: 14pt;
-    text-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.4px;
     font-weight: bolder;
     color: #66686a;
     padding: 0;
@@ -1045,6 +1072,15 @@ html fieldset {
 
 .section-header {
     text-align: center;
-    padding: 50px 0 40px;
+    padding: 40px 0;
     font-size: 26px;
+    margin: 0;
+}
+
+.bubble {
+    border-radius: 20px;
+}
+
+.bubble p {
+    width: 100%;
 }
