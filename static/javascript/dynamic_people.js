@@ -4,15 +4,15 @@ $bubble = $('#bubble');
 
 $(window).scroll(function() {
     var scrollValue = Math.max($(this).scrollTop(), 0);
-    var screenHeight = $(this).outerHeight();
-    var screenWidth = $(this).outerWidth();
+    var screenHeight = $(this).innerHeight();
+    var screenWidth = $(this).innerWidth();
     var multiplier = scrollValue / screenHeight;
     if (multiplier < 1) {
-    	$person.css("margin-left", screenWidth * 0.055 * (1 - multiplier) + "%");
-    	$person.css("margin-right", screenWidth * 0.055 * (1 - multiplier) + "%");
+    	$person.css("margin-left", screenWidth * 0.055 * (1 - multiplier) + "vw");
+    	$person.css("margin-right", screenWidth * 0.055 * (1 - multiplier) + "vw");
     } else {
-    	$person.css("margin-left", "0%");
-    	$person.css("margin-right", "0%");
+    	$person.css("margin-left", "0");
+    	$person.css("margin-right", "0");
     	
     }
     $bubble.css("opacity", multiplier - .2);

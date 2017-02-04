@@ -330,8 +330,11 @@ a {
 }
 
 /* --- Dynamic People --- */
+#people-container {
+    margin-top: 100vh;
+}
+
 #bubble {
-    margin-top: 800px;
     margin-bottom: 200px;
     position: relative;
     left: calc(50% - 130px);
