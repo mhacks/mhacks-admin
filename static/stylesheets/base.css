@@ -273,7 +273,7 @@ a {
 #logo {
     height: 100%; /*70%;*/
     width: 100vw; /*300px;*/
-    padding: 5%;
+    margin: 5%;
     text-align: center;
     display: flex;
     align-items: center;
