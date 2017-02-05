@@ -36,7 +36,7 @@ p {
 }
 
 .title-form {
-    background-color: #33c5f4;
+    background-color: #e8b92b;
 }
 
 .title-form h3 {
@@ -77,8 +77,8 @@ html input:focus {
     outline: none;
 }
 
-html input[type="checkbox"]{
-
+html input[type="checkbox"] {
+    margin: 4px 0 0 20px;
 }
 
 html input[type="textarea"] {
@@ -152,14 +152,19 @@ html input:focus {
 
 html input[type="radio"],
 html button {
-    background: #33c5f4;
+    background: #e8b92b;
     border-radius: 5px;
     -webkit-transition: .4s;
     transition: .4s;
     font-size: 14px;
     color: white;
-    border: 0;
     padding: 10px 25px 10px 25px;
+    border: 2px solid #e8b92b;
+}
+
+html button:hover {
+    background: white;
+    color: #e8b92b;
 }
 
 /* Rows */
@@ -193,7 +198,7 @@ html button {
     text-align: center;
 }
 
-.drop-down-button{
+.drop-down-button {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     margin-left: auto;
     margin-right: auto;

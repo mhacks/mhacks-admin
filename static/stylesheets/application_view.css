@@ -6,7 +6,7 @@ INCLUDE THAT FILE ON YOUR SPECIFIC PAGE. THANK YOU.
 */
 
 body {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     background-color: #ffffff;
     margin: 0;
     overflow-x: scroll;
@@ -19,7 +19,7 @@ ul {
 }
 
 p {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 12pt;
     font-weight: 200;
     width: 100%;

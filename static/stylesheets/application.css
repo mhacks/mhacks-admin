@@ -9,7 +9,7 @@ html input[type="checkbox"] {
 }
 
 .title-apply {
-	color: #33c5f4;
+	color: #e8b92b;
 	margin-top: 10px;
 	font-weight: bold;
 }
@@ -28,7 +28,7 @@ html input[type="checkbox"] {
 
 .application-subtitle {
 	font-size: 12pt;
-	color:  #33c5f4;
+	color: #e8b92b;
     margin-bottom: 20px;
     margin-top: -10px;
 }

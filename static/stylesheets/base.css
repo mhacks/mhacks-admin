@@ -1037,13 +1037,11 @@ html fieldset {
 
     box-shadow: none;
 
-    color: #33c5f4;
+    color: #e8b92b;
 
     background-color: white;
     border-radius: 5px;
-    border-color: #33c5f4;
-    border-width: 2px;
-    border-style: solid;
+    border: 2px solid #e8b92b;
 
     text-decoration: none;
     transition: all 0.2s;
@@ -1051,7 +1049,7 @@ html fieldset {
 }
 
 .dashboard-registration button:hover {
-    background-color: #33c5f4;
+    background-color: #e8b92b;
     color: white;
     cursor: pointer;
     transition: all 0.2s;
