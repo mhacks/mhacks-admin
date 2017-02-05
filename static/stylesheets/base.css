@@ -187,7 +187,7 @@ a {
 
 /* --- Header and Header Content --- */
 #header-pad {
-    padding-top: 120px;
+    padding-top: 100px;
 }
 
 .header {
@@ -252,8 +252,8 @@ a {
     width: 300px;
     position: fixed;
     top: 0;
-    left: 25px;
-    height: 60px;
+    left: 50px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -307,8 +307,8 @@ a {
     width: 300px;
     position: fixed;
     top: 0;
-    right: 25px;
-    height: 60px;
+    right: 50px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -323,8 +323,8 @@ a {
     width: 300px;
     position: fixed;
     top: 15px;
-    right: 25px;
-    height: 60px;
+    right: 50px;
+    height: 100px;
     text-align: right;
 }
 
@@ -376,16 +376,22 @@ a {
 
 /* --- Dynamic People --- */
 #people-container {
-    margin-top: 40px;
+    margin-top: 60px;
     height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 #bubble {
     margin-bottom: 200px;
     position: relative;
-    left: calc(50% - 130px);
+    /*left: calc(50% - 130px);*/
     height: 40px;
     width: 40px;
+    transform: translate(-80px, 75%);
 }
 
 #bubble-text {
@@ -400,12 +406,12 @@ a {
 #bubble-circle {
     background-color: #e8b92b;
     height: 10em;
-    left: 9em;
+    /*left: 9em;*/
     position: absolute;
-    top: 5em;
+    /*top: 5em;*/
     width: 12em;
-    -moz-border-radius: 80px;
-    -webkit-border-radius: 80px;
+    /*-moz-border-radius: 80px;*/
+    /*-webkit-border-radius: 80px;*/
     border-radius: 80px;
 }
 
@@ -414,76 +420,66 @@ a {
     border-style: solid;
     border-width: 2em;
     position: relative;
-    top: 8.5em;
-    -webkit-transform:rotate(210deg);
-    -moz-transform: rotate(210deg);
     width: 0;
+    transform: translate(64px, 155px) rotate(180deg);
 }
 
 .dynamic-people {
     display: flex;
     position: relative;
-    width: 80%;
+    width: 90%;
     align-items: flex-end;
     justify-content: center
 }
 
 .person {
-    margin-left: 70%;
-    margin-right: 70%;
+    /*margin-left: 70%;
+    margin-right: 70%;*/
 }
 
 #p1 {
-    width: 12.8%;
-    position: relative;
-    left: 16.3%;
-    z-index: -3;
+    width: 13%;
+    z-index: -1;
+    transform: translate(26%, 0);
 }
 
 #p2 {
-    width: 13.8%;
-    position: relative;
-    left: 14.8%;
+    width: 14%;
     z-index: -2;
+    transform: translate(19%, 0);
 }
 
 #p3 {
-    width: 13.9%;
-    position: relative;
-    left: 13.6%;
+    width: 14%;
     z-index: -3;
+    transform: translate(9%, 0);
 }
 
 #p4 {
     width: 13%;
-    position: relative;
-    left: 10.8%;
+    transform: translate(5%, 0);
 }
 
 #p5 {
     width: 12%;
-    position: relative;
-    left: 9%;
     z-index: -2;
+    transform: translate(-5%, 0);
 }
 
 #p6 {
-    width: 14%;
-    position: relative;
-    left: 7.8%;
+    width: 12%;
+    transform: translate(-18%, 0);
 }
 
 #p7 {
-    width: 14.17%;
-    position: relative;
-    left: 7.1%;
+    width: 13%;
     z-index: 0;
+    transform: translate(-21%, 0);
 }
 
 #p8 {
-    width: 14%;
-    position: relative;
-    left: 6%;
+    width: 15%;
+    transform: translate(-32%, 0);
 }
 
 /* --- Non-Tiled Section --- */
