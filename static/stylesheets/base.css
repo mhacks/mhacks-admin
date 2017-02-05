@@ -394,13 +394,13 @@ a {
     text-align: center;
     color: white;
     font-size: 20px;
+    font-weight: 700;
 }
 
 #bubble-circle {
-    background-color: #169ccc;
-    border: 1px solid #999;
+    background-color: #e8b92b;
     height: 10em;
-    left: 5em;
+    left: 9em;
     position: absolute;
     top: 5em;
     width: 12em;
@@ -410,14 +410,14 @@ a {
 }
 
 #bubble-triangle {
-    border-color: transparent transparent #169ccc transparent;
+    border-color: transparent transparent #e8b92b transparent;
     border-style: solid;
     border-width: 2em;
     position: relative;
-    top: 7em;
-    -webkit-transform:rotate(-40deg);
-    -moz-transform: rotate(-40deg);
-    width: 0px;
+    top: 8.5em;
+    -webkit-transform:rotate(210deg);
+    -moz-transform: rotate(210deg);
+    width: 0;
 }
 
 .dynamic-people {
@@ -434,48 +434,50 @@ a {
 }
 
 #p1 {
-    width: 10%;
+    width: 12.8%;
     position: relative;
-    left: 21.8%;
+    left: 16.3%;
+    z-index: -3;
 }
 
 #p2 {
     width: 13.8%;
     position: relative;
-    left: 20%;
+    left: 14.8%;
+    z-index: -2;
 }
 
 #p3 {
-    width: 12.9%;
+    width: 13.9%;
     position: relative;
-    left: 17%;
-    z-index: 2;
+    left: 13.6%;
+    z-index: -3;
 }
 
 #p4 {
-    width: 11%;
+    width: 13%;
     position: relative;
-    left: 15.5%;
+    left: 10.8%;
 }
 
 #p5 {
-    width: 10%;
+    width: 12%;
     position: relative;
-    left: 13%;
-    z-index: 2;
+    left: 9%;
+    z-index: -2;
 }
 
 #p6 {
-    width: 13%;
+    width: 14%;
     position: relative;
-    left: 11.8%;
+    left: 7.8%;
 }
 
 #p7 {
-    width: 11.17%;
+    width: 14.17%;
     position: relative;
-    left: 9.5%;
-    z-index: 2;
+    left: 7.1%;
+    z-index: 0;
 }
 
 #p8 {
@@ -483,23 +485,6 @@ a {
     position: relative;
     left: 6%;
 }
-
-#p9 {
-    width: 10%;
-    position: relative;
-    left: 4.2%;
-    z-index: 2;
-}
-
-#p10 {
-    width: 9%;
-    position: relative;
-    left: 2%;
-}
-
-
-
-
 
 /* --- Non-Tiled Section --- */
 
