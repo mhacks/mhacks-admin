@@ -160,7 +160,7 @@ a {
 .header {
     top: 0;
     height: 60px;
-    box-shadow: 0 -4px 16px 0 #000000;
+    /*box-shadow: 0 -4px 16px 0 #000000;*/
     text-align: center;
     padding: 0;
     width: 100%;
@@ -240,8 +240,9 @@ a {
 }
 
 #logo {
-    height: 70%;
-    width: 300px;
+    height: 100%; /*70%;*/
+    width: 100vw; /*300px;*/
+    padding: 5%;
     text-align: center;
     display: flex;
     align-items: center;
@@ -255,16 +256,19 @@ a {
     vertical-align: middle;
 }
 
-.logo-scale {
-    transform-origin: 50% 50%;
-}
-
 #logo a {
-    background-color: rgba(0,0,0,0);
-    box-shadow: 0 0 0 0 #000000;
-
     padding: 0 0;
     margin: 0 0 0 0;
+
+    /*display: block;*/
+    max-height: 100%;
+}
+
+#scroll-down{
+    position: fixed;
+    bottom: 20px;
+    left: calc(50vw - 16px);
+    cursor: pointer;
 }
 
 #headerButtons {
@@ -341,7 +345,8 @@ a {
 
 /* --- Dynamic People --- */
 #people-container {
-    margin-top: 100vh;
+    margin-top: 40px;
+    height: 100vh;
 }
 
 #bubble {

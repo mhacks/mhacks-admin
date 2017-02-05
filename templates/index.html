@@ -8,7 +8,7 @@
     <div id="container">
         {% include 'header.html' %}
         {% include 'dynamic_people.html' %}
-        <div class="info-section">
+        <div class="info-section" id="scroll-to-here">
             <div class="section-container">
                 <h2 class="section-header">What is MHacks?</h2>
                 <p>MHacks is a 36-hour hackathon run by University of Michigan students. At MHacks, we want to help you
@@ -456,6 +456,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ static('javascript/index.js') }}" type="application/javascript"></script>
     <script src="{{ static('javascript/faq.js') }}" type="application/javascript"></script>
 {% endblock %}
