@@ -52,7 +52,7 @@ p {
     font-family: 'Ubuntu', sans-serif;
     font-size: 12pt;
     font-weight: 300;
-    width: 80%;
+    width: 90%;
 }
 
 a {
@@ -535,7 +535,7 @@ a {
 
 .faq-item .answer {
     display: none;
-    font-family: 'Ubuntu';
+    font-family: 'Ubuntu', sans-serif;
     color: rgba(37, 37, 37, 0.63);
     font-size: 12pt;
     padding-left: calc(14pt + 5px);
@@ -796,6 +796,13 @@ li.answer {
 
 /* --- @media Queries --- */
 
+@media only screen and (max-width: 1140px) {
+    .faq-item {
+        width: 45%;
+        margin-right: 4%;
+    }
+}
+
 @media only screen and (max-width: 720px) {
     #headerButtons {
         display:none;
@@ -814,6 +821,11 @@ li.answer {
     }
 
     .flex-row {
+        flex-direction: column;
+    }
+
+    .faq-row {
+        margin: 0 0 10px 0;
         flex-direction: column;
     }
 
