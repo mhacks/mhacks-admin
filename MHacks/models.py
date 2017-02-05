@@ -195,9 +195,27 @@ class Application(Any):
     grad_date = models.DateField(null=True, blank=True)
     birthday = models.DateField()
 
+    GENDER = [
+        ('', 'Gender'),
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('non_binary', 'Non-Binary'),
+        ('other', 'Other')
+    ]
+
+    # both demographic info and gender are optional
+    DEMOGRAPHIC_INFO = [
+        ('', 'Race'),
+        ('american_indian_or_alaskan_native', 'American Indian or Alaskan Native'),
+        ('asian_or_pacific_islander', 'Asian or Pacific Islander'),
+        ('black', 'Black'),
+        ('hispanic', "Hispanic"),
+        ('white', 'White'),
+    ]
+
     # Demographic
-    gender = models.CharField(max_length=64, default='')
-    race = models.CharField(max_length=64, default='')
+    gender = models.CharField(choices=GENDER, max_length=64, default='')
+    race = models.CharField(choices=DEMOGRAPHIC_INFO, max_length=64, default='')
 
     # Previous Experience
     num_hackathons = models.IntegerField(default=0, validators=[

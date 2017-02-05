@@ -133,10 +133,6 @@ class ApplicationForm(forms.ModelForm):
             # 'is_high_school': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
             # 'is_international': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
 
-            # TODO: change this to dropdown lists
-            'gender': forms.TextInput(attrs={'placeholder': 'They/Them/Theirs', 'id': 'gender-autocomplete'}),
-            'race': forms.TextInput(attrs={'placeholder': 'Hacker', 'id': 'race-autocomplete'}),
-
             'has_side_projects': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
 
             'github': forms.TextInput(attrs={'placeholder': 'https://github.com/username', 'class': 'form-control input-md'}),
