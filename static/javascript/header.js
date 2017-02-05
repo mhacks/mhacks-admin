@@ -37,6 +37,8 @@ $(document).ready(function(){
     } else {
         // not on home page
         $header.css("opacity", 0.95);
+        $logoContainer.css("width", "50vw");
+        $logo.css("max-height", "51px");
         //$headerPad.css("padding-top", 60);
         $downScroll.hide();
     }

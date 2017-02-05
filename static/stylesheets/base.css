@@ -192,7 +192,7 @@ a {
 
 .header {
     top: 0;
-    height: 60px;
+    height: 100px;
     /*box-shadow: 0 -4px 16px 0 #000000;*/
     text-align: center;
     padding: 0;
@@ -201,7 +201,7 @@ a {
     position: fixed;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     z-index: 9999;
     opacity: 1;
@@ -320,11 +320,9 @@ a {
 }
 
 #headerDropdown {
-    width: 300px;
     position: fixed;
-    top: 15px;
+    top: 32px;
     right: 50px;
-    height: 100px;
     text-align: right;
 }
 
@@ -339,7 +337,7 @@ a {
 
     height: 120px;
     width: 160px;
-    top: 57px;
+    top: 97px;
     right: -160px;
     transition: right 0.5s;
 
