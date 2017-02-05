@@ -271,9 +271,9 @@ a {
 }
 
 #logo {
-    height: 100%; /*70%;*/
+    height: 80%; /*70%;*/
     width: 100vw; /*300px;*/
-    margin: 5%;
+    margin: 10%;
     text-align: center;
     display: flex;
     align-items: center;
@@ -285,6 +285,7 @@ a {
     max-height: 100%;
     margin: 0 auto;
     vertical-align: middle;
+    cursor: pointer;
 }
 
 #logo a {

@@ -5,9 +5,9 @@
         <p>University of Michigan</p>
     </div>
     <div id="logo">
-        <a href="{{ url_for('mhacks-home') }}">
+{#        <a href="{{ url_for('mhacks-home') }}">#}
             <img id="logo-text" src="{{ static('assets/logo-text.png') }}" alt="MHacks 9 Logo">
-        </a>
+{#        </a>#}
     </div>
 
     <i class="fa fa-angle-double-down fa-3x faa-flash animated" id="scroll-down" aria-hidden="true"></i>
@@ -51,3 +51,8 @@
     </div>
 </div>
 <script src="{{ static('javascript/header.js') }}" type="text/javascript"></script>
+<script>
+    $('#logo-text').click(function(event){
+        window.open("{ url_for('mhacks-home') }");
+    });
+</script>
