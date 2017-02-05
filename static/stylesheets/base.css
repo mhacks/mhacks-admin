@@ -283,6 +283,8 @@ a {
 #logo-text {
     max-width: 100%;
     max-height: 100%;
+    width: auto;
+    height: auto;
     margin: 0 auto;
     vertical-align: middle;
     cursor: pointer;
