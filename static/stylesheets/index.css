@@ -91,3 +91,9 @@ h3 {
         display: inline-block;
     }
 }
+
+.sponsorship-content {
+    width: 80%;
+    text-align: center;
+    margin-bottom: 50px;
+}
