@@ -71,21 +71,21 @@ $(window).resize(function (){
     if($(window).innerWidth() > 720){
         $menuContent.removeClass("expanded");
 
-        $headerButtons.show();
+        /*$headerButtons.show();
         $headerDropdown.hide();
     } else {
         $headerButtons.hide();
-        $headerDropdown.show();
+        $headerDropdown.show();*/
     }
 });
 
-if($(window).innerWidth() > 720){
+/*if($(window).innerWidth() > 720){
     $headerButtons.show();
     $headerDropdown.hide();
 } else {
     $headerButtons.hide();
     $headerDropdown.show();
-}
+}*/
 
 $menuTrigger.click(function(){
     $menuContent.toggleClass("expanded");

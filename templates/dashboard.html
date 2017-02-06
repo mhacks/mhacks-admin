@@ -80,15 +80,18 @@
         {% endif %}
         {% if not registration_application and not application %}
         <div class="dashboard-registration">
-            <h2>INSERT TEXT HERE</h2>
-            <p>SOMETHING ABOUT APPLYING FOR BOTH OR ONE OR NEITHER</p>
-            <p>LOL IM A BOAT CHOO CHO</p>
+            <h2>Hi! Welcome to your Dashboard!</h2>
+            <p>This is where you'll find updates on your application status, travel reimbursements, and registration forms.</p>
+            <p>Fill out one of the applications below if you want to attend MHacks 9. For those who want to both hack
+                and mentor, use the Hacker application. If you think you might need a Travel Reimbursement, you must
+                apply by <strong>Saturday, February 18th</strong>. Otherwise, the application is open until
+                <strong>Friday, March 10th</strong>.</p>
             <div class="row-container">
+                <form method="GET" action="{{ url_for('mhacks-apply') }}">
+                    <button type="submit">Hacker</button>
+                </form>
                 <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
                     <button type="submit">Mentor</button>
-                </form>
-                <form method="GET" action="{{ url_for('mhacks-apply') }}">
-                    <button type="submit">Apply</button>
                 </form>
             </div>
         </div>
