@@ -527,6 +527,26 @@ p.big-text {
     transition: all 0.2s;
 }
 
+.yellow-text .faq-item a {
+    color: #e8b92b;
+}
+
+.mustard-text .faq-item a {
+    color: #c09b2e;
+}
+
+.orange-text .faq-item a {
+    color: #ed9a48;
+}
+
+.orange-red-text .faq-item a {
+    color: #ef7a54;
+}
+
+.red-text .faq-item a {
+    color: #f16768;
+}
+
 .faq-item .question {
     font-size: 14pt;
 }
