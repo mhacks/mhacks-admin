@@ -330,6 +330,7 @@ p.big-text {
 }
 
 #headerDropdown {
+    display: none;
     position: fixed;
     top: 33px;
     right: 25px;
