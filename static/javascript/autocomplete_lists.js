@@ -3,18 +3,19 @@
  */
 
 var GENDERS = [
-    'Male',
     'Female',
+    'Male',
     'Non-Binary',
     'Other'
 ];
 
 var RACES = [
-    'White',
-    'Black',
     'American Indian or Alaskan Native',
     'Asian or Pacific Islander',
-    'Hispanic'
+    'Black',
+    'Hispanic',
+    'White',
+    'Other'
 ];
 
 var COLLEGES = [

@@ -211,6 +211,7 @@ class Application(Any):
         ('black', 'Black'),
         ('hispanic', "Hispanic"),
         ('white', 'White'),
+        ('other', 'Other')
     ]
 
     # Demographic
