@@ -9,7 +9,7 @@ var $menuContent = $('#dropdownContent');
 var $downScroll = $('#scroll-down');
 
 var shouldScale = window.location.pathname == '/';
-var headerScroll = 160;
+var headerScroll = 300;
 
 $(document).ready(function(){
     if (shouldScale){

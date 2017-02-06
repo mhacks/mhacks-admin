@@ -2,8 +2,8 @@ var $person = $('.person');
 var $people = [$('#p1'), $('#p2'), $('#p3'), $('#p4'), $('#p5'), $('#p6'), $('#p7'), $('#p8')];
 var $bubble = $('#bubble');
 
-var animStart = 60;
-var headerScroll = 160;
+var animStart = 100;
+var headerScroll = 300;
 var animStops = [
     {s: animStart, l: headerScroll - animStart},
     {s: animStart + (headerScroll - animStart) / 4, l: (headerScroll - animStart) * 0.75},
