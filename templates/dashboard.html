@@ -73,6 +73,17 @@
                     <div class="rounded-box decline">
                         <p>We haven’t gotten to read your application just yet, but we’re on it! You should receive a decision by next Monday. Hang tight!</p>
                     </div>
+                    <div>
+                        <p>If you need to edit your application, use the buttons below.</p>
+                    </div>
+                    <div class="row-container">
+                        <form method="GET" action="{{ url_for('mhacks-apply') }}">
+                            <button type="submit">Hacker</button>
+                        </form>
+                        <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
+                            <button type="submit">Mentor</button>
+                        </form>
+                    </div>
                 {% endif %}
 {#            {% else %}#}
 {#                <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>#}
