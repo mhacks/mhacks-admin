@@ -229,6 +229,7 @@ class MentorApplicationForm(forms.ModelForm):
         super(MentorApplicationForm, self).__init__(*args, **kwargs)
 
         self.fields['agree_tc'].required = True
+        self.fields['user_focused_design_skills'].required = False
 
         self.fields['what_importance'].title = "Short Answer"
         self.fields['skills'].title = "Skills"
@@ -240,7 +241,7 @@ class MentorApplicationForm(forms.ModelForm):
         self.fields['mentorship_ideas'].full = True
         self.fields['what_importance'].full = True
         self.fields['agree_tc'].full = True
-        self.fields['user_focused_design_skills'].full = False
+
 
     class Meta:
         from application_lists import SKILLS
