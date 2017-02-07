@@ -38,7 +38,7 @@ $(document).ready(function(){
     } else {
         if(isMobile){
             $('#people-container').css("margin-top", 0).css("height", "calc(100vh - 100px)");
-            $('#header-pad').css("padding-top", 0);
+            //$('#header-pad').css("padding-top", 0);
         }
         // not on home page
         $header.css("opacity", 0.95);
