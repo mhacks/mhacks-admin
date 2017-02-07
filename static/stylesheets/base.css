@@ -201,8 +201,7 @@ p.big-text {
     /*box-shadow: 0 -4px 16px 0 #000000;*/
     text-align: center;
     padding: 0;
-    width: 100%;
-    max-width: 100%;
+    width: 100vw;
     position: fixed;
     display: flex;
     flex-direction: row;
