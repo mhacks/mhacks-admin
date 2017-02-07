@@ -112,7 +112,7 @@ class ApplicationForm(forms.ModelForm):
 
 
             'passionate': 'Tell us about a project that you worked on and why you\'re proud of it. This doesn\'t have to be a hack! (150 words max)',
-            'coolest_thing': 'What do you hope to take away from MHacks 8? (150 words max)',
+            'coolest_thing': 'What do you hope to take away from MHacks 9? (150 words max)',
             'other_info': 'Anything else you want to tell us?',
 
 
@@ -240,6 +240,7 @@ class MentorApplicationForm(forms.ModelForm):
         self.fields['mentorship_ideas'].full = True
         self.fields['what_importance'].full = True
         self.fields['agree_tc'].full = True
+        self.fields['user_focused_design_skills'].full = False
 
     class Meta:
         from application_lists import SKILLS
@@ -338,8 +339,8 @@ class RegistrationForm(forms.ModelForm):
         exclude = ['user', 'submitted', 'deleted']
 
         labels = {
-            'acceptance': 'Do you accept your invitation to attend MHacks 8 this fall?',
-            'transportation': 'How do you plan on getting to MHacks 8?',
+            'acceptance': 'Do you accept your invitation to attend MHacks 9 this fall?',
+            'transportation': 'How do you plan on getting to MHacks 9?',
             'want_help': 'What areas would you like to have help in? (CTRL/CMD + click to select multiple options!)',
             'other_want_help': '',
             'can_help': 'What areas can you mentor another hacker in? (CTRL/CMD + click to select multiple options!)',
