@@ -833,7 +833,6 @@ li.answer {
 @media only screen and (max-width: 1140px) {
     .faq-item {
         width: 45%;
-        margin-right: 4%;
     }
 }
 
