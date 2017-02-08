@@ -287,7 +287,9 @@ class MentorApplication(Any):
             max_length=32,
             choices=zip(USER_FOCUSED_DESIGN_SKILLS, USER_FOCUSED_DESIGN_SKILLS),
             blank=True),
-        size=len(USER_FOCUSED_DESIGN_SKILLS)
+        size=len(USER_FOCUSED_DESIGN_SKILLS),
+        blank=True,
+        null=True
     )
     other_design_skills = models.CharField(max_length=255, default='', blank=True)
 
