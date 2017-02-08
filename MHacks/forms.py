@@ -73,10 +73,11 @@ class ApplicationForm(forms.ModelForm):
         self.fields['passionate'].required = True
 
 
-        # if the user is from UMich, exclude the short answer and reimbursement/travel fields
+        # if the user is from UMich, exclude the reimbursement/travel fields
         if self.user and 'umich.edu' in self.user.email:
-            for key in ['passionate', 'coolest_thing', 'other_info']:
+            for key in ['needs_reimbursement', 'from_city', 'from_state']:
                 del self.fields[key]
+
 
     class Meta:
         from application_lists import TECH_OPTIONS
