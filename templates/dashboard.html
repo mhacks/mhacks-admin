@@ -14,22 +14,16 @@
         {% if request.user and request.user.groups.filter(name='application_reader').exists() %}
             <h2>Looks like you're an application reader!</h2>
             <a href="{{url_for('mhacks-applicationSearch')}}"><button type="button">Read Apps</button></a>
-            <br>
-            <hr>
         {% endif %}
 
         {% if request.user and request.user.groups.filter(name='sponsor').exists() %}
             <h2>Looks like you're a sponsor!</h2>
             <a href="{{url_for('mhacks-sponsorPortal')}}"><button type="button">Sponsor Portal</button></a>
-            <br>
-            <hr>
         {% endif %}
 
         {% if request.user and request.user.groups.filter(name='stats_team').exists() %}
             <h2>Looks like you're on the stats team!</h2>
             {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
-            <br>
-            <hr>
         {% endif %}
 
         {% if request.user and request.user.groups.filter(name='hacker').exists() %}
@@ -49,29 +43,30 @@
 
             {% if application %}
                 {% if application.decision == 'Accept' %}
-                    <h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>
-                    <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/1197509966946089/">Facebook event page</a> and join the community!</p>
-                    <p>Hit the button below to register and make sure you check out our <span class="fake-link" id="bus-routes-link">bus routes</span>! 🎉</p>
-                    <p><a href="https://www.eventbrite.com/e/mhacks-8-busses-registration-27238162076">Click here to register for a bus! (Eventbrite)</a></p>
-                    <p>Please note: UMich students do not have to register for busses. There will be busses departing from Pierpont Commons at 4:00pm and 5:30pm on Friday.</p>
+                    <!--<h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>-->
+                    <!--<p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/1197509966946089/">Facebook event page</a> and join the community!</p>-->
+                    <!--<p>Hit the button below to register and make sure you check out our <span class="fake-link" id="bus-routes-link">bus routes</span>! 🎉</p>-->
+                    <!--<p><a href="https://www.eventbrite.com/e/mhacks-8-busses-registration-27238162076">Click here to register for a bus! (Eventbrite)</a></p>-->
+                    <!--<p>Please note: UMich students do not have to register for busses. There will be busses departing from Pierpont Commons at 4:00pm and 5:30pm on Friday.</p>-->
 
-                    <div id="bus-routes">
-                        <br>
-                        <img id="bus-routes-img" src="{{ static('assets/bus_routes_white.png') }}">
-                    </div>
-                    <br>
-                    {% if not registration_application %}
-                        <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
-                    {% endif %}
-                    {% if application.reimbursement %}
-                        <br>
-                        <h2>Reimbursement amount: <span class="rounded-box accept">${{ '{:.2f}'.format(application.reimbursement) }}</span> </h2>
-                        <p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to <a href="https://goo.gl/wORx7K">this guide</a> for more details on traveling that weekend.</p>
-                        <p>We’ll see you there!</p>
+                    <!--<div id="bus-routes">-->
+                        <!--<br>-->
+                        <!--<img id="bus-routes-img" src="{{ static('assets/bus_routes_white.png') }}">-->
+                    <!--</div>-->
+                    <!--<br>-->
+                    <!--{% if not registration_application %}-->
+                        <!--<a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>-->
+                    <!--{% endif %}-->
+                    <!--{% if application.reimbursement %}-->
+                        <!--<br>-->
+                        <!--<h2>Reimbursement amount: <span class="rounded-box accept">${{ '{:.2f}'.format(application.reimbursement) }}</span> </h2>-->
+                        <!--<p>You currently have 5 days to send your flight receipt to <a href="mailto:flymhacks@umich.edu">flymhacks@umich.edu</a>! Please refer to <a href="https://goo.gl/wORx7K">this guide</a> for more details on traveling that weekend.</p>-->
+                        <!--<p>We’ll see you there!</p>-->
+                    <p>Sorry for the technical difficulties folks, we'll make an announcement when we're back up and running. Stay tuned!</p>
                     {% endif %}
                 {% elif application.decision == 'Waitlist' %}
                     <h2>Application Status: <span class="rounded-box waitlist">WAITLIST</span></h2>
-                    <p>Thank you for applying to MHacks 8. Unfortunately, we can't extend you an invitation at the moment, but hang tight! If there’s a change in your decision, we’ll let you know.</p>
+                    <p>Thank you for applying to MHacks 9. Unfortunately, we can't extend you an invitation at the moment, but hang tight! If there’s a change in your decision, we’ll let you know.</p>
                 {% elif application.decision == 'Decline' %}
                     <div>
                         <h2>Your application has been submitted. We look forward to reading it!</h2>
@@ -79,19 +74,40 @@
                     <div class="rounded-box decline">
                         <p>We haven’t gotten to read your application just yet, but we’re on it! You should receive a decision by next Monday. Hang tight!</p>
                     </div>
+                    <div>
+                        <p>If you need to edit your application, use the buttons below.</p>
+                    </div>
+                    <div class="row-container">
+                        <form method="GET" action="{{ url_for('mhacks-apply') }}">
+                            <button type="submit">Hacker</button>
+                        </form>
+                        <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
+                            <button type="submit">Mentor</button>
+                        </form>
+                    </div>
                 {% endif %}
-
-                <br>
-                <hr>
 {#            {% else %}#}
-{#                <h2>Welcome to your hacker dashboard! Check back here for MHacks 8 invitations, travel reimbursements, and registration forms.</h2>#}
+{#                <h2>Welcome to your hacker dashboard! Check back here for MHacks 9 invitations, travel reimbursements, and registration forms.</h2>#}
             {% endif %}
         {% endif %}
         {% if not registration_application and not application %}
-            <h2>Are you a walk on?</h2>
-            <p>After registering you will receive an email with your MHacks ticket attached which you must present to get access to the event.</p>
-            <p>Your dashboard will also be updated to display your MHacks ticket after you have registered so you can come back here to get access to it.</p>
-            <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
+        <div class="dashboard-registration">
+            <h2>Hi! Welcome to your Dashboard!</h2>
+            <p>This is where you'll find updates on your application status, travel reimbursements, and registration
+                forms. Fill out one of the applications below if you want to attend MHacks 9.</p>
+            <p> For those who want to both hack and mentor, use the Hacker application. </p>
+            <p> If you think you might need a Travel Reimbursement, you must
+                apply by <strong>Saturday, February 18th</strong>. Otherwise, the application is open until
+                <strong>Friday, March 10th</strong>.</p>
+            <div class="row-container">
+                <form method="GET" action="{{ url_for('mhacks-apply') }}">
+                    <button type="submit">Hacker</button>
+                </form>
+                <form method="GET" action="{{ url_for('mhacks-applyMentor') }}">
+                    <button type="submit">Mentor</button>
+                </form>
+            </div>
+        </div>
         {% endif %}
     </div>
     {# Enable registration for walk-ons #}

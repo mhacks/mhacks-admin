@@ -2,18 +2,20 @@
  * Created by Omkar on 8/15/2016.
  */
 
-var GENDER_PRONOUNS = [
-    'He/Him/His',
-    'She/Her/Hers',
-    'They/Them/Theirs'
+var GENDERS = [
+    'Female',
+    'Male',
+    'Non-Binary',
+    'Other'
 ];
 
 var RACES = [
-    'White',
-    'Black',
     'American Indian or Alaskan Native',
     'Asian or Pacific Islander',
-    'Hispanic'
+    'Black',
+    'Hispanic',
+    'White',
+    'Other'
 ];
 
 var COLLEGES = [

@@ -5,12 +5,22 @@ TECH_OPTIONS = [('ios', 'iOS'),
                 ('web_dev', 'Web Dev'),
                 ('vr', 'Virtual/Augmented Reality'),
                 ('game_dev', 'Game Development'),
-                ('hardware', 'Hardware')]
+                ('hardware', 'Hardware'),
+                ('ui_ux', 'Design'),
+                ('ai_ml', 'Artificial Intelligence/Machine Learning')]
 
 APPLICATION_DECISION = [
     'Accept',
     'Waitlist',
     'Decline'
+]
+
+USER_FOCUSED_DESIGN_SKILLS = [
+    'User experience research',
+    'Interaction design',
+    'Graphic design',
+    'Product design',
+    'Design thinking'
 ]
 
 SKILLS = [
@@ -123,3 +133,5 @@ EMPLOYMENT_SKILLS = [
     'Web Development',
     'Windows Development'
 ]
+
+

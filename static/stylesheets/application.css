@@ -1,19 +1,20 @@
 p {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 12pt;
     font-weight: 200;
     width: 100%;
 }
+
 html input[type="checkbox"] {
 }
 
-.title-apply{
-	color: #1CA5AA;
+.title-apply {
+	color: #e8b92b;
 	margin-top: 10px;
 	font-weight: bold;
 }
 
-.application-text{
+.application-text {
 	color: #000;
 	font-size: 12pt;
     opacity: 0.7;
@@ -27,7 +28,7 @@ html input[type="checkbox"] {
 
 .application-subtitle {
 	font-size: 12pt;
-	color:  #78CCCB;
+	color: #e8b92b;
     margin-bottom: 20px;
     margin-top: -10px;
 }

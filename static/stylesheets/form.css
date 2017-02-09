@@ -6,7 +6,7 @@ INCLUDE THAT FILE ON YOUR SPECIFIC PAGE. THANK YOU.
 */
 
 body {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     background-color: #ffffff;
     margin: 0;
     overflow-x: hidden;
@@ -16,25 +16,35 @@ body {
 button {
     cursor: pointer;
 }
-ul {
-    list-style-type: none;
-}
 
 p {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 12pt;
-    font-weight: 200;
     width: 100%;
+}
+
+.ui-widget-content {
+    box-shadow: 0px 1px 5px 0px gray;
+}
+.ui-menu .ui-menu-item {
+    background-color: white;
+    margin-left: 20px !important;
 }
 
 .header-form {
     position: static;
 }
 
+.title-form {
+    background-color: #e8b92b;
+}
+
 .title-form h3 {
-    color: rgba(0, 169, 194, 1);
-    font-size: 35px;
-    margin-bottom: 0;
+    font-weight: bolder;
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    padding: 15px 0;
 }
 
 .body-form {
@@ -49,10 +59,6 @@ p {
 .container-form {
     width: 66%;
     margin: 40px auto 40px auto;
-    -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    -moz-box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    border: 1px solid  rgba(0,0,0,0.33);
     padding-bottom: 30px;
     color: #333;
 }
@@ -70,6 +76,11 @@ html input {
 html input:focus {
     outline: none;
 }
+
+html input[type="checkbox"] {
+    margin: 4px 0 0 20px;
+}
+
 html input[type="textarea"] {
     resize: vertical;
 }
@@ -141,15 +152,20 @@ html input:focus {
 
 html input[type="radio"],
 html button {
-    background: rgba(0, 169, 194, 1);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.23), 0 3px 6px rgba(0,0,0,0.15);
+    background: #e8b92b;
     border-radius: 5px;
     -webkit-transition: .4s;
     transition: .4s;
     font-size: 14px;
     color: white;
-    border: 0;
     padding: 10px 25px 10px 25px;
+    margin: 0 10px;
+    border: 2px solid #e8b92b;
+}
+
+html button:hover {
+    background: white;
+    color: #e8b92b;
 }
 
 /* Rows */
@@ -183,7 +199,7 @@ html button {
     text-align: center;
 }
 
-.drop-down-button{
+.drop-down-button {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     margin-left: auto;
     margin-right: auto;
@@ -247,6 +263,23 @@ html button {
     text-align: center;
 }
 
+.form-field ul,
+.form-full ul {
+    list-style-type: none;
+}
+
+.form-field ul li,
+.form-full ul li {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.form-field ul li input[type="radio"],
+.form-full ul li input[type="radio"] {
+    width: 12px;
+    height: 12px;
+}
+
 .full {
     margin-left: 30px;
     margin-right: 30px;
@@ -269,4 +302,42 @@ html button {
 
 .file-upload {
     padding-left: 20px;
+}
+
+.checkbox-form-container {
+    display: flex;
+}
+
+.checkbox-form-container label {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: 200;
+    font-size: 15px;
+    margin-right: 7px;
+    float: left;
+    text-align: right;
+}
+
+.checkbox-form-container .full-widget {
+    margin: 0 0 0 20px;
+}
+
+#id_resume {
+    margin-left: 20px;
+}
+
+#id_needs_reimbursement {
+    margin: 4px 0 0 20px;
+}
+
+#id_gender,
+#id_race {
+    border: 0;
+    margin-left: 20px;
+}
+
+#id_mentoring {
+    padding-left: 0;
 }

@@ -25,7 +25,31 @@ Pre-installed packages:
 - Postgre SQL (make sure its setup and running!)
     - For this make sure you have a database named mhacks and an empty user and password on localhost. If this is not the case update the development settings DATABASE settings to your own authentication details.
 
+    
+
+
+
+### Getting started:
+
+```bash
+    git clone <ssh or git link from repo>
+    cd MHacks-Website
+    # if <virtual environment preferred>
+    virtualenv --distribute venv/
+    source venv/bin/activate
+    # endif
+    pip install -r requirements.txt
+    ./manage.py migrate
+    ./manage.py runserver
+
+```
+##Installation Issues
+
+### Ubuntu/Linux
+
 If you're running on Ubuntu/Linux and you run into this output while doing `pip install -r requirements.txt`:
+]
+
 ```
 Complete output from command python setup.py egg_info:
     running egg_info
@@ -53,17 +77,20 @@ ild-vqrPuW/psycopg2/
 ```
 run `sudo apt-get install libpq-dev python-dev` to fix it and then run `pip install -r requirements.txt` to begin installation again.
 
-Getting started:
-```bash
-    git clone <ssh or git link from repo>
-    cd MHacks-Website
-    # if <virtual environment preferred>
-    virtualenv --distribute venv/
-    source venv/bin/activate
-    # endif
-    pip install -r requirements.txt
-    ./manage.py migrate
-    ./manage.py runserver
+
+
+### Mac OS
+
+When installing through the ``requirements.txt``, you might encounter an issue where the installation breaks when installing M2Crypto. If you have brew installed, manually install the following dependencies. 
+
+```
+brew install openssl && brew install swig
+brew --prefix openssl
+$ /usr/local/opt/openssl
+$ LDFLAGS="-L$(brew --prefix openssl)/lib"
+CFLAGS="-I$(brew --prefix openssl)/include" \
+SWIG_FEATURES="-I$(brew --prefix openssl)/include" \
+pip install m2crypto
 ```
 
 ## URLs

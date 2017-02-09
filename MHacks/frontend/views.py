@@ -20,7 +20,7 @@ from rest_framework.authtoken.models import Token
 
 from MHacks.decorator import anonymous_required, application_reader_required
 from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, RegistrationForm, \
-    SponsorPortalForm
+    SponsorPortalForm, MentorApplicationForm
 from MHacks.models import Application, MentorApplication, Registration
 from MHacks.pass_creator import create_apple_pass
 from MHacks.utils import send_verification_email, send_password_reset_email, validate_signed_token, \
@@ -62,7 +62,6 @@ def thanks_registering(request):
 @permission_required('MHacks.add_application')
 @permission_required('MHacks.change_application')
 def application(request):
-    return render(request, 'applications_closed.html')
 
     # find the user's application if it exists
     try:
@@ -103,40 +102,40 @@ def application(request):
 
 @login_required()
 def apply_mentor(request):
-    return redirect('https://docs.google.com/a/umich.edu/forms/d/e/1FAIpQLSdHtRqgaUORcwkwyOTkOZqDmcXGvPDmfZmEs2G13tbh9gzuBg/viewform')
+    # return redirect('https://docs.google.com/a/umich.edu/forms/d/e/1FAIpQLSdHtRqgaUORcwkwyOTkOZqDmcXGvPDmfZmEs2G13tbh9gzuBg/viewform')
 
     # unused as of 9/19/16
-    # try:
-    #     app = MentorApplication.objects.get(user=request.user, deleted=False)
-    # except MentorApplication.DoesNotExist:
-    #     app = None
-    #
-    # if request.method == 'GET':
-    #     form = MentorApplicationForm(instance=app)
-    # elif request.method == 'POST':
-    #     if not app:
-    #         try:
-    #             # look for deleted apps too
-    #             app = MentorApplication.objects.get(user=request.user)
-    #         except MentorApplication.DoesNotExist:
-    #             app = None
-    #
-    #     form = MentorApplicationForm(data=request.POST, instance=app)
-    #
-    #     if form.is_valid():
-    #         # save application
-    #         app = form.save(commit=False)
-    #         app.user = request.user
-    #         app.submitted = True
-    #         app.deleted = False
-    #         app.save()
-    #
-    #         return redirect(reverse('mhacks-dashboard'))
-    # else:
-    #     return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
-    #
-    # context = {'form': form}
-    # return render(request, 'apply_mentor.html', context=context)
+    try:
+        app = MentorApplication.objects.get(user=request.user, deleted=False)
+    except MentorApplication.DoesNotExist:
+        app = None
+
+    if request.method == 'GET':
+        form = MentorApplicationForm(instance=app)
+    elif request.method == 'POST':
+        if not app:
+            try:
+                # look for deleted apps too
+                app = MentorApplication.objects.get(user=request.user)
+            except MentorApplication.DoesNotExist:
+                app = None
+
+        form = MentorApplicationForm(data=request.POST, instance=app)
+
+        if form.is_valid():
+            # save application
+            app = form.save(commit=False)
+            app.user = request.user
+            app.submitted = True
+            app.deleted = False
+            app.save()
+
+            return redirect(reverse('mhacks-dashboard'))
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
+    context = {'form': form}
+    return render(request, 'apply_mentor.html', context=context)
 
 
 @login_required()

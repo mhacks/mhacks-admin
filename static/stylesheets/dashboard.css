@@ -20,6 +20,13 @@
     color: black;
 }
 
+.body-info p {
+    max-width: 90%;
+    width: 525px;
+    text-align: justify;
+    margin: 10px auto;
+}
+
 .rounded-box {
     padding: 3px;
     border-radius: 5px 5px 5px 5px;
@@ -34,8 +41,6 @@
 }
 
 .decline {
-    background-color: dimgray;
-    color: white;
 }
 
 .fake-link {

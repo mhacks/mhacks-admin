@@ -195,24 +195,51 @@ class Application(Any):
     grad_date = models.DateField(null=True, blank=True)
     birthday = models.DateField()
 
+    GENDER = [
+        ('', 'Gender'),
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('non_binary', 'Non-Binary'),
+        ('other', 'Other')
+    ]
+
+    # both demographic info and gender are optional
+    DEMOGRAPHIC_INFO = [
+        ('', 'Race'),
+        ('american_indian_or_alaskan_native', 'American Indian or Alaskan Native'),
+        ('asian_or_pacific_islander', 'Asian or Pacific Islander'),
+        ('black', 'Black'),
+        ('hispanic', "Hispanic"),
+        ('white', 'White'),
+        ('other', 'Other')
+    ]
+
     # Demographic
-    gender = models.CharField(max_length=32, default='')
-    race = models.CharField(max_length=64, default='')
+    gender = models.CharField(choices=GENDER, max_length=64, default='')
+    race = models.CharField(choices=DEMOGRAPHIC_INFO, max_length=64, default='')
 
-    # External Links
-    github = models.URLField()
-    devpost = models.URLField()
-    personal_website = models.URLField()
-    resume = models.FileField(max_length=(10 * 1024 * 1024))  # 10 MB max file size
-
-    # Experience
+    # Previous Experience
     num_hackathons = models.IntegerField(default=0, validators=[
         MinValueValidator(limit_value=0, message='You went to negative hackathons? Weird...')])
-    mentoring = models.BooleanField(default=False)
+    has_side_projects = models.BooleanField(default=False)
+    num_cs_courses = models.IntegerField(default=0)
+    num_ux_courses = models.IntegerField(default=0)
+
+    # External Links
+    github = models.URLField(default='https://github.com/username')
+    linkedin = models.URLField(default='https://linkedin.com/in/username')
+    devpost = models.URLField(default='https://devpost.com/username')
+    personal_website = models.URLField(default='')
+    other_links = models.URLField(default='')
+    resume = models.FileField(max_length=(10 * 1024 * 1024))  # 10 MB max file size
+
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True),
                         size=len(TECH_OPTIONS))
+    mentoring = models.BooleanField(default=False)
+
+    # Short Answer
     passionate = models.TextField()
     coolest_thing = models.TextField()
     other_info = models.TextField()
@@ -237,11 +264,11 @@ class Application(Any):
 
     def user_is_minor(self):
         from datetime import date
-        return self.birthday >= date(year=1998, month=10, day=7)
+        return self.birthday >= date(year=1999, month=03, day=24)
 
 
 class MentorApplication(Any):
-    from application_lists import SKILLS, APPLICATION_DECISION
+    from application_lists import SKILLS, APPLICATION_DECISION, USER_FOCUSED_DESIGN_SKILLS
 
     user = models.OneToOneField(AUTH_USER_MODEL)
 
@@ -252,6 +279,19 @@ class MentorApplication(Any):
     what_importance = models.TextField()
     why_mentor = models.TextField()
     mentorship_ideas = models.TextField()
+
+    # User-Focused Design Skills Review
+    has_user_design_experience = models.BooleanField(default=False)
+    user_focused_design_skills = ArrayField(
+        models.CharField(
+            max_length=32,
+            choices=zip(USER_FOCUSED_DESIGN_SKILLS, USER_FOCUSED_DESIGN_SKILLS),
+            blank=True),
+        size=len(USER_FOCUSED_DESIGN_SKILLS),
+        blank=True,
+        null=True
+    )
+    other_design_skills = models.CharField(max_length=255, default='', blank=True)
 
     # Skill Review
     skills = ArrayField(models.CharField(max_length=32, choices=zip(SKILLS, SKILLS), blank=True), size=len(SKILLS))
