@@ -208,3 +208,18 @@ def validate_url(data, query):
     """
     if data and query not in data:
         raise forms.ValidationError('Please enter a valid {} url'.format(query))
+
+
+def change_resume_filename(self, filename):
+    """
+    Changes the filename of an uploaded file to be a unique hash
+    :param self: the file instance
+    :param filename: the filename
+    :return: string that is the new filename
+    """
+    file_ending = filename.split('.')[-1]
+    from config.settings import SECRET_KEY
+
+    from hashlib import sha256
+    new_name = sha256(self.user.email + SECRET_KEY).hexdigest()
+    return new_name[:10] + '.' + file_ending
