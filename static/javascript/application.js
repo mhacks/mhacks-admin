@@ -26,20 +26,31 @@ $( function() {
     });
 } );
 $(document).ready(function() {
-    $('input[type="checkbox"][id="id_is_high_school"]').change(function() {
-        if (this.checked) {
-            $("#graduation_date").parent().hide();
-            $("#major-autocomplete").parent().hide();
-            $("#school-autocomplete").attr('placeholder', 'High School');
-            $("#school-autocomplete").prev().text('High School');
+    function updateHighSchoolField() {
+        var gradDateContainer = $("#graduation_date").parent();
+        var majorContainer = $("#major-autocomplete").parent();
+        var schoolField = $("#school-autocomplete");
+        if (document.getElementById('id_is_high_school').checked) {
+            gradDateContainer.hide();
+            majorContainer.hide();
+            schoolField.attr('placeholder', 'High School');
+            schoolField.prev().text('High School');
         }
         else{
-            $("#graduation_date").parent().show();
-            $("#major-autocomplete").parent().show();
-            $("#school-autocomplete").attr('placeholder', 'Hackathon College');
-            $("#school-autocomplete").prev().text('University');
+            gradDateContainer.show();
+            majorContainer.show();
+            schoolField.attr('placeholder', 'Hackathon College');
+            schoolField.prev().text('University');
         }
+    }
+    
+    // On form load, check if high school is already checked (if editing submitted app)
+    updateHighSchoolField();
+    
+    document.getElementById('id_is_high_school').addEventListener('change', function() {
+        updateHighSchoolField();
     });
+    
     $('input[type="checkbox"][id="id_is_international"]').change(function() {
         var stateAutocomplete = $("#state-autocomplete" );
         if (this.checked) {
