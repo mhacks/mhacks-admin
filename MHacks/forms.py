@@ -322,15 +322,13 @@ class RegistrationForm(forms.ModelForm):
         if self.user and 'umich.edu' in self.user.email:
             del self.fields['transportation']
 
-        # Changed to allow for walk ons
-        # Remove fields/add additional text based on the hacker application
-        # hacker_app = Application.objects.get(user=self.user)
-        # if not hacker_app.mentoring:
-        #     for key in ['can_help', 'other_can_help']:
-        #         del self.fields[key]
+        hacker_app = Application.objects.get(user=self.user)
+        if not hacker_app.mentoring:
+            for key in ['can_help', 'other_can_help']:
+                del self.fields[key]
 
-        # if hacker_app.is_high_school:
-        # self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in September."
+        if hacker_app.is_high_school:
+            self.fields['mlh_code_of_conduct'].subtitle = "If you are under the age of 18 you will be contacted with more liability forms that MUST be filled out and submitted before you attend the event in March."
 
     class Meta:
         from application_lists import TECH_OPTIONS, EMPLOYMENT_SKILLS
@@ -342,7 +340,7 @@ class RegistrationForm(forms.ModelForm):
         labels = {
             'acceptance': 'Do you accept your invitation to attend MHacks 9 this fall?',
             'transportation': 'How do you plan on getting to MHacks 9?',
-            'want_help': 'What areas would you like to have help in? (CTRL/CMD + click to select multiple options!)',
+            'want_help': 'What areas would you like to have help available in? (CTRL/CMD + click to select multiple options!)',
             'other_want_help': '',
             'can_help': 'What areas can you mentor another hacker in? (CTRL/CMD + click to select multiple options!)',
             'other_can_help': '',

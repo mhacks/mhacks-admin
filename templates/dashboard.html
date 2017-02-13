@@ -43,20 +43,13 @@
 
             {% if application %}
                 {% if application.decision == 'Accept' %}
-                    <!--<h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>-->
-                    <!--<p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/1197509966946089/">Facebook event page</a> and join the community!</p>-->
-                    <!--<p>Hit the button below to register and make sure you check out our <span class="fake-link" id="bus-routes-link">bus routes</span>! 🎉</p>-->
-                    <!--<p><a href="https://www.eventbrite.com/e/mhacks-8-busses-registration-27238162076">Click here to register for a bus! (Eventbrite)</a></p>-->
-                    <!--<p>Please note: UMich students do not have to register for busses. There will be busses departing from Pierpont Commons at 4:00pm and 5:30pm on Friday.</p>-->
+                    <h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>
+                    <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/1197509966946089/">Facebook event page</a> and join the community!</p>
 
-                    <!--<div id="bus-routes">-->
-                        <!--<br>-->
-                        <!--<img id="bus-routes-img" src="{{ static('assets/bus_routes_white.png') }}">-->
-                    <!--</div>-->
-                    <!--<br>-->
-                    <!--{% if not registration_application %}-->
-                        <!--<a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>-->
-                    <!--{% endif %}-->
+                    {% if not registration_application %}
+                        <p>Hit the button below to confirm your acceptance!</p>
+                        <a href="{{ url_for('mhacks-registration') }}"><button type="button">Confirm Acceptance</button></a>
+                    {% endif %}
                     <!--{% if application.reimbursement %}-->
                         <!--<br>-->
                         <!--<h2>Reimbursement amount: <span class="rounded-box accept">${{ '{:.2f}'.format(application.reimbursement) }}</span> </h2>-->

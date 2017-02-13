@@ -5,7 +5,7 @@ import qrcode
 
 def create_apple_pass(user):
     card_info = EventTicket()
-    header_field = Field('date', 'Oct 7-9', 'MASONIC TEMPLE')
+    header_field = Field('date', 'March 24-26', 'University of Michigan')
     header_field.textAlignment = Alignment.RIGHT
     card_info.headerFields.append(header_field)
     card_info.addPrimaryField('name', user.get_full_name(), 'HACKER')

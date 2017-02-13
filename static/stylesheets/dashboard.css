@@ -9,6 +9,7 @@
 }
 
 .body-info {
+    text-align: center;
     color: rgb(37, 37, 37);
 }
 
@@ -23,8 +24,7 @@
 .body-info p {
     max-width: 90%;
     width: 525px;
-    text-align: justify;
-    margin: 10px auto;
+    margin: 20px auto;
 }
 
 .rounded-box {

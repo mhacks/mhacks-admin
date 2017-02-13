@@ -85,8 +85,8 @@ DEGREES = [
 ]
 
 EMPLOYMENT = [
-    ('internship', 'Internship (I am graduating in December 2017 or later)'),
-    ('full time', 'Full Time Employment (I am graduating prior to June 2017)'),
+    ('internship', 'Internship'),
+    ('full time', 'Full Time Employment'),
     ('part time', 'Part Time Employment while in school (Co-op)'),
     ('none', 'Not Interested')
 ]
