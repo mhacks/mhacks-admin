@@ -33,7 +33,7 @@ def create_apple_pass(user):
     pass_file.description = 'MHacks Ticket'
     pass_file.serialNumber = str(user.pk)
     pass_file.barcode = Barcode(message=user.email, format=BarcodeFormat.QR)
-    pass_file.backgroundColor = 'rgb(0, 188, 212)'
+    pass_file.backgroundColor = 'rgb(230, 183, 59)'
     pass_file.foregroundColor = 'rgb(250, 250, 250)'
     pass_file.labelColor = 'rgba(0, 0, 0, 0.6)'
     pass_file.associatedStoreIdentifiers = [955659359]
