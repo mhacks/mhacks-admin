@@ -233,11 +233,15 @@ class Application(Any):
     other_links = models.URLField(default='')
 
     from utils import change_resume_filename
-    from django_boto.s3.storage import S3Storage
+    from config.settings import DEBUG
 
-    s3_storage = S3Storage()
+    if not DEBUG:
+        from django_boto.s3.storage import S3Storage
 
-    resume = models.FileField(max_length=(10 * 1024 * 1024), upload_to=change_resume_filename, storage=s3_storage)  # 10 MB max file size
+        s3_storage = S3Storage()
+        resume = models.FileField(max_length=(10 * 1024 * 1024), upload_to=change_resume_filename, storage=s3_storage)  # 10 MB max file size
+    else:
+        resume = models.FileField(max_length=(10 * 1024 * 1024), upload_to=change_resume_filename)  # 10 MB max file size
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True),

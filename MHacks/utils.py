@@ -1,3 +1,4 @@
+import sys
 import logging
 
 import mandrill
@@ -49,6 +50,14 @@ def add_permissions(**kwargs):
 def send_mandrill_mail(template_name, subject, email_to, email_vars=None, attachments=None, images=None):
     if not email_vars:
         email_vars = dict()
+
+    from config.settings import DEBUG
+
+    if DEBUG:
+        if 'confirmation_url' in email_vars:
+            print("Open this URL in a browser: " + email_vars['confirmation_url'])
+            sys.stdout.flush()
+        return
 
     try:
         mandrill_client = mandrill.Mandrill(MANDRILL_API_KEY)
