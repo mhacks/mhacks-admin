@@ -1,6 +1,8 @@
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
+import os
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$xo%i8vi+d624)&5)msxs3)s5tunm3dj9#n+fqn*zl%am%==!%'
 
@@ -15,8 +17,11 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'NAME': 'mhacks',
+        'NAME': os.getenv('PSQL_NAME', 'mhacks'),
+        'HOST': os.getenv('PSQL_HOST', 'localhost'),
+        'PORT': os.getenv('PSQL_PORT', '5432'),
+        'USER': os.getenv('PSQL_USER', ''),
+        'PASSWORD': os.getenv('PSQL_PASSWORD', ''),
         'CONN_MAX_AGE': None,  # Unlimited
         'USE_TZ': True,
     }
@@ -50,3 +55,9 @@ MAILCHIMP_INTEREST_LIST = 'https://us6.api.mailchimp.com/3.0/lists'  # Fill with
 # ^ This is for the blackout interest link
 
 APPLE_WALLET_PASSPHRASE = ''
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
+AWS_ACL_POLICY = os.getenv('AWS_ACL_POLICY', 'private')
+BOTO_S3_BUCKET = os.getenv('BOTO_S3_BUCKET', 'mhacks-9-resumes')
+SECRET_KEY = os.getenv('SECRET_KEY', 'mhacks')

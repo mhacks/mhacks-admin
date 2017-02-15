@@ -1,0 +1,36 @@
+version: '2'
+services:
+  mhacks_db:
+    image: postgres
+    environment:
+      POSTGRES_USER: mhacks
+      POSTGRES_PASSWORD: mhacks
+    restart: always
+  mhacks_website:
+    build:
+      context: ..
+    image: mhacks_website
+    environment:
+      PSQL_NAME: mhacks
+      PSQL_HOST: mhacks_db
+      PSQL_USER: mhacks
+      PSQL_PASSWORD: mhacks
+    entrypoint: /bin/bash
+    command: -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: always
+  mhacks_nginx:
+    image: jwilder/nginx-proxy
+    volumes:
+      - /etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+  mhacks_nginx_letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
