@@ -32,3 +32,19 @@ class AnonymousRequired(object):
             from django.conf import settings
             return HttpResponseRedirect(resolve_url(self.redirect_to or settings.LOGIN_REDIRECT_URL))
         return self.view_function(request, *args, **kwargs)
+
+
+def stats_team_required(view_function, redirect_to=None):
+    return StatsTeamRequired(view_function, redirect_to)
+
+
+class StatsTeamRequired(object):
+    def __init__(self, view_function, redirect_to):
+        self.view_function = view_function
+        self.redirect_to = redirect_to
+
+    def __call__(self, request, *args, **kwargs):
+        if not request.user or not request.user.groups.filter(name='stats_team').exists():
+            from django.conf import settings
+            return HttpResponseRedirect(resolve_url(self.redirect_to or settings.LOGIN_REDIRECT_URL))
+        return self.view_function(request, *args, **kwargs)
