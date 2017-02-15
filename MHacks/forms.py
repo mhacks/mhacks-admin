@@ -353,8 +353,8 @@ class RegistrationForm(forms.ModelForm):
             'degree': 'What degree are you currently pursuing?',
             'employment': 'What types of employment are you interested in?',
             'technical_skills': 'Please select any technical skills you are competent in:',
-            'code_of_conduct': mark_safe('I have read and agree to the terms of the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTVllEckF5UHpYZk0/view">MHacks Code of Conduct</a>'),
-            'waiver_signature': mark_safe('By signing below, I indicate my acceptance of the terms stated in the <a href="https://drive.google.com/a/umich.edu/file/d/0B5_voCkrKbNTX0c3NjUzV1F2WTQ/view">Accident Waiver and Release of Liability Form</a>'),
+            'code_of_conduct': mark_safe('I have read and agree to the terms of the <a href="https://drive.google.com/file/d/0B4fSxuPetYFGeE5QelF2bW1idEk/view?usp=sharing">MHacks Code of Conduct</a>'),
+            'waiver_signature': mark_safe('By signing below, I indicate my acceptance of the terms stated in the <a href="https://drive.google.com/file/d/0B4fSxuPetYFGbFgxTDR5X0lHZ2s/view?usp=sharing">Accident Waiver and Release of Liability Form</a>'),
             'mlh_code_of_conduct': mark_safe('<br>We participate in Major League Hacking (MLH) as a MLH Member Event. You authorize us to share certain application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons in line with the MLH Privacy Policy. <br><br> I have read and agree to the terms of the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>')
         }
 
