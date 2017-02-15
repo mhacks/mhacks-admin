@@ -1,3 +1,4 @@
+import sys
 import logging
 
 import mandrill
@@ -49,6 +50,14 @@ def add_permissions(**kwargs):
 def send_mandrill_mail(template_name, subject, email_to, email_vars=None, attachments=None, images=None):
     if not email_vars:
         email_vars = dict()
+
+    from config.settings import DEBUG
+
+    if DEBUG:
+        if 'confirmation_url' in email_vars:
+            print("Open this URL in a browser: " + email_vars['confirmation_url'])
+            sys.stdout.flush()
+        return
 
     try:
         mandrill_client = mandrill.Mandrill(MANDRILL_API_KEY)
@@ -208,3 +217,18 @@ def validate_url(data, query):
     """
     if data and query not in data:
         raise forms.ValidationError('Please enter a valid {} url'.format(query))
+
+
+def change_resume_filename(self, filename):
+    """
+    Changes the filename of an uploaded file to be a unique hash
+    :param self: the file instance
+    :param filename: the filename
+    :return: string that is the new filename
+    """
+    file_ending = filename.split('.')[-1]
+    from config.settings import SECRET_KEY
+
+    from hashlib import sha256
+    new_name = sha256(self.user.email + SECRET_KEY).hexdigest()
+    return new_name[:10] + '.' + file_ending

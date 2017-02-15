@@ -526,17 +526,35 @@ def sponsor_review(request):
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
 
-@user_passes_test(lambda u: u.is_superuser or u.groups.filter(name='sponsor').exists())
+@user_passes_test(lambda u: u.is_superuser or u.groups.filter(name='sponsor').exists() or u.groups.filter(name='application_reader').exists())
 def resumes(request, filename):
-    from config.settings import MEDIA_ROOT
+    from config.settings import DEBUG
+    if not DEBUG:
+        from django_boto.s3.storage import S3Storage
 
-    path = os.path.join(MEDIA_ROOT, filename)
-    if os.path.isfile(path):
-        response = HttpResponse(content=open(path, "rb"),
-                                content_type='application/force-download')
-        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename)
-        response['X-Sendfile'] = smart_str(path)
-        response['Content-Length'] = os.path.getsize(path)
-        return response
+        storage = S3Storage()
+
+        if storage.exists(filename) and Application.objects.filter(resume=filename).exists():
+            app = Application.objects.get(resume=filename)
+            file_ending = filename.split('.')[-1]
+            file = storage.open(filename)
+            file.seek(0)
+            response = HttpResponse(content=file.read(),
+                                    content_type='application/force-download')
+            response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(app.user.first_name + " " + app.user.last_name + "." + file_ending)
+            return response
+    else:
+        from config.settings import MEDIA_ROOT
+
+        path = os.path.join(MEDIA_ROOT, filename)
+        if os.path.isfile(path) and Application.objects.filter(resume=filename).exists():
+            app = Application.objects.get(resume=filename)
+            file_ending = filename.split('.')[-1]
+            response = HttpResponse(content=open(path, "rb"),
+                                    content_type='application/force-download')
+            response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(app.user.first_name + " " + app.user.last_name + "." + file_ending)
+            response['X-Sendfile'] = smart_str(path)
+            response['Content-Length'] = os.path.getsize(path)
+            return response
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

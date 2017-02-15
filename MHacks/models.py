@@ -231,8 +231,17 @@ class Application(Any):
     devpost = models.URLField(default='https://devpost.com/username')
     personal_website = models.URLField(default='')
     other_links = models.URLField(default='')
-    resume = models.FileField(max_length=(10 * 1024 * 1024))  # 10 MB max file size
 
+    from utils import change_resume_filename
+    from config.settings import DEBUG
+
+    if not DEBUG:
+        from django_boto.s3.storage import S3Storage
+
+        s3_storage = S3Storage()
+        resume = models.FileField(max_length=(10 * 1024 * 1024), upload_to=change_resume_filename, storage=s3_storage)  # 10 MB max file size
+    else:
+        resume = models.FileField(max_length=(10 * 1024 * 1024), upload_to=change_resume_filename)  # 10 MB max file size
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True),
