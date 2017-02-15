@@ -18,7 +18,7 @@ from django.utils.http import urlsafe_base64_encode, is_safe_url
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 
-from MHacks.decorator import anonymous_required, application_reader_required
+from MHacks.decorator import anonymous_required, application_reader_required, stats_team_required
 from MHacks.forms import RegisterForm, LoginForm, ApplicationForm, ApplicationSearchForm, RegistrationForm, \
     SponsorPortalForm, MentorApplicationForm
 from MHacks.models import Application, MentorApplication, Registration
@@ -460,6 +460,12 @@ def update_applications(request):
                                                                        reimbursement=reimbursement_amount)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+@stats_team_required
+def stats(request):
+    return render(request, 'stats.html')
 
 
 def live(request):

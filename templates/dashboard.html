@@ -23,8 +23,10 @@
 
         {% if request.user and request.user.groups.filter(name='stats_team').exists() %}
             <h2>Looks like you're on the stats team!</h2>
-            {# TODO: Show stats link and filter links here, i.e. admins who can view stats pages #}
+            <a href="{{url_for('mhacks-stats')}}"><button type="button">Stats</button></a>
         {% endif %}
+
+        <br>
 
         {% if request.user and request.user.groups.filter(name='hacker').exists() %}
             {% if registration_application and registration_application.submitted %}
