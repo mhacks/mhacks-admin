@@ -1,14 +1,16 @@
-from datetime import datetime
-from pytz import utc
 import base64
+from datetime import datetime
 
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
+from django.http import HttpResponseForbidden
+from pytz import utc
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, BasePermission
+from rest_framework.response import Response
 
-from MHacks.models import ScanEvent, ScanEventUser
+from MHacks.models import ScanEvent, ScanEventUser, Application
 from MHacks.pass_creator import create_apple_pass
 from MHacks.v1.serializers.util import now_as_utc_epoch, parse_date_last_updated, to_utc_epoch
 from MHacks.v1.util import serialized_user
@@ -120,3 +122,59 @@ def perform_scan(request):
         scan_event_user_join.save()
 
     return Response(data=scan_result)
+
+
+@api_view(http_method_names=['GET'])
+def application_breakdown(request):
+    if not request.user or not request.user.groups.filter(name='stats_team').exists():
+        return HttpResponseForbidden()
+
+    accepted = Application.objects.filter(decision='Accept')
+    waitlisted = Application.objects.filter(decision='Waitlist')
+    declined = Application.objects.filter(decision='Decline')
+    total_reimbursement = Application.objects.aggregate(Sum('reimbursement'))['reimbursement__sum']
+    total_applications = accepted.count() + waitlisted.count() + declined.count()
+    avg_reimbursement = total_reimbursement / total_applications
+
+    return Response(data={'accepted': accepted.count(),
+                          'waitlisted': waitlisted.count(),
+                          'declined': declined.count(),
+                          'total_applications': total_applications,
+                          'total_reimbursement': total_reimbursement,
+                          'avg_reimbursment': avg_reimbursement})
+
+
+@api_view(http_method_names=['GET'])
+def race_breakdown(request):
+    from MHacks.application_lists import DEMOGRAPHIC_INFO
+
+    if not request.user or not request.user.groups.filter(name='stats_team').exists():
+        return HttpResponseForbidden()
+
+    race_stats = list()
+    for value, label in DEMOGRAPHIC_INFO:
+        apps = Application.objects.filter(race=value)
+        race_stats.append({
+            'label': label,
+            'count': apps.count()
+        })
+
+    return Response(data=race_stats)
+
+
+@api_view(http_method_names=['GET'])
+def gender_breakdown(request):
+    from MHacks.application_lists import GENDER
+
+    if not request.user or not request.user.groups.filter(name='stats_team').exists():
+        return HttpResponseForbidden()
+
+    gender_stats = list()
+    for value, label in GENDER:
+        apps = Application.objects.filter(gender=value)
+        gender_stats.append({
+            'label': label,
+            'count': apps.count()
+        })
+
+    return Response(data=gender_stats)
