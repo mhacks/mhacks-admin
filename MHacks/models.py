@@ -184,7 +184,7 @@ class Announcement(Any):
 
 
 class Application(Any):
-    from application_lists import TECH_OPTIONS, APPLICATION_DECISION
+    from application_lists import TECH_OPTIONS, APPLICATION_DECISION, GENDER, DEMOGRAPHIC_INFO
 
     # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
@@ -195,25 +195,7 @@ class Application(Any):
     grad_date = models.DateField(null=True, blank=True)
     birthday = models.DateField()
 
-    GENDER = [
-        ('', 'Gender'),
-        ('male', 'Male'),
-        ('female', 'Female'),
-        ('non_binary', 'Non-Binary'),
-        ('other', 'Other')
-    ]
-
     # both demographic info and gender are optional
-    DEMOGRAPHIC_INFO = [
-        ('', 'Race'),
-        ('american_indian_or_alaskan_native', 'American Indian or Alaskan Native'),
-        ('asian_or_pacific_islander', 'Asian or Pacific Islander'),
-        ('black', 'Black'),
-        ('hispanic', "Hispanic"),
-        ('white', 'White'),
-        ('other', 'Other')
-    ]
-
     # Demographic
     gender = models.CharField(choices=GENDER, max_length=64, default='')
     race = models.CharField(choices=DEMOGRAPHIC_INFO, max_length=64, default='')

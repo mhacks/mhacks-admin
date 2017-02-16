@@ -1,5 +1,23 @@
 # coding=utf-8
 
+GENDER = [
+    ('', 'Gender'),
+    ('male', 'Male'),
+    ('female', 'Female'),
+    ('non_binary', 'Non-Binary'),
+    ('other', 'Other')
+]
+
+DEMOGRAPHIC_INFO = [
+    ('', 'Race'),
+    ('american_indian_or_alaskan_native', 'American Indian or Alaskan Native'),
+    ('asian_or_pacific_islander', 'Asian or Pacific Islander'),
+    ('black', 'Black'),
+    ('hispanic', "Hispanic"),
+    ('white', 'White'),
+    ('other', 'Other')
+]
+
 TECH_OPTIONS = [('ios', 'iOS'),
                 ('android', 'Android'),
                 ('web_dev', 'Web Dev'),
