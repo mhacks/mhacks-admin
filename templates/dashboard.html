@@ -47,10 +47,14 @@
                 {% if application.decision == 'Accept' %}
                     <h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>
                     <p>You’re awesome. We’re awesome. Head over to our <a href="https://www.facebook.com/events/257902701319629/">Facebook event page</a> and join the community!</p>
-                    <p style="margin: 20px auto 0;">There will be two MHacks buses 🚌: </p>
-                    <p style="margin: 0 auto; padding-left: 25px">• University of Toronto -> University of Waterloo -> University of Michigan </p>
-                    <p style="margin: 0 auto; padding-left: 25px">• University of Illinois at Urbana-Champaign -> Purdue University -> University of Michigan </p>
-                    <p style="margin: 0 auto 20px;">Space is limited, so sign up ASAP to guarantee a spot on the bus. Check back soon for bus itineraries and a bus registration link. </p>
+                    <p>
+                        There will be two MHacks buses:
+                        <ul>
+                            <li>University of Toronto -> University of Waterloo -> University of Michigan</li>
+                            <li>University of Illinois at Urbana-Champaign -> Purdue University -> University of Michigan</li>
+                        </ul>
+                        Space is limited, so sign up ASAP to guarantee a spot on the bus. Check back soon for bus itineraries and a bus registration link.
+                    </p>
 
                     {% if not registration_application %}
                         <p>Hit the button below to confirm your acceptance!</p>
