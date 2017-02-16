@@ -4,8 +4,8 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     # Blackout
-    #url(r'^$', blackout, name='mhacks-blackout'),
-    #url(r'^.*/$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-blackout'),
+    # url(r'^$', blackout, name='mhacks-blackout'),
+    # url(r'^.*/$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-blackout'),
 
     # Homepage
     url(r'^$', index, name='mhacks-home'),
@@ -36,11 +36,15 @@ urlpatterns = [
     url(r'^application_review/$', application_review, name='mhacks-applicationReview'),
     url(r'^update_applications/$', update_applications, name='mhacks-updateApplication'),
 
+    # Statistics (logistical info for orgianizers)
+    url(r'^stats/$', stats, name='mhacks-stats'),
+
     # Sponsor portal
     url(r'^sponsor_portal', sponsor_portal, name='mhacks-sponsorPortal'),
     url(r'^sponsor_review', sponsor_review, name='mhacks-sponsorReview'),
     url(r'^resumes/(?P<filename>[\w\S]{0,256})/$', resumes, name='mhacks-resumes'),
 
+    # Admin only
     url(r'^explorer/', include('explorer.urls')),
 
     # Apple Wallet pass support

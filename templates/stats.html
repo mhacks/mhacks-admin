@@ -1,0 +1,38 @@
+{% extends 'basic_page.html' %}
+
+{% block basic_page_headers %}
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/stats.css') }}">
+{% endblock %}
+
+{% block basic_page_title %}MHacks Stats{% endblock %}
+{% block pagetitle %}MHacks Stats{% endblock %}
+
+{% block basic_page_content %}
+    <div id="mhacks-stats">
+        <h1>Application Breakdown</h1>
+        <br>
+        <div class="stats-content" id="application-breakdown">
+            <canvas id="application-pie" width="400" height="400"></canvas>
+        </div>
+        <div class="stats-content" id="reimbursment-breakdown">
+            <h2 id="total-applications"></h2>
+            <h2 id="total-reimbursement"></h2>
+            <h2 id="avg-reimbursement"></h2>
+        </div>
+
+        <h1>Demographic Breakdown</h1>
+        <br>
+        <div class="stats-content" id="race-breakdown">
+            <canvas id="race-pie" width="400" height="400"></canvas>
+        </div>
+        <div class="stats-content" id="gender-breakdown">
+            <canvas id="gender-pie" width="400" height="400"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js" type="application/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/randomcolor/0.4.4/randomColor.min.js" type="application/javascript"></script>
+    <script src="{{ static('javascript/stats.js') }}" type="text/javascript"></script>
+{% endblock %}

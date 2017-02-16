@@ -184,7 +184,7 @@ class Announcement(Any):
 
 
 class Application(Any):
-    from application_lists import TECH_OPTIONS, APPLICATION_DECISION
+    from application_lists import TECH_OPTIONS, APPLICATION_DECISION, GENDER, DEMOGRAPHIC_INFO
 
     # General information
     user = models.OneToOneField(AUTH_USER_MODEL)
@@ -195,25 +195,7 @@ class Application(Any):
     grad_date = models.DateField(null=True, blank=True)
     birthday = models.DateField()
 
-    GENDER = [
-        ('', 'Gender'),
-        ('male', 'Male'),
-        ('female', 'Female'),
-        ('non_binary', 'Non-Binary'),
-        ('other', 'Other')
-    ]
-
     # both demographic info and gender are optional
-    DEMOGRAPHIC_INFO = [
-        ('', 'Race'),
-        ('american_indian_or_alaskan_native', 'American Indian or Alaskan Native'),
-        ('asian_or_pacific_islander', 'Asian or Pacific Islander'),
-        ('black', 'Black'),
-        ('hispanic', "Hispanic"),
-        ('white', 'White'),
-        ('other', 'Other')
-    ]
-
     # Demographic
     gender = models.CharField(choices=GENDER, max_length=64, default='')
     race = models.CharField(choices=DEMOGRAPHIC_INFO, max_length=64, default='')
@@ -231,8 +213,17 @@ class Application(Any):
     devpost = models.URLField(default='https://devpost.com/username')
     personal_website = models.URLField(default='')
     other_links = models.URLField(default='')
-    resume = models.FileField(max_length=(10 * 1024 * 1024))  # 10 MB max file size
 
+    from utils import change_resume_filename
+    from config.settings import DEBUG
+
+    if not DEBUG:
+        from django_boto.s3.storage import S3Storage
+
+        s3_storage = S3Storage()
+        resume = models.FileField(max_length=(10 * 1024 * 1024), upload_to=change_resume_filename, storage=s3_storage)  # 10 MB max file size
+    else:
+        resume = models.FileField(max_length=(10 * 1024 * 1024), upload_to=change_resume_filename)  # 10 MB max file size
 
     # Interests
     cortex = ArrayField(models.CharField(max_length=16, choices=TECH_OPTIONS, default='', blank=True),
