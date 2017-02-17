@@ -25,6 +25,7 @@
     max-width: 90%;
     width: 525px;
     margin: 20px auto;
+    text-align: justify;
 }
 
 .rounded-box {
