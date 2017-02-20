@@ -134,14 +134,14 @@ def application_breakdown(request):
     declined = Application.objects.filter(decision='Decline')
     total_reimbursement = Application.objects.aggregate(Sum('reimbursement'))['reimbursement__sum']
     total_applications = accepted.count() + waitlisted.count() + declined.count()
-    avg_reimbursement = total_reimbursement / total_applications
+    avg_reimbursement = total_reimbursement / accepted.count()
 
     return Response(data={'accepted': accepted.count(),
                           'waitlisted': waitlisted.count(),
                           'declined': declined.count(),
                           'total_applications': total_applications,
                           'total_reimbursement': total_reimbursement,
-                          'avg_reimbursment': avg_reimbursement})
+                          'avg_reimbursement': avg_reimbursement})
 
 
 @api_view(http_method_names=['GET'])

@@ -39,7 +39,7 @@ function getApplicationBreakdown() {
 
             $("#total-applications").text("Total applications submitted: " + response.total_applications);
             $("#total-reimbursement").text("Total reimbursement given: $" + Number(response.total_reimbursement).toFixed(2));
-            $("#avg-reimbursement").text("Average reimbursement: $" + Number(response.avg_reimbursment).toFixed(2) + "/hacker");
+            $("#avg-reimbursement").text("Average reimbursement: $" + Number(response.avg_reimbursement).toFixed(2) + "/hacker");
         },
         error: function(xhr, errmsg, err){
             console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
@@ -103,7 +103,11 @@ function getDataAndLabels(response, hue) {
     };
 
     response.forEach(function (item) {
-        data.labels.push(item.label);
+        if (item.label == "Race" || item.label == "Gender") {
+            data.labels.push("N/A")
+        } else {
+            data.labels.push(item.label);
+        }
         data.datasets[0].data.push(item.count);
     });
 
