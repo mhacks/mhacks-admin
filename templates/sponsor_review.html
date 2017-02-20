@@ -38,19 +38,7 @@
                     <td>{{result.technical_skills|join(', ') }}</td>
                     <td><a href="{{ hacker.github }}">{{ hacker.github }}</a></td>
                     <td><a href="{{ hacker.personal_website }}">{{ hacker.personal_website }}</a></td>
-                    <td>
-                        {% if (hacker.resume|string).startswith('./') %}
-                            <a href="{{ url_for('mhacks-resumes',
-                                    kwargs={'filename': (hacker.resume|string)[2:]}) }}">
-                                {{ hacker.resume }}
-                            </a>
-                        {% else %}
-                            <a href="{{ url_for('mhacks-resumes',
-                                    kwargs={'filename': (hacker.resume|string)}) }}">
-                                {{ hacker.resume }}
-                            </a>
-                        {% endif %}
-                    </td>
+                    <td><a href="/resumes/{{hacker.resume}}">{{hacker.resume}}</a></td>
                 </tr>
             {% endfor %}
             </tbody>
