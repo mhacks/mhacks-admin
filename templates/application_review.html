@@ -17,6 +17,7 @@
             <input id="update-all-button" type="submit" value="Update all">
             <input type="hidden" name="application_type" value="hacker">
 
+            <button id="generate-csv">CSV</button>
 
             <table class="table table-striped" style="color:black; overflow-x:scroll; column-width: fit-content">
                 <thead>
@@ -103,4 +104,35 @@
     {% else %}
         <h1>Sorry! There are no result for your search. <a href="{{url_for('mhacks-applicationSearch')}}">Rerun the search</a></h1>
     {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        {% if results %}
+            $("#generate-csv").click(function() {
+                var csv_dump = "data:text/csv;charset=utf-8,";
+
+                var headers = ["name", "email"];
+                {% for f in results[0]._meta.get_fields() %}
+                    headers.push("{{ f.name|safe }}");
+                {% endfor %}
+                csv_dump += headers.join(",") + "\n";
+
+
+                {% for result in results %}
+                    var result_data = ["{{ result.user.first_name|safe }} {{ result.user.last_name|safe }}", "{{ result.user.email|safe }}"];
+                    {% for f in result._meta.get_fields() %}
+                        result_data.push("{{ result.__dict__[f.name]|safe }}");
+                    {% endfor %}
+                    csv_dump += result_data.join(",") + "\n";
+                {% endfor %}
+
+                var link = document.createElement("a");
+                link.setAttribute("href", encodeURI(csv_dump));
+                link.setAttribute("download", "applications.csv");
+                link.click();
+            });
+        {% endif %}
+
+    </script>
 {% endblock %}
