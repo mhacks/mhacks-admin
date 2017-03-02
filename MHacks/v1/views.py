@@ -2,7 +2,7 @@ import base64
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.http import HttpResponseForbidden
 from pytz import utc
 from rest_framework.decorators import api_view, permission_classes
@@ -178,3 +178,19 @@ def gender_breakdown(request):
         })
 
     return Response(data=gender_stats)
+
+
+@api_view(http_method_names=['GET'])
+def school_breakdown(request):
+    if not request.user or not request.user.groups.filter(name='stats_team').exists():
+        return HttpResponseForbidden()
+
+    school_stats = list()
+    results = Application.objects.filter(decision='Accept').values('school').annotate(count=Count('school'))
+    for school in results:
+        school_stats.append({
+            'label': school['school'],
+            'count': school['count']
+        })
+
+    return Response(data=school_stats)

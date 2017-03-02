@@ -8,7 +8,7 @@ from MHacks.v1.floors import Floors, Floor
 from MHacks.v1.locations import Locations, Location
 from MHacks.v1.push_notification_views import APNSTokenView, GCMTokenView
 from MHacks.v1.scan_event import ScanEvents, ScanEvent
-from MHacks.v1.views import get_countdown, apple_pass_endpoint, update_user_profile, perform_scan, application_breakdown, race_breakdown, gender_breakdown
+from MHacks.v1.views import get_countdown, apple_pass_endpoint, update_user_profile, perform_scan, application_breakdown, race_breakdown, gender_breakdown, school_breakdown
 
 urlpatterns = [
     # Authentication
@@ -34,5 +34,6 @@ urlpatterns = [
     # Stats
     url(r'^application_breakdown/$', application_breakdown, name='application_breakdown'),
     url(r'^race_breakdown/$', race_breakdown, name='race_breakdown'),
-    url(r'^gender_breakdown/$', gender_breakdown, name='gender_breakdown')
+    url(r'^gender_breakdown/$', gender_breakdown, name='gender_breakdown'),
+    url(r'^school_breakdown/$', school_breakdown, name='school_breakdown')
 ]

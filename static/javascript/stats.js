@@ -15,6 +15,7 @@ $(document).ready(function(){
     getApplicationBreakdown();
     getRaceBreakdown();
     getGenderBreakdown();
+    getSchoolBreakdown();
 });
 
 function getApplicationBreakdown() {
@@ -72,6 +73,22 @@ function getGenderBreakdown() {
             var data = getDataAndLabels(response, "green");
             var genderPieCanvas = $("#gender-pie");
             drawPie(genderPieCanvas, data, options);
+        },
+        error: function(xhr, errmsg, err){
+            console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
+        }
+    });
+}
+
+function getSchoolBreakdown() {
+    $.ajax({
+        url : "/v1/school_breakdown",
+        type: "GET",
+        dataType: "json",
+        success: function(response){
+            var data = getDataAndLabels(response, "purple");
+            var schoolPieCanvas = $("#school-pie");
+            drawPie(schoolPieCanvas, data, options);
         },
         error: function(xhr, errmsg, err){
             console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
