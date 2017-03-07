@@ -88,7 +88,9 @@ function getSchoolBreakdown() {
         success: function(response){
             var data = getDataAndLabels(response, "purple");
             var schoolPieCanvas = $("#school-pie");
-            drawPie(schoolPieCanvas, data, options);
+            var optionsResponsive = options;
+            optionsResponsive.responsive = true;
+            drawPie(schoolPieCanvas, data, optionsResponsive);
         },
         error: function(xhr, errmsg, err){
             console.error("Encountered Error: " + errmsg + "\n" + xhr.status + ": " + xhr.responseText);
