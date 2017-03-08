@@ -1,102 +1,94 @@
 p {
-    margin: 15px auto 25px;
+  margin: 15px auto 25px;
 }
 
 h3 {
-    font-weight: bolder;
-    margin: 0 0 8px 0;
+  font-weight: bolder;
+  margin: 0 0 8px 0;
 }
 
 .centered-image-container {
-    margin: 0 auto;
-    width: 210px;
-    height: 210px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 0 auto;
+  width: 210px;
+  height: 210px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .centered-image-container img {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .info-section{
-    background-color: #eef1f3;
-    padding-bottom: 50px;
-}
-
-.event-info-section p {
-
-}
-
-.categories-section {
-
+  background-color: #eef1f3;
+  padding-bottom: 50px;
 }
 
 .categories-header {
-    text-transform: uppercase;
-    text-align: center;
-    padding: 100px 0;
-    font-weight: 300;
-    font-size: 26px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 100px 0;
+  font-weight: 300;
+  font-size: 26px;
 }
 
 .category-row:last-child {
-    padding-bottom: 60px;
+  padding-bottom: 60px;
 }
 
 .category-item {
-    text-align: center;
+  text-align: center;
 }
 
 .category-item h4 {
-    margin: 20px 0;
+  margin: 20px 0;
 }
 
 .category-item p {
-    font-size: 20px;
-    max-width: 60%;
+  font-size: 20px;
+  max-width: 60%;
 }
 
 @media only screen and (max-width: 720px) {
-    .categories-header {
-        padding-bottom: 40px;
-    }
+  .categories-header {
+    padding-bottom: 40px;
+  }
 
-    .category-row:last-child {
-        padding-top: 0;
-        padding-bottom: 40px;
-    }
+  .category-row:last-child {
+    padding-top: 0;
+    padding-bottom: 40px;
+  }
 
-    .category-item h4 {
-        margin-top: 10px;
-    }
+  .category-item h4 {
+    margin-top: 10px;
+  }
 
-    .category-item p {
-        margin-bottom: 40px;
-    }
+  .category-item p {
+    margin-bottom: 40px;
+  }
 
-    .centered-image-container {
-        width: auto;
-        max-width: 210px;
-        max-height: 160px;
-        display: inline-block;
-    }
+  .centered-image-container {
+    width: auto;
+    max-width: 210px;
+    max-height: 160px;
+    display: inline-block;
+  }
 }
 
 .sponsorship-content {
-    width: 80%;
-    text-align: center;
-    margin-bottom: 50px;
+  width: 80%;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .faq-section {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 
-    align-self: stretch;
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
+  align-self: stretch;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
 }
 

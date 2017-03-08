@@ -60,25 +60,25 @@
 }
 
 .symbol.down-arrow::before {
-    transform: rotate(-135deg) translateY(-75%) scaleX(.625);
+  transform: rotate(-135deg) translateY(-75%) scaleX(.625);
 }
 
 .symbol.down-arrow::after {
-    transform: rotate(135deg) translateY(-75%) scaleX(.625);
+  transform: rotate(135deg) translateY(-75%) scaleX(.625);
 }
 
 .symbol.up-arrow::before {
-    transform: rotate(-45deg) translateY(-75%) scaleX(.625);
+  transform: rotate(-45deg) translateY(-75%) scaleX(.625);
 }
 
 .symbol.up-arrow::after {
-    transform: rotate(45deg) translateY(-75%) scaleX(.625);
+  transform: rotate(45deg) translateY(-75%) scaleX(.625);
 }
 
 .symbol.check::before {
-    transform: rotate(-135deg) translateY(-125%) scaleX(.5);
+  transform: rotate(-135deg) translateY(-125%) scaleX(.5);
 }
 
 .symbol.check::after {
-    transform: rotate(135deg) translateY(-50%) scaleX(.875);
+  transform: rotate(135deg) translateY(-50%) scaleX(.875);
 }

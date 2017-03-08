@@ -3,98 +3,98 @@ THIS FILE IS GOING TO BE USED ACROSS ALL FORMS ON MHACKS.
 PLEASE KEEP THIS AS GENERAL AS POSSIBLE. IF YOU WANT TO
 ADD STYLING TO ONE FORM, PLEASE MAKE A NEW CSS FILE, AND ONLY
 INCLUDE THAT FILE ON YOUR SPECIFIC PAGE. THANK YOU.
-*/
+ */
 
 body {
-    font-family: 'Ubuntu', sans-serif;
-    background-color: #ffffff;
-    margin: 0;
-    overflow-x: scroll;
-    overflow-y: auto;
-    font-size: 12pt;
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  overflow-x: scroll;
+  overflow-y: auto;
+  font-size: 12pt;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 p {
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 12pt;
-    font-weight: 200;
-    width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 12pt;
+  font-weight: 200;
+  width: 100%;
 }
 
 .header-form{
-    position: static;
+  position: static;
 }
 
 .title-form h3 {
-    color: rgba(0, 169, 194, 1);
+  color: rgba(0, 169, 194, 1);
 }
 
 .body-form {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 thead, tbody { display: block; }
 
 tbody {
-    height: 650px;       /* Just for the demo          */
-    overflow-y: auto;    /* Trigger vertical scroll    */
-    overflow-x: hidden;  /* Hide the horizontal scroll */
+  height: 650px;       /* Just for the demo          */
+  overflow-y: auto;    /* Trigger vertical scroll    */
+  overflow-x: hidden;  /* Hide the horizontal scroll */
 }
 
 .table > thead > tr > th{
-    text-align: center;
-    min-width: 300px;
-    max-width: 300px;
-    padding: 0 10px 0 10px;
+  text-align: center;
+  min-width: 300px;
+  max-width: 300px;
+  padding: 0 10px 0 10px;
 }
 
 td{
-    text-align: center;
-    min-width: 300px;
-    max-width: 300px;
-    padding: 0 10px 0 10px;
+  text-align: center;
+  min-width: 300px;
+  max-width: 300px;
+  padding: 0 10px 0 10px;
 }
 
 input[type=text]{
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 form{
-    text-align: center;
+  text-align: center;
 }
 
 html button, input[type=submit] {
-    background: rgba(0, 169, 194, 1);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.23), 0 3px 6px rgba(0,0,0,0.15);
-    border-radius: 5px;
-    -webkit-transition: .4s;
-    transition: .4s;
-    font-size: 14px;
-    color: white;
-    border: 0;
-    padding: 10px 25px;
+  background: rgba(0, 169, 194, 1);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.23), 0 3px 6px rgba(0,0,0,0.15);
+  border-radius: 5px;
+  -webkit-transition: .4s;
+  transition: .4s;
+  font-size: 14px;
+  color: white;
+  border: 0;
+  padding: 10px 25px;
 }
 
 
 .header-form{
-    position: static;
+  position: static;
 }
 
 
 .body-form {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 
 .logo{
-    display: block;
-    width: 70%;
+  display: block;
+  width: 70%;
 }
 
 #update-all-button {
-    text-align: right;
+  text-align: right;
 }
