@@ -1,50 +1,41 @@
-{% extends 'base.html' %}
+{% extends 'basic_page.html' %}
 
 {% block headers %}
     <link rel="stylesheet" media="all" href="{{ static('stylesheets/live.css') }}">
-    {% block basic_page_headers %}
-    {% endblock %}
 {% endblock %}
 
-{% block content %}
+{% block basic_page_title %}
+<div class="live-navbar">
+    <a class="live-navlink" data-section="Announcements">
+        Announcements
+    </a>
+    <a class="live-navlink" data-section="Schedule">
+        Schedule
+    </a>
+    <a class="live-navlink" data-section="Maps">
+        Map
+    </a>
+    <a class="live-navlink" data-section="Mentorship">
+        Mentorship
+    </a>
+    <a class="live-navlink" data-section="Hardware">
+        Hardware
+    </a>
+    <a class="live-navlink" data-section="FAQ">
+        FAQ
+    </a>
+    <a class="live-navlink" target="_blank" href="https://mhacks8.devpost.com">
+        Devpost
+    </a>
+</div>
+{% endblock %}
+
+{% block basic_page_content %}
+    </div>
     <div class="live-header">
-        <div class="header lightTurquoise">
-            <div id="eventInfo">
-                <h2>October 7-9</h2>
-                <p>Detroit Masonic Temple</p>
-            </div>
-            <div id="logo">
-                <a href="{{ url_for('mhacks-home') }}">
-                    <img id="logo" src="{{ static('assets/logo.png') }}" alt="MHacks 8 Logo - M">
-                </a>
-            </div>
-            <div id="countdown-container">
-                {% include 'countdown.html' %}
-            </div>
-        </div>
-        <div class="live-navbar">
-            <a class="live-navlink" data-section="Announcements">
-                Announcements
-            </a>
-            <a class="live-navlink" data-section="Schedule">
-                Schedule
-            </a>
-            <a class="live-navlink" data-section="Maps">
-                Map
-            </a>
-            <a class="live-navlink" data-section="Mentorship">
-                Mentorship
-            </a>
-            <a class="live-navlink" data-section="Hardware">
-                Hardware
-            </a>
-            <a class="live-navlink" data-section="FAQ">
-                FAQ
-            </a>
-            <a class="live-navlink" target="_blank" href="https://mhacks8.devpost.com">
-                Devpost
-            </a>
-        </div>
+      <div id="countdown-container">
+          {% include 'countdown.html' %}
+      </div>
     </div>
 
     <div class="live-container col-2-flex">

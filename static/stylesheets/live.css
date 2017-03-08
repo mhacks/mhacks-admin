@@ -2,19 +2,15 @@ body{
     background-color: #e6f3f7;
 }
 
-.live-header {
-    width: 100%;
-    height: 180px;
-    margin-bottom: 50px;
-    background-color: #07889C;
-    box-shadow: 0 4px 5px 1px rgba(200, 200, 200, 0.80);
+.title-form {
 }
 
-.header {
-    opacity: 1;
-    position: static !important;
-    background-color: #00A9C2;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.60);
+.title-form h3 {
+  font-weight: bolder;
+  color: white;
+  font-size: 20px;
+  margin: 0;
+  padding: 15px 0;
 }
 
 .live-navbar {
@@ -22,6 +18,7 @@ body{
     height: 60px;
 
     cursor: pointer;
+    background-color: salmon;
 
     display: flex;
     flex-direction: row;
@@ -47,12 +44,12 @@ body{
     top: 100%;
     left: 0;
     width: 100%;
-	height: 1px;
-	background: #fff;
-	content: '';
-	opacity: 0;
-	transition: height 0.2s, opacity 0.2s, transform 0.2s;
-	transform: translateY(5px);
+  height: 1px;
+  background: #fff;
+  content: '';
+  opacity: 0;
+  transition: height 0.2s, opacity 0.2s, transform 0.2s;
+  transform: translateY(5px);
 }
 
 .live-navlink:hover::after, .live-navlink:focus::after {
