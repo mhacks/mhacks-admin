@@ -1018,7 +1018,6 @@ html button {
     font-size:  16px;
 }
 
-
 /* Rows */
 
 .row {
@@ -1098,6 +1097,34 @@ html fieldset {
 
 .dashboard-registration .row-container {
     margin-top: 40px;
+}
+
+.button-link {
+  font-size: 16px;
+  font-weight: bolder;
+  padding: 10px 20px;
+  width: 120px;
+  margin: 2px 0 2px 20px;
+
+  box-shadow: none;
+
+  color: #e8b92b;
+
+  background-color: white;
+  border-radius: 5px;
+  border: 2px solid #e8b92b;
+
+  text-decoration: none;
+  transition: all 0.2s;
+  line-height: inherit;
+}
+
+.button-link:hover {
+  text-decoration: none;
+  background-color: #e8b92b;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .row-container {
