@@ -94,16 +94,9 @@
         {% if not registration_application and not application %}
         <div class="dashboard-registration">
             <h2>Hi! Welcome to your Dashboard!</h2>
-            <p>This is where you'll find updates on your application status, travel reimbursements, and registration
-                forms. Fill out one of the applications below if you want to attend MHacks 9.</p>
-            <p> For those who want to both hack and mentor, use the Hacker application. </p>
-            <p> If you think you might need a Travel Reimbursement, you must
-                apply by <strong>Saturday, February 18th</strong>. Otherwise, the application is open until
-                <strong>Friday, March 10th</strong>.</p>
+            <p style="text-align: center">This is where you'll find updates on your application status, travel reimbursements, and registration
+                forms. Hacker applications are now <strong>closed</strong>. You can still apply to be a mentor below!</p>
             <div class="row-container">
-                <form method="GET" action="{{ url_for('mhacks-apply') }}">
-                    <button type="submit">Hacker</button>
-                </form>
                 <a class="button-link" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfe58RgYR8zSb_NxMfDNDC5x5Wi3H2MQwGrzAPZW4B-alaMnQ/viewform?usp=sf_link">Mentor</a>
             </div>
         </div>
