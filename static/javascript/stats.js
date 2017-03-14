@@ -90,6 +90,7 @@ function getSchoolBreakdown() {
             var schoolPieCanvas = $("#school-pie");
             var optionsResponsive = options;
             optionsResponsive.responsive = true;
+            console.log(data);
             drawPie(schoolPieCanvas, data, optionsResponsive);
         },
         error: function(xhr, errmsg, err){

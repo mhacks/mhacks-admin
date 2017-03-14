@@ -45,7 +45,8 @@ class FloorSerializer(MHacksModelSerializer):
 
     class Meta:
         model = FloorModel
-        fields = ('id', 'name', 'image', 'index', 'offset_fraction', 'aspect_ratio', 'description')
+        fields = ('id', 'name', 'image', 'index', 'offset_fraction', 'aspect_ratio', 'description', 'nw_latitude',
+                  'nw_longitude', 'se_latitude', 'se_longitude')
 
 
 class LocationSerializer(MHacksModelSerializer):
@@ -56,7 +57,7 @@ class LocationSerializer(MHacksModelSerializer):
 
     class Meta:
         model = LocationModel
-        fields = ('id', 'name', 'floor')
+        fields = ('id', 'name', 'floor', 'latitude', 'longitude')
 
 
 class ScanEventSerializer(MHacksModelSerializer):

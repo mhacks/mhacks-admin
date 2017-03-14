@@ -135,8 +135,13 @@ class Floor(Any):
     index = models.IntegerField(unique=True)
     image = models.URLField()
     description = models.TextField(blank=True)
-    offset_fraction = models.FloatField(default=1.0)
-    aspect_ratio = models.FloatField(default=1.0)
+    offset_fraction = models.FloatField(default=1.0, null=True, blank=True)
+    aspect_ratio = models.FloatField(default=1.0, null=True, blank=True)
+    # Only used for maps ground overlay
+    nw_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    nw_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    se_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    se_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
     def __unicode__(self):
         return '{} displayed at index {}'.format(self.name, str(self.index))
@@ -145,6 +150,8 @@ class Floor(Any):
 class Location(Any):
     name = models.CharField(max_length=60)
     floor = models.ForeignKey(Floor, on_delete=models.PROTECT, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
     def __unicode__(self):
         if self.floor:
