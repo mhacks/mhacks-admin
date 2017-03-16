@@ -29,7 +29,7 @@ def get_countdown(request):
     if client_updated and client_updated >= date_updated:
         return Response(data={'date_updated': now_as_utc_epoch()})
 
-    start_time = datetime(year=2016, month=10, day=8, hour=4, minute=0, second=0, microsecond=0,
+    start_time = datetime(year=2017, month=3, day=24, hour=4, minute=0, second=0, microsecond=0,
                           tzinfo=utc)
     return Response(data={'start_time': to_utc_epoch(start_time),
                           'countdown_duration': 129600,  # 36 hours
