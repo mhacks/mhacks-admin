@@ -32,26 +32,28 @@
 
 {% block basic_page_content %}
     </div>
+    <div style="background-image:url({{ static('assets/live_bg_1.png') }}); background-size:cover">
     <div class="live-header">
       <div id="countdown-container">
           {% include 'countdown.html' %}
       </div>
     </div>
 
-    <div class="live-container col-2-flex">
+    <div class="live-container col-2-flex" style="background-image:url({{ static('assets/live_bg_1.png') }}); background-size:cover">
         <div class="live-section" data-section="Announcements">{% include 'announcements.html' %}</div>
         <div class="live-section" data-section="Schedule">{% include 'schedule.html' %}</div>
     </div>
-    <div class="live-container">
+    <div class="live-container" style="display:none">
         <div class="live-section" data-section="Maps">{% include 'maps.html' %}</div>
     </div>
-    <div class="live-container col-2-flex">
+    <div class="live-container col-2-flex" style="display: none">
         <div class="live-section" data-section="Mentorship">{% include 'mentorship.html' %}</div>
         <div class="live-section" data-section="Hardware">{% include 'hardware.html' %}</div>
     </div>
-    <div class="live-container">
+    <div class="live-container" style="display:none">
         <div class="live-section" data-section="FAQ">{% include 'live_faqs.html' %}</div>
     </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

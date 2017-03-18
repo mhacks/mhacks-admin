@@ -5,8 +5,8 @@ var numEvents = [];
 var placedEvents = [];
 var doResizeEvents;
 var numLines = 107;
-var baseTime = new Date("2016-10-07T19:00:00.000Z");
-var endTime = new Date("2016-10-10T00:00:00.000Z");
+var baseTime = new Date("2017-03-24T19:00:00.000Z");
+var endTime = new Date("2017-03-24T00:00:00.000Z");
 
 var locations = [];
 var events = [];
@@ -135,8 +135,7 @@ function processEvents(){
             eventsDiv.append(
                 "<div class='event category-" + e.category + "' style='top:" + p.offset + "px; min-height: " + p.height + "px' data-colnum='" + width + "' data-colpos='" + offset + "'>" +
                     "<h2>" + e.name + "</h2>" +
-                    "<h3>" + formatTime(new Date(e.startTime)) + " - " + formatTime(new Date(e.endTime)) + "</h3>" +
-                    "<h3>" + formatLocations(e.locations) + "</h3>" +
+                    "<h3>" + formatTime(new Date(e.startTime)) + " - " + formatTime(new Date(e.endTime)) + ", " + formatLocations(e.locations) + "</h3>" +
                     "<p>" + e.description + "</p>" +
                 "</div>");
         }
@@ -246,7 +245,7 @@ function formatLocations(locs){
             } else {
                 output += ", ";
             }
-            output += locations[l].name + " [" + locations[l].floor + "]";
+            output += locations[l].name;
         }
     });
     return output;
