@@ -14,8 +14,15 @@ function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 17,
     center: {lat: 42.292620, lng: -83.714415},
-    mapTypeId: 'satellite',
-    rotateControl: false
+    rotateControl: false,
+    styles: [
+      {
+        featureType: "poi",
+        stylers: [
+            { visibility: "off" }
+        ]
+      }
+    ]
   });
 
   var bounds = new google.maps.LatLngBounds(
