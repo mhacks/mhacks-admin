@@ -1,152 +1,110 @@
 <div class="content-box maps">
     <div class="content-header col-2-flex">
         <h1>Maps</h1>
-        <div class="right-header-group">
-            <div class="maps-link selected" data-level="B">B</div>
-            <div class="maps-link" data-level="1">1</div>
-            <div class="maps-link" data-level="2">2</div>
-            <div class="maps-link" data-level="3">3</div>
-            <div class="maps-link" data-level="4">4</div>
-            <div class="maps-link" data-level="5">5</div>
-        </div>
     </div>
+    <div id="map" style="height: 400px"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3cTO6cT409UROZEMyCO26Rysr60TH_I"></script>
+<script>
+    var overlay;
+USGSOverlay.prototype = new google.maps.OverlayView();
+
+// Initialize the map and the custom overlay.
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 17,
+    center: {lat: 42.292620, lng: -83.714415},
+    mapTypeId: 'satellite',
+    rotateControl: false
+  });
+
+  var bounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(42.291820, -83.716611),
+      new google.maps.LatLng(42.293530, -83.713641));
+
+  // The photograph is courtesy of the U.S. Geological Survey.
+  var srcImage = "{{ static('assets/map-overlay.png') }}";
+
+  // The custom USGSOverlay object contains the USGS image,
+  // the bounds of the image, and a reference to the map.
+  overlay = new USGSOverlay(bounds, srcImage, map);
+  map.setTilt(0);
+}
+
+/** @constructor */
+function USGSOverlay(bounds, image, map) {
+
+  // Initialize all properties.
+  this.bounds_ = bounds;
+  this.image_ = image;
+  this.map_ = map;
+
+  // Define a property to hold the image's div. We'll
+  // actually create this div upon receipt of the onAdd()
+  // method so we'll leave it null for now.
+  this.div_ = null;
+
+  // Explicitly call setMap on this overlay.
+  this.setMap(map);
+}
+
+/**
+ * onAdd is called when the map's panes are ready and the overlay has been
+ * added to the map.
+ */
+USGSOverlay.prototype.onAdd = function() {
+
+  var div = document.createElement('div');
+  div.style.borderStyle = 'none';
+  div.style.borderWidth = '0px';
+  div.style.position = 'absolute';
+
+  // Create the img element and attach it to the div.
+  var img = document.createElement('img');
+  img.src = this.image_;
+  img.style.width = '100%';
+  img.style.height = '100%';
+  img.style.position = 'absolute';
+  div.appendChild(img);
+
+  this.div_ = div;
+
+  // Add the element to the "overlayLayer" pane.
+  var panes = this.getPanes();
+  panes.overlayLayer.appendChild(div);
+};
+
+USGSOverlay.prototype.draw = function() {
+
+  // We use the south-west and north-east
+  // coordinates of the overlay to peg it to the correct position and size.
+  // To do this, we need to retrieve the projection from the overlay.
+  var overlayProjection = this.getProjection();
+
+  // Retrieve the south-west and north-east coordinates of this overlay
+  // in LatLngs and convert them to pixel coordinates.
+  // We'll use these coordinates to resize the div.
+  var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+  var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+  // Resize the image's div to fit the indicated dimensions.
+  var div = this.div_;
+  div.style.left = sw.x + 'px';
+  div.style.top = ne.y + 'px';
+  div.style.width = (ne.x - sw.x) + 'px';
+  div.style.height = (sw.y - ne.y) + 'px';
+};
+
+// The onRemove() method will be called automatically from the API if
+// we ever set the overlay's map property to 'null'.
+USGSOverlay.prototype.onRemove = function() {
+  this.div_.parentNode.removeChild(this.div_);
+  this.div_ = null;
+};
+
+google.maps.event.addDomListener(window, 'load', initMap);
+</script>
     <div class="maps-container">
-        <div class="maps-floor" data-level="5">
-            <div class="floor-diagram">
-                <img src="{{ static('assets/5th_floor.png') }}" alt="5th Floor Diagram">
-            </div>
-            <div class="floor-details">
-                <h3>Web Cortex</h3>
-                <ul>
-                    <li>MongoDB</li>
-                    <li>RetailMeNot</li>
-                    <li>Namecheap</li>
-                    <li>Linode</li>
-                    <li>Qualtrics</li>
-                </ul>
-            </div>
-        </div>
-        <div class="maps-floor" data-level="4">
-            <div class="floor-diagram">
-                <img src="{{ static('assets/4th_floor.png') }}" alt="4th Floor Diagram">
-            </div>
-            <div class="floor-details">
-                <h3>Other</h3>
-                <ul>
-                    <li>Bathrooms</li>
-                </ul>
-            </div>
-            <div class="floor-details">
-                <h3>Hardware Cortex</h3>
-                <ul>
-                    <li>ICS</li>
-                </ul>
-            </div>
-        </div>
-        <div class="maps-floor" data-level="3">
-            <div class="floor-diagram">
-                <img src="{{ static('assets/3rd_floor.png') }}" alt="3rd Floor Diagram">
-            </div>
-            <div class="floor-details">
-                <h3>Tech Talk Rooms</h3>
-                <ul>
-                    <li>Red Wings</li>
-                </ul>
-                <h3>Machine Learning + AI Cortex</h3>
-                <ul>
-                    <li>Wolfram Alpha</li>
-                    <li>GE Digital</li>
-                    <li>SalesforceIQ</li>
-                    <li>Amazon</li>
-                </ul>
-            </div>
-            <div class="floor-details">
-                <h3>AR/VR Cortex</h3>
-                <ul>
-                    <li>Magna Electronics</li>
-                </ul>
-                <h3>Startup Lounge</h3>
-                <ul>
-                    <li>VentureStorm</li>
-                    <li>Branch</li>
-                    <li>Petrichor</li>
-                </ul>
-            </div>
-        </div>
-        <div class="maps-floor" data-level="2">
-            <div class="floor-diagram">
-                <img src="{{ static('assets/2nd_floor.png') }}" alt="2nd Floor Diagram">
-            </div>
-            <div class="floor-details">
-                <h3>Other</h3>
-                <ul>
-                    <li>Help Desk</li>
-                    <li>Bathrooms</li>
-                </ul>
-                <h3>Mobile Cortex</h3>
-                <ul>
-                    <li>Expedia</li>
-                    <li>Target</li>
-                    <li>Concur</li>
-                    <li>Google</li>
-                </ul>
-            </div>
-        </div>
-        <div class="maps-floor" data-level="1">
-            <div class="floor-diagram">
-                <img src="{{ static('assets/FirstFloor.png') }}" alt="1st Floor Diagram">
-            </div>
-            <div class="floor-details">
-                <h3>Other</h3>
-                <ul>
-                    <li>Auditorium</li>
-                    <li>Help Desk</li>
-                    <li>Bathrooms</li>
-                </ul>
-            </div>
-        </div>
-        <div class="maps-floor" data-level="B">
-            <div class="floor-diagram">
-                <img src="{{ static('assets/basement.png') }}" alt="Basement Floor Diagram">
-            </div>
-            <div class="floor-details">
-                <h3>Tech Talk Rooms</h3>
-                <ul>
-                    <li>Lions Room</li>
-                    <li>Tigers Room</li>
-                </ul>
-                <h3>Other</h3>
-                <ul>
-                    <li>Hacker and Sponsor Registration</li>
-                    <li>Sleeping Rooms (10pm - 7am)</li>
-                    <li>Bathrooms</li>
-                </ul>
-            </div>
-            <div class="floor-details">
-                <h3>Social Impact, Detroit, Mobility Cortices</h3>
-                <ul>
-                    <li>NREL</li>
-                    <li>Facebook</li>
-                    <li>VFA</li>
-                    <li>1517 Fund</li>
-                    <li>BlackRock</li>
-                    <li>Esri</li>
-                    <li>Capital One</li>
-                    <li>Battelle</li>
-                    <li>a16z</li>
-                    <li>KCG</li>
-                    <li>Meridian Health Plan</li>
-                    <li>Wellopp</li>
-                    <li>Microsoft</li>
-                    <li>Bloomberg</li>
-                    <li>Goldman Sachs</li>
-                    <li>HookLogic</li>
-                    <li>Quicken Loans</li>
-                    <li>GM</li>
-                    <li>Pillar</li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 <script src="{{ static('javascript/maps.js') }}" type="text/javascript"></script>

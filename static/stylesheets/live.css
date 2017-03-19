@@ -96,8 +96,7 @@ body{
 }
 
 .schedule .content-header h1 {
-  text-align: center;
-  margin: 0 auto;
+  text-align: left;
 }
 
 .right-header-group {
@@ -519,13 +518,13 @@ body{
   }
 
   .announcements-container {
-    max-height: calc(100% - 140px);
+    max-height: calc(100% - 80px);
   }
 }
 
 @media only screen and (max-width: 500px){
   .announcements-container {
-    max-height: calc(100% - 160px);
+    max-height: calc(100% - 80px);
   }
 }
 
@@ -706,8 +705,12 @@ body{
   text-align: center;
 }
 
+.mentorship-container a {
+  color: #ed9a48;
+}
+
 .mentorship-container h2 {
-  color: #0093B1;
+  color: white;
 }
 
 .mentorship-container h3 {
@@ -716,7 +719,7 @@ body{
 }
 
 .mentorship-container p {
-  color: black;
+  color: white;
   width: 100%;
 }
 
@@ -731,6 +734,10 @@ body{
 .mentorship-minerva {
   text-align: left;
   width: 100%;
+}
+
+.mentorship-minerva .question {
+  color: lightgray;
 }
 
 .mentorship-minerva img {
@@ -753,7 +760,7 @@ body{
 }
 
 .hardware-container h2{
-  color: #0093B1;
+  color: white;
 }
 
 .hardware-container h3 {
@@ -762,8 +769,12 @@ body{
 }
 
 .hardware-container p {
-  color: black;
+  color: white;
   width: 100%;
+}
+
+.hardware-container a {
+  color: #ed9a48;
 }
 
 @media only screen and (max-width: 850px){
