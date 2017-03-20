@@ -73,7 +73,7 @@ def error_field(value):
     return _create_field('ERROR', value, color='FF0000')
 
 
-def _create_field(label, value, color=None):
+def _create_field(label, value, color='000000'):
     return {'label': label,
             'value': value,
-            'color': color if color else '000000'}
+            'color': color}

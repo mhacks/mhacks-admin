@@ -23,7 +23,7 @@ def get_countdown(request):
     Gets the countdown representation for the hackathon
     """
     # Update the date_updated to your current time if you modify the return value of the countdown
-    date_updated = datetime(year=2016, month=9, day=22, hour=0, minute=0, second=0, microsecond=0, tzinfo=utc)
+    date_updated = datetime(year=2017, month=3, day=19, hour=0, minute=0, second=0, microsecond=0, tzinfo=utc)
 
     client_updated = parse_date_last_updated(request)
     if client_updated and client_updated >= date_updated:
