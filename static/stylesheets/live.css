@@ -282,10 +282,11 @@ body{
 }
 
 .event:hover {
+  width: auto;
   height: auto;
   opacity: 1;
   box-shadow: 0 2px 2px 1px rgba(200, 200, 200, 0.40);
-  transition: all 0.2s linear;
+  transition: height 0.3s linear, width 0.3s linear, min-width 0.3s linear, left 0.2s linear 0.1s, opacity 0.2s;
   z-index: 10;
 }
 

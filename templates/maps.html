@@ -2,7 +2,7 @@
     <div class="content-header col-2-flex">
         <h1>Maps</h1>
     </div>
-    <div id="map" style="height: 400px"></div>
+    <div id="map" style="height: 450px"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO3cTO6cT409UROZEMyCO26Rysr60TH_I"></script>
 <script>
     var overlay;
@@ -12,9 +12,10 @@ USGSOverlay.prototype = new google.maps.OverlayView();
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 17,
-    center: {lat: 42.292620, lng: -83.714415},
+    zoom: 18,
+    center: {lat: 42.292670, lng: -83.715364},
     rotateControl: false,
+    scrollwheel: false,
     styles: [
       {
         featureType: "poi",
