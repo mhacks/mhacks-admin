@@ -51,14 +51,8 @@ function displayAnnouncements(){
     announcements.forEach(function(a, idx){
         aContainer.append(
             "<div class='announcement'>" +
-                "<div class='category-container'>" +
-                    ((a.category & 1) ? "<div class='category-indicator category-0'></div>" : "") +
-                    ((a.category & 2) ? "<div class='category-indicator category-1'></div>" : "") +
-                    ((a.category & 4) ? "<div class='category-indicator category-2'></div>" : "") +
-                    ((a.category & 8) ? "<div class='category-indicator category-3'></div>" : "") +
-                "</div>" +
-                "<div class='announcement-details'>" +
-                    "<h2>" + a.title + "</h2>" +
+                "<div class='announcement-details category-" + mapCategoryIndex(a.category) + "'>" +
+            "<div class='event-title'><h2>" + a.title + "</h2><span class='category-identifier'>" + formatAnnouncementCategoryIdentifier(a.category) + "</span></div>" +
                     "<h3>" + formatDate(a.time) + "</h3>" +
                     "<p>" + a.info + "</p>" +
                 "</div>" +
@@ -72,3 +66,34 @@ refresh.click(function(){
     announcements = [];
     getAnnouncements();
 });
+
+function mapCategoryIndex(category) {
+    switch (category) {
+        case 1:
+            return 0;
+        case 2:
+            return 1;
+        case 4:
+            return 2;
+        case 8:
+            return 3;
+    }
+
+    return 0;
+}
+
+function formatAnnouncementCategoryIdentifier(category) {
+    console.log(category);
+    switch (category) {
+        case 1:
+            return "General";
+        case 2:
+            return "Emergency";
+        case 4:
+            return "Logistics";
+        case 8:
+            return "Food";
+    }
+
+    return "Category";
+}
