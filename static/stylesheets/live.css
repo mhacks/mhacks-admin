@@ -258,11 +258,11 @@ body{
 }
 
 .time-lines div:nth-child(odd){
-  border-top: 2px solid whitesmoke;
+  border-top: 2px solid rgba(255, 255, 255, 0.7);
 }
 
 .time-lines div:nth-child(even){
-  border-top: 1px solid whitesmoke;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .live-section {
@@ -303,6 +303,7 @@ body{
 
 .event-title {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding-bottom: 4px;
 }
