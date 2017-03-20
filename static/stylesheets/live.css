@@ -83,6 +83,7 @@ body{
   align-items: center;
 
   z-index: 20;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25);
 }
 
 .content-header * {
@@ -112,6 +113,7 @@ body{
 
 .content-box {
   background-color: rgba(0,0,0,0.4);
+  border-radius: 20px;
 }
 
 @media only screen and (max-width: 850px){
@@ -263,6 +265,10 @@ body{
   border-top: 1px solid whitesmoke;
 }
 
+.live-section {
+  -webkit-backdrop-filter: blur(50px);
+}
+
 .events {
   position: relative;
 }
@@ -273,7 +279,7 @@ body{
   border: 3px solid black;
   border-radius: 5px;
   padding: 6px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.6);
   opacity: 0.95;
   overflow: hidden;
   height: 0;
@@ -295,11 +301,23 @@ body{
   transition: opacity 0.3s;
 }
 
+.event-title {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 4px;
+}
+
+.event .category-identifier {
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
 .shiftLeft {
   left: 100px !important;
 }
 
 .event h2 {
+  color: white;
   margin: 0;
   font-size: 12pt;
 }
@@ -307,9 +325,7 @@ body{
 .event h3 {
   margin: 0;
   padding-bottom: 4px;
-  border-bottom: 2px solid rgba(204, 204, 204, 0.8);
   font-size: 16px;
-  font-weight: bolder
 }
 
 .event p {
@@ -332,24 +348,39 @@ body{
   border-color: rgb(255, 0, 0);
 }
 
-.event.category-0 * {
+.event.category-0 .category-identifier {
   color: rgb(0, 188, 212);
+}
+
+.event.category-1 .category-identifier {
+  color: rgb(247, 139, 49);
+}
+
+.event.category-2 .category-identifier {
+  color: #ff357d;
+}
+
+.event.category-3 .category-identifier {
+  color: rgb(168, 110, 219);
+}
+
+.event.category-4 .category-identifier {
+  color: rgb(255, 0, 0);
+}
+
+.event.category-0 * {
   border-color: rgb(0, 188, 212);
 }
 .event.category-1 * {
-  color: rgb(247, 139, 49);
   border-color: rgb(247, 139, 49);
 }
 .event.category-2 * {
-  color: rgb(255, 202, 11);
   border-color: rgb(255, 202, 11);
 }
 .event.category-3 * {
-  color: rgb(168, 110, 219);
   border-color: rgb(168, 110, 219);
 }
 .event.category-4 * {
-  color: rgb(255, 0, 0);
   border-color: rgb(255, 0, 0);
 }
 
@@ -444,7 +475,7 @@ body{
 }
 
 .announcement {
-  border-bottom: 2px solid rgba(204,204,204,0.5);
+  border-bottom: 2px solid rgba(255,255,255,0.25);
   padding: 15px 20px 15px 10px;
 
   display: flex;

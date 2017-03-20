@@ -134,9 +134,9 @@ function processEvents(){
 
             eventsDiv.append(
                 "<div class='event category-" + e.category + "' style='top:" + p.offset + "px; min-height: " + p.height + "px' data-colnum='" + width + "' data-colpos='" + offset + "'>" +
-                    "<h2>" + e.name + "</h2>" +
+                "<div class='event-title'><h2>" + e.name + "</h2>" + "<span class='category-identifier'>" + formatCategoryIdentifier(e.category) + "</span></div>" +
                     "<h3>" + formatTime(new Date(e.startTime)) + " - " + formatTime(new Date(e.endTime)) + ", " + formatLocations(e.locations) + "</h3>" +
-                    "<p>" + e.description + "</p>" +
+                "<p>" + e.description + "</p>" +
                 "</div>");
         }
     });
@@ -249,4 +249,25 @@ function formatLocations(locs){
         }
     });
     return output;
+}
+
+function formatCategoryIdentifier(index) {
+    switch (index) {
+        case 0:
+            return "General";
+        case 1:
+            return "Emergency";
+        case 2:
+            return "Logistics";
+        case 3:
+            return "Food";
+        case 4:
+            return "Swag";
+        case 5:
+            return "Sponsor";
+        case 6:
+            return "Other";
+    }
+
+    return "Category";
 }
