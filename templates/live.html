@@ -1,10 +1,13 @@
-{% extends 'basic_page.html' %}
+{% extends 'base.html' %}
 
 {% block headers %}
+    <link rel="stylesheet" media="all" href="{{ static('stylesheets/form.css') }}">
     <link rel="stylesheet" media="all" href="{{ static('stylesheets/live.css') }}?v=2">
+    {% block basic_page_headers %}
+    {% endblock %}
 {% endblock %}
 
-{% block basic_page_title %}
+{% block content %}
 <div class="live-navbar">
     <a class="live-navlink" data-section="Announcements">
         Announcements
@@ -28,10 +31,8 @@
         Devpost
     </a>
 </div>
-{% endblock %}
 
-{% block basic_page_content %}
-    </div>
+<div>
     <div style="background-image:url({{ static('assets/live_bg_1.png') }}); background-size:cover; background-attachment:fixed;">
     <div class="live-header">
       <div id="countdown-container">
@@ -53,6 +54,7 @@
     <div class="live-container" style="display:none">
         <div class="live-section" data-section="FAQ">{% include 'live_faqs.html' %}</div>
     </div>
+</div>
 </div>
 {% endblock %}
 
