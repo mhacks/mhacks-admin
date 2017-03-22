@@ -761,11 +761,8 @@ body{
 }
 
 .mentorship-block {
-  border-top: 2px solid #0093B1;
-}
-
-.mentorship-block:last-child {
-  border-bottom: 2px solid #0093B1;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  padding-top: 7px;
 }
 
 .mentorship-minerva {
@@ -774,7 +771,14 @@ body{
 }
 
 .mentorship-minerva .question {
+  text-align: center;
   color: lightgray;
+}
+
+.mentorship-minerva .answer {
+  margin: auto;
+  width: 90%;
+  padding-left: 0;
 }
 
 .mentorship-minerva img {
