@@ -394,7 +394,7 @@ body{
 
 @media only screen and (max-width: 400px){
   .schedule-container {
-    max-height: calc(100% - 160px);
+    max-height: calc(100% - 80px);
   }
 }
 
