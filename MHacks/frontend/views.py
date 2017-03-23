@@ -469,7 +469,12 @@ def stats(request):
 
 
 def live(request):
-    return render(request, 'live.html')
+    # Server time is one hour behind
+    current_hour = (datetime.datetime.now().hour + 1) % 24;
+
+    print current_hour
+
+    return render(request, 'live.html', {'hour': current_hour})
 
 
 @login_required()

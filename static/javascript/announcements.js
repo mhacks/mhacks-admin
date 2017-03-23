@@ -83,7 +83,6 @@ function mapCategoryIndex(category) {
 }
 
 function formatAnnouncementCategoryIdentifier(category) {
-    console.log(category);
     switch (category) {
         case 1:
             return "General";
