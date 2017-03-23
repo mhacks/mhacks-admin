@@ -85,13 +85,17 @@ function mapCategoryIndex(category) {
 function formatAnnouncementCategoryIdentifier(category) {
     switch (category) {
         case 1:
-            return "General";
-        case 2:
             return "Emergency";
-        case 4:
+        case 2:
             return "Logistics";
-        case 8:
+        case 4:
             return "Food";
+        case 8:
+            return "Swag";
+        case 16:
+            return "Sponsor";
+        case 32:
+            return "Other";
     }
 
     return "Category";

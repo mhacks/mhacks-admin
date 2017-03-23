@@ -256,13 +256,13 @@ function formatCategoryIdentifier(index) {
         case 0:
             return "General";
         case 1:
-            return "Emergency";
-        case 2:
             return "Logistics";
-        case 3:
+        case 2:
             return "Food";
+        case 3:
+            return "Learn";
         case 4:
-            return "Swag";
+            return "Social";
         case 5:
             return "Sponsor";
         case 6:
