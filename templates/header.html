@@ -19,17 +19,17 @@
                     <button type="submit" style="width: 110px;">Dashboard</button>
                 </form>
             {% endif %}
-            <form method="GET" action="{{ url_for('mhacks-live') }}">
+            {#<form method="GET" action="{{ url_for('mhacks-live') }}">
                 <button type="submit">Live</button>
-            </form>
+            </form>#}
             <form method="POST" action="{{ url_for('mhacks-logout') }}">
                 {{ csrf_input }}
                 <button type="submit">Logout</button>
             </form>
         {% else %}
-            <form method="GET" action="{{ url_for('mhacks-live') }}">
+        {#<form method="GET" action="{{ url_for('mhacks-live') }}">
                 <button type="submit">Live</button>
-            </form>
+        </form>#}
             <form method="GET" action="{{ url_for('mhacks-login') }}">
                 <button type="submit">Login</button>
             </form>
@@ -44,17 +44,17 @@
                         <button type="submit" style="width: 110px;">Dashboard</button>
                     </form>
                 {% endif %}
-                <form method="GET" action="{{ url_for('mhacks-live') }}">
+                {#<form method="GET" action="{{ url_for('mhacks-live') }}">
                     <button type="submit">Live</button>
-                </form>
+                </form>#}
                 <form method="POST" action="{{ url_for('mhacks-logout') }}">
                     {{ csrf_input }}
                     <button type="submit">Logout</button>
                 </form>
             {% else %}
-                <form method="GET" action="{{ url_for('mhacks-live') }}">
+            {#<form method="GET" action="{{ url_for('mhacks-live') }}">
                     <button type="submit">Live</button>
-                </form>
+            </form>#}
                 <form method="GET" action="{{ url_for('mhacks-login') }}">
                     <button type="submit">Login</button>
                 </form>
