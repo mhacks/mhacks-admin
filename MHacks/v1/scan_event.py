@@ -59,6 +59,9 @@ def swag_scan_verify(request, scanned_user):
         succeeded = False
     else:
         all_fields.append(_create_field('T-SHIRT SIZE', registration.t_shirt_size))
+    application = scanned_user.application_or_none()
+    if application and application.mentoring:
+        all_fields.append(_create_field('MENTOR', 'Yes', color='0000FF'))
 
     return succeeded, all_fields
 
