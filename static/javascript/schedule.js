@@ -232,7 +232,7 @@ function drawMarkers(){
 }
 
 function formatTime(d){
-    return (d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
+    return (d.getHours() % 12 == 0 ? 12 : d.getHours() % 12) + ":" + ("0" + d.getMinutes()).slice(-2) + (d.getHours() >= 12 ? "pm" : "am");
 }
 
 function formatLocations(locs){
