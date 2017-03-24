@@ -43,6 +43,10 @@
                 {% endif %}
             {% endif %}
 
+            {# ONLY FOR WALK ON #}
+            <br />
+            <a href="{{ url_for('mhacks-registration') }}"><button type="button">Register</button></a>
+
             {% if application %}
                 {% if application.decision == 'Accept' %}
                     <h2>Application Status: <span class="rounded-box accept">ACCEPTED</span></h2>
