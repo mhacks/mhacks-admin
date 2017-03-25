@@ -91,12 +91,10 @@ function formatAnnouncementCategoryIdentifier(category) {
         case 4:
             return "Food";
         case 8:
-            return "Swag";
+            return "Event";
         case 16:
             return "Sponsor";
-        case 32:
-            return "Other";
     }
 
-    return "Category";
+    return "Other";
 }
