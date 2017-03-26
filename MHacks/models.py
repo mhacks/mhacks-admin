@@ -178,7 +178,7 @@ class Announcement(Any):
     info = models.TextField(default='')
     broadcast_at = models.DateTimeField()
     category = models.PositiveIntegerField(validators=[MinValueValidator(0),
-                                                       MaxValueValidator(31)])
+                                                       MaxValueValidator(31)], help_text="0 for none; 1 for emergency; 2 for logistics; 4 for food; 8 for event; Add 16 to make sponsored")
     approved = models.BooleanField(default=False)
     sent = models.BooleanField(default=False)
 

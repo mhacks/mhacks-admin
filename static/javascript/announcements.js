@@ -68,33 +68,36 @@ refresh.click(function(){
 });
 
 function mapCategoryIndex(category) {
-    switch (category) {
-        case 1:
-            return 0;
-        case 2:
-            return 1;
-        case 4:
-            return 2;
-        case 8:
-            return 3;
+    if (category & 1) {
+        return 0;
     }
-
+    if (category & 2) {
+        return 1;
+    }
+    if (category & 4) {
+        return 2;
+    }
+    if (category & 8) {
+        return 3;
+    }
     return 0;
 }
 
 function formatAnnouncementCategoryIdentifier(category) {
-    switch (category) {
-        case 1:
-            return "Emergency";
-        case 2:
-            return "Logistics";
-        case 4:
-            return "Food";
-        case 8:
-            return "Event";
-        case 16:
-            return "Sponsor";
+    if (category & 1) {
+        return "Emergency";
     }
-
+    if (category & 2) {
+        return "Logistics";
+    }
+    if (category & 4) {
+        return "Food";
+    }
+    if (category & 8) {
+        return "Event";
+    }
+    if (category & 16) {
+        return "Sponsor";
+    }
     return "Other";
 }

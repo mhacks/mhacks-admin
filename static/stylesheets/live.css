@@ -114,6 +114,7 @@ body{
 .content-box {
   background-color: rgba(0,0,0,0.4);
   border-radius: 20px;
+  -webkit-backdrop-filter: saturate(150%) blur(20px);
 }
 
 @media only screen and (max-width: 850px){
