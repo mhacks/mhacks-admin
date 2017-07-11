@@ -1,4 +1,4 @@
-# MHacks Backend And Frontend
+# MHacks Admin/Organizer Tools
 
 ## Installation
 
