@@ -9,6 +9,8 @@ import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
 
+import users
+
 
 class Migration(migrations.Migration):
 
@@ -133,7 +135,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'User',
             },
             managers=[
-                ('objects', MHacks.models.MHacksUserManager()),
+                ('objects', users.MHacksUserManager()),
             ],
         ),
         migrations.AddField(

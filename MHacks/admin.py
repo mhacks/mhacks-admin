@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from models import *
+from announcements import AnnouncementModel
+from events import EventModel
+from locations import LocationModel
+from floors import FloorModel
+from scan_events import ScanEventModel, ScanEventUser
+from users import MHacksUser
 
 
 @admin.register(MHacksUser)
@@ -8,12 +13,12 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ['first_name', 'last_name', 'email']
 
 
-@admin.register(Location)
+@admin.register(LocationModel)
 class LocationAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
-@admin.register(Event)
+@admin.register(EventModel)
 class EventAdmin(admin.ModelAdmin):
     search_fields = ['name', 'info']
     list_display = ['name', 'start', 'duration', 'category', 'deleted_string', 'location_list']
@@ -29,7 +34,7 @@ class EventAdmin(admin.ModelAdmin):
     location_list.short_description = 'LOCATIONS'
 
 
-@admin.register(Announcement)
+@admin.register(AnnouncementModel)
 class AnnouncementAdmin(admin.ModelAdmin):
     search_fields = ['title', 'info']
     list_display = ['title', 'broadcast_at', 'category', 'sent', 'approved', 'deleted_string']
@@ -40,18 +45,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
     deleted_string.short_description = 'DELETED'
 
 
-@admin.register(Application)
-class ApplicationAdmin(admin.ModelAdmin):
-    search_fields = ['user__first_name', 'user__last_name', 'user__email', 'decision']
-
-
-@admin.register(Registration)
-class RegistrationAdmin(admin.ModelAdmin):
-    search_fields = ['user__first_name', 'user__last_name', 'user__email', 'acceptance', 'dietary_restrictions',
-                     'transportation']
-
-
-@admin.register(ScanEvent)
+@admin.register(ScanEventModel)
 class ScanEventAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
@@ -61,6 +55,6 @@ class ScanEventUserAdmin(admin.ModelAdmin):
     search_fields = ['scan_event__name']
 
 
-@admin.register(Floor)
+@admin.register(FloorModel)
 class FloorAdmin(admin.ModelAdmin):
     search_fields = ['name']

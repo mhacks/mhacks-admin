@@ -1,6 +1,8 @@
 from django.conf.urls import url, include
-from MHacks.frontend.views import *
 from django.views.generic.base import RedirectView
+
+from MHacks.views import *
+from views import index
 
 urlpatterns = [
     # Blackout
@@ -25,30 +27,12 @@ urlpatterns = [
 
     # Content
     url(r'^dashboard/$', dashboard, name='mhacks-dashboard'),
-    url(r'^live/$', live, name='mhacks-live'),
-    url(r'^apply/$', application, name='mhacks-apply'),
     url(r'^thanks_for_registering/$', thanks_registering, name='mhacks-thanks-registering'),
-    url(r'^applyMentor/$', apply_mentor, name='mhacks-applyMentor'),
-    url(r'^registration/$', registration, name='mhacks-registration'),
-
-    # Application reading
-    url(r'^application_search/$', application_search, name='mhacks-applicationSearch'),
-    url(r'^application_review/$', application_review, name='mhacks-applicationReview'),
-    url(r'^update_applications/$', update_applications, name='mhacks-updateApplication'),
-
-    # Statistics (logistical info for orgianizers)
-    url(r'^stats/$', stats, name='mhacks-stats'),
-
-    # Sponsor portal
-    url(r'^sponsor_portal', sponsor_portal, name='mhacks-sponsorPortal'),
-    url(r'^sponsor_review', sponsor_review, name='mhacks-sponsorReview'),
-    url(r'^resumes/(?P<filename>[\w\S]{0,256})/$', resumes, name='mhacks-resumes'),
 
     # Admin only
     url(r'^explorer/', include('explorer.urls')),
 
-    # Apple Wallet pass support
-    url(r'^apple_pass.pkpass$', apple_pass, name='mhacks-apple-pass'),
+    url(r'^apple-app-site-association', apple_site_association),
 
     # Redirect all other endpoints to the homepage
     url(r'^.*/$', RedirectView.as_view(url='/', permanent=False), name='redirect-mhacks-home')

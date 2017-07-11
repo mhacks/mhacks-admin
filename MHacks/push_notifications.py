@@ -1,10 +1,11 @@
-from rest_framework import generics, status
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from rest_framework.exceptions import ValidationError
 from push_notifications.api.rest_framework import APNSDeviceSerializer, GCMDeviceSerializer
 from push_notifications.models import APNSDevice, GCMDevice
-from MHacks.models import Announcement
+from rest_framework import generics, status
+from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
+from announcements import AnnouncementModel
 
 
 class PushNotificationView(generics.CreateAPIView):
@@ -14,13 +15,13 @@ class PushNotificationView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         preference = request.data.get('preference', 0)
         if not preference:
-            preference = request.data.get('name', str(Announcement.max_category()))
+            preference = request.data.get('name', str(AnnouncementModel.max_category()))
 
         try:
             if int(preference) <= 0:
-                preference = str(Announcement.max_category())
+                preference = str(AnnouncementModel.max_category())
         except ValueError:
-            preference = str(Announcement.max_category())
+            preference = str(AnnouncementModel.max_category())
 
         copied_data = request.data.copy()
         copied_data['name'] = preference

@@ -1,22 +1,24 @@
-import sys
 import logging
+import sys
 
 import mandrill
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.template import loader
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from jinja2 import Environment
-
-from config.settings import EMAIL_HOST_USER
-from config.settings import MANDRILL_API_KEY
+from rest_framework import serializers
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPermissions
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED
+from rest_framework.views import exception_handler
 
 from MHacks.globals import permissions_map
+from config.settings import MANDRILL_API_KEY
 
 
 # Updates permissions to groups
@@ -138,33 +140,6 @@ def send_password_reset_email(user, request):
     )
 
 
-def send_registration_email(user, request=None):
-    from pass_creator import create_qr_code_image
-    from pass_creator import create_apple_pass
-    import base64
-    if request:
-        wallet_url = _get_absolute_url(request, reverse('mhacks-apple-pass'))
-    else:
-        wallet_url = "{0}://{1}{2}".format('https', 'mhacks.org', reverse('mhacks-apple-pass'))
-    send_mandrill_mail('ticket_email_simple', 'Your MHacks Ticket', user.email,
-                       email_vars={
-                           'FIRST_NAME': user.get_short_name(),
-                           'WALLET_URL': wallet_url,
-                           'QR_CODE': "cid:qrcode.png",
-                           'FULL_NAME': user.get_full_name(),
-                           'SCHOOL': user.cleaned_school_name()
-                       },
-                       attachments=[{'content': base64.b64encode(create_apple_pass(user).getvalue()),
-                                     'name': 'mhacks.pkpass',
-                                     'type': 'application/vnd.apple.pkpass'
-                                     }],
-                       images=[{'content': create_qr_code_image(user),
-                                'name': 'qrcode.png',
-                                'type': 'image/png'
-                                }]
-                       )
-
-
 def validate_signed_token(uid, token, require_token=True):
     """
     Validates a signed token and uid and returns the user who owns it.
@@ -219,16 +194,154 @@ def validate_url(data, query):
         raise forms.ValidationError('Please enter a valid {} url'.format(query))
 
 
-def change_resume_filename(self, filename):
-    """
-    Changes the filename of an uploaded file to be a unique hash
-    :param self: the file instance
-    :param filename: the filename
-    :return: string that is the new filename
-    """
-    file_ending = filename.split('.')[-1]
-    from config.settings import SECRET_KEY
+class GenericListCreateModel(CreateAPIView, ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    from hashlib import sha256
-    new_name = sha256(self.user.email + SECRET_KEY).hexdigest()
-    return new_name[:10] + '.' + file_ending
+    def __init__(self):
+        self.date_of_update = None
+        super(GenericListCreateModel, self).__init__()
+
+    def get_queryset(self):
+        self.date_of_update = now_as_utc_epoch()
+        return parse_date_last_updated(self.request)
+
+    def list(self, request, *args, **kwargs):
+        response = super(GenericListCreateModel, self).list(request, *args, **kwargs)
+        response.data = {'results': response.data, 'date_updated': self.date_of_update}
+        return response
+
+    # noinspection PyProtectedMember
+    def create(self, request, *args, **kwargs):
+        if hasattr(self, 'get_queryset'):
+            queryset = self.get_queryset()
+        else:
+            queryset = getattr(self, 'queryset', None)
+
+        assert queryset is not None, (
+            'Cannot have a GenericListModel with no '
+            '`.queryset` or not have defined the `.get_queryset()` method.'
+        )
+        model_class = queryset.model
+        request_data = request.data.copy()
+        request_data['approved'] = request.user.has_perm('%(app_label)s.change_%(model_name)s' %
+                                                         {'app_label': model_class._meta.app_label,
+                                                          'model_name': model_class._meta.model_name})
+        serializer = self.get_serializer(data=request_data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
+
+
+class GenericUpdateDestroyModel(RetrieveUpdateDestroyAPIView):
+    permission_classes = (DjangoModelPermissions,)
+    lookup_field = 'id'
+
+
+def serialized_user(user):
+    return {'name': user.get_full_name(), 'email': user.email,
+            'school': user.cleaned_school_name(),
+            'can_post_announcements': user.has_perm('MHacks.add_announcement'),
+            'can_edit_announcements': user.has_perm('MHacks.change_announcement'),
+            'can_perform_scan': user.has_perm('MHacks.can_perform_scan')}
+
+
+def mhacks_exception_handler(exc, context):
+    # Call REST framework's default exception handler first,
+    # to get the standard error response.
+    response = exception_handler(exc, context)
+
+    if not response:
+        return response
+    if isinstance(response.data, str):
+        response.data = {'detail': response}
+    elif isinstance(response.data, list):
+        response.data = {'detail': response.data[0]}
+    elif not response.data.get('detail', None):
+        if len(response.data) == 0:
+            response.data = {'detail': 'Unknown error'}
+        elif isinstance(response.data, list):
+            response.data = {'detail': response.data[0]}
+        elif isinstance(response.data, dict):
+            first_key = response.data.keys()[0]
+            detail_for_key = response.data[first_key]
+            if isinstance(detail_for_key, list):
+                detail_for_key = detail_for_key[0]
+            if first_key.lower() == 'non_field_errors':
+                response.data = {'detail': "{}".format(detail_for_key)}
+            else:
+                response.data = {'detail': "{}: {}".format(first_key.title(), detail_for_key)}
+        else:
+            response.data = {'detail': 'Unknown error'}
+    return response
+
+
+class UnixEpochDateField(serializers.DateTimeField):
+    def to_internal_value(self, value):
+        from datetime import datetime
+        from pytz import utc
+        try:
+            return datetime.utcfromtimestamp(float(value)).replace(tzinfo=utc)
+        except ValueError:
+            self.fail('invalid', format='Unix Epoch Timestamp')
+
+    def to_representation(self, value):
+        import datetime
+
+        if isinstance(value, datetime.date) and not isinstance(value, datetime.datetime):
+            self.fail('date')
+        dt = to_utc_epoch(value)
+        if not dt:
+            self.fail('invalid', format='Unix Epoch Timestamp')
+        return dt
+
+
+class DurationInSecondsField(serializers.Field):
+    error_messages = {'invalid': 'Invalid format expected duration in seconds'}
+
+    def to_internal_value(self, data):
+        from datetime import timedelta
+        try:
+            return timedelta(seconds=int(data))
+        except ValueError:
+            self.fail('invalid')
+
+    def to_representation(self, value):
+        return value.total_seconds()
+
+
+class NonNullPrimaryKeyField(serializers.PrimaryKeyRelatedField):
+    def to_representation(self, value):
+        if not value:
+            return None
+        return super(NonNullPrimaryKeyField, self).to_representation(value)
+
+
+def parse_date_last_updated(request):
+    date_last_updated_raw = request.query_params.get('since', None)
+    if date_last_updated_raw:
+        try:
+            from pytz import utc
+            from datetime import datetime
+            return datetime.utcfromtimestamp(float(date_last_updated_raw)).replace(tzinfo=utc)
+        except ValueError:
+            print('Value error')
+            pass
+    return None
+
+
+def now_as_utc_epoch():
+    import pytz
+    from datetime import datetime
+    return to_utc_epoch(datetime.now(pytz.utc))
+
+
+def to_utc_epoch(date_time):
+    from datetime import datetime
+
+    if isinstance(date_time, datetime):
+        import pytz
+        date_time = date_time.astimezone(pytz.utc)
+        from calendar import timegm
+        return timegm(date_time.timetuple())
+    return None

@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
-from push_notifications.models import APNSDevice, GCMDevice
 from push_notifications.apns import APNSDataOverflow, apns_send_bulk_message
-from MHacks.models import Announcement
+from push_notifications.models import APNSDevice, GCMDevice
+
+from announcements import AnnouncementModel
 
 
 class Command(BaseCommand):
@@ -10,7 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         import pytz
         from datetime import datetime
-        announcements = Announcement.objects.all().filter(sent=False, approved=True, broadcast_at__lte=datetime.now(pytz.utc))
+        announcements = AnnouncementModel.objects.all().filter(sent=False, approved=True, broadcast_at__lte=datetime.now(pytz.utc))
         for announcement in announcements:
             announcement.sent = True
             announcement.save()  # Save immediately so even if this takes time to run, we won't have duplicate pushes

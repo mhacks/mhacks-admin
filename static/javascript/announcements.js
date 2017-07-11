@@ -68,15 +68,19 @@ refresh.click(function(){
 });
 
 function mapCategoryIndex(category) {
+    //noinspection JSBitwiseOperatorUsage
     if (category & 1) {
         return 0;
     }
+    //noinspection JSBitwiseOperatorUsage
     if (category & 2) {
         return 1;
     }
+    //noinspection JSBitwiseOperatorUsage
     if (category & 4) {
         return 2;
     }
+    //noinspection JSBitwiseOperatorUsage
     if (category & 8) {
         return 3;
     }
@@ -84,18 +88,23 @@ function mapCategoryIndex(category) {
 }
 
 function formatAnnouncementCategoryIdentifier(category) {
+    //noinspection JSBitwiseOperatorUsage
     if (category & 1) {
         return "Emergency";
     }
+    //noinspection JSBitwiseOperatorUsage
     if (category & 2) {
         return "Logistics";
     }
+    //noinspection JSBitwiseOperatorUsage
     if (category & 4) {
         return "Food";
     }
+    //noinspection JSBitwiseOperatorUsage
     if (category & 8) {
         return "Event";
     }
+    //noinspection JSBitwiseOperatorUsage
     if (category & 16) {
         return "Sponsor";
     }

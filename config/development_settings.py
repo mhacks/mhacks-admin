@@ -55,9 +55,3 @@ MAILCHIMP_INTEREST_LIST = 'https://us6.api.mailchimp.com/3.0/lists'  # Fill with
 # ^ This is for the blackout interest link
 
 APPLE_WALLET_PASSPHRASE = ''
-
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
-AWS_ACL_POLICY = os.getenv('AWS_ACL_POLICY', 'private')
-BOTO_S3_BUCKET = os.getenv('BOTO_S3_BUCKET', 'mhacks-9-resumes')
-SECRET_KEY = os.getenv('SECRET_KEY', 'mhacks')

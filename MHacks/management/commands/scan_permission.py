@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Permission
-from MHacks.models import MHacksUser
+from users import MHacksUser
 
 
 class Command(BaseCommand):

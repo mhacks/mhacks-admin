@@ -117,7 +117,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
-    'EXCEPTION_HANDLER': 'MHacks.v1.util.mhacks_exception_handler',
+    'EXCEPTION_HANDLER': 'MHacks.utils.mhacks_exception_handler',
     'URL_FORMAT_OVERRIDE': None
 }
 
@@ -143,9 +143,7 @@ STATICFILES_DIRS = [
 
 APPEND_SLASH = True
 
-MEDIA_ROOT = 'resumes/'
-
 # SQL explorer settings
-EXPLORER_PERMISSION_VIEW = lambda u: u.is_superuser
+EXPLORER_PERMISSION_VIEW = lambda user: user.is_superuser
 # EXPLORER_CONNECTION_NAME =
-EXPLORER_SQL_WHITELIST = ('UPDATE')
+EXPLORER_SQL_WHITELIST = 'UPDATE'
